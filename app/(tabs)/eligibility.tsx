@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Clock, Calculator, Info, FileSliders as Sliders } from 'lucide-react-native';
-import CustomSlider from '@/components/CustomSlider';
+import CustomSlider from '../../components/CustomSlider';
 
 interface EligibilityResult {
   eligible: boolean;

@@ -9,7 +9,7 @@ import {
   Switch,
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
-import CustomSlider from '@/components/CustomSlider';
+import CustomSlider from '../../components/CustomSlider';
 
 interface PensionCalculation {
   annualPension: number;

@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native';
-import { useSharedValue, useAnimatedGestureHandler, useAnimatedStyle, runOnJS } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
+import { View, Text, StyleSheet, PanResponder } from 'react-native';
 
 interface CustomSliderProps {
   min: number;
@@ -27,40 +25,38 @@ export default function CustomSlider({
   const sliderWidth = 280;
   const thumbSize = 24;
   
-  const translateX = useSharedValue((value - min) / (max - min) * (sliderWidth - thumbSize));
+  const percentage = (value - min) / (max - min);
+  const thumbPosition = percentage * (sliderWidth - thumbSize);
   
-  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onStart: (_, context) => {
-      context.startX = translateX.value;
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: (evt, gestureState) => {
+      const { locationX } = evt.nativeEvent;
+      updateValue(locationX);
     },
-    onActive: (event, context) => {
-      const newTranslateX = Math.max(0, Math.min(sliderWidth - thumbSize, context.startX + event.translationX));
-      translateX.value = newTranslateX;
-      
-      const percentage = newTranslateX / (sliderWidth - thumbSize);
-      const newValue = min + percentage * (max - min);
-      const steppedValue = Math.round(newValue / step) * step;
-      
-      runOnJS(onValueChange)(Math.max(min, Math.min(max, steppedValue)));
+    onPanResponderMove: (evt, gestureState) => {
+      const { locationX } = evt.nativeEvent;
+      updateValue(locationX);
+    },
+    onPanResponderRelease: () => {
+      // Optional: Add any cleanup or final value setting
     },
   });
 
-  const thumbStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-    };
-  });
+  const updateValue = (locationX: number) => {
+    const clampedLocationX = Math.max(0, Math.min(sliderWidth, locationX));
+    const percentage = clampedLocationX / sliderWidth;
+    const newValue = min + percentage * (max - min);
+    const steppedValue = Math.round(newValue / step) * step;
+    const finalValue = Math.max(min, Math.min(max, steppedValue));
+    onValueChange(finalValue);
+  };
 
-  const trackFillStyle = useAnimatedStyle(() => {
-    return {
-      width: translateX.value + thumbSize / 2,
-    };
-  });
-
-  // Update thumb position when value changes externally
-  React.useEffect(() => {
-    translateX.value = (value - min) / (max - min) * (sliderWidth - thumbSize);
-  }, [value, min, max, sliderWidth, thumbSize]);
+  const handleTrackPress = (evt: any) => {
+    const { locationX } = evt.nativeEvent;
+    updateValue(locationX);
+  };
 
   return (
     <View style={styles.container}>
@@ -74,15 +70,19 @@ export default function CustomSlider({
       )}
       
       <View style={styles.sliderContainer}>
-        <View style={[styles.track, { width: sliderWidth }]}>
-          <Animated.View style={[styles.trackFill, { backgroundColor: color }, trackFillStyle]} />
+        <View 
+          style={[styles.track, { width: sliderWidth }]}
+          onTouchEnd={handleTrackPress}
+        >
+          <View style={[styles.trackFill, { backgroundColor: color, width: thumbPosition + thumbSize / 2 }]} />
         </View>
         
-        <PanGestureHandler onGestureEvent={gestureHandler}>
-          <Animated.View style={[styles.thumb, { backgroundColor: color }, thumbStyle]}>
-            <View style={styles.thumbInner} />
-          </Animated.View>
-        </PanGestureHandler>
+        <View
+          style={[styles.thumb, { backgroundColor: color, left: thumbPosition }]}
+          {...panResponder.panHandlers}
+        >
+          <View style={styles.thumbInner} />
+        </View>
       </View>
       
       <View style={styles.rangeContainer}>
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     marginBottom: 8,
+    position: 'relative',
   },
   track: {
     height: 6,
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

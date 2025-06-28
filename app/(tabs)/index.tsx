@@ -11,6 +11,7 @@ import {
   Modal,
 } from 'react-native';
 import { Calendar, User, Briefcase, Save, ChevronDown, Building } from 'lucide-react-native';
+import DatePicker from '../../components/DatePicker';
 
 interface UserProfile {
   organization: string;
@@ -225,48 +226,33 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.inputGroup}>
-          <View style={styles.labelContainer}>
-            <Calendar size={20} color="#374151" strokeWidth={2} />
-            <Text style={styles.label}>Date of Birth</Text>
-          </View>
-          <TextInput
-            style={[styles.input, errors.dateOfBirth && styles.inputError]}
+          <DatePicker
             value={profile.dateOfBirth}
-            onChangeText={(value) => handleDateChange('dateOfBirth', value)}
+            onDateChange={(value) => handleDateChange('dateOfBirth', value)}
             placeholder="YYYY-MM-DD"
-            placeholderTextColor="#9CA3AF"
+            label="Date of Birth"
+            error={errors.dateOfBirth}
           />
-          {errors.dateOfBirth && <Text style={styles.errorText}>{errors.dateOfBirth}</Text>}
         </View>
 
         <View style={styles.inputGroup}>
-          <View style={styles.labelContainer}>
-            <Briefcase size={20} color="#374151" strokeWidth={2} />
-            <Text style={styles.label}>Entry on Duty</Text>
-          </View>
-          <TextInput
-            style={[styles.input, errors.entryOnDuty && styles.inputError]}
+          <DatePicker
             value={profile.entryOnDuty}
-            onChangeText={(value) => handleDateChange('entryOnDuty', value)}
+            onDateChange={(value) => handleDateChange('entryOnDuty', value)}
             placeholder="YYYY-MM-DD"
-            placeholderTextColor="#9CA3AF"
+            label="Entry on Duty"
+            error={errors.entryOnDuty}
           />
-          {errors.entryOnDuty && <Text style={styles.errorText}>{errors.entryOnDuty}</Text>}
         </View>
 
         <View style={styles.inputGroup}>
-          <View style={styles.labelContainer}>
-            <Calendar size={20} color="#374151" strokeWidth={2} />
-            <Text style={styles.label}>Expected Separation</Text>
-          </View>
-          <TextInput
-            style={[styles.input, errors.expectedSeparation && styles.inputError]}
+          <DatePicker
             value={profile.expectedSeparation}
-            onChangeText={(value) => handleDateChange('expectedSeparation', value)}
+            onDateChange={(value) => handleDateChange('expectedSeparation', value)}
             placeholder="YYYY-MM-DD"
-            placeholderTextColor="#9CA3AF"
+            label="Expected Separation"
+            error={errors.expectedSeparation}
           />
-          {errors.expectedSeparation && <Text style={styles.errorText}>{errors.expectedSeparation}</Text>}
         </View>
 
         <View style={styles.calculatedValues}>
