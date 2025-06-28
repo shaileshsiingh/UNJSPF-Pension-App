@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, PanResponder } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
 interface CustomSliderProps {
   min: number;
@@ -22,41 +22,61 @@ export default function CustomSlider({
   unit = '',
   color = '#2563EB'
 }: CustomSliderProps) {
-  const sliderWidth = 280;
+  const screenWidth = Dimensions.get('window').width;
+  const sliderWidth = screenWidth - 80; // Account for padding
   const thumbSize = 24;
+  const trackRef = useRef<View>(null);
   
-  const percentage = (value - min) / (max - min);
+  const [sliderValue, setSliderValue] = useState(value);
+  const [trackLayout, setTrackLayout] = useState({ x: 0, width: sliderWidth });
+  
+  // Update internal state when prop changes
+  useEffect(() => {
+    setSliderValue(value);
+  }, [value]);
+  
+  const percentage = (sliderValue - min) / (max - min);
   const thumbPosition = percentage * (sliderWidth - thumbSize);
   
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderGrant: (evt, gestureState) => {
-      const { locationX } = evt.nativeEvent;
-      updateValue(locationX);
-    },
-    onPanResponderMove: (evt, gestureState) => {
-      const { locationX } = evt.nativeEvent;
-      updateValue(locationX);
-    },
-    onPanResponderRelease: () => {
-      // Optional: Add any cleanup or final value setting
-    },
-  });
-
-  const updateValue = (locationX: number) => {
-    const clampedLocationX = Math.max(0, Math.min(sliderWidth, locationX));
-    const percentage = clampedLocationX / sliderWidth;
+  const updateValue = (touchX: number) => {
+    // Calculate relative position within the track
+    const relativeX = touchX - trackLayout.x;
+    const clampedX = Math.max(0, Math.min(trackLayout.width, relativeX));
+    const percentage = clampedX / trackLayout.width;
     const newValue = min + percentage * (max - min);
     const steppedValue = Math.round(newValue / step) * step;
     const finalValue = Math.max(min, Math.min(max, steppedValue));
-    onValueChange(finalValue);
+    
+    // Only update if we have a valid number
+    if (!isNaN(finalValue) && isFinite(finalValue)) {
+      setSliderValue(finalValue);
+      onValueChange(finalValue);
+    }
   };
 
   const handleTrackPress = (evt: any) => {
-    const { locationX } = evt.nativeEvent;
-    updateValue(locationX);
+    try {
+      const { pageX } = evt.nativeEvent;
+      if (typeof pageX === 'number' && !isNaN(pageX)) {
+        updateValue(pageX);
+      }
+    } catch (error) {
+      console.log('Slider touch error:', error);
+    }
   };
+
+  const handleTrackLayout = (event: any) => {
+    const { x, width } = event.nativeEvent.layout;
+    setTrackLayout({ x, width });
+  };
+
+  const handleThumbPress = (evt: any) => {
+    // Prevent track press when thumb is pressed
+    evt.stopPropagation();
+  };
+
+  // Format the display value to prevent NaN
+  const displayValue = isNaN(sliderValue) || !isFinite(sliderValue) ? value : sliderValue;
 
   return (
     <View style={styles.container}>
@@ -64,25 +84,29 @@ export default function CustomSlider({
         <View style={styles.labelContainer}>
           <Text style={styles.label}>{label}</Text>
           <Text style={[styles.value, { color }]}>
-            {value.toLocaleString()}{unit}
+            {displayValue.toLocaleString()}{unit}
           </Text>
         </View>
       )}
       
       <View style={styles.sliderContainer}>
-        <View 
+        <TouchableOpacity
+          ref={trackRef}
           style={[styles.track, { width: sliderWidth }]}
-          onTouchEnd={handleTrackPress}
+          onPress={handleTrackPress}
+          onLayout={handleTrackLayout}
+          activeOpacity={0.8}
         >
           <View style={[styles.trackFill, { backgroundColor: color, width: thumbPosition + thumbSize / 2 }]} />
-        </View>
+        </TouchableOpacity>
         
-        <View
+        <TouchableOpacity
           style={[styles.thumb, { backgroundColor: color, left: thumbPosition }]}
-          {...panResponder.panHandlers}
+          onPress={handleThumbPress}
+          activeOpacity={0.8}
         >
           <View style={styles.thumbInner} />
-        </View>
+        </TouchableOpacity>
       </View>
       
       <View style={styles.rangeContainer}>

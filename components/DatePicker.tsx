@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -40,6 +40,13 @@ export default function DatePicker({
     const [year, month, day] = dateString.split('-').map(Number);
     return new Date(year, month - 1, day);
   };
+
+  // Initialize selectedDate when value changes
+  useEffect(() => {
+    if (value) {
+      setSelectedDate(parseDate(value));
+    }
+  }, [value]);
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);

@@ -250,10 +250,17 @@ export default function EligibilityScreen() {
               <TextInput
                 style={styles.input}
                 value={yearsOfService.toString()}
-                onChangeText={(text) => setYearsOfService(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setYearsOfService(num);
+                  } else if (text === '' || text === '.') {
+                    setYearsOfService(0);
+                  }
+                }}
                 placeholder="Enter total years of service"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
               <Text style={styles.helpText}>Include all pensionable service periods</Text>
             </View>
@@ -263,10 +270,17 @@ export default function EligibilityScreen() {
               <TextInput
                 style={styles.input}
                 value={currentAge.toString()}
-                onChangeText={(text) => setCurrentAge(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setCurrentAge(num);
+                  } else if (text === '' || text === '.') {
+                    setCurrentAge(0);
+                  }
+                }}
                 placeholder="Enter your current age"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
             </View>
 
@@ -275,10 +289,17 @@ export default function EligibilityScreen() {
               <TextInput
                 style={styles.input}
                 value={finalSalary.toString()}
-                onChangeText={(text) => setFinalSalary(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setFinalSalary(num);
+                  } else if (text === '' || text === '.') {
+                    setFinalSalary(0);
+                  }
+                }}
                 placeholder="Enter annual salary for estimates"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
               <Text style={styles.helpText}>For benefit amount estimates</Text>
             </View>

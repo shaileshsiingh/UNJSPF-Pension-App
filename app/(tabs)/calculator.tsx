@@ -187,10 +187,17 @@ export default function CalculatorScreen() {
               <TextInput
                 style={styles.input}
                 value={far.toString()}
-                onChangeText={(text) => setFar(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setFar(num);
+                  } else if (text === '' || text === '.') {
+                    setFar(0);
+                  }
+                }}
                 placeholder="Enter annual salary"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
               <Text style={styles.helpText}>Your average salary over the last 3-5 years</Text>
             </View>
@@ -203,10 +210,17 @@ export default function CalculatorScreen() {
               <TextInput
                 style={styles.input}
                 value={roa.toString()}
-                onChangeText={(text) => setRoa(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setRoa(num);
+                  } else if (text === '' || text === '.') {
+                    setRoa(0);
+                  }
+                }}
                 placeholder="Enter rate (e.g., 2.5)"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
               <Text style={styles.helpText}>Pension accrual rate per year of service</Text>
             </View>
@@ -216,10 +230,17 @@ export default function CalculatorScreen() {
               <TextInput
                 style={styles.input}
                 value={yearsOfService.toString()}
-                onChangeText={(text) => setYearsOfService(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setYearsOfService(num);
+                  } else if (text === '' || text === '.') {
+                    setYearsOfService(0);
+                  }
+                }}
                 placeholder="Enter years of service"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
             </View>
 
@@ -228,10 +249,17 @@ export default function CalculatorScreen() {
               <TextInput
                 style={styles.input}
                 value={colaRate.toString()}
-                onChangeText={(text) => setColaRate(parseFloat(text) || 0)}
+                onChangeText={(text) => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) {
+                    setColaRate(num);
+                  } else if (text === '' || text === '.') {
+                    setColaRate(0);
+                  }
+                }}
                 placeholder="Enter COLA rate"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
               />
               <Text style={styles.helpText}>Cost of living adjustment rate</Text>
             </View>

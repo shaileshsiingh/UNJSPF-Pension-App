@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { User, Calculator, SquareCheck as CheckSquare, BookOpen, Info, FileText, Smartphone } from 'lucide-react-native';
+import { Home, User, Shield, Calculator, FileText, Info } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -13,29 +13,28 @@ export default function TabLayout() {
           borderTopColor: '#E5E7EB',
           paddingTop: 8,
           paddingBottom: 8,
-          height: 80,
+          height: 88,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          elevation: 8,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: '600',
+          marginTop: 4,
+        },
+        tabBarIconStyle: {
           marginTop: 4,
         },
       }}>
       <Tabs.Screen
-        name="about-pension"
+        name="home"
         options={{
-          title: 'About Pension',
+          title: 'Home',
           tabBarIcon: ({ size, color }) => (
-            <FileText size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="about-app"
-        options={{
-          title: 'About App',
-          tabBarIcon: ({ size, color }) => (
-            <Smartphone size={size} color={color} strokeWidth={2} />
+            <Home size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
@@ -53,7 +52,7 @@ export default function TabLayout() {
         options={{
           title: 'Eligibility',
           tabBarIcon: ({ size, color }) => (
-            <CheckSquare size={size} color={color} strokeWidth={2} />
+            <Shield size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
@@ -71,7 +70,7 @@ export default function TabLayout() {
         options={{
           title: 'Resources',
           tabBarIcon: ({ size, color }) => (
-            <BookOpen size={size} color={color} strokeWidth={2} />
+            <FileText size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
