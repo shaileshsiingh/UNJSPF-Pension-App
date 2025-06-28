@@ -70,7 +70,7 @@ export default function HomeScreen() {
           
           <TouchableOpacity 
             style={styles.infoCard}
-            onPress={() => router.push('/(tabs)/about-pension')}
+            onPress={() => router.push('/about-pension')}
           >
             <View style={styles.cardIconContainer}>
               <FileText size={24} color="#2563EB" strokeWidth={2} />
@@ -86,7 +86,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity 
             style={styles.infoCard}
-            onPress={() => router.push('/(tabs)/about-app')}
+            onPress={() => router.push('/about-app')}
           >
             <View style={styles.cardIconContainer}>
               <Smartphone size={24} color="#2563EB" strokeWidth={2} />

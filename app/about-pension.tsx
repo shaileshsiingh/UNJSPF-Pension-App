@@ -134,7 +134,7 @@ export default function AboutPensionScreen() {
 
         <TouchableOpacity 
           style={styles.nextButton}
-          onPress={() => router.push('/(tabs)/about-app')}
+          onPress={() => router.push('/about-app')}
         >
           <Text style={styles.nextButtonText}>Learn About This App</Text>
         </TouchableOpacity>
