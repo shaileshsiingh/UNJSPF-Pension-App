@@ -59,17 +59,18 @@ export default function CalculatorScreen() {
     return new Date(year, month - 1, day);
   }
 
-  // Helper to generate month labels
   function getMonthLabels(separationDate: Date) {
     const labels = [];
     let date = new Date(separationDate);
+    date.setDate(1); // Always start at the 1st of the month to avoid overflow issues
     for (let i = 0; i < 36; i++) {
       labels.push(date.toLocaleString('default', { month: 'short', year: '2-digit' }));
       date.setMonth(date.getMonth() - 1);
     }
     return labels;
   }
-  const monthLabels = getMonthLabels(getSeparationDateObj());
+  const monthLabels = getMonthLabels(getSeparationDateObj()).slice(0, 36);
+  const rows = [monthLabels.slice(0, 12), monthLabels.slice(12, 24), monthLabels.slice(24, 36)];
 
   // Calculate FAR
   const far = prValues.filter(v => v !== '').length === 36
@@ -99,16 +100,17 @@ export default function CalculatorScreen() {
     return Math.min(roa, 70);
   }
   const roa = calculateROA(yearsOfService);
-
+ // Commutation factor
+  const commutationFactor = getCommutationFactor(ageAtRetirement);
   // Calculate max lump sum
   const annualPension = far * (roa / 100);
-  const maxLumpSum = annualPension / 3;
+  const lumpBeforcf = (annualPension *30)/100
+  const maxLumpSum = ((annualPension *30)/100)*commutationFactor;
 
-  // Commutation factor
-  const commutationFactor = getCommutationFactor(ageAtRetirement);
+ 
 
   // Calculate monthly pension
-  const monthlyPension = (annualPension - lumpSum) / 12 ;
+  const monthlyPension = (annualPension - lumpBeforcf) / 12 ;
 
   useEffect(() => {
     setCalculation({
@@ -119,6 +121,14 @@ export default function CalculatorScreen() {
       colaAdjustedPension: 0, // not used in Excel logic
     });
   }, [far, roa, yearsOfService, lumpSum, ageAtRetirement]);
+
+  // Auto-populate lump sum to max by default, but allow user override
+  useEffect(() => {
+    if (lumpSum === 0 && annualPension > 0) {
+      setLumpSum(maxLumpSum);
+    }
+    // eslint-disable-next-line
+  }, [annualPension]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -146,53 +156,49 @@ export default function CalculatorScreen() {
         <Text style={styles.sliderHelpText}>Select your date of separation. The 36 months below will auto-label from this date.</Text>
 
         <View style={{ marginVertical: 16 }}>
-          <Text style={styles.label}>Enter Pensionable Remuneration for each of the last 36 months:</Text>
-          <ScrollView horizontal style={{ marginTop: 8 }}>
-            <View style={{ flexDirection: 'row' }}>
-              {monthLabels.map((label, idx) => (
-                <View key={label + idx} style={{ alignItems: 'center', marginRight: 8 }}>
-                  <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
-                  <TextInput
-                    style={{
-                      borderWidth: 1,
-                      borderColor: '#D1D5DB',
-                      borderRadius: 8,
-                      width: 70,
-                      height: 36,
-                      textAlign: 'center',
-                      marginTop: 2,
-                      backgroundColor: '#FFF',
-                      color: '#111827',
-                    }}
-                    value={prValues[idx]}
-                    onChangeText={text => {
-                      const newValues = [...prValues];
-                      // Only allow numbers and decimals
-                      if (/^\d*\.?\d*$/.test(text)) {
-                        if (idx === 0) {
-                          // If all other cells are empty or match the previous first cell value, autofill
-                          const prevFirst = prValues[0];
-                          const shouldAutofill = prValues.slice(1).every(v => v === '' || v === prevFirst);
-                          if (shouldAutofill) {
-                            for (let i = 0; i < 36; i++) newValues[i] = text;
+          <Text style={styles.label}>Enter Pensionable Remuneration for each of the last 36 months (most recent on left):</Text>
+          {rows.map((row, rowIdx) => (
+            <View key={rowIdx} style={{ flexDirection: 'row', marginBottom: 8 }}>
+              {row.map((label, colIdx) => {
+                const absIndex = rowIdx * 12 + colIdx;
+                return (
+                  <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                    <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
+                    <TextInput
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#D1D5DB',
+                        borderRadius: 8,
+                        width: 70,
+                        height: 36,
+                        textAlign: 'center',
+                        marginTop: 2,
+                        backgroundColor: '#FFF',
+                        color: '#111827',
+                      }}
+                      value={prValues[absIndex]}
+                      onChangeText={text => {
+                        const newValues = [...prValues];
+                        if (/^\d*\.?\d*$/.test(text)) {
+                          // If leftmost cell in row (most recent month for that year), autofill all months in this row
+                          if (colIdx === 0) {
+                            for (let i = 0; i < 12; i++) newValues[rowIdx * 12 + i] = text;
                           } else {
-                            newValues[0] = text;
+                            newValues[absIndex] = text;
                           }
-                        } else {
-                          newValues[idx] = text;
+                          setPrValues(newValues);
                         }
-                        setPrValues(newValues);
-                      }
-                    }}
-                    placeholder="0"
-                    keyboardType="decimal-pad"
-                    maxLength={8}
-                  />
-                </View>
-              ))}
+                      }}
+                      placeholder="0"
+                      keyboardType="decimal-pad"
+                      maxLength={8}
+                    />
+                  </View>
+                );
+              })}
             </View>
-          </ScrollView>
-          <Text style={styles.helpText}>All 36 months must be filled for calculation.</Text>
+          ))}
+          <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter the leftmost cell in each row to auto-fill that year.</Text>
         </View>
 
         <View style={styles.inputGroup}>
@@ -233,7 +239,7 @@ export default function CalculatorScreen() {
           <Text style={styles.label}>Lump Sum (up to 1/3 of annual pension)</Text>
           <TextInput
             style={styles.input}
-            value={lumpSum.toString()}
+            value={maxLumpSum.toString()}
             onChangeText={text => {
               const num = parseFloat(text);
               if (!isNaN(num) && num >= 0 && num <= maxLumpSum) setLumpSum(num);

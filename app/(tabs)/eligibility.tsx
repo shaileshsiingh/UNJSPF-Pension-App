@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Clock, Calculator, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
+import DatePicker from '../../components/DatePicker';
 
 interface EligibilityResult {
   eligible: boolean;
@@ -26,13 +27,14 @@ export default function EligibilityScreen() {
   const [inputMode, setInputMode] = useState<'manual' | 'slider'>('slider');
   const [yearsOfService, setYearsOfService] = useState(15);
   const [currentAge, setCurrentAge] = useState(55);
-  const [finalSalary, setFinalSalary] = useState(75000);
+  const [far, setFar] = useState(0);
   const [result, setResult] = useState<EligibilityResult | null>(null);
+  const [separationDate, setSeparationDate] = useState('');
 
   const checkEligibility = () => {
     const years = yearsOfService;
     const age = currentAge;
-    const salary = finalSalary;
+    const salary = far;
 
     let eligibilityResult: EligibilityResult;
 
@@ -150,7 +152,7 @@ export default function EligibilityScreen() {
 
   React.useEffect(() => {
     checkEligibility();
-  }, [yearsOfService, currentAge, finalSalary]);
+  }, [yearsOfService, currentAge, far]);
 
   const getStatusIcon = () => {
     if (!result) return <Clock size={24} color="#6B7280" strokeWidth={2} />;
@@ -195,6 +197,61 @@ export default function EligibilityScreen() {
     </View>
   );
 
+  function calculateROA(years: number) {
+    let roa = 0;
+    let remaining = years;
+    if (remaining > 0) {
+      const first5 = Math.min(5, remaining);
+      roa += first5 * 1.5;
+      remaining -= first5;
+    }
+    if (remaining > 0) {
+      const next5 = Math.min(5, remaining);
+      roa += next5 * 1.75;
+      remaining -= next5;
+    }
+    if (remaining > 0) {
+      const next15 = Math.min(15, remaining);
+      roa += next15 * 2.0;
+      remaining -= next15;
+    }
+    return Math.min(roa, 70);
+  }
+  const roa = calculateROA(yearsOfService);
+  const annualPension = far * (roa / 100);
+  const maxLumpSum = annualPension / 3;
+  const [lumpSum, setLumpSum] = useState(maxLumpSum);
+  const monthlyPension = (annualPension - lumpSum) / 12;
+
+  function getSeparationDateObj() {
+    if (!separationDate) return new Date();
+    const [year, month, day] = separationDate.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+  function getYearRows(separationDate: string) {
+    const rows = [];
+    let date = new Date(separationDate);
+    // Find the July before or equal to separation date
+    if (date.getMonth() !== 6) {
+      date.setMonth(6);
+      if (date > new Date(separationDate)) date.setFullYear(date.getFullYear() - 1);
+    }
+    for (let y = 0; y < 3; y++) {
+      const row = [];
+      for (let m = 0; m < 12; m++) {
+        const monthDate = new Date(date.getFullYear(), 6 + m, 1);
+        row.push({
+          label: monthDate.toLocaleString('default', { month: 'short', year: '2-digit' }),
+          absIndex: y * 12 + m,
+        });
+      }
+      rows.push(row);
+      date.setFullYear(date.getFullYear() - 1);
+    }
+    return rows;
+  }
+  const yearRows = getYearRows(separationDate);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -231,16 +288,6 @@ export default function EligibilityScreen() {
               color="#059669"
             />
 
-            <CustomSlider
-              min={30000}
-              max={150000}
-              value={finalSalary}
-              onValueChange={setFinalSalary}
-              step={1000}
-              label="Final Average Salary"
-              unit=""
-              color="#DC2626"
-            />
             <Text style={styles.sliderHelpText}>For benefit amount estimates</Text>
           </>
         ) : (
@@ -285,23 +332,29 @@ export default function EligibilityScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Final Average Salary</Text>
+              <Text style={styles.label}>Separation Date</Text>
+              <DatePicker
+                value={separationDate}
+                onDateChange={setSeparationDate}
+                label="Separation Date"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Final Average Remuneration (FAR)</Text>
               <TextInput
                 style={styles.input}
-                value={finalSalary.toString()}
-                onChangeText={(text) => {
+                value={far.toString()}
+                onChangeText={text => {
                   const num = parseFloat(text);
-                  if (!isNaN(num) && num >= 0) {
-                    setFinalSalary(num);
-                  } else if (text === '' || text === '.') {
-                    setFinalSalary(0);
-                  }
+                  if (!isNaN(num) && num >= 0) setFar(num);
+                  else if (text === '' || text === '.') setFar(0);
                 }}
-                placeholder="Enter annual salary for estimates"
+                placeholder="Enter FAR"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="decimal-pad"
               />
-              <Text style={styles.helpText}>For benefit amount estimates</Text>
+              <Text style={styles.helpText}>Average of your highest 36 months' pensionable remuneration.</Text>
             </View>
           </>
         )}
