@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
+import DatePicker from '../../components/DatePicker';
 
 interface PensionCalculation {
   annualPension: number;
@@ -23,68 +24,101 @@ interface PensionCalculation {
   bonusPercentage?: number;
 }
 
+const COMMUTATION_FACTORS = [
+  { age: 55, factor: 13.5 },
+  { age: 60, factor: 12.3 },
+  { age: 62, factor: 11.7 },
+  { age: 65, factor: 10.2 },
+  { age: 67, factor: 8.8 },
+  { age: 70, factor: 8.7 },
+];
+
+function getCommutationFactor(age: number) {
+  let closest = COMMUTATION_FACTORS[0];
+  for (const entry of COMMUTATION_FACTORS) {
+    if (Math.abs(entry.age - age) < Math.abs(closest.age - age)) {
+      closest = entry;
+    }
+  }
+  return closest.factor;
+}
+
 export default function CalculatorScreen() {
-  const [inputMode, setInputMode] = useState<'manual' | 'slider'>('slider');
-  const [far, setFar] = useState(75000); // Final Average Remuneration
-  const [roa, setRoa] = useState(2.5); // Rate of Accrual
+  // New state for Excel logic
+  const [separationDate, setSeparationDate] = useState('');
+  const [prValues, setPrValues] = useState(Array(36).fill(''));
   const [yearsOfService, setYearsOfService] = useState(20);
-  const [lumpSumOption, setLumpSumOption] = useState(false);
-  const [colaRate, setColaRate] = useState(3); // Cost of Living Adjustment
+  const [ageAtRetirement, setAgeAtRetirement] = useState(62);
+  const [lumpSum, setLumpSum] = useState(0);
   const [calculation, setCalculation] = useState<PensionCalculation | null>(null);
 
-  const calculatePension = () => {
-    const farValue = far;
-    const roaValue = roa / 100; // Convert percentage to decimal
-    const years = yearsOfService;
-    const cola = colaRate / 100;
+  // Helper to parse separationDate string to Date
+  function getSeparationDateObj() {
+    if (!separationDate) return new Date();
+    const [year, month, day] = separationDate.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
 
-    // UNJSPF-specific calculations based on video transcripts
-    
-    // Basic annual pension calculation: FAR × ROA × Years of Service
-    const annualPension = farValue * roaValue * years;
-    const monthlyPension = annualPension / 12;
+  // Helper to generate month labels
+  function getMonthLabels(separationDate: Date) {
+    const labels = [];
+    let date = new Date(separationDate);
+    for (let i = 0; i < 36; i++) {
+      labels.unshift(date.toLocaleString('default', { month: 'short', year: '2-digit' }));
+      date.setMonth(date.getMonth() - 1);
+    }
+    return labels;
+  }
+  const monthLabels = getMonthLabels(getSeparationDateObj());
 
-    // UNJSPF Withdrawal Settlement calculation
-    const ownContributions = farValue * 0.08 * years; // 8% employee contribution
-    const interestRate = 0.0325; // 3.25% compound interest
-    const baseWithdrawal = ownContributions * Math.pow(1 + interestRate, years);
-    
-    // Bonus for service beyond 5 years (10% per year, up to 100%)
-    const bonusYears = Math.max(0, years - 5);
-    const bonusPercentage = Math.min(bonusYears * 10, 100);
-    const withdrawalSettlement = baseWithdrawal * (1 + bonusPercentage / 100);
+  // Calculate FAR
+  const far = prValues.filter(v => v !== '').length === 36
+    ? prValues.reduce((sum, v) => sum + parseFloat(v || '0'), 0) / 36
+    : 0;
 
-    // Deferred pension (same as regular pension but payable later)
-    const deferredPension = monthlyPension;
+  // Calculate ROA (tiered)
+  function calculateROA(years: number) {
+    let roa = 0;
+    let remaining = years;
+    if (remaining > 0) {
+      const first5 = Math.min(5, remaining);
+      roa += first5 * 1.5;
+      remaining -= first5;
+    }
+    if (remaining > 0) {
+      const next5 = Math.min(5, remaining);
+      roa += next5 * 1.75;
+      remaining -= next5;
+    }
+    if (remaining > 0) {
+      const next15 = Math.min(15, remaining);
+      roa += next15 * 2.0;
+      remaining -= next15;
+    }
+    // Cap at 70%
+    return Math.min(roa, 70);
+  }
+  const roa = calculateROA(yearsOfService);
 
-    // Early retirement reduction (if applicable)
-    const earlyRetirementReduction = years < 25 ? 6 : years < 30 ? 3 : 1; // % per year before normal retirement
+  // Calculate max lump sum
+  const annualPension = far * (roa / 100);
+  const maxLumpSum = annualPension / 3;
 
-    // Lump sum calculation (typically 30% of total pension value)
-    const lumpSum = lumpSumOption ? annualPension * 5 * 0.3 : 0; // 5 years worth at 30%
-    const reducedMonthlyPension = lumpSumOption 
-      ? (annualPension - (lumpSum * 0.2)) / 12 // Reduced by 20% if lump sum taken
-      : monthlyPension;
+  // Commutation factor
+  const commutationFactor = getCommutationFactor(ageAtRetirement);
 
-    // COLA adjusted pension (compound growth over time)
-    const colaAdjustedPension = monthlyPension * Math.pow(1 + cola, 5); // 5 years projection
+  // Calculate monthly pension
+  const monthlyPension = (annualPension - lumpSum) / 12 ;
 
+  useEffect(() => {
     setCalculation({
       annualPension,
       monthlyPension,
       lumpSum,
-      reducedMonthlyPension,
-      colaAdjustedPension,
-      withdrawalSettlement,
-      deferredPension,
-      earlyRetirementReduction,
-      bonusPercentage,
+      reducedMonthlyPension: monthlyPension, // for compatibility
+      colaAdjustedPension: 0, // not used in Excel logic
     });
-  };
-
-  useEffect(() => {
-    calculatePension();
-  }, [far, roa, yearsOfService, lumpSumOption, colaRate]);
+  }, [far, roa, yearsOfService, lumpSum, ageAtRetirement]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -95,28 +129,6 @@ export default function CalculatorScreen() {
     }).format(amount);
   };
 
-  const renderInputModeToggle = () => (
-    <View style={styles.inputModeContainer}>
-      <TouchableOpacity
-        style={[styles.modeButton, inputMode === 'slider' && styles.activeModeButton]}
-        onPress={() => setInputMode('slider')}
-      >
-        <Sliders size={16} color={inputMode === 'slider' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
-        <Text style={[styles.modeButtonText, inputMode === 'slider' && styles.activeModeButtonText]}>
-          Sliders
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.modeButton, inputMode === 'manual' && styles.activeModeButton]}
-        onPress={() => setInputMode('manual')}
-      >
-        <Text style={[styles.modeButtonText, inputMode === 'manual' && styles.activeModeButtonText]}>
-          Manual
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -125,252 +137,142 @@ export default function CalculatorScreen() {
         <Text style={styles.subtitle}>Calculate your estimated pension benefits with interactive controls</Text>
       </View>
 
-      {renderInputModeToggle()}
-
       <View style={styles.form}>
-        {inputMode === 'slider' ? (
-          <>
-            <CustomSlider
-              min={30000}
-              max={150000}
-              value={far}
-              onValueChange={setFar}
-              step={1000}
-              label="Final Average Remuneration (FAR)"
-              unit=""
-              color="#2563EB"
-            />
-            <Text style={styles.sliderHelpText}>Your average salary over the last 3-5 years</Text>
+        <DatePicker
+          value={separationDate}
+          onDateChange={setSeparationDate}
+          label="Separation Date"
+        />
+        <Text style={styles.sliderHelpText}>Select your date of separation. The 36 months below will auto-label from this date.</Text>
 
-            <CustomSlider
-              min={1.5}
-              max={4.0}
-              value={roa}
-              onValueChange={setRoa}
-              step={0.1}
-              label="Rate of Accrual (ROA)"
-              unit="%"
-              color="#059669"
-            />
-            <Text style={styles.sliderHelpText}>Pension accrual rate per year of service</Text>
-
-            <CustomSlider
-              min={5}
-              max={40}
-              value={yearsOfService}
-              onValueChange={setYearsOfService}
-              step={1}
-              label="Years of Service"
-              unit=" years"
-              color="#DC2626"
-            />
-
-            <CustomSlider
-              min={1}
-              max={6}
-              value={colaRate}
-              onValueChange={setColaRate}
-              step={0.1}
-              label="COLA Rate (Annual)"
-              unit="%"
-              color="#D97706"
-            />
-            <Text style={styles.sliderHelpText}>Cost of living adjustment rate</Text>
-          </>
-        ) : (
-          <>
-            <View style={styles.inputGroup}>
-              <View style={styles.labelContainer}>
-                <DollarSign size={20} color="#374151" strokeWidth={2} />
-                <Text style={styles.label}>Final Average Remuneration (FAR)</Text>
-              </View>
-              <TextInput
-                style={styles.input}
-                value={far.toString()}
-                onChangeText={(text) => {
-                  const num = parseFloat(text);
-                  if (!isNaN(num) && num >= 0) {
-                    setFar(num);
-                  } else if (text === '' || text === '.') {
-                    setFar(0);
-                  }
-                }}
-                placeholder="Enter annual salary"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="decimal-pad"
-              />
-              <Text style={styles.helpText}>Your average salary over the last 3-5 years</Text>
+        <View style={{ marginVertical: 16 }}>
+          <Text style={styles.label}>Enter Pensionable Remuneration for each of the last 36 months:</Text>
+          <ScrollView horizontal style={{ marginTop: 8 }}>
+            <View style={{ flexDirection: 'row' }}>
+              {monthLabels.map((label, idx) => (
+                <View key={label + idx} style={{ alignItems: 'center', marginRight: 8 }}>
+                  <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
+                  <TextInput
+                    style={{
+                      borderWidth: 1,
+                      borderColor: '#D1D5DB',
+                      borderRadius: 8,
+                      width: 70,
+                      height: 36,
+                      textAlign: 'center',
+                      marginTop: 2,
+                      backgroundColor: '#FFF',
+                      color: '#111827',
+                    }}
+                    value={prValues[idx]}
+                    onChangeText={text => {
+                      const newValues = [...prValues];
+                      // Only allow numbers and decimals
+                      if (/^\d*\.?\d*$/.test(text)) {
+                        newValues[idx] = text;
+                        setPrValues(newValues);
+                      }
+                    }}
+                    placeholder="0"
+                    keyboardType="decimal-pad"
+                    maxLength={8}
+                  />
+                </View>
+              ))}
             </View>
-
-            <View style={styles.inputGroup}>
-              <View style={styles.labelContainer}>
-                <TrendingUp size={20} color="#374151" strokeWidth={2} />
-                <Text style={styles.label}>Rate of Accrual (ROA) %</Text>
-              </View>
-              <TextInput
-                style={styles.input}
-                value={roa.toString()}
-                onChangeText={(text) => {
-                  const num = parseFloat(text);
-                  if (!isNaN(num) && num >= 0) {
-                    setRoa(num);
-                  } else if (text === '' || text === '.') {
-                    setRoa(0);
-                  }
-                }}
-                placeholder="Enter rate (e.g., 2.5)"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="decimal-pad"
-              />
-              <Text style={styles.helpText}>Pension accrual rate per year of service</Text>
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Years of Service</Text>
-              <TextInput
-                style={styles.input}
-                value={yearsOfService.toString()}
-                onChangeText={(text) => {
-                  const num = parseFloat(text);
-                  if (!isNaN(num) && num >= 0) {
-                    setYearsOfService(num);
-                  } else if (text === '' || text === '.') {
-                    setYearsOfService(0);
-                  }
-                }}
-                placeholder="Enter years of service"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="decimal-pad"
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>COLA Rate % (Annual)</Text>
-              <TextInput
-                style={styles.input}
-                value={colaRate.toString()}
-                onChangeText={(text) => {
-                  const num = parseFloat(text);
-                  if (!isNaN(num) && num >= 0) {
-                    setColaRate(num);
-                  } else if (text === '' || text === '.') {
-                    setColaRate(0);
-                  }
-                }}
-                placeholder="Enter COLA rate"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="decimal-pad"
-              />
-              <Text style={styles.helpText}>Cost of living adjustment rate</Text>
-            </View>
-          </>
-        )}
-
-        <View style={styles.switchContainer}>
-          <View style={styles.switchLabelContainer}>
-            <Text style={styles.switchLabel}>Include Lump Sum Option</Text>
-            <Text style={styles.switchDescription}>Take 30% as lump sum with reduced monthly pension</Text>
-          </View>
-          <Switch
-            value={lumpSumOption}
-            onValueChange={setLumpSumOption}
-            trackColor={{ false: '#D1D5DB', true: '#93C5FD' }}
-            thumbColor={lumpSumOption ? '#2563EB' : '#F3F4F6'}
-          />
+          </ScrollView>
+          <Text style={styles.helpText}>All 36 months must be filled for calculation.</Text>
         </View>
-      </View>
 
-      {calculation && (
-        <View style={styles.resultsContainer}>
-          <Text style={styles.resultsTitle}>UNJSPF Pension Calculation Results</Text>
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Years of Contributory Service</Text>
+          <TextInput
+            style={styles.input}
+            value={yearsOfService.toString()}
+            onChangeText={text => {
+              const num = parseFloat(text);
+              if (!isNaN(num) && num >= 0) setYearsOfService(num);
+              else if (text === '' || text === '.') setYearsOfService(0);
+            }}
+            placeholder="Enter years of service"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="decimal-pad"
+          />
+          <Text style={styles.helpText}>Maximum recognized service is 38.75 years.</Text>
+        </View>
 
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Age at Retirement</Text>
+          <TextInput
+            style={styles.input}
+            value={ageAtRetirement.toString()}
+            onChangeText={text => {
+              const num = parseInt(text);
+              if (!isNaN(num) && num > 0) setAgeAtRetirement(num);
+              else if (text === '' || text === '.') setAgeAtRetirement(0);
+            }}
+            placeholder="Enter age at retirement"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="number-pad"
+          />
+          <Text style={styles.helpText}>Commutation factor is based on this age.</Text>
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Lump Sum (up to 1/3 of annual pension)</Text>
+          <TextInput
+            style={styles.input}
+            value={lumpSum.toString()}
+            onChangeText={text => {
+              const num = parseFloat(text);
+              if (!isNaN(num) && num >= 0 && num <= maxLumpSum) setLumpSum(num);
+              else if (text === '' || text === '.') setLumpSum(0);
+            }}
+            placeholder={`Max: ${formatCurrency(maxLumpSum)}`}
+            placeholderTextColor="#9CA3AF"
+            keyboardType="decimal-pad"
+          />
+          <Text style={styles.helpText}>You may take any amount up to 1/3 of your annual pension as a lump sum.</Text>
+        </View>
+
+        {/* Debug Section: Show raw calculation values */}
+        <View style={{ marginTop: 16, backgroundColor: '#FFF7ED', padding: 12, borderRadius: 8 }}>
+          <Text style={{ color: '#92400E', fontWeight: 'bold' }}>Debug Info</Text>
+          <Text>Annual Pension: {annualPension}</Text>
+          <Text>Lump Sum: {lumpSum}</Text>
+          <Text>Commutation Factor: {commutationFactor}</Text>
+          <Text>(Annual Pension - Lump Sum) / 12: {((annualPension - lumpSum) / 12).toFixed(2)}</Text>
+          <Text>Monthly Pension (final): {monthlyPension}</Text>
+        </View>
+
+        <View style={{ marginTop: 24 }}>
+          <Text style={styles.resultsTitle}>Calculation Results</Text>
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Final Average Remuneration (FAR)</Text>
+            <Text style={styles.resultValue}>{formatCurrency(far)}</Text>
+          </View>
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Rate of Accumulation (ROA)</Text>
+            <Text style={styles.resultValue}>{roa.toFixed(2)}%</Text>
+          </View>
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Annual Pension</Text>
-            <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension)}</Text>
+            <Text style={styles.resultValue}>{formatCurrency(annualPension)}</Text>
           </View>
-
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Maximum Lump Sum</Text>
+            <Text style={styles.resultValue}>{formatCurrency(maxLumpSum)}</Text>
+          </View>
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Commutation Factor</Text>
+            <Text style={styles.resultValue}>{commutationFactor}</Text>
+          </View>
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Monthly Pension</Text>
-            <Text style={styles.resultValue}>{formatCurrency(calculation.monthlyPension)}</Text>
-          </View>
-
-          {calculation.withdrawalSettlement && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultLabel}>Withdrawal Settlement</Text>
-              <Text style={[styles.resultValue, styles.highlightValue]}>
-                {formatCurrency(calculation.withdrawalSettlement)}
-              </Text>
-              {calculation.bonusPercentage && calculation.bonusPercentage > 0 && (
-                <Text style={styles.bonusText}>Includes {calculation.bonusPercentage}% bonus</Text>
-              )}
-            </View>
-          )}
-
-          {calculation.deferredPension && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultLabel}>Deferred Pension (Monthly)</Text>
-              <Text style={styles.resultValue}>
-                {formatCurrency(calculation.deferredPension)}
-              </Text>
-            </View>
-          )}
-
-          {calculation.earlyRetirementReduction && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultLabel}>Early Retirement Reduction</Text>
-              <Text style={styles.resultValue}>
-                {calculation.earlyRetirementReduction}% per year
-              </Text>
-            </View>
-          )}
-
-          {lumpSumOption && (
-            <>
-              <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Lump Sum Payment</Text>
-                <Text style={[styles.resultValue, styles.highlightValue]}>
-                  {formatCurrency(calculation.lumpSum)}
-                </Text>
-              </View>
-
-              <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Reduced Monthly Pension</Text>
-                <Text style={styles.resultValue}>
-                  {formatCurrency(calculation.reducedMonthlyPension)}
-                </Text>
-              </View>
-            </>
-          )}
-
-          <View style={styles.resultCard}>
-            <Text style={styles.resultLabel}>COLA Adjusted (5 years)</Text>
-            <Text style={styles.resultValue}>
-              {formatCurrency(calculation.colaAdjustedPension)}
-            </Text>
-          </View>
-
-          <View style={styles.summaryCard}>
-            <Text style={styles.summaryTitle}>UNJSPF Summary</Text>
-            <Text style={styles.summaryText}>
-              Based on {yearsOfService} years of contributory service with a FAR of {formatCurrency(far)} 
-              and ROA of {roa}%, your estimated monthly pension would be{' '}
-              <Text style={styles.summaryHighlight}>
-                {formatCurrency(lumpSumOption ? calculation.reducedMonthlyPension : calculation.monthlyPension)}
-              </Text>
-              {lumpSumOption && (
-                <Text> plus a lump sum of <Text style={styles.summaryHighlight}>
-                  {formatCurrency(calculation.lumpSum)}
-                </Text></Text>
-              )}.
-              {calculation.withdrawalSettlement && (
-                <Text> Alternatively, withdrawal settlement: <Text style={styles.summaryHighlight}>
-                  {formatCurrency(calculation.withdrawalSettlement)}
-                </Text></Text>
-              )}
-            </Text>
+            <Text style={styles.resultValue}>{formatCurrency(monthlyPension)}</Text>
           </View>
         </View>
-      )}
+      </View>
 
       <View style={styles.disclaimerBox}>
         <Info size={20} color="#D97706" strokeWidth={2} />
@@ -409,39 +311,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     textAlign: 'center',
     lineHeight: 24,
-  },
-  inputModeContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    margin: 24,
-    marginBottom: 0,
-    borderRadius: 12,
-    padding: 4,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  modeButton: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  activeModeButton: {
-    backgroundColor: '#2563EB',
-  },
-  modeButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#6B7280',
-    marginLeft: 6,
-  },
-  activeModeButtonText: {
-    color: '#FFFFFF',
   },
   form: {
     padding: 24,
