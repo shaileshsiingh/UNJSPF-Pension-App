@@ -64,7 +64,7 @@ export default function CalculatorScreen() {
     const labels = [];
     let date = new Date(separationDate);
     for (let i = 0; i < 36; i++) {
-      labels.unshift(date.toLocaleString('default', { month: 'short', year: '2-digit' }));
+      labels.push(date.toLocaleString('default', { month: 'short', year: '2-digit' }));
       date.setMonth(date.getMonth() - 1);
     }
     return labels;
@@ -169,7 +169,18 @@ export default function CalculatorScreen() {
                       const newValues = [...prValues];
                       // Only allow numbers and decimals
                       if (/^\d*\.?\d*$/.test(text)) {
-                        newValues[idx] = text;
+                        if (idx === 0) {
+                          // If all other cells are empty or match the previous first cell value, autofill
+                          const prevFirst = prValues[0];
+                          const shouldAutofill = prValues.slice(1).every(v => v === '' || v === prevFirst);
+                          if (shouldAutofill) {
+                            for (let i = 0; i < 36; i++) newValues[i] = text;
+                          } else {
+                            newValues[0] = text;
+                          }
+                        } else {
+                          newValues[idx] = text;
+                        }
                         setPrValues(newValues);
                       }
                     }}
