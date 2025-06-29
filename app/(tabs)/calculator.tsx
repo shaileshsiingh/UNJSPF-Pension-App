@@ -253,14 +253,14 @@ export default function CalculatorScreen() {
         </View>
 
         {/* Debug Section: Show raw calculation values */}
-        <View style={{ marginTop: 16, backgroundColor: '#FFF7ED', padding: 12, borderRadius: 8 }}>
+        {/* <View style={{ marginTop: 16, backgroundColor: '#FFF7ED', padding: 12, borderRadius: 8 }}>
           <Text style={{ color: '#92400E', fontWeight: 'bold' }}>Debug Info</Text>
           <Text>Annual Pension: {annualPension}</Text>
           <Text>Lump Sum: {lumpSum}</Text>
           <Text>Commutation Factor: {commutationFactor}</Text>
           <Text>(Annual Pension - Lump Sum) / 12: {((annualPension - lumpSum) / 12).toFixed(2)}</Text>
           <Text>Monthly Pension (final): {monthlyPension}</Text>
-        </View>
+        </View> */}
 
         <View style={{ marginTop: 24 }}>
           <Text style={styles.resultsTitle}>Calculation Results</Text>
