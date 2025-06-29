@@ -197,6 +197,7 @@ export default function EligibilityScreen() {
     </View>
   );
 
+  // Calculate ROA based on UNJSPF rules
   function calculateROA(years: number) {
     let roa = 0;
     let remaining = years;
@@ -211,16 +212,16 @@ export default function EligibilityScreen() {
       remaining -= next5;
     }
     if (remaining > 0) {
-      const next15 = Math.min(15, remaining);
-      roa += next15 * 2.0;
-      remaining -= next15;
+      const next25 = Math.min(25, remaining);
+      roa += next25 * 2.0;
+      remaining -= next25;
     }
     return Math.min(roa, 70);
   }
-  const roa = calculateROA(yearsOfService);
+
+  const roa = calculateROA(yearsOfService); // in percent
   const annualPension = far * (roa / 100);
-  const maxLumpSum = annualPension / 3;
-  const [lumpSum, setLumpSum] = useState(maxLumpSum);
+  const lumpSum = annualPension * 0.3;
   const monthlyPension = (annualPension - lumpSum) / 12;
 
   function getSeparationDateObj() {
@@ -375,20 +376,30 @@ export default function EligibilityScreen() {
           {(result.withdrawalAmount || result.pensionAmount) && (
             <View style={styles.estimatesContainer}>
               <Text style={styles.estimatesTitle}>Estimated Benefits</Text>
-              
-              {result.withdrawalAmount && (
-                <View style={styles.estimateItem}>
-                  <Text style={styles.estimateLabel}>Withdrawal Amount:</Text>
-                  <Text style={styles.estimateValue}>{formatCurrency(result.withdrawalAmount)}</Text>
-                </View>
-              )}
-              
-              {result.pensionAmount && (
-                <View style={styles.estimateItem}>
-                  <Text style={styles.estimateLabel}>Monthly Pension:</Text>
-                  <Text style={styles.estimateValue}>{formatCurrency(result.pensionAmount)}</Text>
-                </View>
-              )}
+
+              {/* Show ROA */}
+              <View style={styles.estimateItem}>
+                <Text style={styles.estimateLabel}>Rate of Accumulation (ROA):</Text>
+                <Text style={styles.estimateValue}>{roa.toFixed(2)}%</Text>
+              </View>
+
+              {/* Show Annual Pension */}
+              <View style={styles.estimateItem}>
+                <Text style={styles.estimateLabel}>Annual Pension:</Text>
+                <Text style={styles.estimateValue}>{formatCurrency(annualPension)}</Text>
+              </View>
+
+              {/* Show Lump Sum */}
+              <View style={styles.estimateItem}>
+                <Text style={styles.estimateLabel}>Lump Sum (30%):</Text>
+                <Text style={styles.estimateValue}>{formatCurrency(lumpSum)}</Text>
+              </View>
+
+              {/* Show Monthly Pension */}
+              <View style={styles.estimateItem}>
+                <Text style={styles.estimateLabel}>Monthly Pension (after lump sum):</Text>
+                <Text style={styles.estimateValue}>{formatCurrency(monthlyPension)}</Text>
+              </View>
 
               {result.earlyRetirementReduction && (
                 <View style={styles.warningBox}>
