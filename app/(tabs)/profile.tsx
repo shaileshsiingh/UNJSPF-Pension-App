@@ -24,6 +24,7 @@ import {
 } from 'lucide-react-native';
 import DatePicker from '../../components/DatePicker';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const organizations = [
   'United Nations Secretariat including Peacekeeping Missions',
@@ -82,7 +83,7 @@ export default function ProfileScreen() {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Calculate length of contributory service
     const serviceLength = calculateServiceLength(formattedEntry, formattedSeparation);
 
@@ -105,6 +106,17 @@ export default function ProfileScreen() {
         [{ text: 'OK' }]
       );
       return;
+    }
+
+    // Save profile data to AsyncStorage
+    const profileToSave = {
+      ...formData,
+      serviceLength,
+    };
+    try {
+      await AsyncStorage.setItem('profileData', JSON.stringify(profileToSave));
+    } catch (e) {
+      // Optionally show an error toast or alert
     }
 
     // Show toast message
