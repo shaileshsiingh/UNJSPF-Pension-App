@@ -10,6 +10,8 @@ import {
   TextInput,
   Modal,
   Alert,
+  Platform,
+  ToastAndroid,
 } from 'react-native';
 import { 
   User, 
@@ -21,6 +23,7 @@ import {
   Check
 } from 'lucide-react-native';
 import DatePicker from '../../components/DatePicker';
+import { router } from 'expo-router';
 
 const organizations = [
   'United Nations Secretariat including Peacekeeping Missions',
@@ -80,10 +83,21 @@ export default function ProfileScreen() {
   };
 
   const handleSave = () => {
+    // Calculate length of contributory service
+    const serviceLength = calculateServiceLength(formattedEntry, formattedSeparation);
+
     // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'organization', 'dateOfBirth', 'dateOfEntry'];
+    const requiredFields = [
+      'firstName',
+      'lastName',
+      'organization',
+      'dateOfBirth',
+      'dateOfEntry',
+      'dateOfSeparation',
+    ];
     const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
-    
+    if (!serviceLength) missingFields.push('Length of Contributory Service');
+
     if (missingFields.length > 0) {
       Alert.alert(
         'Missing Information',
@@ -93,11 +107,26 @@ export default function ProfileScreen() {
       return;
     }
 
-    Alert.alert(
-      'Profile Saved',
-      'Your profile information has been saved successfully.',
-      [{ text: 'OK' }]
-    );
+    // Show toast message
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Profile saved successfully!', ToastAndroid.SHORT);
+    } else {
+      Alert.alert('Profile saved successfully!');
+    }
+
+    // Navigate to eligibility tab and pass profile data as params
+    router.push({
+      pathname: '/(tabs)/eligibility',
+      params: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        organization: formData.organization,
+        dateOfBirth: formData.dateOfBirth,
+        dateOfEntry: formData.dateOfEntry,
+        dateOfSeparation: formData.dateOfSeparation,
+        serviceLength,
+      }
+    });
   };
 
   function calculateServiceLength(entry: string, separation: string) {
@@ -167,7 +196,7 @@ export default function ProfileScreen() {
                 value={formData.dateOfBirth}
                 onDateChange={(value) => handleInputChange('dateOfBirth', value)}
                 placeholder="DD-MM-YYYY"
-                label="Date of Birth"
+                // label="Date of Birth"
                 minYear={1960}
                 maxYear={2012}
               />
@@ -201,7 +230,7 @@ export default function ProfileScreen() {
                 value={formData.dateOfEntry}
                 onDateChange={(value) => handleInputChange('dateOfEntry', value)}
                 placeholder="DD-MM-YYYY"
-                label="Date of Entry into Pension Fund Participation"
+                // label="Date of Entry into Pension Fund Participation"
                 minYear={1978}
                 maxYear={2047}
               />
@@ -215,7 +244,7 @@ export default function ProfileScreen() {
                 value={formData.dateOfSeparation}
                 onDateChange={(value) => handleInputChange('dateOfSeparation', value)}
                 placeholder="DD-MM-YYYY"
-                label="Date of Separation"
+                // label="Date of Separation"
                 minYear={2025}
                 maxYear={2047}
               />

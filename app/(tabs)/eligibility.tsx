@@ -10,6 +10,7 @@ import {
 import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Clock, Calculator, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 import DatePicker from '../../components/DatePicker';
+import { useLocalSearchParams } from 'expo-router';
 
 interface EligibilityResult {
   eligible: boolean;
@@ -44,12 +45,54 @@ function getCommutationFactor(age: number) {
 }
 
 export default function EligibilityScreen() {
+  const params = useLocalSearchParams();
   const [inputMode, setInputMode] = useState<'manual' | 'slider'>('slider');
   const [yearsOfService, setYearsOfService] = useState(15);
   const [currentAge, setCurrentAge] = useState(55);
   const [far, setFar] = useState(0);
   const [result, setResult] = useState<EligibilityResult | null>(null);
   const [separationDate, setSeparationDate] = useState('');
+
+  // Pre-populate fields from params if present
+  React.useEffect(() => {
+    if (params) {
+      if (params.dateOfBirth) {
+        // Calculate age from DOB (DD-MM-YYYY)
+        const dob = params.dateOfBirth as string;
+        const [dobDay, dobMonth, dobYear] = dob.split('-').map(Number);
+        if (!isNaN(dobYear) && !isNaN(dobMonth) && !isNaN(dobDay)) {
+          const today = new Date();
+          let age = today.getFullYear() - dobYear;
+          if (
+            today.getMonth() + 1 < dobMonth ||
+            (today.getMonth() + 1 === dobMonth && today.getDate() < dobDay)
+          ) {
+            age--;
+          }
+          setCurrentAge(age);
+        }
+      }
+      if (params.dateOfEntry && params.dateOfSeparation) {
+        // Calculate years of service from entry and separation (DD-MM-YYYY)
+        const entry = params.dateOfEntry as string;
+        const sep = params.dateOfSeparation as string;
+        const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+        const [sepDay, sepMonth, sepYear] = sep.split('-').map(Number);
+        if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].every(n => !isNaN(n))) {
+          let years = sepYear - entryYear;
+          let months = sepMonth - entryMonth;
+          if (months < 0) {
+            years--;
+            months += 12;
+          }
+          setYearsOfService(years + months / 12);
+        }
+      }
+      if (params.dateOfSeparation) {
+        setSeparationDate(params.dateOfSeparation as string);
+      }
+    }
+  }, [params]);
 
   const checkEligibility = () => {
     const years = yearsOfService;
@@ -355,11 +398,11 @@ export default function EligibilityScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Separation Date</Text>
+              <Text style={styles.label}>Date of Separation</Text>
               <DatePicker
                 value={separationDate}
                 onDateChange={setSeparationDate}
-                label="Separation Date"
+                // label="Separation Date"
               />
             </View>
 
