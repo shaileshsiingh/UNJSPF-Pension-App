@@ -23,25 +23,40 @@ import {
 import DatePicker from '../../components/DatePicker';
 
 const organizations = [
-  'United Nations Secretariat',
-  'UNICEF',
-  'UNDP',
-  'UNHCR',
-  'WFP',
-  'WHO',
-  'UNESCO',
-  'FAO',
-  'ILO',
-  'UNIDO',
-  'IAEA',
-  'UNFPA',
-  'UNODC',
-  'UNEP',
-  'UN-Habitat',
-  'UN Women',
-  'UNRWA',
-  'Other'
+  'United Nations Secretariat including Peacekeeping Missions',
+  'Preparatory Commission for the Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO)',
+  'European and Mediterranean Plant Protection Organization (EPPO)',
+  'Food and Agriculture Organization of the United Nations (FAO)',
+  'International Atomic Energy Agency (IAEA)',
+  'International Centre for Genetic Engineering and Biotechnology (ICGEB)',
+  'International Centre for the Study of the Preservation and Restoration of Cultural Property (ICCROM)',
+  'International Civil Aviation Organization (ICAO)',
+  'International Criminal Court (ICC)',
+  'International Fund for Agricultural Development (IFAD)',
+  'International Labour Organization (ILO)',
+  'International Maritime Organization (IMO)',
+  'International Organization for Migration (IOM)',
+  'Inter-Parliamentary Union (IPU)',
+  'International Seabed Authority (ISA)',
+  'International Telecommunication Union (ITU)',
+  'International Tribunal for the Law of the Sea (ITLOS)',
+  'Organisation for the Prohibition of Chemical Weapons (OPCW)',
+  'United Nations Educational, Scientific and Cultural Organization (UNESCO)',
+  'United Nations Industrial Development Organization (UNIDO)',
+  'World Tourism Organization (UNWTO)',
+  'Wassenaar Arrangement',
+  'World Health Organization (WHO)',
+  'World Intellectual Property Organization (WIPO)',
+  'World Meteorological Organization (WMO)'
 ];
+
+// Helper for DD-MM-YYYY formatting
+function formatDateDMY(dateString: string) {
+  if (!dateString) return '';
+  const [year, month, day] = dateString.split('-').map(Number);
+  if ([year, month, day].some(isNaN)) return '';
+  return `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+}
 
 export default function ProfileScreen() {
   const [formData, setFormData] = useState({
@@ -85,6 +100,24 @@ export default function ProfileScreen() {
     );
   };
 
+  function calculateServiceLength(entry: string, separation: string) {
+    if (!entry || !separation) return '';
+    const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+    const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
+    if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return '';
+    let years = sepYear - entryYear;
+    let months = sepMonth - entryMonth;
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    return `${years} years, ${months} months`;
+  }
+
+  // Use formattedEntry and formattedSeparation for calculation
+  const formattedEntry = formatDateDMY(formData.dateOfEntry);
+  const formattedSeparation = formatDateDMY(formData.dateOfSeparation);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
@@ -95,7 +128,7 @@ export default function ProfileScreen() {
             <User size={48} color="#2563EB" strokeWidth={2} />
             <Text style={styles.headerTitle}>Profile Setup</Text>
             <Text style={styles.headerSubtitle}>
-              Enter your employment details for accurate pension calculations
+              Enter your employment history for accurate benefit calculations
             </Text>
           </View>
         </View>
@@ -107,7 +140,7 @@ export default function ProfileScreen() {
             <Text style={styles.sectionTitle}>Personal Information</Text>
             
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>First Name *</Text>
+              <Text style={styles.label}>First Name</Text>
               <TextInput
                 style={styles.input}
                 value={formData.firstName}
@@ -118,7 +151,7 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Last Name *</Text>
+              <Text style={styles.label}>Last Name</Text>
               <TextInput
                 style={styles.input}
                 value={formData.lastName}
@@ -129,72 +162,76 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.inputGroup}>
+              <Text style={styles.label}>Date of Birth</Text>
               <DatePicker
                 value={formData.dateOfBirth}
                 onDateChange={(value) => handleInputChange('dateOfBirth', value)}
-                placeholder="Select date of birth"
-                label="Date of Birth *"
+                placeholder="DD-MM-YYYY"
+                label="Date of Birth"
+                minYear={1960}
+                maxYear={2012}
               />
             </View>
+            <Text style={styles.helpText}>Select your date of birth (output in DD-MM-YYYY format)</Text>
           </View>
 
           {/* Employment Information */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Employment Information</Text>
+            <Text style={styles.sectionTitle}>Employment History</Text>
             
+            {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>UN Organization *</Text>
+              <Text style={styles.label}>Participating Organization</Text>
               <TouchableOpacity
                 style={styles.dropdownInput}
                 onPress={() => setShowOrgModal(true)}
               >
                 <Text style={[styles.dropdownText, !formData.organization && styles.placeholderText]}>
-                  {formData.organization || 'Select your organization'}
+                  {formData.organization || 'Select your Organization'}
                 </Text>
                 <ChevronDown size={20} color="#6B7280" strokeWidth={2} />
               </TouchableOpacity>
+              <Text style={styles.helpText}>Select your Organization</Text>
             </View>
 
+            {/* Date of Entry into Pension Fund Participation */}
             <View style={styles.inputGroup}>
+              <Text style={styles.label}>Date of Entry into Pension Fund Participation</Text>
               <DatePicker
                 value={formData.dateOfEntry}
                 onDateChange={(value) => handleInputChange('dateOfEntry', value)}
-                placeholder="Select entry date"
-                label="Date of Entry into Service *"
+                placeholder="DD-MM-YYYY"
+                label="Date of Entry into Pension Fund Participation"
+                minYear={1978}
+                maxYear={2047}
               />
             </View>
+            <Text style={styles.helpText}>(Usually the same date on which you joined the UN organization)</Text>
 
+            {/* Date of Separation */}
             <View style={styles.inputGroup}>
+              <Text style={styles.label}>Date of Separation</Text>
               <DatePicker
                 value={formData.dateOfSeparation}
                 onDateChange={(value) => handleInputChange('dateOfSeparation', value)}
-                placeholder="Select separation date"
-                label="Date of Separation (if applicable)"
+                placeholder="DD-MM-YYYY"
+                label="Date of Separation"
+                minYear={2025}
+                maxYear={2047}
               />
             </View>
 
+            {/* Length of Contributory Service (auto-calc) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Current Annual Salary (USD)</Text>
+              <Text style={styles.label}>Length of Contributory Service</Text>
               <TextInput
-                style={styles.input}
-                value={formData.salary}
-                onChangeText={(value) => handleInputChange('salary', value)}
-                placeholder="Enter your annual salary"
+                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                value={calculateServiceLength(formattedEntry, formattedSeparation)}
+                editable={false}
+                placeholder="Years and months will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
               />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Years of Service</Text>
-              <TextInput
-                style={styles.input}
-                value={formData.yearsOfService}
-                onChangeText={(value) => handleInputChange('yearsOfService', value)}
-                placeholder="Enter years of service"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
-              />
+              <Text style={styles.helpText}>Calculated from Date of Entry and Date of Separation</Text>
             </View>
           </View>
 
@@ -402,5 +439,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#111827',
     flex: 1,
+  },
+  helpText: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    marginLeft: 8,
   },
 }); 

@@ -16,6 +16,8 @@ interface DatePickerProps {
   placeholder?: string;
   label?: string;
   error?: string;
+  minYear?: number;
+  maxYear?: number;
 }
 
 export default function DatePicker({
@@ -23,7 +25,9 @@ export default function DatePicker({
   onDateChange,
   placeholder = 'Select Date',
   label,
-  error
+  error,
+  minYear,
+  maxYear
 }: DatePickerProps) {
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -64,8 +68,9 @@ export default function DatePicker({
 
   const renderYearPicker = () => {
     const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 50 }, (_, i) => currentYear - 25 + i);
-    
+    const startYear = minYear || currentYear - 25;
+    const endYear = maxYear || currentYear + 24;
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
     return (
       <View style={styles.pickerSection}>
         <Text style={styles.pickerSectionTitle}>Year</Text>
