@@ -32,7 +32,7 @@ export default function HomeScreen() {
             <Building size={48} color="#2563EB" strokeWidth={2} />
             <Text style={styles.welcomeTitle}>Welcome</Text>
             <Text style={styles.welcomeSubtitle}>
-              Your Comprehensive Guide to UNJSPF Pension Benefits and Calculations
+              Your Comprehensive Guide to United Nations Pension Fund Benefits
             </Text>
           </View>
         </View>
@@ -53,7 +53,7 @@ export default function HomeScreen() {
               <View style={styles.buttonTextContainer}>
                 <Text style={styles.primaryButtonText}>Start Profile Setup</Text>
                 <Text style={styles.primaryButtonSubtext}>
-                  Enter your employment details for accurate calculations
+                  Enter your employment history for accurate calculations
                 </Text>
               </View>
             </View>
@@ -63,9 +63,9 @@ export default function HomeScreen() {
 
         {/* Information Cards Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Learn More</Text>
+          <Text style={styles.sectionTitle}>Know Your Pension</Text>
           <Text style={styles.sectionSubtitle}>
-            Understand your pension scheme and this application
+            Understand your vested pension rights, benefit options, and your separation entitlements
           </Text>
           
           <TouchableOpacity 
@@ -76,7 +76,7 @@ export default function HomeScreen() {
               <FileText size={24} color="#2563EB" strokeWidth={2} />
             </View>
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>About Pension Schemes</Text>
+              <Text style={styles.cardTitle}>Know Your Pension Fund</Text>
               <Text style={styles.cardDescription}>
                 Learn about UNJSPF, vested rights, and separation scenarios
               </Text>
@@ -92,9 +92,9 @@ export default function HomeScreen() {
               <Smartphone size={24} color="#2563EB" strokeWidth={2} />
             </View>
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>About This App</Text>
+              <Text style={styles.cardTitle}>Key features of this Application</Text>
               <Text style={styles.cardDescription}>
-                Discover features and how to use this pension calculator
+                Key features of this Application
               </Text>
             </View>
             <ArrowRight size={20} color="#6B7280" strokeWidth={2} />

@@ -23,6 +23,26 @@ interface EligibilityResult {
   earlyRetirementReduction?: number;
 }
 
+// Add commutation factors and function
+const COMMUTATION_FACTORS = [
+  { age: 55, factor: 13.5 },
+  { age: 60, factor: 12.3 },
+  { age: 62, factor: 11.7 },
+  { age: 65, factor: 10.2 },
+  { age: 67, factor: 8.8 },
+  { age: 70, factor: 8.7 },
+];
+
+function getCommutationFactor(age: number) {
+  let closest = COMMUTATION_FACTORS[0];
+  for (const entry of COMMUTATION_FACTORS) {
+    if (Math.abs(entry.age - age) < Math.abs(closest.age - age)) {
+      closest = entry;
+    }
+  }
+  return closest.factor;
+}
+
 export default function EligibilityScreen() {
   const [inputMode, setInputMode] = useState<'manual' | 'slider'>('slider');
   const [yearsOfService, setYearsOfService] = useState(15);
@@ -219,10 +239,12 @@ export default function EligibilityScreen() {
     return Math.min(roa, 70);
   }
 
+  // Use currentAge as age at retirement for eligibility
+  const commutationFactor = getCommutationFactor(currentAge);
   const roa = calculateROA(yearsOfService); // in percent
   const annualPension = far * (roa / 100);
-  const lumpSum = annualPension * 0.3;
-  const monthlyPension = (annualPension - lumpSum) / 12;
+  const lumpSum = (annualPension * 0.3) * commutationFactor;
+  const monthlyPension = (annualPension - (annualPension * 0.3)) / 12;
 
   function getSeparationDateObj() {
     if (!separationDate) return new Date();
@@ -391,7 +413,7 @@ export default function EligibilityScreen() {
 
               {/* Show Lump Sum */}
               <View style={styles.estimateItem}>
-                <Text style={styles.estimateLabel}>Lump Sum (30%):</Text>
+                <Text style={styles.estimateLabel}>Lump Sum (30% × Commutation Factor):</Text>
                 <Text style={styles.estimateValue}>{formatCurrency(lumpSum)}</Text>
               </View>
 
@@ -399,6 +421,12 @@ export default function EligibilityScreen() {
               <View style={styles.estimateItem}>
                 <Text style={styles.estimateLabel}>Monthly Pension (after lump sum):</Text>
                 <Text style={styles.estimateValue}>{formatCurrency(monthlyPension)}</Text>
+              </View>
+
+              {/* Show Commutation Factor */}
+              <View style={styles.estimateItem}>
+                <Text style={styles.estimateLabel}>Commutation Factor:</Text>
+                <Text style={styles.estimateValue}>{commutationFactor}</Text>
               </View>
 
               {result.earlyRetirementReduction && (
