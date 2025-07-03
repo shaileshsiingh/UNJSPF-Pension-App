@@ -175,6 +175,17 @@ export default function DatePicker({
         <Text style={[styles.inputText, !value && styles.placeholderText]}>
           {value || placeholder}
         </Text>
+        {value ? (
+          <TouchableOpacity
+            onPress={(e) => {
+              e.stopPropagation && e.stopPropagation();
+              onDateChange('');
+            }}
+            style={styles.clearButton}
+          >
+            <X size={22} color="#9CA3AF" strokeWidth={2.2} />
+          </TouchableOpacity>
+        ) : null}
         <Calendar size={20} color="#6B7280" strokeWidth={2} />
       </TouchableOpacity>
       
@@ -343,5 +354,14 @@ const styles = StyleSheet.create({
   pickerOptionTextSelected: {
     color: '#FFFFFF',
     fontWeight: '600',
+  },
+  clearButton: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginLeft: 8,
+    marginRight: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 16,
   },
 }); 
