@@ -57,9 +57,115 @@ const organizations = [
 // Helper for DD-MM-YYYY formatting
 function formatDateDMY(dateString: string) {
   if (!dateString) return '';
-  const [year, month, day] = dateString.split('-').map(Number);
-  if ([year, month, day].some(isNaN)) return '';
-  return `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+  let parts = dateString.split('-');
+  if (parts.length !== 3) return '';
+  if (parts[0].length === 4) {
+    // YYYY-MM-DD
+    const [year, month, day] = parts.map(Number);
+    if ([year, month, day].some(isNaN)) return '';
+    return `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+  } else {
+    // DD-MM-YYYY
+    const [day, month, year] = parts.map(Number);
+    if ([day, month, year].some(isNaN)) return '';
+    return `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}-${year}`;
+  }
+}
+
+// Helper to parse DD-MM-YYYY to Date
+function parseDMY(dateString: string) {
+  if (!dateString) return null;
+  let parts = dateString.split('-');
+  if (parts.length !== 3) return null;
+  let day, month, year;
+  if (parts[0].length === 4) {
+    // YYYY-MM-DD
+    [year, month, day] = parts.map(Number);
+  } else {
+    // DD-MM-YYYY
+    [day, month, year] = parts.map(Number);
+  }
+  if ([day, month, year].some(isNaN)) return null;
+  return new Date(year, month - 1, day);
+}
+
+// Helper to get last day of month
+function getLastDayOfMonth(year: number, month: number) {
+  return new Date(year, month, 0).getDate();
+}
+
+// Calculate MAS
+function calculateMAS(dob: string) {
+  const dobDate = parseDMY(dob);
+  if (!dobDate) return '';
+  // Special case: DOB before 1 Jan 1958
+  const cutoff = new Date(1958, 0, 1);
+  if (dobDate < cutoff) return '31-12-2023';
+  // Otherwise, MAS is last day of month when user turns 65
+  const masYear = dobDate.getFullYear() + 65;
+  const masMonth = dobDate.getMonth() + 1;
+  const lastDay = getLastDayOfMonth(masYear, masMonth);
+  return formatDateDMY(`${masYear}-${String(masMonth).padStart(2, '0')}-${lastDay}`);
+}
+
+// Calculate NRA
+function calculateNRA(dob: string, entry: string) {
+  const dobDate = parseDMY(dob);
+  const entryDate = parseDMY(entry);
+  if (!dobDate || !entryDate) return '';
+  let nraAge = 65;
+  const entry1990 = new Date(1990, 0, 1);
+  const entry2014 = new Date(2014, 0, 1);
+  if (entryDate < entry1990) nraAge = 60;
+  else if (entryDate < entry2014) nraAge = 62;
+  // Calculate NRA date
+  let nraYear = dobDate.getFullYear() + nraAge;
+  let nraMonth = dobDate.getMonth() + 1;
+  let nraDay = dobDate.getDate();
+  // If birthday is last day of month, NRA is last day of month
+  const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
+  if (nraDay === dobLastDay) {
+    nraDay = getLastDayOfMonth(nraYear, nraMonth);
+  } else if (nraDay === 1) {
+    // If birthday is 1st, NRA is day before
+    if (nraMonth === 1) {
+      nraYear -= 1;
+      nraMonth = 12;
+    } else {
+      nraMonth -= 1;
+    }
+    nraDay = getLastDayOfMonth(nraYear, nraMonth);
+  }
+  return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${nraDay}`);
+}
+
+// Calculate ERA
+function calculateERA(dob: string, entry: string) {
+  const dobDate = parseDMY(dob);
+  const entryDate = parseDMY(entry);
+  if (!dobDate || !entryDate) return '';
+  let eraAge = 58;
+  const entry2014 = new Date(2014, 0, 1);
+  if (entryDate < entry2014) eraAge = 55;
+  // Calculate ERA date
+  let eraYear = dobDate.getFullYear() + eraAge;
+  let eraMonth = dobDate.getMonth() + 1;
+  let eraDay = dobDate.getDate();
+  // If birthday is last day of month, ERA is last day of month
+  const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
+  if (eraDay === dobLastDay) {
+    eraDay = getLastDayOfMonth(eraYear, eraMonth);
+  } else if (eraDay === 1) {
+    // If birthday is 1st, ERA is day before
+    if (eraMonth === 1) {
+      eraYear -= 1;
+      eraMonth = 12;
+    } else {
+      eraMonth -= 1;
+    }
+    eraDay = getLastDayOfMonth(eraYear, eraMonth);
+  }
+  return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${eraDay}`);
 }
 
 export default function ProfileScreen() {
@@ -108,9 +214,12 @@ export default function ProfileScreen() {
       return;
     }
 
-    // Save profile data to AsyncStorage
+    // Save profile data to AsyncStorage (all dates in DD-MM-YYYY)
     const profileToSave = {
       ...formData,
+      dateOfBirth: formatDateDMY(formData.dateOfBirth),
+      dateOfEntry: formatDateDMY(formData.dateOfEntry),
+      dateOfSeparation: formatDateDMY(formData.dateOfSeparation),
       serviceLength,
     };
     try {
@@ -126,16 +235,16 @@ export default function ProfileScreen() {
       Alert.alert('Profile saved successfully!');
     }
 
-    // Navigate to eligibility tab and pass profile data as params
+    // Navigate to eligibility tab and pass profile data as params (all dates in DD-MM-YYYY)
     router.push({
       pathname: '/(tabs)/eligibility',
       params: {
         firstName: formData.firstName,
         lastName: formData.lastName,
         organization: formData.organization,
-        dateOfBirth: formData.dateOfBirth,
-        dateOfEntry: formData.dateOfEntry,
-        dateOfSeparation: formData.dateOfSeparation,
+        dateOfBirth: formatDateDMY(formData.dateOfBirth),
+        dateOfEntry: formatDateDMY(formData.dateOfEntry),
+        dateOfSeparation: formatDateDMY(formData.dateOfSeparation),
         serviceLength,
       }
     });
@@ -205,15 +314,14 @@ export default function ProfileScreen() {
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Birth</Text>
               <DatePicker
-                value={formData.dateOfBirth}
-                onDateChange={(value) => handleInputChange('dateOfBirth', value)}
+                value={formatDateDMY(formData.dateOfBirth)}
+                onDateChange={(value) => handleInputChange('dateOfBirth', formatDateDMY(value))}
                 placeholder="DD-MM-YYYY"
-                // label="Date of Birth"
                 minYear={1960}
                 maxYear={2012}
               />
             </View>
-            <Text style={styles.helpText}>Select your date of birth (output in DD-MM-YYYY format)</Text>
+            {/* <Text style={styles.helpText}>Output will be in DD-MM-YYYY format</Text> */}
           </View>
 
           {/* Employment Information */}
@@ -239,28 +347,27 @@ export default function ProfileScreen() {
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Entry into Pension Fund Participation</Text>
               <DatePicker
-                value={formData.dateOfEntry}
-                onDateChange={(value) => handleInputChange('dateOfEntry', value)}
+                value={formatDateDMY(formData.dateOfEntry)}
+                onDateChange={(value) => handleInputChange('dateOfEntry', formatDateDMY(value))}
                 placeholder="DD-MM-YYYY"
-                // label="Date of Entry into Pension Fund Participation"
                 minYear={1978}
                 maxYear={2047}
               />
             </View>
-            <Text style={styles.helpText}>(Usually the same date on which you joined the UN organization)</Text>
+            <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text>
 
             {/* Date of Separation */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Separation</Text>
               <DatePicker
-                value={formData.dateOfSeparation}
-                onDateChange={(value) => handleInputChange('dateOfSeparation', value)}
+                value={formatDateDMY(formData.dateOfSeparation)}
+                onDateChange={(value) => handleInputChange('dateOfSeparation', formatDateDMY(value))}
                 placeholder="DD-MM-YYYY"
-                // label="Date of Separation"
                 minYear={2025}
                 maxYear={2047}
               />
             </View>
+            <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text>
 
             {/* Length of Contributory Service (auto-calc) */}
             <View style={styles.inputGroup}>
@@ -272,7 +379,46 @@ export default function ProfileScreen() {
                 placeholder="Years and months will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Calculated from Date of Entry and Date of Separation</Text>
+              <Text style={styles.helpText}>Calculated from Date of Entry & Date of Separation</Text>
+            </View>
+
+            {/* Mandatory Age of Separation (MAS) */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Mandatory Age of Separation (MAS)</Text>
+              <TextInput
+                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                value={calculateMAS(formData.dateOfBirth)}
+                editable={false}
+                placeholder="Will be calculated automatically"
+                placeholderTextColor="#9CA3AF"
+              />
+              <Text style={styles.helpText}>In most Member Organizations, the MAS for active staff members is currently 65. If different, contact the UNJSPF for advice.</Text>
+            </View>
+
+            {/* Normal Retirement Age (NRA) */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Normal Retirement Age (NRA)</Text>
+              <TextInput
+                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                value={calculateNRA(formData.dateOfBirth, formData.dateOfEntry)}
+                editable={false}
+                placeholder="Will be calculated automatically"
+                placeholderTextColor="#9CA3AF"
+              />
+              <Text style={styles.helpText}>Based on the date at which you last entered UNJSPF participation.</Text>
+            </View>
+
+            {/* Early Retirement Age (ERA) */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Early Retirement Age (ERA)</Text>
+              <TextInput
+                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                value={calculateERA(formData.dateOfBirth, formData.dateOfEntry)}
+                editable={false}
+                placeholder="Will be calculated automatically"
+                placeholderTextColor="#9CA3AF"
+              />
+              <Text style={styles.helpText}>Based on the date at which you last entered UNJSPF participation.</Text>
             </View>
           </View>
 
@@ -482,7 +628,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   helpText: {
-    fontSize: 12,
+    fontSize: 15,
     color: '#9CA3AF',
     marginLeft: 8,
   },
