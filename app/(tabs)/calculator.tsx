@@ -11,6 +11,7 @@ import {
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 import DatePicker from '../../components/DatePicker';
+// import { PanGestureHandler } from 'react-native-gesture-handler';
 
 interface PensionCalculation {
   annualPension: number;
@@ -41,6 +42,14 @@ function getCommutationFactor(age: number) {
     }
   }
   return closest.factor;
+}
+
+// Helper to format date as DD-MM-YYYY
+function formatDateDDMMYYYY(dateString: string) {
+  if (!dateString) return '';
+  const [year, month, day] = dateString.split('-');
+  if (!year || !month || !day) return dateString;
+  return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
 }
 
 export default function CalculatorScreen() {
@@ -149,54 +158,66 @@ export default function CalculatorScreen() {
 
       <View style={styles.form}>
         <DatePicker
-          value={separationDate}
-          onDateChange={setSeparationDate}
-          label="Separation Date"
+          value={formatDateDDMMYYYY(separationDate)}
+          onDateChange={date => {
+            // Accepts YYYY-MM-DD from picker, store as is
+            setSeparationDate(date);
+          }}
+          label="Date of Separation"
         />
         <Text style={styles.sliderHelpText}>Select your date of separation. The 36 months below will auto-label from this date.</Text>
 
         <View style={{ marginVertical: 16 }}>
           <Text style={styles.label}>Enter Pensionable Remuneration for each of the last 36 months (most recent on left):</Text>
           {rows.map((row, rowIdx) => (
-            <View key={rowIdx} style={{ flexDirection: 'row', marginBottom: 8 }}>
-              {row.map((label, colIdx) => {
-                const absIndex = rowIdx * 12 + colIdx;
-                return (
-                  <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
-                    <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
-                    <TextInput
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#D1D5DB',
-                        borderRadius: 8,
-                        width: 70,
-                        height: 36,
-                        textAlign: 'center',
-                        marginTop: 2,
-                        backgroundColor: '#FFF',
-                        color: '#111827',
-                      }}
-                      value={prValues[absIndex]}
-                      onChangeText={text => {
-                        const newValues = [...prValues];
-                        if (/^\d*\.?\d*$/.test(text)) {
-                          // If leftmost cell in row (most recent month for that year), autofill all months in this row
-                          if (colIdx === 0) {
-                            for (let i = 0; i < 12; i++) newValues[rowIdx * 12 + i] = text;
-                          } else {
-                            newValues[absIndex] = text;
+            // <PanGestureHandler key={rowIdx}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={true}
+                style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
+                contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
+                keyboardShouldPersistTaps="handled"
+                scrollEnabled={true}
+              >
+                {row.map((label, colIdx) => {
+                  const absIndex = rowIdx * 12 + colIdx;
+                  return (
+                    <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                      <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
+                      <TextInput
+                        style={{
+                          borderWidth: 1,
+                          borderColor: '#D1D5DB',
+                          borderRadius: 8,
+                          width: 70,
+                          height: 36,
+                          textAlign: 'center',
+                          marginTop: 2,
+                          backgroundColor: '#FFF',
+                          color: '#111827',
+                        }}
+                        value={prValues[absIndex]}
+                        onChangeText={text => {
+                          const newValues = [...prValues];
+                          if (/^\d*\.?\d*$/.test(text)) {
+                            // If leftmost cell in row (most recent month for that year), autofill all months in this row
+                            if (colIdx === 0) {
+                              for (let i = 0; i < 12; i++) newValues[rowIdx * 12 + i] = text;
+                            } else {
+                              newValues[absIndex] = text;
+                            }
+                            setPrValues(newValues);
                           }
-                          setPrValues(newValues);
-                        }
-                      }}
-                      placeholder="0"
-                      keyboardType="decimal-pad"
-                      maxLength={8}
-                    />
-                  </View>
-                );
-              })}
-            </View>
+                        }}
+                        placeholder="0"
+                        keyboardType="decimal-pad"
+                        maxLength={8}
+                      />
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            // </PanGestureHandler>
           ))}
           <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter the leftmost cell in each row to auto-fill that year.</Text>
         </View>
