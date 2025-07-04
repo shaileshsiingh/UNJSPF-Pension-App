@@ -340,7 +340,7 @@ export default function ProfileScreen() {
                 </Text>
                 <ChevronDown size={20} color="#6B7280" strokeWidth={2} />
               </TouchableOpacity>
-              <Text style={styles.helpText}>Select your Organization</Text>
+              {/* <Text style={styles.helpText}>Select your Organization</Text> */}
             </View>
 
             {/* Date of Entry into Pension Fund Participation */}
@@ -354,7 +354,7 @@ export default function ProfileScreen() {
                 maxYear={2047}
               />
             </View>
-            <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text>
+            {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
 
             {/* Date of Separation */}
             <View style={styles.inputGroup}>
@@ -367,11 +367,12 @@ export default function ProfileScreen() {
                 maxYear={2047}
               />
             </View>
-            <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text>
 
             {/* Length of Contributory Service (auto-calc) */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Length of Contributory Service</Text>
+              {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
+
               <TextInput
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
                 value={calculateServiceLength(formattedEntry, formattedSeparation)}
