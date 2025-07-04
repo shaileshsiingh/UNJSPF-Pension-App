@@ -26,11 +26,10 @@ export default function AboutAppScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Smartphone size={24} color="#2563EB" strokeWidth={2} />
-            <Text style={styles.sectionTitle}>Pension Calculator App</Text>
+            <Text style={styles.sectionTitle}>UN Pension Application</Text>
           </View>
           <Text style={styles.description}>
-            This mobile application is designed to help employees understand and calculate their pension benefits 
-            based on their organization's specific pension scheme rules and regulations.
+          This app is designed specifically for UNJSPF participants. It incorporates the Fund's defined benefit formula, vested rights criteria (5 or more years of contributory service), and a range of separation options. Available on iOS, Android, and web platforms, it provides benefit estimates based on official UNJSPF regulations, using your contributory service and final average remuneration
           </Text>
         </View>
 
@@ -141,13 +140,6 @@ export default function AboutAppScreen() {
               <Text style={styles.stepText}>Use the calculator to estimate your pension</Text>
             </View>
           </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={{ color: '#B91C1C', fontWeight: 'bold', fontSize: 16, marginBottom: 8 }}>UN Pension Application</Text>
-          <Text style={{ color: '#B91C1C', fontSize: 14 }}>
-            This app is designed specifically for UNJSPF participants. It incorporates the Fund's defined benefit formula, vested rights criteria (5 or more years of contributory service), and a range of separation options. Available on iOS, Android, and web platforms, it provides benefit estimates based on official UNJSPF regulations, using your contributory service and final average remuneration.
-          </Text>
         </View>
 
         <View style={styles.disclaimer}>
