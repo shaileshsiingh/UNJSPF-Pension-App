@@ -143,6 +143,13 @@ export default function AboutAppScreen() {
           </View>
         </View>
 
+        <View style={styles.section}>
+          <Text style={{ color: '#B91C1C', fontWeight: 'bold', fontSize: 16, marginBottom: 8 }}>UN Pension Application</Text>
+          <Text style={{ color: '#B91C1C', fontSize: 14 }}>
+            This app is designed specifically for UNJSPF participants. It incorporates the Fund's defined benefit formula, vested rights criteria (5 or more years of contributory service), and a range of separation options. Available on iOS, Android, and web platforms, it provides benefit estimates based on official UNJSPF regulations, using your contributory service and final average remuneration.
+          </Text>
+        </View>
+
         <View style={styles.disclaimer}>
           <Text style={styles.disclaimerTitle}>Disclaimer</Text>
           <Text style={styles.disclaimerText}>
