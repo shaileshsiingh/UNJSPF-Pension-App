@@ -61,6 +61,12 @@ function formatYearsMonthsDays(yearsFloat: number) {
   return `${years} years, ${months} months, ${days} days`;
 }
 
+// Helper to get commuted fraction from lump sum
+function getCommutedFraction(lumpSum: number, annualPension: number, commutationFactor: number) {
+  if (!annualPension || !commutationFactor) return 0;
+  return lumpSum / (annualPension * commutationFactor);
+}
+
 export default function CalculatorScreen() {
   // New state for Excel logic
   const [separationDate, setSeparationDate] = useState('');
@@ -69,6 +75,7 @@ export default function CalculatorScreen() {
   const [ageAtRetirement, setAgeAtRetirement] = useState(62);
   const [lumpSum, setLumpSum] = useState(0);
   const [calculation, setCalculation] = useState<PensionCalculation | null>(null);
+  const [ashiContribution, setAshiContribution] = useState(0);
 
   // Helper to parse separationDate string to Date
   function getSeparationDateObj() {
@@ -125,20 +132,29 @@ export default function CalculatorScreen() {
   const lumpBeforcf = (annualPension *30)/100
   const maxLumpSum = ((annualPension *30)/100)*commutationFactor;
 
- 
+  // Calculate commuted fraction
+  const commutedFraction = getCommutedFraction(lumpSum, annualPension, commutationFactor);
+  // Calculate reduced annual and monthly pension
+  const reducedAnnualPension = annualPension * (1 - commutedFraction);
+  const reducedMonthlyPension = reducedAnnualPension / 12;
+  // COLA adjustment (2%)
+  const colaAdjustedMonthlyPension = reducedMonthlyPension * 1.02;
 
-  // Calculate monthly pension
-  const monthlyPension = (annualPension - lumpBeforcf) / 12 ;
+  // Calculate monthly pension (before commutation)
+  const monthlyPension = annualPension / 12;
+
+  // Net monthly pension after ASHI deduction
+  const netMonthlyPension = colaAdjustedMonthlyPension - ashiContribution;
 
   useEffect(() => {
     setCalculation({
       annualPension,
       monthlyPension,
       lumpSum,
-      reducedMonthlyPension: monthlyPension, // for compatibility
-      colaAdjustedPension: 0, // not used in Excel logic
+      reducedMonthlyPension: reducedMonthlyPension, // for compatibility
+      colaAdjustedPension: colaAdjustedMonthlyPension, // not used in Excel logic
     });
-  }, [far, roa, yearsOfService, lumpSum, ageAtRetirement]);
+  }, [far, roa, yearsOfService, lumpSum, ageAtRetirement, reducedMonthlyPension, colaAdjustedMonthlyPension]);
 
   // Auto-populate lump sum to max by default, but allow user override
   useEffect(() => {
@@ -279,6 +295,23 @@ export default function CalculatorScreen() {
           <Text style={styles.helpText}>You may commute any amount up to a maximum of 1/3 of your annual pension as a lump sum.</Text>
         </View>
 
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>ASHI Contribution (USD, if applicable)</Text>
+          <TextInput
+            style={styles.input}
+            value={ashiContribution.toString()}
+            onChangeText={text => {
+              const num = parseFloat(text);
+              if (!isNaN(num) && num >= 0) setAshiContribution(num);
+              else if (text === '' || text === '.') setAshiContribution(0);
+            }}
+            placeholder="0"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="decimal-pad"
+          />
+          <Text style={styles.helpText}>Enter your monthly ASHI deduction, if applicable. Leave as 0 if not applicable.</Text>
+        </View>
+
         {/* Debug Section: Show raw calculation values */}
         {/* <View style={{ marginTop: 16, backgroundColor: '#FFF7ED', padding: 12, borderRadius: 8 }}>
           <Text style={{ color: '#92400E', fontWeight: 'bold' }}>Debug Info</Text>
@@ -315,25 +348,25 @@ export default function CalculatorScreen() {
             <Text style={styles.resultLabel}>Monthly Pension</Text>
             <Text style={styles.resultValue}>{formatCurrency(monthlyPension)}</Text>
           </View>
-          {/* New: Reduced Monthly Pension After Lump Sum */}
+          {/* New: Reduced Monthly Pension After Lump Sum (correct logic) */}
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Reduced Monthly Pension After Lump Sum</Text>
-            <Text style={styles.resultValue}>{formatCurrency((annualPension - lumpSum) / 12)}</Text>
+            <Text style={styles.resultValue}>{formatCurrency(reducedMonthlyPension)}</Text>
           </View>
-          {/* New: Add Cost of Living Adjustment @ 2% */}
+          {/* New: Add Cost of Living Adjustment @ 2% (on reduced monthly pension) */}
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Add: Cost of Living Adjustment @ 2%</Text>
-            <Text style={styles.resultValue}>{formatCurrency(((annualPension - lumpSum) / 12) * 1.02)}</Text>
+            <Text style={styles.resultValue}>{formatCurrency(colaAdjustedMonthlyPension)}</Text>
           </View>
           {/* New: Deduct ASHI Contribution (if applicable) */}
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Deduct: ASHI Contribution (if applicable)</Text>
-            <Text style={styles.resultValue}>-</Text>
+            <Text style={styles.resultValue}>-{formatCurrency(ashiContribution)}</Text>
           </View>
           {/* New: Net Monthly Pension (USD) */}
           <View style={styles.resultCard}>
             <Text style={styles.resultLabel}>Net Monthly Pension (USD)</Text>
-            <Text style={styles.resultValue}>{formatCurrency(((annualPension - lumpSum) / 12) * 1.02)}</Text>
+            <Text style={styles.resultValue}>{formatCurrency(netMonthlyPension)}</Text>
           </View>
         </View>
       </View>
