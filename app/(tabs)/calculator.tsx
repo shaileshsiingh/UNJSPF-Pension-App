@@ -52,6 +52,15 @@ function formatDateDDMMYYYY(dateString: string) {
   return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
 }
 
+// Helper to convert years (float) to years, months, days
+function formatYearsMonthsDays(yearsFloat: number) {
+  const years = Math.floor(yearsFloat);
+  const monthsFloat = (yearsFloat - years) * 12;
+  const months = Math.floor(monthsFloat);
+  const days = Math.round((monthsFloat - months) * 30.4375); // average days in a month
+  return `${years} years, ${months} months, ${days} days`;
+}
+
 export default function CalculatorScreen() {
   // New state for Excel logic
   const [separationDate, setSeparationDate] = useState('');
@@ -160,70 +169,67 @@ export default function CalculatorScreen() {
         <DatePicker
           value={formatDateDDMMYYYY(separationDate)}
           onDateChange={date => {
-            // Accepts YYYY-MM-DD from picker, store as is
             setSeparationDate(date);
           }}
           label="Date of Separation"
         />
-        <Text style={styles.sliderHelpText}>Select your date of separation. The 36 months below will auto-label from this date.</Text>
+        <Text style={styles.sliderHelpText}>This automatically displays from the profile setup page in DD-MM-YYYY format. Use the button to change/delete.</Text>
 
         <View style={{ marginVertical: 16 }}>
-          <Text style={styles.label}>Enter Pensionable Remuneration for each of the last 36 months (most recent on left):</Text>
+          <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 60 months before retiring month.</Text>
+          <Text style={styles.helpText}>You may find these figures in your monthly payslips. Month and year auto-fill from the date of separation above. For example, if the DoS is displayed as 31-7-2025, then this box should show Jul-2025. The next 12 boxes should copy this figure, with edit mode available to user to change any box before or after. For example, the user wants to change the figure in Dec 2024, he should be able to insert a new figure there. The next 12 boxes should copy that figure, until all 36 boxes are populated.</Text>
           {rows.map((row, rowIdx) => (
-            // <PanGestureHandler key={rowIdx}>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={true}
-                style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
-                contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
-                keyboardShouldPersistTaps="handled"
-                scrollEnabled={true}
-              >
-                {row.map((label, colIdx) => {
-                  const absIndex = rowIdx * 12 + colIdx;
-                  return (
-                    <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
-                      <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
-                      <TextInput
-                        style={{
-                          borderWidth: 1,
-                          borderColor: '#D1D5DB',
-                          borderRadius: 8,
-                          width: 70,
-                          height: 36,
-                          textAlign: 'center',
-                          marginTop: 2,
-                          backgroundColor: '#FFF',
-                          color: '#111827',
-                        }}
-                        value={prValues[absIndex]}
-                        onChangeText={text => {
-                          const newValues = [...prValues];
-                          if (/^\d*\.?\d*$/.test(text)) {
-                            // If leftmost cell in row (most recent month for that year), autofill all months in this row
-                            if (colIdx === 0) {
-                              for (let i = 0; i < 12; i++) newValues[rowIdx * 12 + i] = text;
-                            } else {
-                              newValues[absIndex] = text;
-                            }
-                            setPrValues(newValues);
+            <ScrollView
+              key={rowIdx}
+              horizontal
+              showsHorizontalScrollIndicator={true}
+              style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
+              contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
+              keyboardShouldPersistTaps="handled"
+              scrollEnabled={true}
+            >
+              {row.map((label, colIdx) => {
+                const absIndex = rowIdx * 12 + colIdx;
+                return (
+                  <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                    <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
+                    <TextInput
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#D1D5DB',
+                        borderRadius: 8,
+                        width: 70,
+                        height: 36,
+                        textAlign: 'center',
+                        marginTop: 2,
+                        backgroundColor: '#FFF',
+                        color: '#111827',
+                      }}
+                      value={prValues[absIndex]}
+                      onChangeText={text => {
+                        const newValues = [...prValues];
+                        if (/^\d*\.?\d*$/.test(text)) {
+                          // If any cell is changed, copy value to next 12 boxes (or until end)
+                          for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
+                            newValues[i] = text;
                           }
-                        }}
-                        placeholder="0"
-                        keyboardType="decimal-pad"
-                        maxLength={8}
-                      />
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            // </PanGestureHandler>
+                          setPrValues(newValues);
+                        }
+                      }}
+                      placeholder="0"
+                      keyboardType="decimal-pad"
+                      maxLength={8}
+                    />
+                  </View>
+                );
+              })}
+            </ScrollView>
           ))}
-          <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter the leftmost cell in each row to auto-fill that year.</Text>
+          <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Years of Contributory Service</Text>
+          <Text style={styles.label}>Length of Contributory Service</Text>
           <TextInput
             style={styles.input}
             value={yearsOfService.toString()}
@@ -236,7 +242,7 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
-          <Text style={styles.helpText}>Maximum recognized service is 38.75 years.</Text>
+          <Text style={styles.helpText}>Output: {formatYearsMonthsDays(yearsOfService)} (Maximum recognized service is 38.75 years).</Text>
         </View>
 
         <View style={styles.inputGroup}>
@@ -253,11 +259,11 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="number-pad"
           />
-          <Text style={styles.helpText}>Commutation factor is based on this age.</Text>
+          <Text style={styles.helpText}>Commutation factor is based on your age at separation.</Text>
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Lump Sum (up to 1/3 of annual pension)</Text>
+          <Text style={styles.label}>Lump Sum Amount in USD (commutable up to one-third of your annual pension)</Text>
           <TextInput
             style={styles.input}
             value={maxLumpSum.toString()}
@@ -270,7 +276,7 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
-          <Text style={styles.helpText}>You may take any amount up to 1/3 of your annual pension as a lump sum.</Text>
+          <Text style={styles.helpText}>You may commute any amount up to a maximum of 1/3 of your annual pension as a lump sum.</Text>
         </View>
 
         {/* Debug Section: Show raw calculation values */}
@@ -309,16 +315,33 @@ export default function CalculatorScreen() {
             <Text style={styles.resultLabel}>Monthly Pension</Text>
             <Text style={styles.resultValue}>{formatCurrency(monthlyPension)}</Text>
           </View>
+          {/* New: Reduced Monthly Pension After Lump Sum */}
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Reduced Monthly Pension After Lump Sum</Text>
+            <Text style={styles.resultValue}>{formatCurrency((annualPension - lumpSum) / 12)}</Text>
+          </View>
+          {/* New: Add Cost of Living Adjustment @ 2% */}
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Add: Cost of Living Adjustment @ 2%</Text>
+            <Text style={styles.resultValue}>{formatCurrency(((annualPension - lumpSum) / 12) * 1.02)}</Text>
+          </View>
+          {/* New: Deduct ASHI Contribution (if applicable) */}
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Deduct: ASHI Contribution (if applicable)</Text>
+            <Text style={styles.resultValue}>-</Text>
+          </View>
+          {/* New: Net Monthly Pension (USD) */}
+          <View style={styles.resultCard}>
+            <Text style={styles.resultLabel}>Net Monthly Pension (USD)</Text>
+            <Text style={styles.resultValue}>{formatCurrency(((annualPension - lumpSum) / 12) * 1.02)}</Text>
+          </View>
         </View>
       </View>
 
       <View style={styles.disclaimerBox}>
         <Info size={20} color="#D97706" strokeWidth={2} />
         <Text style={styles.disclaimerText}>
-          These calculations are estimates based on UNJSPF regulations. Actual pension amounts may vary based on 
-          final employment terms, regulatory changes, and other factors. For official calculations, use the 
-          Member Self-Service portal or consult with your HR department. Processing typically takes 15 business 
-          days after complete documentation is received.
+          These estimates are based on most recently published UNJSPF Regulations and Rules. Your actual entitlements may vary depending on your final options. For official version, you are strongly encouraged to refer to your Member Self-Service portal. Actual pension amounts may vary based on final employment terms, regulatory changes, and other factors. For official calculations, use the Member Self-Service portal or consult with your HR department. Processing typically takes 15 business days after complete documentation is received.
         </Text>
       </View>
     </ScrollView>

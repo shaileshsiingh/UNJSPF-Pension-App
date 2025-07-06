@@ -32,7 +32,7 @@ export default function HomeScreen() {
             <Building size={48} color="#2563EB" strokeWidth={2} />
             <Text style={styles.welcomeTitle}>Welcome</Text>
             <Text style={styles.welcomeSubtitle}>
-              Your Comprehensive Guide to United Nations Pension Fund Benefits
+              Your Comprehensive Guide to United Nations Pension
             </Text>
           </View>
         </View>
@@ -65,7 +65,7 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Know Your Pension</Text>
           <Text style={styles.sectionSubtitle}>
-            Understand your vested pension rights, benefit options, and your separation entitlements
+            Understand your vested pension rights, benefit options, and separation entitlements
           </Text>
           
           <TouchableOpacity 
@@ -76,7 +76,7 @@ export default function HomeScreen() {
               <FileText size={24} color="#2563EB" strokeWidth={2} />
             </View>
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>Know Your Pension Fund</Text>
+              <Text style={styles.cardTitle}>Your Pension Fund</Text>
               <Text style={styles.cardDescription}>
                 Learn about UNJSPF, vested rights, and separation scenarios
               </Text>
@@ -102,6 +102,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Quick Tools Section */}
+        {/* needs to center-aligned */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Quick Tools</Text>
           <Text style={styles.sectionSubtitle}>
@@ -156,7 +157,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Stats Section */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
               <TrendingUp size={24} color="#059669" strokeWidth={2} />
@@ -169,13 +170,13 @@ export default function HomeScreen() {
               <Text style={styles.statLabel}>Funding Ratio</Text>
             </View>
           </View>
-        </View>
+        </View> */}
 
         {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            This app provides estimates based on UNJSPF regulations. 
-            For official calculations, use the Member Self-Service portal.
+            This app provides estimates based on your inputs.
+            For official figures, please use the UNJSPF Member Self-Service portal
           </Text>
         </View>
       </ScrollView>
