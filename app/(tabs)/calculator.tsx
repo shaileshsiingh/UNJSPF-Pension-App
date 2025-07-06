@@ -193,7 +193,7 @@ export default function CalculatorScreen() {
 
         <View style={{ marginVertical: 16 }}>
           <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 60 months before retiring month.</Text>
-          <Text style={styles.helpText}>You may find these figures in your monthly payslips. Month and year auto-fill from the date of separation above. For example, if the DoS is displayed as 31-7-2025, then this box should show Jul-2025. The next 12 boxes should copy this figure, with edit mode available to user to change any box before or after. For example, the user wants to change the figure in Dec 2024, he should be able to insert a new figure there. The next 12 boxes should copy that figure, until all 36 boxes are populated.</Text>
+          <Text style={styles.helpText}>You may find these figures in your monthly pay slips.</Text>
           {rows.map((row, rowIdx) => (
             <ScrollView
               key={rowIdx}
