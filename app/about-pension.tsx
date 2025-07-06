@@ -85,6 +85,7 @@ export default function AboutPensionScreen() {
           {/* Less than 5 years of Contributory Service: No Pension Rights */}
           <View style={styles.card}>
             <Text style={[styles.cardTitle, { color: '#B91C1C' }]}>Less than 5 years of Contributory Service: No Pension Rights</Text>
+            <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 2 options:</Text>
             <Text style={styles.cardDescription}>
               <Text style={{ fontWeight: 'bold' }}>Option 1: Withdrawal Settlement (Article 31){'\n'}</Text>
               One-time payment equal to your own contributions plus 3.25% compound interest. This is a final decision—no more pension from the Fund after this. No child benefit is paid under this option.{"\n\n"}
@@ -96,6 +97,7 @@ export default function AboutPensionScreen() {
           {/* 5+ years before Early Retirement Age */}
           <View style={styles.card}>
             <Text style={[styles.cardTitle, { color: '#2563EB' }]}>5+ Years of Contributory Service Before Early Retirement Age</Text>
+            <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 3 options:</Text>
             <Text style={styles.cardDescription}>
               <Text style={{ fontWeight: 'bold' }}>Option 1: Deferred Retirement Benefit (Article 30){'\n'}</Text>
               Receive your benefit at normal retirement age (or earlier with a reduction). This gives you a monthly pension when you're older. No child benefit is paid under this option.{"\n\n"}
@@ -109,8 +111,8 @@ export default function AboutPensionScreen() {
           {/* 5+ years after Early Retirement Age but before Normal Retirement Age */}
           <View style={styles.card}>
             <Text style={[styles.cardTitle, { color: '#F59E42' }]}>5+ Years of Contributory Service After Early Retirement Age but Before Normal Retirement Age</Text>
+            <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 4 options:</Text>
             <Text style={styles.cardDescription}>
-              You have 4 options:{"\n\n"}
               <Text style={{ fontWeight: 'bold' }}>Option 1: Early Retirement Benefit (Article 29){'\n'}</Text>
               Start receiving monthly payments before reaching normal retirement age. These payments may be reduced since you retire early. You can choose to commute (convert) up to one-third of the pension into a lump sum (one-time payment). The rest will be paid as monthly pension for life.{"\n\n"}
               <Text style={{ fontWeight: 'bold' }}>Option 2: Deferred Retirement Benefit (Article 30){'\n'}</Text>
@@ -125,6 +127,7 @@ export default function AboutPensionScreen() {
           {/* 5+ years at Normal Retirement Age */}
           <View style={styles.card}>
             <Text style={[styles.cardTitle, { color: '#059669' }]}>5+ Years of Contributory Service at Normal Retirement Age</Text>
+            <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>Your only option:</Text>
             <Text style={styles.cardDescription}>
               <Text style={{ fontWeight: 'bold' }}>Option: Normal Retirement Benefit (Article 28){'\n'}</Text>
               You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment). The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments with no lump sum.
@@ -135,7 +138,7 @@ export default function AboutPensionScreen() {
         <View style={styles.importantNote}>
           <Text style={styles.importantTitle}>Important Note</Text>
           <Text style={styles.importantText}>
-            This is the first digital tool created by a former UN staff member who recently completed the retirement process. It walks you through key steps to take before retirement and provides benefit estimates based on the official UNJSPF Regulations and Rules.{"\n\n"}
+            This is the first-ever app on UN Pension created by a former UN staff member who recently completed the retirement process. It walks you through key steps to take before retirement and provides benefit estimates based on the official UNJSPF Regulations and Rules.{"\n\n"}
             <Text style={{ fontWeight: 'bold' }}>Please note:</Text>{"\n"}
             While we aim to provide accurate and current guidance, we are not official representatives of the United Nations Joint Staff Pension Fund and cannot speak on its behalf. Do not enter or share your personal information on this app. For official and personalized pension estimates, always refer to the UNJSPF Member Self-Service.{"\n\n"}
             <Text style={{ fontWeight: 'bold' }}>We're here to help make your retirement journey easier—let's get started!</Text>{"\n"}
