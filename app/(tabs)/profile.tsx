@@ -313,13 +313,16 @@ export default function ProfileScreen() {
 
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Birth</Text>
-              <DatePicker
-                value={formatDateDMY(formData.dateOfBirth)}
-                onDateChange={(value) => handleInputChange('dateOfBirth', formatDateDMY(value))}
+              <TextInput
+                style={styles.input}
+                value={formData.dateOfBirth}
+                onChangeText={(value) => handleInputChange('dateOfBirth', value)}
                 placeholder="DD-MM-YYYY"
-                minYear={1960}
-                maxYear={2012}
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numbers-and-punctuation"
+                maxLength={10}
               />
+              <Text style={styles.helpText}>Please enter your date of birth in DD-MM-YYYY format.</Text>
             </View>
             {/* <Text style={styles.helpText}>Output will be in DD-MM-YYYY format</Text> */}
           </View>
@@ -346,26 +349,32 @@ export default function ProfileScreen() {
             {/* Date of Entry into Pension Fund Participation */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Entry into Pension Fund Participation</Text>
-              <DatePicker
-                value={formatDateDMY(formData.dateOfEntry)}
-                onDateChange={(value) => handleInputChange('dateOfEntry', formatDateDMY(value))}
+              <TextInput
+                style={styles.input}
+                value={formData.dateOfEntry}
+                onChangeText={(value) => handleInputChange('dateOfEntry', value)}
                 placeholder="DD-MM-YYYY"
-                minYear={1978}
-                maxYear={2047}
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numbers-and-punctuation"
+                maxLength={10}
               />
+              <Text style={styles.helpText}>Please enter your date of entry in DD-MM-YYYY format.</Text>
             </View>
             {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
 
             {/* Date of Separation */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date of Separation</Text>
-              <DatePicker
-                value={formatDateDMY(formData.dateOfSeparation)}
-                onDateChange={(value) => handleInputChange('dateOfSeparation', formatDateDMY(value))}
+              <TextInput
+                style={styles.input}
+                value={formData.dateOfSeparation}
+                onChangeText={(value) => handleInputChange('dateOfSeparation', value)}
                 placeholder="DD-MM-YYYY"
-                minYear={2025}
-                maxYear={2047}
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numbers-and-punctuation"
+                maxLength={10}
               />
+              <Text style={styles.helpText}>Please enter your date of separation in DD-MM-YYYY format.</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
@@ -385,7 +394,7 @@ export default function ProfileScreen() {
 
             {/* Mandatory Age of Separation (MAS) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Mandatory Age of Separation (MAS)</Text>
+              <Text style={styles.label}>Date on which you will reach MAS (Mandatory Age of Separation)</Text>
               <TextInput
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
                 value={calculateMAS(formData.dateOfBirth)}
@@ -393,12 +402,12 @@ export default function ProfileScreen() {
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>In most Member Organizations, the MAS for active staff members is currently 65. If different, contact the UNJSPF for advice.</Text>
+              <Text style={styles.helpText}>In most Member Organisations, MAS is 65 years. If different, contact your UNJSPF for advice.</Text>
             </View>
 
             {/* Normal Retirement Age (NRA) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Normal Retirement Age (NRA)</Text>
+              <Text style={styles.label}>Date on which you will reach NRA (Normal Retirement Age)</Text>
               <TextInput
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
                 value={calculateNRA(formData.dateOfBirth, formData.dateOfEntry)}
@@ -406,12 +415,12 @@ export default function ProfileScreen() {
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Based on the date at which you last entered UNJSPF participation.</Text>
+              <Text style={styles.helpText}>Based on your Date of Birth and Entry into Pension Fund.</Text>
             </View>
 
             {/* Early Retirement Age (ERA) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Early Retirement Age (ERA)</Text>
+              <Text style={styles.label}>Date on which you will reach ERA (Early Retirement Age)</Text>
               <TextInput
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
                 value={calculateERA(formData.dateOfBirth, formData.dateOfEntry)}
@@ -419,7 +428,7 @@ export default function ProfileScreen() {
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Based on the date at which you last entered UNJSPF participation.</Text>
+              <Text style={styles.helpText}>Based on your Date of Birth and Entry into Pension Fund.</Text>
             </View>
           </View>
 
