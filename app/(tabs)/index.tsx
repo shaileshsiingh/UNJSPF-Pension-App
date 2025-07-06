@@ -104,8 +104,8 @@ export default function HomeScreen() {
         {/* Quick Tools Section */}
         {/* needs to center-aligned */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Tools</Text>
-          <Text style={styles.sectionSubtitle}>
+          <Text style={styles.sectionTitle1}>Quick Tools</Text>
+          <Text style={styles.sectionSubtitle1}>
             Access essential pension tools and resources
           </Text>
           
@@ -225,12 +225,32 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 24,
+    
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '700',
     color: '#111827',
     marginBottom: 8,
+    
+  },
+  sectionTitle1: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#111827',
+    marginBottom: 8,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sectionSubtitle1: {
+    fontSize: 16,
+    color: '#6B7280',
+    marginBottom: 24,
+    lineHeight: 22,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   sectionSubtitle: {
     fontSize: 16,
