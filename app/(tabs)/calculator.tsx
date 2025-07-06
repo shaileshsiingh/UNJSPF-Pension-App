@@ -189,7 +189,7 @@ export default function CalculatorScreen() {
           }}
           label="Date of Separation"
         />
-        <Text style={styles.sliderHelpText}>This automatically displays from the profile setup page in DD-MM-YYYY format. Use the button to change/delete.</Text>
+        {/* <Text style={styles.sliderHelpText}>This automatically displays from the profile setup page in DD-MM-YYYY format. Use the button to change/delete.</Text> */}
 
         <View style={{ marginVertical: 16 }}>
           <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 60 months before retiring month.</Text>
@@ -258,7 +258,7 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
-          <Text style={styles.helpText}>Output: {formatYearsMonthsDays(yearsOfService)} (Maximum recognized service is 38.75 years).</Text>
+          <Text style={styles.helpText}>{formatYearsMonthsDays(yearsOfService)} (Maximum recognized service is 38.75 years).</Text>
         </View>
 
         <View style={styles.inputGroup}>
