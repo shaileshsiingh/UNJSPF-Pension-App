@@ -322,7 +322,7 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Please enter your date of birth in DD-MM-YYYY format.</Text>
+              <Text style={styles.helpText}>Enter your date of birth in DD-MM-YYYY format.</Text>
             </View>
             {/* <Text style={styles.helpText}>Output will be in DD-MM-YYYY format</Text> */}
           </View>
@@ -358,7 +358,7 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Please enter your date of entry in DD-MM-YYYY format.</Text>
+              <Text style={styles.helpText}>Enter your date of entry in DD-MM-YYYY format.</Text>
             </View>
             {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
 
@@ -374,7 +374,7 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Please enter your date of separation in DD-MM-YYYY format.</Text>
+              <Text style={styles.helpText}>Enter your date of separation in DD-MM-YYYY format.</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
