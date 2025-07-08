@@ -101,6 +101,17 @@ function calculateMAS(dob: string) {
   // Special case: DOB before 1 Jan 1958
   const cutoff = new Date(1958, 0, 1);
   if (dobDate < cutoff) return '31-12-2023';
+  // If birthday is 1st of any month, MAS is last day of previous month
+  if (dobDate.getDate() === 1) {
+    let masYear = dobDate.getFullYear() + 65;
+    let masMonth = dobDate.getMonth(); // previous month (0-based)
+    if (masMonth === 0) {
+      masYear -= 1;
+      masMonth = 12;
+    }
+    const lastDay = getLastDayOfMonth(masYear, masMonth);
+    return formatDateDMY(`${masYear}-${String(masMonth).padStart(2, '0')}-${lastDay}`);
+  }
   // Otherwise, MAS is last day of month when user turns 65
   const masYear = dobDate.getFullYear() + 65;
   const masMonth = dobDate.getMonth() + 1;
@@ -118,22 +129,23 @@ function calculateNRA(dob: string, entry: string) {
   const entry2014 = new Date(2014, 0, 1);
   if (entryDate < entry1990) nraAge = 60;
   else if (entryDate < entry2014) nraAge = 62;
-  // Calculate NRA date
+  // If birthday is 1st of any month, NRA is last day of previous month
+  if (dobDate.getDate() === 1) {
+    let nraYear = dobDate.getFullYear() + nraAge;
+    let nraMonth = dobDate.getMonth(); // previous month (0-based)
+    if (nraMonth === 0) {
+      nraYear -= 1;
+      nraMonth = 12;
+    }
+    const lastDay = getLastDayOfMonth(nraYear, nraMonth);
+    return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${lastDay}`);
+  }
+  // Otherwise, NRA is last day of month when user turns NRA age
   let nraYear = dobDate.getFullYear() + nraAge;
   let nraMonth = dobDate.getMonth() + 1;
   let nraDay = dobDate.getDate();
-  // If birthday is last day of month, NRA is last day of month
   const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
   if (nraDay === dobLastDay) {
-    nraDay = getLastDayOfMonth(nraYear, nraMonth);
-  } else if (nraDay === 1) {
-    // If birthday is 1st, NRA is day before
-    if (nraMonth === 1) {
-      nraYear -= 1;
-      nraMonth = 12;
-    } else {
-      nraMonth -= 1;
-    }
     nraDay = getLastDayOfMonth(nraYear, nraMonth);
   }
   return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${nraDay}`);
@@ -147,25 +159,45 @@ function calculateERA(dob: string, entry: string) {
   let eraAge = 58;
   const entry2014 = new Date(2014, 0, 1);
   if (entryDate < entry2014) eraAge = 55;
-  // Calculate ERA date
+  // If birthday is 1st of any month, ERA is last day of previous month
+  if (dobDate.getDate() === 1) {
+    let eraYear = dobDate.getFullYear() + eraAge;
+    let eraMonth = dobDate.getMonth(); // previous month (0-based)
+    if (eraMonth === 0) {
+      eraYear -= 1;
+      eraMonth = 12;
+    }
+    const lastDay = getLastDayOfMonth(eraYear, eraMonth);
+    return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${lastDay}`);
+  }
+  // Otherwise, ERA is last day of month when user turns ERA age
   let eraYear = dobDate.getFullYear() + eraAge;
   let eraMonth = dobDate.getMonth() + 1;
   let eraDay = dobDate.getDate();
-  // If birthday is last day of month, ERA is last day of month
   const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
   if (eraDay === dobLastDay) {
     eraDay = getLastDayOfMonth(eraYear, eraMonth);
-  } else if (eraDay === 1) {
-    // If birthday is 1st, ERA is day before
-    if (eraMonth === 1) {
-      eraYear -= 1;
-      eraMonth = 12;
-    } else {
-      eraMonth -= 1;
-    }
-    eraDay = getLastDayOfMonth(eraYear, eraMonth);
   }
   return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${eraDay}`);
+}
+
+// In the Date of Separation field, auto-insert '-' as user types
+function formatSeparationInput(text: string) {
+  // Remove all non-digits
+  let digits = text.replace(/\D/g, '');
+  let parts = [];
+  if (digits.length > 2) {
+    parts.push(digits.slice(0, 2));
+    if (digits.length > 4) {
+      parts.push(digits.slice(2, 4));
+      parts.push(digits.slice(4, 8));
+    } else {
+      parts.push(digits.slice(2));
+    }
+  } else {
+    parts.push(digits);
+  }
+  return parts.join('-');
 }
 
 export default function ProfileScreen() {
@@ -368,7 +400,7 @@ export default function ProfileScreen() {
               <TextInput
                 style={styles.input}
                 value={formData.dateOfSeparation}
-                onChangeText={(value) => handleInputChange('dateOfSeparation', value)}
+                onChangeText={(value) => handleInputChange('dateOfSeparation', formatSeparationInput(value))}
                 placeholder="DD-MM-YYYY"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="numbers-and-punctuation"
