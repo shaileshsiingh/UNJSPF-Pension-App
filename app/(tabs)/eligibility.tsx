@@ -44,6 +44,33 @@ function getCommutationFactor(age: number) {
   return closest.factor;
 }
 
+// Helper to calculate years of service as years, months, days (calendar-accurate)
+function getServiceLengthParts(entry: string, separation: string) {
+  if (!entry || !separation) return { years: 0, months: 0, days: 0 };
+  const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+  const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
+  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return { years: 0, months: 0, days: 0 };
+  let years = sepYear - entryYear;
+  let months = sepMonth - entryMonth;
+  let days = sepDay - entryDay;
+  if (days < 0) {
+    months--;
+    // Get days in previous month
+    const prevMonth = sepMonth - 1 === 0 ? 12 : sepMonth - 1;
+    const prevYear = prevMonth === 12 ? sepYear - 1 : sepYear;
+    days += new Date(prevYear, prevMonth, 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  return { years, months, days };
+}
+
+function formatServiceLength(parts: { years: number, months: number, days: number }) {
+  return `${parts.years} years, ${parts.months} months, ${parts.days} days`;
+}
+
 export default function EligibilityScreen() {
   const params = useLocalSearchParams();
   const [inputMode, setInputMode] = useState<'manual' | 'slider'>('slider');
@@ -359,10 +386,10 @@ export default function EligibilityScreen() {
         ) : (
           <>
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Years of Service</Text>
+              <Text style={styles.label}>Length of Contributory Service</Text>
               <TextInput
                 style={styles.input}
-                value={yearsOfService.toString()}
+                value={formatServiceLength(getServiceLengthParts(params.dateOfEntry as string, separationDate))}
                 onChangeText={(text) => {
                   const num = parseFloat(text);
                   if (!isNaN(num) && num >= 0) {

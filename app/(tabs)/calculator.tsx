@@ -80,7 +80,7 @@ function parseDateDMY(dateString: string) {
   return new Date(year, month - 1, day);
 }
 
-// Helper to convert years (float) to years, months, days
+// Helper to format years as years, months, days
 function formatYearsMonthsDays(yearsFloat: number) {
   const years = Math.floor(yearsFloat);
   const monthsFloat = (yearsFloat - years) * 12;
@@ -359,7 +359,7 @@ export default function CalculatorScreen() {
           <Text style={styles.label}>Length of Contributory Service</Text>
           <TextInput
             style={styles.input}
-            value={yearsOfService.toString()}
+            value={formatYearsMonthsDays(yearsOfService)}
             onChangeText={text => {
               const num = parseFloat(text);
               if (!isNaN(num) && num >= 0) setYearsOfService(num);
@@ -376,7 +376,7 @@ export default function CalculatorScreen() {
           <Text style={styles.label}>Age at Retirement</Text>
           <TextInput
             style={styles.input}
-            value={ageAtRetirement.toString()}
+            value={Math.floor(ageAtRetirement).toString()}
             onChangeText={text => {
               const num = parseInt(text);
               if (!isNaN(num) && num > 0) setAgeAtRetirement(num);

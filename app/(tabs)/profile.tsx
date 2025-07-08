@@ -195,6 +195,35 @@ function formatDateInput(text: string) {
   return parts.join('-');
 }
 
+// Helper to calculate years of service as float (like eligibility/calculator)
+function getYearsOfServiceFloat(entry: string, separation: string) {
+  if (!entry || !separation) return 0;
+  const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+  const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
+  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return 0;
+  let years = sepYear - entryYear;
+  let months = sepMonth - entryMonth;
+  let days = sepDay - entryDay;
+  if (days < 0) {
+    months--;
+    days += new Date(sepYear, sepMonth - 1, 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  return +(years + months / 12 + days / 365.25).toFixed(6);
+}
+
+// Helper to format years as years, months, days (copied from eligibility/calculator)
+function formatYearsMonthsDays(yearsFloat: number) {
+  const years = Math.floor(yearsFloat);
+  const monthsFloat = (yearsFloat - years) * 12;
+  const months = Math.floor(monthsFloat);
+  const days = Math.round((monthsFloat - months) * 30.4375); // average days in a month
+  return `${years} years, ${months} months, ${days} days`;
+}
+
 export default function ProfileScreen() {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -202,10 +231,21 @@ export default function ProfileScreen() {
     organization: '',
     dateOfBirth: '',
     dateOfEntry: '',
+    // Set dateOfSeparation to MAS if DOB is present, else empty
     dateOfSeparation: '',
     salary: '',
     yearsOfService: '',
   });
+
+  // When dateOfBirth changes, always set dateOfSeparation to MAS
+  React.useEffect(() => {
+    if (formData.dateOfBirth) {
+      setFormData(prev => ({
+        ...prev,
+        dateOfSeparation: calculateMAS(formData.dateOfBirth)
+      }));
+    }
+  }, [formData.dateOfBirth]);
 
   const [showOrgModal, setShowOrgModal] = useState(false);
 
@@ -218,7 +258,7 @@ export default function ProfileScreen() {
 
   const handleSave = async () => {
     // Calculate length of contributory service
-    const serviceLength = calculateServiceLength(formattedEntry, formattedSeparation);
+    const serviceLength = formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation));
 
     // Validate required fields
     const requiredFields = [
@@ -276,20 +316,6 @@ export default function ProfileScreen() {
       }
     });
   };
-
-  function calculateServiceLength(entry: string, separation: string) {
-    if (!entry || !separation) return '';
-    const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
-    const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
-    if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return '';
-    let years = sepYear - entryYear;
-    let months = sepMonth - entryMonth;
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-    return `${years} years, ${months} months`;
-  }
 
   // Use formattedEntry and formattedSeparation for calculation
   const formattedEntry = formatDateDMY(formData.dateOfEntry);
@@ -411,7 +437,7 @@ export default function ProfileScreen() {
 
               <TextInput
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
-                value={calculateServiceLength(formattedEntry, formattedSeparation)}
+                value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
                 editable={false}
                 placeholder="Years and months will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
