@@ -154,6 +154,9 @@ export default function CalculatorScreen() {
   const [lumpSum, setLumpSum] = useState(0);
   const [calculation, setCalculation] = useState<PensionCalculation | null>(null);
   const [ashiContribution, setAshiContribution] = useState(0);
+  const [serviceLength, setServiceLength] = useState('');
+  // Add a state for entry date if not present
+  const [entryDate, setEntryDate] = useState('');
 
   // Helper to parse separationDate string to Date
   function getSeparationDateObj() {
@@ -248,6 +251,9 @@ export default function CalculatorScreen() {
         if (data) {
           try {
             const profile = JSON.parse(data);
+            if (profile.dateOfEntry) {
+              setEntryDate(profile.dateOfEntry);
+            }
             if (profile.dateOfSeparation) {
               // Always store as DD-MM-YYYY
               setSeparationDate(formatDateDDMMYYYY(profile.dateOfSeparation));
@@ -274,6 +280,13 @@ export default function CalculatorScreen() {
       });
     }, [yearsOfService, ageAtRetirement])
   );
+
+  // Recalculate service length whenever separationDate or entryDate changes
+  React.useEffect(() => {
+    if (entryDate && separationDate) {
+      setServiceLength(formatYearsMonthsDays(calculateYearsOfService(entryDate, separationDate)));
+    }
+  }, [entryDate, separationDate]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -359,7 +372,7 @@ export default function CalculatorScreen() {
           <Text style={styles.label}>Length of Contributory Service</Text>
           <TextInput
             style={styles.input}
-            value={formatYearsMonthsDays(yearsOfService)}
+            value={serviceLength}
             onChangeText={text => {
               const num = parseFloat(text);
               if (!isNaN(num) && num >= 0) setYearsOfService(num);
