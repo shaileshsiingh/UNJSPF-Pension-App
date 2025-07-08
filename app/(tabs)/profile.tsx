@@ -145,12 +145,8 @@ function calculateNRA(dob: string, entry: string) {
   // Otherwise, NRA is last day of month when user turns NRA age
   let nraYear = dobDate.getFullYear() + nraAge;
   let nraMonth = dobDate.getMonth() + 1;
-  let nraDay = dobDate.getDate();
-  const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
-  if (nraDay === dobLastDay) {
-    nraDay = getLastDayOfMonth(nraYear, nraMonth);
-  }
-  return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${nraDay}`);
+  const lastDay = getLastDayOfMonth(nraYear, nraMonth);
+  return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${lastDay}`);
 }
 
 // Calculate ERA
@@ -176,12 +172,8 @@ function calculateERA(dob: string, entry: string) {
   // Otherwise, ERA is last day of month when user turns ERA age
   let eraYear = dobDate.getFullYear() + eraAge;
   let eraMonth = dobDate.getMonth() + 1;
-  let eraDay = dobDate.getDate();
-  const dobLastDay = getLastDayOfMonth(dobDate.getFullYear(), dobDate.getMonth() + 1);
-  if (eraDay === dobLastDay) {
-    eraDay = getLastDayOfMonth(eraYear, eraMonth);
-  }
-  return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${eraDay}`);
+  const lastDay = getLastDayOfMonth(eraYear, eraMonth);
+  return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${lastDay}`);
 }
 
 // In the Date fields, auto-insert '-' as user types
