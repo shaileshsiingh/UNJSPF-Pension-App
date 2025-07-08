@@ -337,7 +337,7 @@ export default function EligibilityScreen() {
               value={yearsOfService}
               onValueChange={setYearsOfService}
               step={1}
-              label="Years of Service"
+              label="Length of Contributory Service"
               unit=" years"
               color="#2563EB"
             />

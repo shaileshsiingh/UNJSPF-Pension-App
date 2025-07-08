@@ -11,6 +11,8 @@ import {
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 import DatePicker from '../../components/DatePicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 // import { PanGestureHandler } from 'react-native-gesture-handler';
 
 interface PensionCalculation {
@@ -47,9 +49,35 @@ function getCommutationFactor(age: number) {
 // Helper to format date as DD-MM-YYYY
 function formatDateDDMMYYYY(dateString: string) {
   if (!dateString) return '';
-  const [year, month, day] = dateString.split('-');
-  if (!year || !month || !day) return dateString;
-  return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
+  // Accepts either DD-MM-YYYY or YYYY-MM-DD and returns DD-MM-YYYY
+  const parts = dateString.split('-');
+  if (parts.length !== 3) return dateString;
+  if (parts[0].length === 4) {
+    // YYYY-MM-DD
+    const [year, month, day] = parts;
+    return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
+  } else {
+    // DD-MM-YYYY
+    const [day, month, year] = parts;
+    return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
+  }
+}
+
+// Helper to parse DD-MM-YYYY or YYYY-MM-DD to Date
+function parseDateDMY(dateString: string) {
+  if (!dateString) return null;
+  const parts = dateString.split('-');
+  if (parts.length !== 3) return null;
+  let day, month, year;
+  if (parts[0].length === 4) {
+    // YYYY-MM-DD
+    [year, month, day] = parts.map(Number);
+  } else {
+    // DD-MM-YYYY
+    [day, month, year] = parts.map(Number);
+  }
+  if ([day, month, year].some(isNaN)) return null;
+  return new Date(year, month - 1, day);
 }
 
 // Helper to convert years (float) to years, months, days
@@ -65,6 +93,56 @@ function formatYearsMonthsDays(yearsFloat: number) {
 function getCommutedFraction(lumpSum: number, annualPension: number, commutationFactor: number) {
   if (!annualPension || !commutationFactor) return 0;
   return lumpSum / (annualPension * commutationFactor);
+}
+
+// Helper to calculate years of service (float)
+function calculateYearsOfService(entry: string, separation: string) {
+  if (!entry || !separation) return 0;
+  const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+  const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
+  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return 0;
+  let years = sepYear - entryYear;
+  let months = sepMonth - entryMonth;
+  let days = sepDay - entryDay;
+  if (days < 0) {
+    months--;
+    days += new Date(sepYear, sepMonth - 1, 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  return +(years + months / 12 + days / 365.25).toFixed(2);
+}
+
+// Helper to calculate age at retirement (int, like eligibility)
+function calculateAgeAtRetirement(dob: string, separation: string) {
+  if (!dob || !separation) return 0;
+  const dobParts = dob.split('-').map(Number);
+  const sepParts = separation.split('-').map(Number);
+  let dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear;
+  if (dobParts[0] > 1000) {
+    // YYYY-MM-DD
+    [dobYear, dobMonth, dobDay] = dobParts;
+  } else {
+    [dobDay, dobMonth, dobYear] = dobParts;
+  }
+  if (sepParts[0] > 1000) {
+    [sepYear, sepMonth, sepDay] = sepParts;
+  } else {
+    [sepDay, sepMonth, sepYear] = sepParts;
+  }
+  if ([dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear].some(isNaN)) return 0;
+  let age = sepYear - dobYear;
+  if (sepMonth < dobMonth || (sepMonth === dobMonth && sepDay < dobDay)) {
+    age--;
+  }
+  // For decimal part (months/days)
+  let months = sepMonth - dobMonth;
+  if (months < 0) months += 12;
+  let days = sepDay - dobDay;
+  if (days < 0) days += 30; // Approximate
+  return +(age + months / 12 + days / 365.25).toFixed(2);
 }
 
 export default function CalculatorScreen() {
@@ -164,6 +242,39 @@ export default function CalculatorScreen() {
     // eslint-disable-next-line
   }, [annualPension]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      AsyncStorage.getItem('profileData').then(data => {
+        if (data) {
+          try {
+            const profile = JSON.parse(data);
+            if (profile.dateOfSeparation) {
+              // Always store as DD-MM-YYYY
+              setSeparationDate(formatDateDDMMYYYY(profile.dateOfSeparation));
+            }
+            // Compute and set yearsOfService and ageAtRetirement if all dates are present
+            if (profile.dateOfEntry && profile.dateOfSeparation) {
+              const entry = formatDateDDMMYYYY(profile.dateOfEntry);
+              const sep = formatDateDDMMYYYY(profile.dateOfSeparation);
+              const computedYears = calculateYearsOfService(entry, sep);
+              if (computedYears && Math.abs(computedYears - yearsOfService) > 0.01) {
+                setYearsOfService(computedYears);
+              }
+            }
+            if (profile.dateOfBirth && profile.dateOfSeparation) {
+              const dob = formatDateDDMMYYYY(profile.dateOfBirth);
+              const sep = formatDateDDMMYYYY(profile.dateOfSeparation);
+              const computedAge = calculateAgeAtRetirement(dob, sep);
+              if (computedAge && Math.abs(computedAge - ageAtRetirement) > 0.01) {
+                setAgeAtRetirement(computedAge);
+              }
+            }
+          } catch {}
+        }
+      });
+    }, [yearsOfService, ageAtRetirement])
+  );
+
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -185,7 +296,7 @@ export default function CalculatorScreen() {
         <DatePicker
           value={formatDateDDMMYYYY(separationDate)}
           onDateChange={date => {
-            setSeparationDate(date);
+            setSeparationDate(formatDateDDMMYYYY(date));
           }}
           label="Date of Separation"
         />
