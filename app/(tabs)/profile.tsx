@@ -109,6 +109,7 @@ function calculateMAS(dob: string) {
       masYear -= 1;
       masMonth = 12;
     }
+    // masMonth is now 1-based
     const lastDay = getLastDayOfMonth(masYear, masMonth);
     return formatDateDMY(`${masYear}-${String(masMonth).padStart(2, '0')}-${lastDay}`);
   }
@@ -137,6 +138,7 @@ function calculateNRA(dob: string, entry: string) {
       nraYear -= 1;
       nraMonth = 12;
     }
+    // nraMonth is now 1-based
     const lastDay = getLastDayOfMonth(nraYear, nraMonth);
     return formatDateDMY(`${nraYear}-${String(nraMonth).padStart(2, '0')}-${lastDay}`);
   }
@@ -167,6 +169,7 @@ function calculateERA(dob: string, entry: string) {
       eraYear -= 1;
       eraMonth = 12;
     }
+    // eraMonth is now 1-based
     const lastDay = getLastDayOfMonth(eraYear, eraMonth);
     return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${lastDay}`);
   }
@@ -181,8 +184,8 @@ function calculateERA(dob: string, entry: string) {
   return formatDateDMY(`${eraYear}-${String(eraMonth).padStart(2, '0')}-${eraDay}`);
 }
 
-// In the Date of Separation field, auto-insert '-' as user types
-function formatSeparationInput(text: string) {
+// In the Date fields, auto-insert '-' as user types
+function formatDateInput(text: string) {
   // Remove all non-digits
   let digits = text.replace(/\D/g, '');
   let parts = [];
@@ -348,7 +351,7 @@ export default function ProfileScreen() {
               <TextInput
                 style={styles.input}
                 value={formData.dateOfBirth}
-                onChangeText={(value) => handleInputChange('dateOfBirth', value)}
+                onChangeText={(value) => handleInputChange('dateOfBirth', formatDateInput(value))}
                 placeholder="DD-MM-YYYY"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="numbers-and-punctuation"
@@ -384,7 +387,7 @@ export default function ProfileScreen() {
               <TextInput
                 style={styles.input}
                 value={formData.dateOfEntry}
-                onChangeText={(value) => handleInputChange('dateOfEntry', value)}
+                onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
                 placeholder="DD-MM-YYYY"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="numbers-and-punctuation"
@@ -400,7 +403,7 @@ export default function ProfileScreen() {
               <TextInput
                 style={styles.input}
                 value={formData.dateOfSeparation}
-                onChangeText={(value) => handleInputChange('dateOfSeparation', formatSeparationInput(value))}
+                onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
                 placeholder="DD-MM-YYYY"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="numbers-and-punctuation"
