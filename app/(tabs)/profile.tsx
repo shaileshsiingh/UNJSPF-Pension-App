@@ -212,6 +212,16 @@ function getYearsOfServiceFloat(entry: string, separation: string) {
     years--;
     months += 12;
   }
+  // Roll days into months
+  if (days >= 30) {
+    months += Math.floor(days / 30);
+    days = days % 30;
+  }
+  // Roll months into years
+  if (months >= 12) {
+    years += Math.floor(months / 12);
+    months = months % 12;
+  }
   return +(years + months / 12 + days / 365.25).toFixed(6);
 }
 
@@ -220,7 +230,7 @@ function formatYearsMonthsDays(yearsFloat: number) {
   const years = Math.floor(yearsFloat);
   const monthsFloat = (yearsFloat - years) * 12;
   const months = Math.floor(monthsFloat);
-  const days = Math.round((monthsFloat - months) * 30.4375); // average days in a month
+  const days = Math.round((monthsFloat - months) * 30); // average days in a month
   return `${years} years, ${months} months, ${days} days`;
 }
 

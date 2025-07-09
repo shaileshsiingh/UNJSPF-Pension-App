@@ -65,6 +65,16 @@ function getServiceLengthParts(entry: string, separation: string) {
     years--;
     months += 12;
   }
+  // Roll days into months
+  if (days >= 30) {
+    months += Math.floor(days / 30);
+    days = days % 30;
+  }
+  // Roll months into years
+  if (months >= 12) {
+    years += Math.floor(months / 12);
+    months = months % 12;
+  }
   return { years, months, days };
 }
 
