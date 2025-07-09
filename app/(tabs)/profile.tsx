@@ -427,7 +427,7 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Enter your date of separation in DD-MM-YYYY format.</Text>
+              <Text style={styles.helpText}>Enter your preferred date of separation, if any</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
@@ -439,10 +439,10 @@ export default function ProfileScreen() {
                 style={[styles.input, { backgroundColor: '#F3F4F6' }]}
                 value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
                 editable={false}
-                placeholder="Years and months will be calculated automatically"
+                placeholder="Years, months, days will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Calculated from Date of Entry & Date of Separation</Text>
+              <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
             </View>
 
             {/* Mandatory Age of Separation (MAS) */}
