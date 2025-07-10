@@ -68,18 +68,20 @@ export default function LandingPage() {
       <View style={styles.container}>
         <Text style={styles.title}>Welcome to the UNJSPF Pension App</Text>
         <Text style={styles.subtitle}>Calculate your pension, check eligibility, and more.</Text>
-        <AnimatedButton
-          title="Login"
-          onPress={() => router.push('/login')}
-          color1="#2563EB"
-          color2="#6EE7B7"
-        />
-        <AnimatedButton
-          title="Sign Up"
-          onPress={() => router.push('/signup')}
-          color1="#F59E42"
-          color2="#FDE68A"
-        />
+        <View style={styles.buttonGroup}>
+          <AnimatedButton
+            title="Login"
+            onPress={() => router.push('/login')}
+            color1="#2563EB"
+            color2="#6EE7B7"
+          />
+          <AnimatedButton
+            title="Sign Up"
+            onPress={() => router.push('/signup')}
+            color1="#F59E42"
+            color2="#FDE68A"
+          />
+        </View>
         <Text style={styles.info}>You must be logged in to access personalized features.</Text>
       </View>
     </LinearGradient>
@@ -145,5 +147,13 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0,0,0,0.10)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
+  },
+  buttonGroup: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    marginTop: 8,
+    marginBottom: 8,
   },
 }); 

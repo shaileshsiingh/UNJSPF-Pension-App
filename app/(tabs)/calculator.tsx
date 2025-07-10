@@ -85,7 +85,7 @@ function formatYearsMonthsDays(yearsFloat: number) {
   const years = Math.floor(yearsFloat);
   const monthsFloat = (yearsFloat - years) * 12;
   const months = Math.floor(monthsFloat);
-  const days = Math.round((monthsFloat - months) * 30.4375); // average days in a month
+  const days = Math.round((monthsFloat - months) * 30); // use 30 days per month for consistency
   return `${years} years, ${months} months, ${days} days`;
 }
 

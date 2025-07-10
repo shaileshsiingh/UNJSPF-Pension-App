@@ -455,6 +455,58 @@ export default function ProfileScreen() {
               <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
             </View>
 
+            {/* Retirement Categories Card (NRA, ERA, DRA) */}
+            <View style={styles.retirementCard}>
+              <Text style={styles.retirementCardTitle}>Retirement Categories (Based on Entry Date):</Text>
+              <Text style={styles.retirementCardText}>
+                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Normal Retirement Age (NRA): </Text>
+                {(() => {
+                  const dob = formData.dateOfBirth;
+                  const entry = formData.dateOfEntry;
+                  const nraDate = calculateNRA(dob, entry);
+                  let nraAge = 65;
+                  const entryDate = parseDMY(entry);
+                  if (entryDate) {
+                    const entry1990 = new Date(1990, 0, 1);
+                    const entry2014 = new Date(2014, 0, 1);
+                    if (entryDate < entry1990) nraAge = 60;
+                    else if (entryDate < entry2014) nraAge = 62;
+                  }
+                  return nraDate ? `${nraAge} years on ${nraDate}` : '—';
+                })()}
+              </Text>
+              <Text style={styles.retirementCardText}>
+                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Early Retirement Age (ERA): </Text>
+                {(() => {
+                  const dob = formData.dateOfBirth;
+                  const entry = formData.dateOfEntry;
+                  const eraDate = calculateERA(dob, entry);
+                  let eraAge = 58;
+                  const entryDate = parseDMY(entry);
+                  if (entryDate) {
+                    const entry2014 = new Date(2014, 0, 1);
+                    if (entryDate < entry2014) eraAge = 55;
+                  }
+                  return eraDate ? `${eraAge} years on ${eraDate}` : '—';
+                })()}
+              </Text>
+              <Text style={styles.retirementCardText}>
+                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Deferred Retirement Age (DRA): </Text>
+                {(() => {
+                  const dob = formData.dateOfBirth;
+                  const entry = formData.dateOfEntry;
+                  const entryDate = parseDMY(entry);
+                  if (!dob || !entryDate) return '—';
+                  // DRA: Any age younger than ERA, before ERA date
+                  let eraAge = 58;
+                  const entry2014 = new Date(2014, 0, 1);
+                  if (entryDate < entry2014) eraAge = 55;
+                  const eraDate = calculateERA(dob, entry);
+                  return eraDate ? `Any age younger than ${eraAge}. Before ${eraDate}` : '—';
+                })()}
+              </Text>
+            </View>
+
             {/* Mandatory Age of Separation (MAS) */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Date on which you will reach MAS (Mandatory Age of Separation)</Text>
@@ -704,5 +756,29 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#9CA3AF',
     marginLeft: 8,
+  },
+  retirementCard: {
+    backgroundColor: '#EEF2FF',
+    borderRadius: 16,
+    padding: 18,
+    marginTop: 18,
+    marginBottom: 18,
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  retirementCardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#6366F1',
+    marginBottom: 8,
+  },
+  retirementCardText: {
+    fontSize: 15,
+    color: '#1E293B',
+    marginBottom: 4,
+    lineHeight: 22,
   },
 }); 

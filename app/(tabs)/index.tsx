@@ -17,14 +17,27 @@ import {
   Shield, 
   Calculator,
   Users,
-  TrendingUp
+  TrendingUp,
+  LogOut
 } from 'lucide-react-native';
 import { router } from 'expo-router';
+import { useAuth } from '../../components/AuthContext';
 
 export default function HomeScreen() {
+  const { signOut } = useAuth();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
+      <View style={styles.topBar}>
+        <View style={{ flex: 1 }} />
+        <TouchableOpacity
+          onPress={signOut}
+          style={styles.logoutButton}
+          accessibilityLabel="Logout"
+        >
+          <LogOut size={24} color="#2563EB" strokeWidth={2} />
+        </TouchableOpacity>
+      </View>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header Section */}
         <View style={styles.header}>
@@ -188,6 +201,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9FAFB',
+  },
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    marginBottom: 0,
+  },
+  logoutButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: '#EEF2FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 8,
+    marginTop: 4,
   },
   scrollView: {
     flex: 1,
