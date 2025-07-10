@@ -24,7 +24,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <LinearGradient colors={["#2563EB", "#6EE7B7"]} style={styles.background}>
+    <View style={styles.background}>
       <KeyboardAvoidingView
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -56,13 +56,14 @@ export default function LoginScreen() {
           </Pressable>
         </View>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    backgroundColor: '#e5e7eb', // slightly darker, warm gray
   },
   card: {
     width: 340,

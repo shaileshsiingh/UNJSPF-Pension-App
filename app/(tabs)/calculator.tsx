@@ -155,6 +155,40 @@ function calculateAgeAtRetirement(dob: string, separation: string) {
   return +(age + months / 12 + days / 365.25).toFixed(2);
 }
 
+// Helper to calculate years of service as years, months, days (calendar-accurate)
+function getServiceLengthParts(entry: string, separation: string) {
+  if (!entry || !separation) return { years: 0, months: 0, days: 0 };
+  const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
+  const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
+  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return { years: 0, months: 0, days: 0 };
+  let years = sepYear - entryYear;
+  let months = sepMonth - entryMonth;
+  let days = sepDay - entryDay;
+  if (days < 0) {
+    months--;
+    days += new Date(sepYear, sepMonth - 1, 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  // Roll days into months
+  if (days >= 30) {
+    months += Math.floor(days / 30);
+    days = days % 30;
+  }
+  // Roll months into years
+  if (months >= 12) {
+    years += Math.floor(months / 12);
+    months = months % 12;
+  }
+  return { years, months, days };
+}
+
+function formatServiceLength(parts: { years: number, months: number, days: number }) {
+  return `${parts.years} years, ${parts.months} months, ${parts.days} days`;
+}
+
 export default function CalculatorScreen() {
   // New state for Excel logic
   const [separationDate, setSeparationDate] = useState('');
@@ -294,7 +328,7 @@ export default function CalculatorScreen() {
   // Recalculate service length whenever separationDate or entryDate changes
   React.useEffect(() => {
     if (entryDate && separationDate) {
-      setServiceLength(formatYearsMonthsDays(calculateYearsOfService(entryDate, separationDate)));
+      setServiceLength(formatServiceLength(getServiceLengthParts(entryDate, separationDate)));
     }
   }, [entryDate, separationDate]);
 
@@ -392,7 +426,7 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
-          <Text style={styles.helpText}>{formatYearsMonthsDays(yearsOfService)} (Maximum recognized service is 38.75 years).</Text>
+          <Text style={styles.helpText}>{serviceLength} (Maximum recognized service is 38.75 years).</Text>
         </View>
 
         <View style={styles.inputGroup}>

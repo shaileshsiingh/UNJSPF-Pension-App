@@ -11,7 +11,7 @@ function AnimatedButton({ title, onPress, color1, color2 }: { title: string; onP
 
   const handlePressIn = () => {
     Animated.spring(scale, {
-      toValue: 0.95,
+      toValue: 0.97,
       useNativeDriver: true,
     }).start();
   };
@@ -30,7 +30,7 @@ function AnimatedButton({ title, onPress, color1, color2 }: { title: string; onP
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      style={{ width: '100%', marginBottom: 18 }}
+      style={{ width: '100%', marginBottom: 12, alignItems: 'center' }}
     >
       <Animated.View style={[styles.animatedButton, { transform: [{ scale }] }]}> 
         <LinearGradient
@@ -59,12 +59,7 @@ export default function LandingPage() {
   if (loading) return null;
 
   return (
-    <LinearGradient
-      colors={["#2563EB", "#6EE7B7", "#FDE68A"]}
-      style={styles.background}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <View style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>Welcome to the UNJSPF Pension App</Text>
         <Text style={styles.subtitle}>Calculate your pension, check eligibility, and more.</Text>
@@ -84,13 +79,14 @@ export default function LandingPage() {
         </View>
         <Text style={styles.info}>You must be logged in to access personalized features.</Text>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    backgroundColor: '#e5e7eb', // slightly darker, warm gray
   },
   container: {
     flex: 1,
@@ -103,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
-    color: '#fff',
+    color: '#000',
     textShadowColor: 'rgba(0,0,0,0.15)',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 6,
@@ -112,35 +108,35 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 32,
     textAlign: 'center',
-    color: '#F3F4F6',
+    color: '#000',
     textShadowColor: 'rgba(0,0,0,0.10)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
   },
   animatedButton: {
-    width: width * 0.7,
-    borderRadius: 30,
+    width: 220,
+    borderRadius: 24,
     overflow: 'hidden',
-    elevation: 4,
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
   },
   gradientButton: {
-    paddingVertical: 16,
+    paddingVertical: 12,
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 24,
   },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
-    letterSpacing: 1,
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
   info: {
     marginTop: 40,
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     fontSize: 15,
     opacity: 0.85,
@@ -149,10 +145,10 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   buttonGroup: {
-    width: '100%',
+    // width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: 10,
     marginTop: 8,
     marginBottom: 8,
   },
