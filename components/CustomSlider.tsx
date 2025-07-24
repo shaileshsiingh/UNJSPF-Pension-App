@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, PanResponder, GestureResponderEvent, PanResponderGestureState } from 'react-native';
 
 interface CustomSliderProps {
   min: number;
@@ -24,11 +24,12 @@ export default function CustomSlider({
 }: CustomSliderProps) {
   const screenWidth = Dimensions.get('window').width;
   const sliderWidth = screenWidth - 80; // Account for padding
-  const thumbSize = 24;
+  const thumbSize = 32; // Larger thumb
   const trackRef = useRef<View>(null);
   
   const [sliderValue, setSliderValue] = useState(value);
   const [trackLayout, setTrackLayout] = useState({ x: 0, width: sliderWidth });
+  const [dragging, setDragging] = useState(false);
   
   // Update internal state when prop changes
   useEffect(() => {
@@ -70,10 +71,26 @@ export default function CustomSlider({
     setTrackLayout({ x, width });
   };
 
-  const handleThumbPress = (evt: any) => {
-    // Prevent track press when thumb is pressed
-    evt.stopPropagation();
-  };
+  // PanResponder for smooth dragging
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+        setDragging(true);
+      },
+      onPanResponderMove: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+        const touchX = evt.nativeEvent.pageX;
+        updateValue(touchX);
+      },
+      onPanResponderRelease: () => {
+        setDragging(false);
+      },
+      onPanResponderTerminate: () => {
+        setDragging(false);
+      },
+    })
+  ).current;
 
   // Format the display value to prevent NaN
   const displayValue = isNaN(sliderValue) || !isFinite(sliderValue) ? value : sliderValue;
@@ -81,34 +98,28 @@ export default function CustomSlider({
   return (
     <View style={styles.container}>
       {label && (
-        <View style={styles.labelContainer}>
-          <Text style={styles.label}>{label}</Text>
-          <Text style={[styles.value, { color }]}>
-            {displayValue.toLocaleString()}{unit}
-          </Text>
-        </View>
+        <Text style={styles.label}>{label}</Text>
       )}
-      
-      <View style={styles.sliderContainer}>
-        <TouchableOpacity
-          ref={trackRef}
-          style={[styles.track, { width: sliderWidth }]}
-          onPress={handleTrackPress}
-          onLayout={handleTrackLayout}
-          activeOpacity={0.8}
-        >
-          <View style={[styles.trackFill, { backgroundColor: color, width: thumbPosition + thumbSize / 2 }]} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          style={[styles.thumb, { backgroundColor: color, left: thumbPosition }]}
-          onPress={handleThumbPress}
-          activeOpacity={0.8}
-        >
-          <View style={styles.thumbInner} />
-        </TouchableOpacity>
+      <View style={styles.sliderRow}>
+        <View style={styles.sliderContainer}>
+          <TouchableOpacity
+            ref={trackRef}
+            style={[styles.track, { width: sliderWidth }]}
+            onPress={handleTrackPress}
+            onLayout={handleTrackLayout}
+            activeOpacity={0.8}
+          >
+            <View style={[styles.trackFill, { backgroundColor: color, width: thumbPosition + thumbSize / 2 }]} />
+          </TouchableOpacity>
+          <View
+            style={[styles.thumb, { backgroundColor: '#FFF', borderColor: color, left: thumbPosition }]}
+            {...panResponder.panHandlers}
+          >
+            <View style={[styles.thumbInner, { backgroundColor: color }]} />
+          </View>
+        </View>
+        <Text style={[styles.value, { color }]}>{displayValue.toLocaleString()}{unit}</Text>
       </View>
-      
       <View style={styles.rangeContainer}>
         <Text style={styles.rangeText}>{min.toLocaleString()}{unit}</Text>
         <Text style={styles.rangeText}>{max.toLocaleString()}{unit}</Text>
@@ -119,65 +130,84 @@ export default function CustomSlider({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
+    marginVertical: 20,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
     color: '#374151',
+    marginBottom: 8,
+    marginLeft: 2,
   },
-  value: {
-    fontSize: 18,
-    fontWeight: '700',
+  sliderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
   sliderContainer: {
-    height: 40,
+    height: 48,
     justifyContent: 'center',
-    marginBottom: 8,
     position: 'relative',
+    flex: 1,
+    marginRight: 16,
   },
   track: {
-    height: 6,
+    height: 12,
     backgroundColor: '#E5E7EB',
-    borderRadius: 3,
+    borderRadius: 6,
     position: 'absolute',
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
   },
   trackFill: {
-    height: 6,
-    borderRadius: 3,
+    height: 12,
+    borderRadius: 6,
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    elevation: 3,
   },
   thumb: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    elevation: 4,
-    shadowColor: '#000',
+    elevation: 6,
+    shadowColor: '#2563EB',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
   },
   thumbInner: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#FFFFFF',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#2563EB',
+  },
+  value: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginLeft: 12,
+    minWidth: 60,
+    textAlign: 'right',
   },
   rangeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
+    marginTop: 2,
   },
   rangeText: {
-    fontSize: 12,
-    color: '#6B7280',
+    fontSize: 13,
+    color: '#9CA3AF',
+    fontWeight: '500',
   },
 });
