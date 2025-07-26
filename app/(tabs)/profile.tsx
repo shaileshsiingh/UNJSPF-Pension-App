@@ -58,7 +58,7 @@ const organizations = [
 ];
 
 // Helper for DD-MM-YYYY formatting
-function formatDateDMY(dateString) {
+function formatDateDMY(dateString: string): string {
   if (!dateString) return '';
   let parts = dateString.split('-');
   if (parts.length !== 3) return '';
@@ -76,7 +76,7 @@ function formatDateDMY(dateString) {
 }
 
 // Helper to parse DD-MM-YYYY to Date
-function parseDMY(dateString) {
+function parseDMY(dateString: string): Date | null {
   if (!dateString) return null;
   let parts = dateString.split('-');
   if (parts.length !== 3) return null;
@@ -93,12 +93,12 @@ function parseDMY(dateString) {
 }
 
 // Helper to get last day of month
-function getLastDayOfMonth(year, month) {
+function getLastDayOfMonth(year: number, month: number): number {
   return new Date(year, month, 0).getDate();
 }
 
 // Calculate MAS
-function calculateMAS(dob) {
+function calculateMAS(dob: string): string {
   const dobDate = parseDMY(dob);
   if (!dobDate) return '';
   // Special case: DOB before 1 Jan 1958
@@ -124,7 +124,7 @@ function calculateMAS(dob) {
 }
 
 // Calculate NRA
-function calculateNRA(dob, entry) {
+function calculateNRA(dob: string, entry: string): string {
   const dobDate = parseDMY(dob);
   const entryDate = parseDMY(entry);
   if (!dobDate || !entryDate) return '';
@@ -153,7 +153,7 @@ function calculateNRA(dob, entry) {
 }
 
 // Calculate ERA
-function calculateERA(dob, entry) {
+function calculateERA(dob: string, entry: string): string {
   const dobDate = parseDMY(dob);
   const entryDate = parseDMY(entry);
   if (!dobDate || !entryDate) return '';
@@ -180,7 +180,7 @@ function calculateERA(dob, entry) {
 }
 
 // In the Date fields, auto-insert '-' as user types
-function formatDateInput(text) {
+function formatDateInput(text: string): string {
   // Remove all non-digits
   let digits = text.replace(/\D/g, '');
   let parts = [];
@@ -199,7 +199,7 @@ function formatDateInput(text) {
 }
 
 // Helper to calculate years of service as float
-function getYearsOfServiceFloat(entry, separation) {
+function getYearsOfServiceFloat(entry: string, separation: string): number {
   if (!entry || !separation) return 0;
   const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
   const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
@@ -229,7 +229,7 @@ function getYearsOfServiceFloat(entry, separation) {
 }
 
 // Helper to format years as years, months, days
-function formatYearsMonthsDays(yearsFloat) {
+function formatYearsMonthsDays(yearsFloat: number): string {
   const years = Math.floor(yearsFloat);
   const monthsFloat = (yearsFloat - years) * 12;
   const months = Math.floor(monthsFloat);
@@ -262,7 +262,7 @@ export default function ProfileScreen() {
     }
   }, [formData.dateOfBirth]);
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -282,7 +282,7 @@ export default function ProfileScreen() {
       'dateOfEntry',
       'dateOfSeparation',
     ];
-    const missingFields = requiredFields.filter(field => !formData[field]);
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
     if (!serviceLength) missingFields.push('Length of Contributory Service');
 
     if (missingFields.length > 0) {
