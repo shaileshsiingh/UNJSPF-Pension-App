@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   Alert,
   Platform,
   ToastAndroid,
+  Dimensions,
 } from 'react-native';
 import { 
   User, 
@@ -20,11 +21,13 @@ import {
   ChevronDown,
   X,
   Save,
-  Check
+  Check,
+  Info
 } from 'lucide-react-native';
-import DatePicker from '../../components/DatePicker';
-import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
+
+const { width } = Dimensions.get('window');
 
 const organizations = [
   'United Nations Secretariat including Peacekeeping Missions',
@@ -55,7 +58,7 @@ const organizations = [
 ];
 
 // Helper for DD-MM-YYYY formatting
-function formatDateDMY(dateString: string) {
+function formatDateDMY(dateString) {
   if (!dateString) return '';
   let parts = dateString.split('-');
   if (parts.length !== 3) return '';
@@ -73,7 +76,7 @@ function formatDateDMY(dateString: string) {
 }
 
 // Helper to parse DD-MM-YYYY to Date
-function parseDMY(dateString: string) {
+function parseDMY(dateString) {
   if (!dateString) return null;
   let parts = dateString.split('-');
   if (parts.length !== 3) return null;
@@ -90,12 +93,12 @@ function parseDMY(dateString: string) {
 }
 
 // Helper to get last day of month
-function getLastDayOfMonth(year: number, month: number) {
+function getLastDayOfMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
 // Calculate MAS
-function calculateMAS(dob: string) {
+function calculateMAS(dob) {
   const dobDate = parseDMY(dob);
   if (!dobDate) return '';
   // Special case: DOB before 1 Jan 1958
@@ -121,7 +124,7 @@ function calculateMAS(dob: string) {
 }
 
 // Calculate NRA
-function calculateNRA(dob: string, entry: string) {
+function calculateNRA(dob, entry) {
   const dobDate = parseDMY(dob);
   const entryDate = parseDMY(entry);
   if (!dobDate || !entryDate) return '';
@@ -150,7 +153,7 @@ function calculateNRA(dob: string, entry: string) {
 }
 
 // Calculate ERA
-function calculateERA(dob: string, entry: string) {
+function calculateERA(dob, entry) {
   const dobDate = parseDMY(dob);
   const entryDate = parseDMY(entry);
   if (!dobDate || !entryDate) return '';
@@ -177,7 +180,7 @@ function calculateERA(dob: string, entry: string) {
 }
 
 // In the Date fields, auto-insert '-' as user types
-function formatDateInput(text: string) {
+function formatDateInput(text) {
   // Remove all non-digits
   let digits = text.replace(/\D/g, '');
   let parts = [];
@@ -195,8 +198,8 @@ function formatDateInput(text: string) {
   return parts.join('-');
 }
 
-// Helper to calculate years of service as float (like eligibility/calculator)
-function getYearsOfServiceFloat(entry: string, separation: string) {
+// Helper to calculate years of service as float
+function getYearsOfServiceFloat(entry, separation) {
   if (!entry || !separation) return 0;
   const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
   const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
@@ -225,8 +228,8 @@ function getYearsOfServiceFloat(entry: string, separation: string) {
   return +(years + months / 12 + days / 365.25).toFixed(6);
 }
 
-// Helper to format years as years, months, days (copied from eligibility/calculator)
-function formatYearsMonthsDays(yearsFloat: number) {
+// Helper to format years as years, months, days
+function formatYearsMonthsDays(yearsFloat) {
   const years = Math.floor(yearsFloat);
   const monthsFloat = (yearsFloat - years) * 12;
   const months = Math.floor(monthsFloat);
@@ -241,14 +244,16 @@ export default function ProfileScreen() {
     organization: '',
     dateOfBirth: '',
     dateOfEntry: '',
-    // Set dateOfSeparation to MAS if DOB is present, else empty
     dateOfSeparation: '',
     salary: '',
     yearsOfService: '',
   });
 
+  const [showOrgModal, setShowOrgModal] = useState(false);
+  const [showRetirementInfo, setShowRetirementInfo] = useState(false);
+
   // When dateOfBirth changes, always set dateOfSeparation to MAS
-  React.useEffect(() => {
+  useEffect(() => {
     if (formData.dateOfBirth) {
       setFormData(prev => ({
         ...prev,
@@ -257,9 +262,7 @@ export default function ProfileScreen() {
     }
   }, [formData.dateOfBirth]);
 
-  const [showOrgModal, setShowOrgModal] = useState(false);
-
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -279,7 +282,7 @@ export default function ProfileScreen() {
       'dateOfEntry',
       'dateOfSeparation',
     ];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    const missingFields = requiredFields.filter(field => !formData[field]);
     if (!serviceLength) missingFields.push('Length of Contributory Service');
 
     if (missingFields.length > 0) {
@@ -299,6 +302,7 @@ export default function ProfileScreen() {
       dateOfSeparation: formatDateDMY(formData.dateOfSeparation),
       serviceLength,
     };
+    
     try {
       await AsyncStorage.setItem('profileData', JSON.stringify(profileToSave));
     } catch (e) {
@@ -309,7 +313,7 @@ export default function ProfileScreen() {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Profile saved successfully!', ToastAndroid.SHORT);
     } else {
-      Alert.alert('Profile saved successfully!');
+      Alert.alert('Success', 'Profile saved successfully!');
     }
 
     // Navigate to eligibility tab and pass profile data as params (all dates in DD-MM-YYYY)
@@ -337,20 +341,23 @@ export default function ProfileScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <User size={48} color="#2563EB" strokeWidth={2} />
-            <Text style={styles.headerTitle}>Profile Setup</Text>
-            <Text style={styles.headerSubtitle}>
-              Enter your employment history for accurate benefit calculations
-            </Text>
+          <View style={styles.headerIconContainer}>
+            <User size={32} color="#2563EB" strokeWidth={2} />
           </View>
+          <Text style={styles.headerTitle}>Your Retirement Age Calculator</Text>
+          <Text style={styles.headerSubtitle}>
+            Enter your employment history for accurate benefit calculations
+          </Text>
         </View>
 
         {/* Form */}
         <View style={styles.form}>
           {/* Personal Information */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Personal Information</Text>
+            <View style={styles.sectionHeader}>
+              <User size={20} color="#2563EB" strokeWidth={2} />
+              <Text style={styles.sectionTitle}>Personal Information</Text>
+            </View>
             
             <View style={styles.inputGroup}>
               <Text style={styles.label}>First Name</Text>
@@ -375,7 +382,7 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date of Birth</Text>
+              <Text style={styles.label}>Your Date of Birth</Text>
               <TextInput
                 style={styles.input}
                 value={formData.dateOfBirth}
@@ -385,18 +392,20 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Enter your date of birth in DD-MM-YYYY format.</Text>
+              {/* <Text style={styles.helpText}>Enter your date of birth in DD-MM-YYYY format</Text> */}
             </View>
-            {/* <Text style={styles.helpText}>Output will be in DD-MM-YYYY format</Text> */}
           </View>
 
           {/* Employment Information */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Employment History</Text>
+            <View style={styles.sectionHeader}>
+              <Building size={20} color="#2563EB" strokeWidth={2} />
+              <Text style={styles.sectionTitle}>Employment History</Text>
+            </View>
             
             {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Participating Organization</Text>
+              <Text style={styles.label}>Your Employing Organization(Participating in Pension Fund)</Text>
               <TouchableOpacity
                 style={styles.dropdownInput}
                 onPress={() => setShowOrgModal(true)}
@@ -406,12 +415,11 @@ export default function ProfileScreen() {
                 </Text>
                 <ChevronDown size={20} color="#6B7280" strokeWidth={2} />
               </TouchableOpacity>
-              {/* <Text style={styles.helpText}>Select your Organization</Text> */}
             </View>
 
             {/* Date of Entry into Pension Fund Participation */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date of Entry into Pension Fund Participation</Text>
+              <Text style={styles.label}>Your Date of Entry into Fund</Text>
               <TextInput
                 style={styles.input}
                 value={formData.dateOfEntry}
@@ -421,13 +429,12 @@ export default function ProfileScreen() {
                 keyboardType="numbers-and-punctuation"
                 maxLength={10}
               />
-              <Text style={styles.helpText}>Enter your date of entry in DD-MM-YYYY format.</Text>
+              {/* <Text style={styles.helpText}>Enter your date of entry in DD-MM-YYYY format</Text> */}
             </View>
-            {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
 
             {/* Date of Separation */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date of Separation</Text>
+              <Text style={styles.label}>Your Preferred Date of Separation</Text>
               <TextInput
                 style={styles.input}
                 value={formData.dateOfSeparation}
@@ -442,11 +449,9 @@ export default function ProfileScreen() {
 
             {/* Length of Contributory Service (auto-calc) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Length of Contributory Service</Text>
-              {/* <Text style={styles.helpText}>Calculated from Date of Entry to Date of Separation</Text> */}
-
+              <Text style={styles.label}>Length of Your Contributory Service(Calculated)</Text>
               <TextInput
-                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                style={[styles.input, styles.readOnlyInput]}
                 value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
                 editable={false}
                 placeholder="Years, months, days will be calculated automatically"
@@ -454,96 +459,127 @@ export default function ProfileScreen() {
               />
               <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
             </View>
+          </View>
 
-            {/* Retirement Categories Card (NRA, ERA, DRA) */}
-            <View style={styles.retirementCard}>
-              <Text style={styles.retirementCardTitle}>Retirement Categories (Based on Entry Date):</Text>
-              <Text style={styles.retirementCardText}>
-                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Normal Retirement Age (NRA): </Text>
-                {(() => {
-                  const dob = formData.dateOfBirth;
-                  const entry = formData.dateOfEntry;
-                  const nraDate = calculateNRA(dob, entry);
-                  let nraAge = 65;
-                  const entryDate = parseDMY(entry);
-                  if (entryDate) {
-                    const entry1990 = new Date(1990, 0, 1);
-                    const entry2014 = new Date(2014, 0, 1);
-                    if (entryDate < entry1990) nraAge = 60;
-                    else if (entryDate < entry2014) nraAge = 62;
-                  }
-                  return nraDate ? `${nraAge} years on ${nraDate}` : '—';
-                })()}
-              </Text>
-              <Text style={styles.retirementCardText}>
-                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Early Retirement Age (ERA): </Text>
-                {(() => {
-                  const dob = formData.dateOfBirth;
-                  const entry = formData.dateOfEntry;
-                  const eraDate = calculateERA(dob, entry);
-                  let eraAge = 58;
-                  const entryDate = parseDMY(entry);
-                  if (entryDate) {
-                    const entry2014 = new Date(2014, 0, 1);
-                    if (entryDate < entry2014) eraAge = 55;
-                  }
-                  return eraDate ? `${eraAge} years on ${eraDate}` : '—';
-                })()}
-              </Text>
-              <Text style={styles.retirementCardText}>
-                <Text style={{ fontWeight: 'bold', color: '#2563EB' }}>Deferred Retirement Age (DRA): </Text>
-                {(() => {
-                  const dob = formData.dateOfBirth;
-                  const entry = formData.dateOfEntry;
-                  const entryDate = parseDMY(entry);
-                  if (!dob || !entryDate) return '—';
-                  // DRA: Any age younger than ERA, before ERA date
-                  let eraAge = 58;
-                  const entry2014 = new Date(2014, 0, 1);
-                  if (entryDate < entry2014) eraAge = 55;
-                  const eraDate = calculateERA(dob, entry);
-                  return eraDate ? `Any age younger than ${eraAge}. Before ${eraDate}` : '—';
-                })()}
-              </Text>
+          {/* Retirement Information */}
+          <View style={styles.retirementSection}>
+            <View style={styles.retirementHeader}>
+              <View style={styles.sectionHeader}>
+                <Calendar size={20} color="#1E40AF" strokeWidth={2} />
+                <Text style={styles.retirementSectionTitle}>Retirement Information</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => setShowRetirementInfo(!showRetirementInfo)}
+                style={styles.infoButton}
+              >
+                <Info size={16} color="#1E40AF" strokeWidth={2} />
+              </TouchableOpacity>
             </View>
 
-            {/* Mandatory Age of Separation (MAS) */}
+            {showRetirementInfo && (
+              <View style={styles.retirementInfoCard}>
+                <Text style={styles.retirementInfoTitle}>Retirement Categories (Based on Entry Date):</Text>
+                <View style={styles.retirementInfoItem}>
+                  <Text style={styles.retirementInfoLabel}>Normal Retirement Age (NRA): </Text>
+                  <Text style={styles.retirementInfoValue}>
+                    {(() => {
+                      const dob = formData.dateOfBirth;
+                      const entry = formData.dateOfEntry;
+                      const nraDate = calculateNRA(dob, entry);
+                      let nraAge = 65;
+                      const entryDate = parseDMY(entry);
+                      if (entryDate) {
+                        const entry1990 = new Date(1990, 0, 1);
+                        const entry2014 = new Date(2014, 0, 1);
+                        if (entryDate < entry1990) nraAge = 60;
+                        else if (entryDate < entry2014) nraAge = 62;
+                      }
+                      return nraDate ? `${nraAge} years on ${nraDate}` : '—';
+                    })()}
+                  </Text>
+                </View>
+                <View style={styles.retirementInfoItem}>
+                  <Text style={styles.retirementInfoLabel}>Early Retirement Age (ERA): </Text>
+                  <Text style={styles.retirementInfoValue}>
+                    {(() => {
+                      const dob = formData.dateOfBirth;
+                      const entry = formData.dateOfEntry;
+                      const eraDate = calculateERA(dob, entry);
+                      let eraAge = 58;
+                      const entryDate = parseDMY(entry);
+                      if (entryDate) {
+                        const entry2014 = new Date(2014, 0, 1);
+                        if (entryDate < entry2014) eraAge = 55;
+                      }
+                      return eraDate ? `${eraAge} years on ${eraDate}` : '—';
+                    })()}
+                  </Text>
+                </View>
+                <View style={styles.retirementInfoItem}>
+                  <Text style={styles.retirementInfoLabel}>Deferred Retirement Age (DRA): </Text>
+                  <Text style={styles.retirementInfoValue}>
+                    {(() => {
+                      const dob = formData.dateOfBirth;
+                      const entry = formData.dateOfEntry;
+                      const entryDate = parseDMY(entry);
+                      if (!dob || !entryDate) return '—';
+                      let eraAge = 58;
+                      const entry2014 = new Date(2014, 0, 1);
+                      if (entryDate < entry2014) eraAge = 55;
+                      const eraDate = calculateERA(dob, entry);
+                      return eraDate ? `Any age younger than ${eraAge}. Before ${eraDate}` : '—';
+                    })()}
+                  </Text>
+                </View>
+                <Text style={styles.retirementHelpText}>
+                Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on your entry date into the UN Pension Fund. If unsure, refer to your official pension statement or contact UNJSPF.
+                </Text>
+              </View>
+            )}
+
+            {/* MAS */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date on which you will reach MAS (Mandatory Age of Separation)</Text>
+              <Text style={styles.retirementLabel}>Your Date of Mandatory Age of Separation(Calculated))</Text>
               <TextInput
-                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                style={[styles.input, styles.retirementInput]}
                 value={calculateMAS(formData.dateOfBirth)}
                 editable={false}
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>In most Member Organisations, MAS is 65 years. If different, contact your UNJSPF for advice.</Text>
+              <Text style={styles.retirementHelpText}>
+                In most Member Organisations, MAS is 65 years. If different, contact your UNJSPF for advice.
+              </Text>
             </View>
 
-            {/* Normal Retirement Age (NRA) */}
+            {/* NRA */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date on which you will reach NRA (Normal Retirement Age)</Text>
+              <Text style={styles.retirementLabel}>Your Date of Normal Retirement Age(Calculated)</Text>
               <TextInput
-                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                style={[styles.input, styles.retirementInput]}
                 value={calculateNRA(formData.dateOfBirth, formData.dateOfEntry)}
                 editable={false}
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Based on your Date of Birth and Entry into Pension Fund.</Text>
+              <Text style={styles.retirementHelpText}>
+                {/* Based on your Date of Birth and Entry into Pension Fund. */}
+              </Text>
             </View>
 
-            {/* Early Retirement Age (ERA) */}
+            {/* ERA */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Date on which you will reach ERA (Early Retirement Age)</Text>
+              <Text style={styles.retirementLabel}>Your Date of Early Retirement Age(Calculated)</Text>
               <TextInput
-                style={[styles.input, { backgroundColor: '#F3F4F6' }]}
+                style={[styles.input, styles.retirementInput]}
                 value={calculateERA(formData.dateOfBirth, formData.dateOfEntry)}
                 editable={false}
                 placeholder="Will be calculated automatically"
                 placeholderTextColor="#9CA3AF"
               />
-              <Text style={styles.helpText}>Based on your Date of Birth and Entry into Pension Fund.</Text>
+              <Text style={styles.retirementHelpText}>
+                {/* Based on your Date of Birth and Entry into Pension Fund. */}
+              </Text>
             </View>
           </View>
 
@@ -613,42 +649,113 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 24,
     paddingHorizontal: 24,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-  },
-  headerContent: {
     alignItems: 'center',
   },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '800',
     color: '#111827',
-    marginTop: 16,
     marginBottom: 8,
     textAlign: 'center',
   },
   headerSubtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#6B7280',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 22,
   },
   form: {
-    padding: 24,
+    padding: 20,
   },
   section: {
-    marginBottom: 32,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: '#111827',
+    marginLeft: 8,
+  },
+  retirementSection: {
+    backgroundColor: '#EBF4FF',
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+  },
+  retirementHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  retirementSectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1E40AF',
+    marginLeft: 8,
+  },
+  infoButton: {
+    padding: 8,
+    backgroundColor: '#DBEAFE',
+    borderRadius: 20,
+  },
+  retirementInfoCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#BFDBFE',
+  },
+  retirementInfoTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1E40AF',
+    marginBottom: 12,
+  },
+  retirementInfoItem: {
+    marginBottom: 8,
+  },
+  retirementInfoLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1E40AF',
+  },
+  retirementInfoValue: {
+    fontSize: 14,
+    color: '#374151',
+    marginTop: 2,
   },
   inputGroup: {
     marginBottom: 20,
@@ -659,6 +766,12 @@ const styles = StyleSheet.create({
     color: '#374151',
     marginBottom: 8,
   },
+  retirementLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1E40AF',
+    marginBottom: 8,
+  },
   input: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
@@ -667,6 +780,15 @@ const styles = StyleSheet.create({
     padding: 16,
     fontSize: 16,
     color: '#111827',
+  },
+  readOnlyInput: {
+    backgroundColor: '#F3F4F6',
+    color: '#6B7280',
+  },
+  retirementInput: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#BFDBFE',
+    color: '#374151',
   },
   dropdownInput: {
     backgroundColor: '#FFFFFF',
@@ -686,8 +808,20 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: '#9CA3AF',
   },
+  helpText: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  retirementHelpText: {
+    fontSize: 13,
+    color: '#1E40AF',
+    marginTop: 4,
+    marginLeft: 4,
+  },
   saveSection: {
-    marginTop: 32,
+    marginTop: 20,
     marginBottom: 40,
   },
   saveButton: {
@@ -748,37 +882,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F3F4F6',
   },
   orgOptionText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#111827',
     flex: 1,
+    paddingRight: 12,
   },
-  helpText: {
-    fontSize: 15,
-    color: '#9CA3AF',
-    marginLeft: 8,
-  },
-  retirementCard: {
-    backgroundColor: '#EEF2FF',
-    borderRadius: 16,
-    padding: 18,
-    marginTop: 18,
-    marginBottom: 18,
-    shadowColor: '#2563EB',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  retirementCardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#6366F1',
-    marginBottom: 8,
-  },
-  retirementCardText: {
-    fontSize: 15,
-    color: '#1E293B',
-    marginBottom: 4,
-    lineHeight: 22,
-  },
-}); 
+});
