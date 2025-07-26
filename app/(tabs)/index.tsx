@@ -81,7 +81,7 @@ export default function HomeScreen() {
             Understand your vested pension rights, benefit options, and separation entitlements
           </Text>
           
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style={styles.infoCard}
             onPress={() => router.push('/about-pension')}
           >
@@ -95,7 +95,7 @@ export default function HomeScreen() {
               </Text>
             </View>
             <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity 
             style={styles.infoCard}

@@ -383,15 +383,26 @@ export default function ProfileScreen() {
 
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Your Date of Birth</Text>
-              <TextInput
-                style={styles.input}
-                value={formData.dateOfBirth}
-                onChangeText={(value) => handleInputChange('dateOfBirth', formatDateInput(value))}
-                placeholder="DD-MM-YYYY"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="numbers-and-punctuation"
-                maxLength={10}
-              />
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  style={styles.input}
+                  value={formData.dateOfBirth}
+                  onChangeText={(value) => handleInputChange('dateOfBirth', formatDateInput(value))}
+                  placeholder="DD-MM-YYYY"
+                  placeholderTextColor="#9CA3AF"
+                  keyboardType="numbers-and-punctuation"
+                  maxLength={10}
+                />
+                {formData.dateOfBirth ? (
+                  <TouchableOpacity
+                    style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                    onPress={() => handleInputChange('dateOfBirth', '')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
               {/* <Text style={styles.helpText}>Enter your date of birth in DD-MM-YYYY format</Text> */}
             </View>
           </View>
@@ -420,30 +431,52 @@ export default function ProfileScreen() {
             {/* Date of Entry into Pension Fund Participation */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Your Date of Entry into Fund</Text>
-              <TextInput
-                style={styles.input}
-                value={formData.dateOfEntry}
-                onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
-                placeholder="DD-MM-YYYY"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="numbers-and-punctuation"
-                maxLength={10}
-              />
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  style={styles.input}
+                  value={formData.dateOfEntry}
+                  onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
+                  placeholder="DD-MM-YYYY"
+                  placeholderTextColor="#9CA3AF"
+                  keyboardType="numbers-and-punctuation"
+                  maxLength={10}
+                />
+                {formData.dateOfEntry ? (
+                  <TouchableOpacity
+                    style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                    onPress={() => handleInputChange('dateOfEntry', '')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
               {/* <Text style={styles.helpText}>Enter your date of entry in DD-MM-YYYY format</Text> */}
             </View>
 
             {/* Date of Separation */}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Your Preferred Date of Separation</Text>
-              <TextInput
-                style={styles.input}
-                value={formData.dateOfSeparation}
-                onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
-                placeholder="DD-MM-YYYY"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="numbers-and-punctuation"
-                maxLength={10}
-              />
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  style={styles.input}
+                  value={formData.dateOfSeparation}
+                  onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
+                  placeholder="DD-MM-YYYY"
+                  placeholderTextColor="#9CA3AF"
+                  keyboardType="numbers-and-punctuation"
+                  maxLength={10}
+                />
+                {formData.dateOfSeparation ? (
+                  <TouchableOpacity
+                    style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                    onPress={() => handleInputChange('dateOfSeparation', '')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
               <Text style={styles.helpText}>Enter your preferred date of separation, if any</Text>
             </View>
 

@@ -243,6 +243,15 @@ export default function EligibilityScreen() {
     'World Meteorological Organization (WMO)': 'pension@wmo.int',
   };
 
+  // Add a helper to format years as years, months, days (copied from profile tab)
+  function formatYearsMonthsDays(yearsFloat: number): string {
+    const years = Math.floor(yearsFloat);
+    const monthsFloat = (yearsFloat - years) * 12;
+    const months = Math.floor(monthsFloat);
+    const days = Math.round((monthsFloat - months) * 30); // average days in a month
+    return `${years} years, ${months} months, ${days} days`;
+  }
+
   const renderScenarioCard = (scenario: any, idx: number) => {
     const isEligible = scenario.eligible;
     const cardStyle = {
@@ -473,26 +482,35 @@ export default function EligibilityScreen() {
               {/* Years of Service Slider */}
               <View style={styles.sliderContainer}>
                 <CustomSlider
-                  value={yearsOfService}
-                  onValueChange={setYearsOfService}
+                  value={Math.min(yearsOfService, 38.75)}
+                  onValueChange={val => setYearsOfService(Math.min(val, 38.75))}
                   min={0}
-                  max={40}
+                  max={38.75}
                   step={0.1}
                   color="#2563EB"
                   label="Length of Your Contributory Service"
                   unit=" years"
                 />
                 
-                <View style={styles.tickMarksContainer}>
-                  {[0, 5, 10, 20, 30, 40].map((mark) => (
-                    <View key={mark} style={styles.tickMark}>
+                <View style={{ position: 'relative', height: 28, width: '100%' }}>
+                  {[0, 5, 10, 20, 30, 38.75].map((mark) => (
+                    <View
+                      key={mark}
+                      style={{
+                        position: 'absolute',
+                        left: `${((mark - 0) / (38.75 - 0)) * 100}%`,
+                        transform: [{ translateX: -12 }],
+                        alignItems: 'center',
+                        width: 24,
+                      }}
+                    >
                       <View style={styles.tickLine} />
                       <Text style={styles.tickLabel}>{mark}</Text>
                     </View>
                   ))}
                 </View>
                 
-                <Text style={styles.sliderValue}>{yearsOfService.toFixed(1)} years</Text>
+                <Text style={styles.sliderValue}>{formatYearsMonthsDays(yearsOfService)}</Text>
                 <Text style={styles.sliderNote}>Maximum total accrual: 70% of FAR (after 38.75 years of service)</Text>
               </View>
               
@@ -509,12 +527,22 @@ export default function EligibilityScreen() {
                   unit=" years"
                 />
                 
-                <View style={styles.tickMarksContainer}>
+                <View style={{ position: 'relative', height: 28, width: '100%' }}>
                   {[25, 35, 45, ERA, NRA, 70].map((mark) => (
-                    <View key={mark} style={styles.tickMark}>
-                      <View style={[styles.tickLine, 
-                        mark === ERA ? styles.eraTick : 
-                        mark === NRA ? styles.nraTick : 
+                    <View
+                      key={mark}
+                      style={{
+                        position: 'absolute',
+                        left: `${((mark - 25) / (70 - 25)) * 100}%`,
+                        transform: [{ translateX: -12 }],
+                        alignItems: 'center',
+                        width: 24,
+                      }}
+                    >
+                      <View style={[
+                        styles.tickLine,
+                        mark === ERA ? styles.eraTick :
+                        mark === NRA ? styles.nraTick :
                         styles.regularTick
                       ]} />
                       <Text style={[
@@ -572,7 +600,7 @@ export default function EligibilityScreen() {
                     if (!isNaN(num) && num >= 0) setYearsOfService(num);
                     else if (text === '' || text === '.') setYearsOfService(0);
                   }}
-                  placeholder="4 years, 6 months, 27 days"
+                  placeholder=""
                   placeholderTextColor="#9CA3AF"
                   keyboardType="decimal-pad"
                 />
