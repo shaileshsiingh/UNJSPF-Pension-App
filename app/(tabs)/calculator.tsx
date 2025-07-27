@@ -413,7 +413,7 @@ export default function CalculatorScreen() {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Length of Contributory Service</Text>
+          <Text style={styles.label}>Length of Your Contributory Service</Text>
           <TextInput
             style={styles.input}
             value={serviceLength}
