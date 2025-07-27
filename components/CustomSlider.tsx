@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     minWidth: 60,
     textAlign: 'right',
+    display: 'none',
   },
   rangeContainer: {
     flexDirection: 'row',
