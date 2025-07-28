@@ -497,7 +497,7 @@ export default function CalculatorScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Calculator size={32} color="#2563EB" strokeWidth={2} />
-        <Text style={styles.title}>Enhanced Pension Calculator</Text>
+        <Text style={styles.title}>Benefits Calculator</Text>
         <Text style={styles.subtitle}>Calculate your estimated pension benefits with comprehensive options</Text>
       </View>
 

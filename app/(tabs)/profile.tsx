@@ -356,7 +356,7 @@ export default function ProfileScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <User size={20} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.sectionTitle}>Personal Information</Text>
+              <Text style={styles.sectionTitle}>Your Information</Text>
             </View>
             
             <View style={styles.inputGroup}>
@@ -411,7 +411,7 @@ export default function ProfileScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Building size={20} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.sectionTitle}>Employment History</Text>
+              <Text style={styles.sectionTitle}>Your Employment History</Text>
             </View>
             
             {/* Participating Organization Dropdown */}
