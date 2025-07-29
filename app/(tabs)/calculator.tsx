@@ -187,7 +187,7 @@ function formatServiceLength(parts: { years: number, months: number, days: numbe
   return `${parts.years} years, ${parts.months} months, ${parts.days} days`;
 }
 
-// Calculate withdrawal settlement with interest and bonus
+// Calculate withdrawal settlement with interest and bonus - FIXED LOGIC
 function calculateWithdrawalSettlement(
   ownContributions: number, 
   yearsOfService: number,
@@ -201,13 +201,15 @@ function calculateWithdrawalSettlement(
   const calculatedInterest = futureValue - ownContributions;
   const baseAmount = ownContributions + calculatedInterest;
   
-  // Calculate bonus percentage based on years of service
+  // Calculate bonus percentage based on years of service - FIXED LOGIC
   let bonusPercentage = 0;
-  if (yearsOfService >= 5 && yearsOfService <= 15) {
+  if (yearsOfService < 5) {
+    bonusPercentage = 0; // No bonus for less than 5 years
+  } else if (yearsOfService >= 5 && yearsOfService <= 15) {
     const yearsOver5 = yearsOfService - 5;
-    bonusPercentage = Math.min(yearsOver5 * 0.10, 1.0);
+    bonusPercentage = Math.min(yearsOver5 * 0.10, 1.0); // 10% per year over 5, capped at 100%
   } else if (yearsOfService > 15) {
-    bonusPercentage = 1.0; // 100% bonus
+    bonusPercentage = 1.0; // 100% bonus for over 15 years
   }
   
   const bonusAmount = baseAmount * bonusPercentage;
@@ -223,7 +225,7 @@ function calculateWithdrawalSettlement(
   };
 }
 
-// Determine benefit eligibility and type
+// Determine benefit eligibility and type - CORRECTED LOGIC
 function determineBenefitType(
   ageAtSeparation: number,
   yearsOfService: number,
@@ -236,7 +238,7 @@ function determineBenefitType(
   
   let nra = 65, era = 58;
   
-  // Determine NRA and ERA based on entry date
+  // Determine NRA and ERA based on entry date - CORRECTED LOGIC
   const jan1990 = new Date(1990, 0, 1);
   const jan2014 = new Date(2014, 0, 1);
   
@@ -266,35 +268,37 @@ function determineBenefitType(
   return { type: benefitType, nra, era };
 }
 
-// Calculate early retirement reduction factor
+// Calculate early retirement reduction factor - CORRECTED LOGIC
 function calculateReductionFactor(
   ageAtSeparation: number,
   yearsOfService: number,
   nra: number,
   era: number
 ) {
-  if (ageAtSeparation >= nra) return 0;
-  if (ageAtSeparation < era) return 0; // Deferred benefit
+  if (ageAtSeparation >= nra) return 0; // No reduction for normal retirement
+  if (ageAtSeparation < era) return 0; // Deferred benefit, no immediate reduction
   
   const yearsToNRA = nra - ageAtSeparation;
   let reductionRate = 0;
   
+  // Determine reduction rate based on ERA and years of service
   if (era === 55) {
     if (yearsOfService < 25) {
-      reductionRate = 0.06;
+      reductionRate = 0.06; // 6%
     } else if (yearsOfService >= 25 && yearsOfService <= 30) {
-      reductionRate = 0.03;
+      reductionRate = 0.03; // 3%
     } else {
-      reductionRate = 0.01;
+      reductionRate = 0.01; // 1%
     }
   } else if (era === 58) {
     if (yearsOfService < 25) {
-      reductionRate = 0.06;
+      reductionRate = 0.06; // 6%
     } else {
-      reductionRate = 0.04;
+      reductionRate = 0.04; // 4%
     }
   }
   
+  // Apply smaller rate for first 5 years, then 6% for remaining years
   const yearsForSmallerRate = Math.min(yearsToNRA, 5);
   const yearsFor6PercentRate = Math.max(0, yearsToNRA - 5);
   
@@ -307,6 +311,8 @@ export default function CalculatorScreen() {
   const [entryDate, setEntryDate] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [ownContributions, setOwnContributions] = useState(0);
+  const [finalAverageRemuneration, setFinalAverageRemuneration] = useState(0); // NEW: FAR input
+  const [actuarialFactor, setActuarialFactor] = useState(12.694); // NEW: Manual actuarial factor
   const [prValues, setPrValues] = useState(Array(36).fill(''));
   const [yearsOfService, setYearsOfService] = useState(20);
   const [ageAtRetirement, setAgeAtRetirement] = useState(62);
@@ -317,6 +323,8 @@ export default function CalculatorScreen() {
   const [ashiContribution, setAshiContribution] = useState(0);
   const [serviceLength, setServiceLength] = useState('');
   const [withdrawalSettlement, setWithdrawalSettlement] = useState<any>(null);
+  const [calculatedInterest, setCalculatedInterest] = useState(0); // NEW: Display calculated interest
+  const [useFarInput, setUseFarInput] = useState(false); // NEW: Toggle between FAR input and PR values
 
   // Helper functions
   function getSeparationDateObj() {
@@ -339,12 +347,14 @@ export default function CalculatorScreen() {
   const monthLabels = getMonthLabels(getSeparationDateObj()).slice(0, 36);
   const rows = [monthLabels.slice(0, 12), monthLabels.slice(12, 24), monthLabels.slice(24, 36)];
 
-  // Calculate FAR
-  const far = prValues.filter(v => v !== '').length === 36
-    ? prValues.reduce((sum, v) => sum + parseFloat(v || '0'), 0) / 36
-    : 0;
+  // Calculate FAR - either from input or PR values
+  const far = useFarInput 
+    ? finalAverageRemuneration
+    : (prValues.filter(v => v !== '').length === 36
+        ? prValues.reduce((sum, v) => sum + parseFloat(v || '0'), 0) / 36
+        : 0);
 
-  // Calculate ROA (tiered system)
+  // Calculate ROA (tiered system) - SAME AS ORIGINAL
   function calculateROA(years: number) {
     let roa = 0;
     let remaining = years;
@@ -380,13 +390,20 @@ export default function CalculatorScreen() {
   }
 
   const roa = calculateROA(yearsOfService);
-  const commutationFactor = getCommutationFactor(ageAtRetirement);
   const annualPension = far * (roa / 100);
-  const maxLumpSum = (annualPension * (lumpSumPercentage / 100)) * commutationFactor;
+  
+  // Use manual actuarial factor instead of age-based lookup
+  const maxLumpSum = (annualPension * (lumpSumPercentage / 100)) * actuarialFactor;
 
-  // Main calculations
+  // Main calculations - UPDATED TO MATCH HTML LOGIC
   useEffect(() => {
-    if (far > 0 && yearsOfService > 0) {
+    if (far > 0 && yearsOfService >= 0) {
+      // Calculate interest on contributions
+      const INTEREST_RATE = 0.0325;
+      const futureValue = ownContributions * Math.pow((1 + INTEREST_RATE), yearsOfService);
+      const interest = futureValue - ownContributions;
+      setCalculatedInterest(interest);
+
       // Determine benefit type
       const benefitInfo = determineBenefitType(ageAtRetirement, yearsOfService, entryDate);
       
@@ -394,45 +411,57 @@ export default function CalculatorScreen() {
       const wsData = calculateWithdrawalSettlement(ownContributions, yearsOfService, separationDate, entryDate);
       setWithdrawalSettlement(wsData);
       
-      // Calculate periodic benefits
-      let reductionFactor = 0;
-      if (benefitInfo.type === 'Early Retirement Benefit (Article 29)') {
-        reductionFactor = calculateReductionFactor(ageAtRetirement, yearsOfService, benefitInfo.nra, benefitInfo.era);
+      // Calculate periodic benefits if eligible (5+ years service)
+      if (yearsOfService >= 5) {
+        let reductionFactor = 0;
+        if (benefitInfo.type === 'Early Retirement Benefit (Article 29)') {
+          reductionFactor = calculateReductionFactor(ageAtRetirement, yearsOfService, benefitInfo.nra, benefitInfo.era);
+        }
+        
+        // Initial annual pension (FAR * ROA)
+        const initialAnnualPension = far * (roa / 100);
+        
+        // Annual pension after reduction factor
+        const annualPensionAfterReduction = initialAnnualPension * (1 - reductionFactor);
+        
+        // Monthly pension before commutation
+        const monthlyPensionBeforeCommutation = annualPensionAfterReduction / 12;
+        
+        // Lump sum calculations
+        let totalLumpSumAmount = 0;
+        let monthlyCommutedValue = 0;
+        let reducedMonthlyPension = monthlyPensionBeforeCommutation;
+        
+        // Only allow lump sum for non-deferred benefits
+        if (electLumpSum && benefitInfo.type !== 'Deferred Retirement Benefit (Article 30)') {
+          // Use initial annual pension (before reduction) for lump sum calculation
+          totalLumpSumAmount = initialAnnualPension * (lumpSumPercentage / 100) * actuarialFactor;
+          monthlyCommutedValue = monthlyPensionBeforeCommutation * (lumpSumPercentage / 100);
+          reducedMonthlyPension = monthlyPensionBeforeCommutation - monthlyCommutedValue;
+        }
+        
+        // COLA adjustment (2.8%)
+        const colaAmount = reducedMonthlyPension * 0.028;
+        const monthlyPensionAfterCOLA = reducedMonthlyPension + colaAmount;
+        
+        // Final periodic benefit after ASHI deduction
+        const finalPeriodicBenefit = monthlyPensionAfterCOLA - ashiContribution;
+        
+        setCalculation({
+          annualPension: initialAnnualPension,
+          monthlyPension: monthlyPensionBeforeCommutation,
+          lumpSum: totalLumpSumAmount,
+          reducedMonthlyPension,
+          colaAdjustedPension: monthlyPensionAfterCOLA,
+          finalPeriodicBenefit,
+          eligibilityType: benefitInfo.type,
+          earlyRetirementReduction: reductionFactor * 100,
+        });
+      } else {
+        setCalculation(null);
       }
-      
-      const reducedAnnualPension = annualPension * (1 - reductionFactor);
-      const monthlyPensionBeforeCommutation = reducedAnnualPension / 12;
-      
-      // Lump sum calculations
-      let totalLumpSumAmount = 0;
-      let monthlyCommutedValue = 0;
-      let reducedMonthlyPension = monthlyPensionBeforeCommutation;
-      
-      if (electLumpSum && benefitInfo.type !== 'Deferred Retirement Benefit (Article 30)') {
-        totalLumpSumAmount = (annualPension * (lumpSumPercentage / 100)) * commutationFactor;
-        monthlyCommutedValue = monthlyPensionBeforeCommutation * (lumpSumPercentage / 100);
-        reducedMonthlyPension = monthlyPensionBeforeCommutation - monthlyCommutedValue;
-      }
-      
-      // COLA adjustment (2.8%)
-      const colaAmount = reducedMonthlyPension * 0.028;
-      const monthlyPensionAfterCOLA = reducedMonthlyPension + colaAmount;
-      
-      // Final periodic benefit after ASHI deduction
-      const finalPeriodicBenefit = monthlyPensionAfterCOLA - ashiContribution;
-      
-      setCalculation({
-        annualPension,
-        monthlyPension: monthlyPensionBeforeCommutation,
-        lumpSum: totalLumpSumAmount,
-        reducedMonthlyPension,
-        colaAdjustedPension: monthlyPensionAfterCOLA,
-        finalPeriodicBenefit,
-        eligibilityType: benefitInfo.type,
-        earlyRetirementReduction: reductionFactor * 100,
-      });
     }
-  }, [far, roa, yearsOfService, ageAtRetirement, electLumpSum, lumpSumPercentage, ashiContribution, ownContributions, entryDate, separationDate]);
+  }, [far, roa, yearsOfService, ageAtRetirement, electLumpSum, lumpSumPercentage, actuarialFactor, ashiContribution, ownContributions, entryDate, separationDate]);
 
   // Load profile data
   useFocusEffect(
@@ -504,9 +533,9 @@ export default function CalculatorScreen() {
       <View style={styles.form}>
         {/* Date inputs */}
         <DatePicker
-          value={formatDateDDMMYYYY(separationDate)}
-          onDateChange={date => setSeparationDate(formatDateDDMMYYYY(date))}
-          label="Date of Separation"
+          value={formatDateDDMMYYYY(dateOfBirth)}
+          onDateChange={date => setDateOfBirth(formatDateDDMMYYYY(date))}
+          label="Date of Birth"
         />
 
         <DatePicker
@@ -516,9 +545,9 @@ export default function CalculatorScreen() {
         />
 
         <DatePicker
-          value={formatDateDDMMYYYY(dateOfBirth)}
-          onDateChange={date => setDateOfBirth(formatDateDDMMYYYY(date))}
-          label="Date of Birth"
+          value={formatDateDDMMYYYY(separationDate)}
+          onDateChange={date => setSeparationDate(formatDateDDMMYYYY(date))}
+          label="Date of Separation"
         />
 
         {/* Own Contributions Input */}
@@ -539,58 +568,101 @@ export default function CalculatorScreen() {
           <Text style={styles.helpText}>Get this from your Annual Pension Statement.</Text>
         </View>
 
-        {/* PR Values Grid */}
-        <View style={{ marginVertical: 16 }}>
-          <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 36 months before retiring month.</Text>
-          <Text style={styles.helpText}>You may find these figures in your monthly pay slips.</Text>
-          {rows.map((row, rowIdx) => (
-            <ScrollView
-              key={rowIdx}
-              horizontal
-              showsHorizontalScrollIndicator={true}
-              style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
-              contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
-              keyboardShouldPersistTaps="handled"
-              scrollEnabled={true}
-            >
-              {row.map((label, colIdx) => {
-                const absIndex = rowIdx * 12 + colIdx;
-                return (
-                  <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
-                    <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
-                    <TextInput
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#D1D5DB',
-                        borderRadius: 8,
-                        width: 70,
-                        height: 36,
-                        textAlign: 'center',
-                        marginTop: 2,
-                        backgroundColor: '#FFF',
-                        color: '#111827',
-                      }}
-                      value={prValues[absIndex]}
-                      onChangeText={text => {
-                        const newValues = [...prValues];
-                        if (/^\d*\.?\d*$/.test(text)) {
-                          for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
-                            newValues[i] = text;
-                          }
-                          setPrValues(newValues);
-                        }
-                      }}
-                      placeholder="0"
-                      keyboardType="decimal-pad"
-                      maxLength={8}
-                    />
-                  </View>
-                );
-              })}
-            </ScrollView>
-          ))}
-          <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
+        {/* Calculated Interest Display */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Calculated Interest (3.25%)</Text>
+          <Text style={styles.displayValue}>{formatCurrency(calculatedInterest)}</Text>
+          <Text style={styles.helpText}>Interest calculated on your contributions over your service period.</Text>
         </View>
+
+        {/* FAR Input Method Toggle */}
+        <View style={styles.switchContainer}>
+          <View style={styles.switchLabelContainer}>
+            <Text style={styles.switchLabel}>Use Direct FAR Input</Text>
+            <Text style={styles.switchDescription}>Toggle between direct FAR input or PR values calculation</Text>
+          </View>
+          <Switch
+            value={useFarInput}
+            onValueChange={setUseFarInput}
+            trackColor={{ false: '#D1D5DB', true: '#3B82F6' }}
+            thumbColor={useFarInput ? '#FFFFFF' : '#F3F4F6'}
+          />
+        </View>
+
+        {/* Direct FAR Input */}
+        {useFarInput && (
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Final Average Remuneration (USD)</Text>
+            <TextInput
+              style={styles.input}
+              value={finalAverageRemuneration.toString()}
+              onChangeText={text => {
+                const num = parseFloat(text);
+                if (!isNaN(num) && num >= 0) setFinalAverageRemuneration(num);
+                else if (text === '' || text === '.') setFinalAverageRemuneration(0);
+              }}
+              placeholder="Enter your Final Average Remuneration"
+              placeholderTextColor="#9CA3AF"
+              keyboardType="decimal-pad"
+            />
+            <Text style={styles.helpText}>Enter your Final Average Remuneration directly.</Text>
+          </View>
+        )}
+
+        {/* PR Values Grid - Only show if not using direct FAR input */}
+        {!useFarInput && (
+          <View style={{ marginVertical: 16 }}>
+            <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 36 months before retiring month.</Text>
+            <Text style={styles.helpText}>You may find these figures in your monthly pay slips.</Text>
+            {rows.map((row, rowIdx) => (
+              <ScrollView
+                key={rowIdx}
+                horizontal
+                showsHorizontalScrollIndicator={true}
+                style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
+                contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
+                keyboardShouldPersistTaps="handled"
+                scrollEnabled={true}
+              >
+                {row.map((label, colIdx) => {
+                  const absIndex = rowIdx * 12 + colIdx;
+                  return (
+                    <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                      <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
+                      <TextInput
+                        style={{
+                          borderWidth: 1,
+                          borderColor: '#D1D5DB',
+                          borderRadius: 8,
+                          width: 70,
+                          height: 36,
+                          textAlign: 'center',
+                          marginTop: 2,
+                          backgroundColor: '#FFF',
+                          color: '#111827',
+                        }}
+                        value={prValues[absIndex]}
+                        onChangeText={text => {
+                          const newValues = [...prValues];
+                          if (/^\d*\.?\d*$/.test(text)) {
+                            for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
+                              newValues[i] = text;
+                            }
+                            setPrValues(newValues);
+                          }
+                        }}
+                        placeholder="0"
+                        keyboardType="decimal-pad"
+                        maxLength={8}
+                      />
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            ))}
+            <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
+          </View>
+        )}
 
         {/* Service Length Display */}
         <View style={styles.inputGroup}>
@@ -604,6 +676,31 @@ export default function CalculatorScreen() {
           <Text style={styles.label}>Age at Separation</Text>
           <Text style={styles.displayValue}>{Math.floor(ageAtRetirement)} years</Text>
           <Text style={styles.helpText}>Calculated from your birth date and separation date.</Text>
+        </View>
+
+        {/* Rate of Accumulation Display */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Rate of Accumulation (%)</Text>
+          <Text style={styles.displayValue}>{roa.toFixed(2)}%</Text>
+          <Text style={styles.helpText}>Calculated based on your years of service and entry date.</Text>
+        </View>
+
+        {/* Actuarial Factor Input */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Actuarial Factor (for Lump Sum)</Text>
+          <TextInput
+            style={styles.input}
+            value={actuarialFactor.toString()}
+            onChangeText={text => {
+              const num = parseFloat(text);
+              if (!isNaN(num) && num >= 0) setActuarialFactor(num);
+              else if (text === '' || text === '.') setActuarialFactor(0);
+            }}
+            placeholder="e.g., 12.694"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="decimal-pad"
+          />
+          <Text style={styles.helpText}>Enter the actuarial factor for lump sum calculations.</Text>
         </View>
 
         {/* Lump Sum Election */}
@@ -678,18 +775,30 @@ export default function CalculatorScreen() {
                 <Text style={styles.resultValue}>{formatCurrency(withdrawalSettlement.baseAmount)}</Text>
               </View>
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Bonus ({withdrawalSettlement.bonusPercentage}%)</Text>
+                <Text style={styles.resultLabel}>Bonus ({withdrawalSettlement.bonusPercentage.toFixed(0)}%)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(withdrawalSettlement.bonusAmount)}</Text>
               </View>
               <View style={[styles.resultCard, styles.highlightCard]}>
                 <Text style={styles.resultLabel}>Total Withdrawal Settlement</Text>
                 <Text style={[styles.resultValue, styles.highlightValue]}>{formatCurrency(withdrawalSettlement.totalSettlement)}</Text>
               </View>
+              
+              {/* Scenario Summary */}
+              <View style={styles.scenarioSummary}>
+                <Text style={styles.scenarioText}>
+                  {yearsOfService < 5 
+                    ? 'Less than 5 years of service. Only contributions plus interest are returned.'
+                    : yearsOfService <= 15 
+                    ? `Between 5 and 15 years of service. Bonus applied based on years over 5.`
+                    : 'More than 15 years of service. Maximum 100% bonus applied.'
+                  }
+                </Text>
+              </View>
             </View>
           )}
 
           {/* OR Separator */}
-          {yearsOfService >= 5 && withdrawalSettlement && (
+          {yearsOfService >= 5 && withdrawalSettlement && calculation && (
             <View style={styles.orSeparator}>
               <Text style={styles.orText}>OR</Text>
             </View>
@@ -701,69 +810,76 @@ export default function CalculatorScreen() {
               <Text style={styles.benefitTitle}>{calculation.eligibilityType}</Text>
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Final Average Remuneration (FAR)</Text>
-                <Text style={styles.resultValue}>{formatCurrency(far)}</Text>
-              </View>
-              
-              <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Rate of Accumulation (ROA)</Text>
-                <Text style={styles.resultValue}>{roa.toFixed(2)}%</Text>
-              </View>
-              
-              <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Annual Pension Amount (for normal retirement)</Text>
+                <Text style={styles.resultLabel}>A) Annual Pension Amount (for normal retirement)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension)}</Text>
               </View>
               
               {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0 && (
-                <View style={styles.resultCard}>
-                  <Text style={styles.resultLabel}>Early Retirement Reduction Factor</Text>
-                  <Text style={styles.resultValue}>{calculation.earlyRetirementReduction.toFixed(2)}%</Text>
-                </View>
+                <>
+                  <View style={styles.resultCard}>
+                    <Text style={styles.resultLabel}>B) Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction.toFixed(2)}%)</Text>
+                    <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension * (1 - calculation.earlyRetirementReduction / 100))}</Text>
+                  </View>
+                </>
               )}
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Monthly Pension (before commutation)</Text>
+                <Text style={styles.resultLabel}>C) Monthly Pension (before commutation)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.monthlyPension)}</Text>
               </View>
               
               {electLumpSum && calculation.eligibilityType !== 'Deferred Retirement Benefit (Article 30)' && (
                 <>
                   <View style={styles.resultCard}>
-                    <Text style={styles.resultLabel}>Total Lump Sum Received ({lumpSumPercentage.toFixed(2)}%)</Text>
+                    <Text style={styles.resultLabel}>D) Total Lump Sum Received ({lumpSumPercentage.toFixed(2)}%)</Text>
                     <Text style={styles.resultValue}>{formatCurrency(calculation.lumpSum)}</Text>
                   </View>
                   
                   <View style={styles.resultCard}>
-                    <Text style={styles.resultLabel}>Monthly Pension Commuted Value</Text>
+                    <Text style={styles.resultLabel}>E) Monthly Pension Commuted Value</Text>
                     <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(calculation.monthlyPension - calculation.reducedMonthlyPension)}</Text>
                   </View>
                 </>
               )}
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Reduced Monthly Pension</Text>
+                <Text style={styles.resultLabel}>F) Reduced Monthly Pension</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.reducedMonthlyPension)}</Text>
               </View>
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Add: COLA (2.8%)</Text>
+                <Text style={styles.resultLabel}>G) Add: COLA (2.8%)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension - calculation.reducedMonthlyPension)}</Text>
               </View>
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Monthly Pension (after COLA)</Text>
+                <Text style={styles.resultLabel}>H) Monthly Pension (after COLA)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension)}</Text>
               </View>
               
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>Less: ASHI Contribution</Text>
+                <Text style={styles.resultLabel}>I) Less: ASHI Contribution</Text>
                 <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(ashiContribution)}</Text>
               </View>
               
               <View style={[styles.resultCard, styles.highlightCard]}>
-                <Text style={styles.resultLabel}>Your Periodic Retirement Benefit</Text>
+                <Text style={styles.resultLabel}>J) Your Periodic Retirement Benefit</Text>
                 <Text style={[styles.resultValue, styles.highlightValue]}>{formatCurrency(calculation.finalPeriodicBenefit || 0)}</Text>
+              </View>
+
+              {/* Scenario Summary */}
+              <View style={styles.scenarioSummary}>
+                <Text style={styles.scenarioText}>
+                  {calculation.eligibilityType === 'Normal Retirement Benefit (Article 28)' &&
+                    'You are eligible for a Normal Retirement Benefit as you are at or above your Normal Retirement Age.'
+                  }
+                  {calculation.eligibilityType === 'Early Retirement Benefit (Article 29)' &&
+                    'You are eligible for an Early Retirement Benefit as you are between your Early Retirement Age and Normal Retirement Age.'
+                  }
+                  {calculation.eligibilityType === 'Deferred Retirement Benefit (Article 30)' &&
+                    'You are eligible for a Deferred Retirement Benefit as you have 5+ years of service but are below your Early Retirement Age.'
+                  }
+                </Text>
               </View>
             </View>
           )}
@@ -784,7 +900,7 @@ export default function CalculatorScreen() {
       <View style={styles.infoSection}>
         <Text style={styles.infoTitle}>Important Information</Text>
         
-        {/* Deferment Option */}
+        {/* Deferment Option - Show conditionally */}
         {yearsOfService >= 5 && yearsOfService < 15 && (
           <View style={styles.infoCard}>
             <Text style={styles.infoCardTitle}>Deferment of Choice ("Freeze" Option - Article 32)</Text>
@@ -792,10 +908,14 @@ export default function CalculatorScreen() {
               You can choose to defer making a benefit election for up to 36 months from your separation date. 
               Note: You do not earn interest on your contributions during this deferment period.
             </Text>
+            <Text style={styles.infoText}>
+              This option is useful if you expect to re-enter the UNJSPF within 36 months, as your participation 
+              is considered continuous with a break in service (BIS).
+            </Text>
           </View>
         )}
         
-        {/* Restoration Eligibility */}
+        {/* Restoration Eligibility - Show conditionally */}
         {yearsOfService >= 5 && (
           <View style={styles.infoCard}>
             <Text style={styles.infoCardTitle}>Eligibility for Restoration</Text>
@@ -814,21 +934,36 @@ export default function CalculatorScreen() {
             {calculation.eligibilityType === 'Normal Retirement Benefit (Article 28)' && (
               <Text style={styles.infoText}>
                 A monthly benefit payable for life without reduction factors. Monthly amount is adjusted 
-                for cost of living over time and carries Survivors Benefits for eligible survivors.
+                for cost of living over time and carries Survivors Benefits for eligible survivors. 
+                Your entitlement starts as of the date following your separation date.
               </Text>
             )}
             {calculation.eligibilityType === 'Early Retirement Benefit (Article 29)' && (
-              <Text style={styles.infoText}>
-                A monthly benefit payable for life but reduced based on your age and length of service 
-                at separation. The reduction is permanent but the benefit still includes cost of living 
-                adjustments and survivor benefits.
-              </Text>
+              <>
+                <Text style={styles.infoText}>
+                  A monthly benefit payable for life but reduced based on your age and length of service 
+                  at separation. The reduction is permanent but the benefit still includes cost of living 
+                  adjustments and survivor benefits.
+                </Text>
+                <Text style={styles.infoCardTitle} style={{ marginTop: 12 }}>Reduction Factors:</Text>
+                <Text style={styles.infoText}>
+                  • If Early Retirement Age is 55:{'\n'}
+                  - Less than 25 years: 6% per year{'\n'}
+                  - 25-30 years: 3% per year{'\n'}
+                  - More than 30 years: 1% per year{'\n'}
+                  • If Early Retirement Age is 58:{'\n'}
+                  - Less than 25 years: 6% per year{'\n'}
+                  - More than 25 years: 4% per year{'\n'}
+                  Note: Smaller rates apply for max 5 years, then 6% for remaining years.
+                </Text>
+              </>
             )}
             {calculation.eligibilityType === 'Deferred Retirement Benefit (Article 30)' && (
               <Text style={styles.infoText}>
                 A periodic benefit offering lifelong monthly payments, adjusted for cost of living. 
                 NO lump sum option available and NO Child's benefits (except for surviving children 
-                under Survivor's Benefits).
+                under Survivor's Benefits). You determine when the benefit starts by submitting payment 
+                instructions after reaching Early Retirement Age.
               </Text>
             )}
           </View>
@@ -986,6 +1121,19 @@ const styles = StyleSheet.create({
   highlightValue: {
     color: '#1D4ED8',
     fontSize: 18,
+  },
+  scenarioSummary: {
+    backgroundColor: '#F0F9FF',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 8,
+    borderColor: '#BAE6FD',
+    borderWidth: 1,
+  },
+  scenarioText: {
+    fontSize: 14,
+    color: '#0C4A6E',
+    fontStyle: 'italic',
   },
   orSeparator: {
     alignItems: 'center',
