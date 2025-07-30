@@ -11,7 +11,27 @@ import {
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
-import DatePicker from '../../components/DatePicker';
+// import DatePicker from '../../components/DatePicker';
+
+// In the Date fields, auto-insert '-' as user types
+function formatDateInput(text: string): string {
+  // Remove all non-digits
+  let digits = text.replace(/\D/g, '');
+  let parts = [];
+  if (digits.length > 2) {
+    parts.push(digits.slice(0, 2));
+    if (digits.length > 4) {
+      parts.push(digits.slice(2, 4));
+      parts.push(digits.slice(4, 8));
+    } else {
+      parts.push(digits.slice(2));
+    }
+  } else {
+    parts.push(digits);
+  }
+  return parts.join('-');
+}
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -531,24 +551,76 @@ export default function CalculatorScreen() {
       </View>
 
       <View style={styles.form}>
-        {/* Date inputs */}
-        <DatePicker
-          value={formatDateDDMMYYYY(dateOfBirth)}
-          onDateChange={date => setDateOfBirth(formatDateDDMMYYYY(date))}
-          label="Date of Birth"
-        />
-
-        <DatePicker
-          value={formatDateDDMMYYYY(entryDate)}
-          onDateChange={date => setEntryDate(formatDateDDMMYYYY(date))}
-          label="Date of Entry/Re-entry into UNJSPF"
-        />
-
-        <DatePicker
-          value={formatDateDDMMYYYY(separationDate)}
-          onDateChange={date => setSeparationDate(formatDateDDMMYYYY(date))}
-          label="Date of Separation"
-        />
+        {/* Date inputs - replaced DatePicker with TextInput */}
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Date of Birth</Text>
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={styles.input}
+              value={dateOfBirth}
+              onChangeText={value => setDateOfBirth(formatDateInput(value))}
+              placeholder="DD-MM-YYYY"
+              placeholderTextColor="#9CA3AF"
+              keyboardType="numbers-and-punctuation"
+              maxLength={10}
+            />
+            {dateOfBirth ? (
+              <TouchableOpacity
+                style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                onPress={() => setDateOfBirth('')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Date of Entry/Re-entry into UNJSPF</Text>
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={styles.input}
+              value={entryDate}
+              onChangeText={value => setEntryDate(formatDateInput(value))}
+              placeholder="DD-MM-YYYY"
+              placeholderTextColor="#9CA3AF"
+              keyboardType="numbers-and-punctuation"
+              maxLength={10}
+            />
+            {entryDate ? (
+              <TouchableOpacity
+                style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                onPress={() => setEntryDate('')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Date of Separation</Text>
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={styles.input}
+              value={separationDate}
+              onChangeText={value => setSeparationDate(formatDateInput(value))}
+              placeholder="DD-MM-YYYY"
+              placeholderTextColor="#9CA3AF"
+              keyboardType="numbers-and-punctuation"
+              maxLength={10}
+            />
+            {separationDate ? (
+              <TouchableOpacity
+                style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                onPress={() => setSeparationDate('')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        </View>
 
         {/* Own Contributions Input */}
         <View style={styles.inputGroup}>
