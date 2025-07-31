@@ -375,7 +375,7 @@ export default function EligibilityScreen() {
                 <View style={styles.stepNumber}>
                   <Text style={styles.stepNumberText}>6</Text>
                 </View>
-                <Text style={styles.stepText}>Upload copy of your valid passport or other government issued photo ID with your signature (UNLP is accepted)</Text>
+                <Text style={styles.stepText}>Upload copy of your valid passport or other government issued photo ID with your signature (UNLP is NOT accepted)</Text>
               </View>
               <View style={styles.stepItem}>
                 <View style={styles.stepNumber}>

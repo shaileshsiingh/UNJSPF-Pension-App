@@ -477,7 +477,7 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 ) : null}
               </View>
-              <Text style={styles.helpText}>Enter your preferred date of separation, if any</Text>
+              <Text style={styles.helpText}>Enter your preferred date of separation, if other than early, normal, or mandatory age of separation</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
@@ -499,7 +499,7 @@ export default function ProfileScreen() {
             <View style={styles.retirementHeader}>
               <View style={styles.sectionHeader}>
                 <Calendar size={20} color="#1E40AF" strokeWidth={2} />
-                <Text style={styles.retirementSectionTitle}>Retirement Information</Text>
+                <Text style={styles.retirementSectionTitle}>Retirement Information (Calculated)</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setShowRetirementInfo(!showRetirementInfo)}
@@ -572,7 +572,7 @@ export default function ProfileScreen() {
 
             {/* MAS */}
             <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Mandatory Age of Separation(Calculated))</Text>
+              <Text style={styles.retirementLabel}>Your Date of Mandatory Age of Separation</Text>
               <TextInput
                 style={[styles.input, styles.retirementInput]}
                 value={calculateMAS(formData.dateOfBirth)}
@@ -587,7 +587,7 @@ export default function ProfileScreen() {
 
             {/* NRA */}
             <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Normal Retirement Age(Calculated)</Text>
+              <Text style={styles.retirementLabel}>Your Date of Normal Retirement Age</Text>
               <TextInput
                 style={[styles.input, styles.retirementInput]}
                 value={calculateNRA(formData.dateOfBirth, formData.dateOfEntry)}
@@ -602,7 +602,7 @@ export default function ProfileScreen() {
 
             {/* ERA */}
             <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Early Retirement Age(Calculated)</Text>
+              <Text style={styles.retirementLabel}>Your Date of Early Retirement Age</Text>
               <TextInput
                 style={[styles.input, styles.retirementInput]}
                 value={calculateERA(formData.dateOfBirth, formData.dateOfEntry)}

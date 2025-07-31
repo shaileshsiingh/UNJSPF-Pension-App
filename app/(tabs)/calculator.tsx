@@ -829,7 +829,7 @@ export default function CalculatorScreen() {
         {/* Results Section */}
         <View style={{ marginTop: 24 }}>
           <Text style={styles.resultsTitle}>Your Estimated Benefits</Text>
-          
+
           {/* Withdrawal Settlement */}
           {withdrawalSettlement && (
             <View style={styles.benefitSection}>
@@ -854,13 +854,13 @@ export default function CalculatorScreen() {
                 <Text style={styles.resultLabel}>Total Withdrawal Settlement</Text>
                 <Text style={[styles.resultValue, styles.highlightValue]}>{formatCurrency(withdrawalSettlement.totalSettlement)}</Text>
               </View>
-              
+
               {/* Scenario Summary */}
               <View style={styles.scenarioSummary}>
                 <Text style={styles.scenarioText}>
-                  {yearsOfService < 5 
+                  {yearsOfService < 5
                     ? 'Less than 5 years of service. Only contributions plus interest are returned.'
-                    : yearsOfService <= 15 
+                    : yearsOfService <= 15
                     ? `Between 5 and 15 years of service. Bonus applied based on years over 5.`
                     : 'More than 15 years of service. Maximum 100% bonus applied.'
                   }
@@ -869,71 +869,74 @@ export default function CalculatorScreen() {
             </View>
           )}
 
-          {/* OR Separator */}
-          {yearsOfService >= 5 && withdrawalSettlement && calculation && (
-            <View style={styles.orSeparator}>
-              <Text style={styles.orText}>OR</Text>
-            </View>
-          )}
-
           {/* Periodic Benefits */}
           {calculation && yearsOfService >= 5 && (
             <View style={styles.benefitSection}>
               <Text style={styles.benefitTitle}>{calculation.eligibilityType}</Text>
-              
+
+              {/* A) Annual Pension Amount (for normal retirement) */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>A) Annual Pension Amount (for normal retirement)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension)}</Text>
               </View>
-              
+
+              {/* B) Annual Pension (early retirement...) */}
               {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0 && (
-                <>
-                  <View style={styles.resultCard}>
-                    <Text style={styles.resultLabel}>B) Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction.toFixed(2)}%)</Text>
-                    <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension * (1 - calculation.earlyRetirementReduction / 100))}</Text>
-                  </View>
-                </>
+                <View style={styles.resultCard}>
+                  <Text style={styles.resultLabel}>
+                    B) Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction?.toFixed(2)}%)
+                  </Text>
+                  <Text style={styles.resultValue}>
+                    {formatCurrency(calculation.annualPension * (1 - (calculation.earlyRetirementReduction ?? 0) / 100))}
+                  </Text>
+                </View>
               )}
-              
+
+              {/* C) Monthly Pension (before commutation) */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>C) Monthly Pension (before commutation)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.monthlyPension)}</Text>
               </View>
-              
+
+              {/* D/E) Lump Sum and Commuted Value, only if electLumpSum and not deferred */}
               {electLumpSum && calculation.eligibilityType !== 'Deferred Retirement Benefit (Article 30)' && (
                 <>
                   <View style={styles.resultCard}>
                     <Text style={styles.resultLabel}>D) Total Lump Sum Received ({lumpSumPercentage.toFixed(2)}%)</Text>
                     <Text style={styles.resultValue}>{formatCurrency(calculation.lumpSum)}</Text>
                   </View>
-                  
                   <View style={styles.resultCard}>
                     <Text style={styles.resultLabel}>E) Monthly Pension Commuted Value</Text>
                     <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(calculation.monthlyPension - calculation.reducedMonthlyPension)}</Text>
                   </View>
                 </>
               )}
-              
+
+              {/* F) Reduced Monthly Pension */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>F) Reduced Monthly Pension</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.reducedMonthlyPension)}</Text>
               </View>
-              
+
+              {/* G) Add: COLA (2.8%) */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>G) Add: COLA (2.8%)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension - calculation.reducedMonthlyPension)}</Text>
               </View>
-              
+
+              {/* H) Monthly Pension (after COLA) */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>H) Monthly Pension (after COLA)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension)}</Text>
               </View>
-              
+
+              {/* I) Less: ASHI Contribution */}
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>I) Less: ASHI Contribution</Text>
                 <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(ashiContribution)}</Text>
               </View>
-              
+
+              {/* J) Your Periodic Retirement Benefit */}
               <View style={[styles.resultCard, styles.highlightCard]}>
                 <Text style={styles.resultLabel}>J) Your Periodic Retirement Benefit</Text>
                 <Text style={[styles.resultValue, styles.highlightValue]}>{formatCurrency(calculation.finalPeriodicBenefit || 0)}</Text>
@@ -943,26 +946,13 @@ export default function CalculatorScreen() {
               <View style={styles.scenarioSummary}>
                 <Text style={styles.scenarioText}>
                   {calculation.eligibilityType === 'Normal Retirement Benefit (Article 28)' &&
-                    'You are eligible for a Normal Retirement Benefit as you are at or above your Normal Retirement Age.'
-                  }
+                    'You are eligible for a Normal Retirement Benefit as you are at or above your Normal Retirement Age.'}
                   {calculation.eligibilityType === 'Early Retirement Benefit (Article 29)' &&
-                    'You are eligible for an Early Retirement Benefit as you are between your Early Retirement Age and Normal Retirement Age.'
-                  }
+                    'You are eligible for an Early Retirement Benefit as you are between your Early Retirement Age and Normal Retirement Age.'}
                   {calculation.eligibilityType === 'Deferred Retirement Benefit (Article 30)' &&
-                    'You are eligible for a Deferred Retirement Benefit as you have 5+ years of service but are below your Early Retirement Age.'
-                  }
+                    'You are eligible for a Deferred Retirement Benefit as you have 5+ years of service but are below your Early Retirement Age.'}
                 </Text>
               </View>
-            </View>
-          )}
-
-          {/* Eligibility Message */}
-          {yearsOfService < 5 && (
-            <View style={styles.warningCard}>
-              <Info size={20} color="#DC2626" strokeWidth={2} />
-              <Text style={styles.warningText}>
-                You are not eligible for a Periodic Retirement Benefit as you have less than 5 years of Contributory Service. Only Withdrawal Settlement is available.
-              </Text>
             </View>
           )}
         </View>
