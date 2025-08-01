@@ -15,6 +15,85 @@ import { useLocalSearchParams } from 'expo-router';
 import CustomSlider from '../../components/CustomSlider';
 
 export default function EligibilityScreen() {
+  // Load profile data on mount and update currentAge and yearsOfService
+  React.useEffect(() => {
+    AsyncStorage.getItem('profileData').then(data => {
+      if (data) {
+        try {
+          const profile = JSON.parse(data);
+          // Calculate currentAge
+          if (profile.dateOfBirth && profile.dateOfSeparation) {
+            const dob = formatDateDMY(profile.dateOfBirth);
+            const sep = formatDateDMY(profile.dateOfSeparation);
+            const dobParts = dob.split('-').map(Number);
+            const sepParts = sep.split('-').map(Number);
+            let dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear;
+            if (dobParts[0] > 1000) {
+              [dobYear, dobMonth, dobDay] = dobParts;
+            } else {
+              [dobDay, dobMonth, dobYear] = dobParts;
+            }
+            if (sepParts[0] > 1000) {
+              [sepYear, sepMonth, sepDay] = sepParts;
+            } else {
+              [sepDay, sepMonth, sepYear] = sepParts;
+            }
+            let age = sepYear - dobYear;
+            if (sepMonth < dobMonth || (sepMonth === dobMonth && sepDay < dobDay)) {
+              age--;
+            }
+            let months = sepMonth - dobMonth;
+            if (months < 0) months += 12;
+            let days = sepDay - dobDay;
+            if (days < 0) days += 30;
+            const currentAgeCalc = +(age + months / 12 + days / 365.25).toFixed(2);
+            if (!isNaN(currentAgeCalc)) setCurrentAge(currentAgeCalc);
+          }
+          // Calculate yearsOfService
+          if (profile.dateOfEntry && profile.dateOfSeparation) {
+            const entry = formatDateDMY(profile.dateOfEntry);
+            const sep = formatDateDMY(profile.dateOfSeparation);
+            const entryParts = entry.split('-').map(Number);
+            const sepParts = sep.split('-').map(Number);
+            let entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear;
+            if (entryParts[0] > 1000) {
+              [entryYear, entryMonth, entryDay] = entryParts;
+            } else {
+              [entryDay, entryMonth, entryYear] = entryParts;
+            }
+            if (sepParts[0] > 1000) {
+              [sepYear, sepMonth, sepDay] = sepParts;
+            } else {
+              [sepDay, sepMonth, sepYear] = sepParts;
+            }
+            let years = sepYear - entryYear;
+            let months = sepMonth - entryMonth;
+            let days = sepDay - entryDay;
+            if (days < 0) {
+              months--;
+              days += new Date(sepYear, sepMonth - 1, 0).getDate();
+            }
+            if (months < 0) {
+              years--;
+              months += 12;
+            }
+            if (days >= 30) {
+              months += Math.floor(days / 30);
+              days = days % 30;
+            }
+            if (months >= 12) {
+              years += Math.floor(months / 12);
+              months = months % 12;
+            }
+            const service = +(years + months / 12 + days / 365.25).toFixed(2);
+            if (!isNaN(service)) setYearsOfService(service);
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+    });
+  }, []);
   const [inputMode, setInputMode] = useState('slider');
   const [yearsOfService, setYearsOfService] = useState(10);
   const [currentAge, setCurrentAge] = useState(58);

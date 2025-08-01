@@ -483,6 +483,24 @@ export default function CalculatorScreen() {
     }
   }, [far, roa, yearsOfService, ageAtRetirement, electLumpSum, lumpSumPercentage, actuarialFactor, ashiContribution, ownContributions, entryDate, separationDate]);
 
+  // --- Live update yearsOfService and ageAtRetirement ---
+  useEffect(() => {
+    // Calculate years of service
+    if (entryDate && separationDate) {
+      const years = calculateYearsOfService(entryDate, separationDate);
+      if (!isNaN(years) && Math.abs(years - yearsOfService) > 0.01) {
+        setYearsOfService(years);
+      }
+    }
+    // Calculate age at retirement (separation)
+    if (dateOfBirth && separationDate) {
+      const age = calculateAgeAtRetirement(dateOfBirth, separationDate);
+      if (!isNaN(age) && Math.abs(age - ageAtRetirement) > 0.01) {
+        setAgeAtRetirement(age);
+      }
+    }
+  }, [entryDate, separationDate, dateOfBirth]);
+
   // Load profile data
   useFocusEffect(
     React.useCallback(() => {
@@ -499,31 +517,12 @@ export default function CalculatorScreen() {
             if (profile.dateOfBirth) {
               setDateOfBirth(formatDateDDMMYYYY(profile.dateOfBirth));
             }
-            
-            // Auto-calculate service and age
-            if (profile.dateOfEntry && profile.dateOfSeparation) {
-              const entry = formatDateDDMMYYYY(profile.dateOfEntry);
-              const sep = formatDateDDMMYYYY(profile.dateOfSeparation);
-              const computedYears = calculateYearsOfService(entry, sep);
-              if (computedYears && Math.abs(computedYears - yearsOfService) > 0.01) {
-                setYearsOfService(computedYears);
-              }
-            }
-            
-            if (profile.dateOfBirth && profile.dateOfSeparation) {
-              const dob = formatDateDDMMYYYY(profile.dateOfBirth);
-              const sep = formatDateDDMMYYYY(profile.dateOfSeparation);
-              const computedAge = calculateAgeAtRetirement(dob, sep);
-              if (computedAge && Math.abs(computedAge - ageAtRetirement) > 0.01) {
-                setAgeAtRetirement(computedAge);
-              }
-            }
           } catch (error) {
             console.error('Error parsing profile data:', error);
           }
         }
       });
-    }, [yearsOfService, ageAtRetirement])
+    }, [])
   );
 
   // Update service length display
