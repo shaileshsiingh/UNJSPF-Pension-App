@@ -16,84 +16,42 @@ import CustomSlider from '../../components/CustomSlider';
 
 export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
+  const [currentAgeParts, setCurrentAgeParts] = useState<{years:number,months:number,days:number}>({years:0,months:0,days:0});
+  const [serviceLengthParts, setServiceLengthParts] = useState<{years:number,months:number,days:number}>({years:0,months:0,days:0});
+  // Navigation params support (for immediate update after profile save)
+  const params = useLocalSearchParams();
   React.useEffect(() => {
-    AsyncStorage.getItem('profileData').then(data => {
-      if (data) {
-        try {
-          const profile = JSON.parse(data);
-          // Calculate currentAge
-          if (profile.dateOfBirth && profile.dateOfSeparation) {
-            const dob = formatDateDMY(profile.dateOfBirth);
-            const sep = formatDateDMY(profile.dateOfSeparation);
-            const dobParts = dob.split('-').map(Number);
-            const sepParts = sep.split('-').map(Number);
-            let dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear;
-            if (dobParts[0] > 1000) {
-              [dobYear, dobMonth, dobDay] = dobParts;
-            } else {
-              [dobDay, dobMonth, dobYear] = dobParts;
+    let setFromParams = false;
+    if (params.dateOfBirth && params.dateOfSeparation) {
+      setCurrentAgeParts(getDateParts(params.dateOfBirth as string, params.dateOfSeparation as string));
+      setFromParams = true;
+    }
+    if (params.dateOfEntry && params.dateOfSeparation) {
+      setServiceLengthParts(getDateParts(params.dateOfEntry as string, params.dateOfSeparation as string));
+      setFromParams = true;
+    }
+    if (!setFromParams) {
+      AsyncStorage.getItem('profileData').then(data => {
+        if (data) {
+          try {
+            const profile = JSON.parse(data);
+            if (profile.dateOfBirth && profile.dateOfSeparation) {
+              const dob = formatDateDMY(profile.dateOfBirth);
+              const sep = formatDateDMY(profile.dateOfSeparation);
+              setCurrentAgeParts(getDateParts(dob, sep));
             }
-            if (sepParts[0] > 1000) {
-              [sepYear, sepMonth, sepDay] = sepParts;
-            } else {
-              [sepDay, sepMonth, sepYear] = sepParts;
+            if (profile.dateOfEntry && profile.dateOfSeparation) {
+              const entry = formatDateDMY(profile.dateOfEntry);
+              const sep = formatDateDMY(profile.dateOfSeparation);
+              setServiceLengthParts(getDateParts(entry, sep));
             }
-            let age = sepYear - dobYear;
-            if (sepMonth < dobMonth || (sepMonth === dobMonth && sepDay < dobDay)) {
-              age--;
-            }
-            let months = sepMonth - dobMonth;
-            if (months < 0) months += 12;
-            let days = sepDay - dobDay;
-            if (days < 0) days += 30;
-            const currentAgeCalc = +(age + months / 12 + days / 365.25).toFixed(2);
-            if (!isNaN(currentAgeCalc)) setCurrentAge(currentAgeCalc);
+          } catch (e) {
+            // ignore
           }
-          // Calculate yearsOfService
-          if (profile.dateOfEntry && profile.dateOfSeparation) {
-            const entry = formatDateDMY(profile.dateOfEntry);
-            const sep = formatDateDMY(profile.dateOfSeparation);
-            const entryParts = entry.split('-').map(Number);
-            const sepParts = sep.split('-').map(Number);
-            let entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear;
-            if (entryParts[0] > 1000) {
-              [entryYear, entryMonth, entryDay] = entryParts;
-            } else {
-              [entryDay, entryMonth, entryYear] = entryParts;
-            }
-            if (sepParts[0] > 1000) {
-              [sepYear, sepMonth, sepDay] = sepParts;
-            } else {
-              [sepDay, sepMonth, sepYear] = sepParts;
-            }
-            let years = sepYear - entryYear;
-            let months = sepMonth - entryMonth;
-            let days = sepDay - entryDay;
-            if (days < 0) {
-              months--;
-              days += new Date(sepYear, sepMonth - 1, 0).getDate();
-            }
-            if (months < 0) {
-              years--;
-              months += 12;
-            }
-            if (days >= 30) {
-              months += Math.floor(days / 30);
-              days = days % 30;
-            }
-            if (months >= 12) {
-              years += Math.floor(months / 12);
-              months = months % 12;
-            }
-            const service = +(years + months / 12 + days / 365.25).toFixed(2);
-            if (!isNaN(service)) setYearsOfService(service);
-          }
-        } catch (e) {
-          // ignore
         }
-      }
-    });
-  }, []);
+      });
+    }
+  }, [params]);
   const [inputMode, setInputMode] = useState('slider');
   const [yearsOfService, setYearsOfService] = useState(10);
   const [currentAge, setCurrentAge] = useState(58);
@@ -240,10 +198,10 @@ export default function EligibilityScreen() {
   const filteredScenarios = getFilteredScenarios();
   const eligibleCount = scenarios.filter(s => s.eligible).length;
 
-  const params = useLocalSearchParams();
+  const params2 = useLocalSearchParams();
   const [orgContact, setOrgContact] = useState<string>('your HR office');
   React.useEffect(() => {
-    let org = (params.organization as string) || '';
+    let org = (params2.organization as string) || '';
     AsyncStorage.getItem('profileData').then(data => {
       if (data) {
         try {
@@ -322,13 +280,39 @@ export default function EligibilityScreen() {
     'World Meteorological Organization (WMO)': 'pension@wmo.int',
   };
 
-  // Add a helper to format years as years, months, days (copied from profile tab)
-  function formatYearsMonthsDays(yearsFloat: number): string {
-    const years = Math.floor(yearsFloat);
-    const monthsFloat = (yearsFloat - years) * 12;
-    const months = Math.floor(monthsFloat);
-    const days = Math.round((monthsFloat - months) * 30); // average days in a month
-    return `${years} years, ${months} months, ${days} days`;
+  // Helper to get difference as years, months, days between two DD-MM-YYYY dates
+  function getDateParts(from: string, to: string) {
+    if (!from || !to) return { years: 0, months: 0, days: 0 };
+    const [fromDay, fromMonth, fromYear] = from.split('-').map(Number);
+    const [toDay, toMonth, toYear] = to.split('-').map(Number);
+    if ([fromDay, fromMonth, fromYear, toDay, toMonth, toYear].some(isNaN)) return { years: 0, months: 0, days: 0 };
+    let years = toYear - fromYear;
+    let months = toMonth - fromMonth;
+    let days = toDay - fromDay;
+    if (days < 0) {
+      months--;
+      days += new Date(toYear, toMonth - 1, 0).getDate();
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    // Roll days into months
+    if (days >= 30) {
+      months += Math.floor(days / 30);
+      days = days % 30;
+    }
+    // Roll months into years
+    if (months >= 12) {
+      years += Math.floor(months / 12);
+      months = months % 12;
+    }
+    return { years, months, days };
+  }
+
+  // Format years, months, days object
+  function formatYearsMonthsDaysObj(parts: { years: number, months: number, days: number }) {
+    return `${parts.years} years, ${parts.months} months, ${parts.days} days`;
   }
 
   const renderScenarioCard = (scenario: any, idx: number) => {
@@ -589,7 +573,7 @@ export default function EligibilityScreen() {
                   ))}
                 </View>
                 
-                <Text style={styles.sliderValue}>{formatYearsMonthsDays(yearsOfService)}</Text>
+                <Text style={styles.sliderValue}>{formatYearsMonthsDaysObj(serviceLengthParts)}</Text>
                 <Text style={styles.sliderNote}>Maximum total accrual: 70% of FAR (after 38.75 years of service)</Text>
               </View>
               
