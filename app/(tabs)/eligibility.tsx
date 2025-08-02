@@ -555,7 +555,7 @@ export default function EligibilityScreen() {
                   unit=" years"
                 />
                 
-                <View style={{ position: 'relative', height: 28, width: '100%' }}>
+                <View style={{ position: 'relative', height: 20, width: '100%', marginTop:'-60px'}}>
                   {[0, 5, 10, 20, 30, 38.75].map((mark) => (
                     <View
                       key={mark}
@@ -590,7 +590,7 @@ export default function EligibilityScreen() {
                   unit=" years"
                 />
                 
-                <View style={{ position: 'relative', height: 28, width: '100%' }}>
+                <View style={{ position: 'relative', height: 28, width: '100%', marginTop:'-60px' }}>
                   {[25, 35, 45, ERA, NRA, 70].map((mark) => (
                     <View
                       key={mark}
@@ -1084,7 +1084,7 @@ const styles = StyleSheet.create({
     width: 2,
     height: 8,
     backgroundColor: '#D1D5DB',
-    marginBottom: 4,
+    marginBottom: 1,
   },
   regularTick: {
     backgroundColor: '#D1D5DB',
