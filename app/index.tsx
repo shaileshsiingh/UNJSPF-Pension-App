@@ -15,12 +15,13 @@ import {
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 
-const LOGO_URL = 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MjgyIiwicCI6InB5aSIsInNpZyI6ImJlOTlkZDgxZjY4MDI1OWFmYzMxYjc0ZDJmOTU1ODQ0ODIyNzJlNTUzNWQ3MGJkMDkyN2M4MDJiYTkxYjA2YjIiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==';
+const LOGO_URL = 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-ec10-622f-b2ed-67482e94d9f3/raw?se=2025-08-03T14%3A51%3A36Z&sp=r&sv=2024-08-04&sr=b&scid=067fc1f0-b4fb-5369-b9f0-9aaec2d3c97c&skoid=bbd22fc4-f881-4ea4-b2f3-c12033cf6a8b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-03T13%3A02%3A02Z&ske=2025-08-04T13%3A02%3A02Z&sks=b&skv=2024-08-04&sig=SBi9rUTCLlJYInSFaWlpRzosPFYqovu7gTJdwKuw8Qc%3D';
 const { width, height } = Dimensions.get('window');
 
 
 const isTablet = width > 768;
 const isSmallScreen = width < 380;
+const isMediumScreen = width < 480;
 
 export default function LandingPage() {
   const { user, loading } = useAuth();
@@ -31,7 +32,6 @@ export default function LandingPage() {
     if (!loading && user) {
       router.replace('/(tabs)');
     }
-    
     // Fade in animation
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -62,7 +62,7 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>Your UN Retirement Benefits Calculator</Text>
+            <Text style={styles.heroSubtitle}>UN Retirement Benefits Calculator</Text>
             <Text style={styles.heroDesc}>
               Empowers you to better plan for your retirement by giving you a complete overview of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.
             </Text>
