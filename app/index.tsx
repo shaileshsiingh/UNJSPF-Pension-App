@@ -328,9 +328,9 @@ export default function LandingPage() {
 // Updated Styles
 const getCardWidth = () => {
   if (isSmallScreen) {
-    return (width - 60) / 3 - 8; // 2 cards per row on very small screens
-  // } else if (isMediumScreen) {
-  //   return (width - 80) / 3 - 8; // 3 cards per row on medium screens
+    return (width - 60) / 3 - 10; // 2 cards per row on very small screens
+  } else if (isMediumScreen) {
+    return (width - 80) / 3 - 10; // 3 cards per row on medium screens
   } else if (isTablet) {
     return (width - 120) / 5 - 12; // 5 cards per row on tablets
   } else {
