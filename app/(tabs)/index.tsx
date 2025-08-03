@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  Image,
 } from 'react-native';
 import { 
   User, 
@@ -22,6 +23,9 @@ import {
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useAuth } from '../../components/AuthContext';
+
+// App logo (re-use same asset as landing page)
+const LOGO_URL = 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MjgyIiwicCI6InB5aSIsInNpZyI6ImJlOTlkZDgxZjY4MDI1OWFmYzMxYjc0ZDJmOTU1ODQ0ODIyNzJlNTUzNWQ3MGJkMDkyN2M4MDJiYTkxYjA2YjIiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==';
 
 export default function HomeScreen() {
   const { signOut } = useAuth();
@@ -42,7 +46,14 @@ export default function HomeScreen() {
         {/* Header Section */}
         <View style={styles.header}>
           <View style={styles.headerContent}>
-            <Building size={48} color="#2563EB" strokeWidth={2} />
+            <TouchableOpacity onPress={() => router.push('/myunpension')}>
+              <Image
+                source={{ uri: LOGO_URL }}
+                style={styles.headerLogo}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome</Text>
             <Text style={styles.welcomeSubtitle}>
               Your Comprehensive Guide to United Nations Pension
@@ -112,6 +123,22 @@ export default function HomeScreen() {
             </View>
             <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
           </TouchableOpacity>
+          {/* Quick link to Landing Page */}
+<TouchableOpacity
+  style={styles.infoCard}
+  onPress={() => router.push('/myunpension')}
+>
+  <View style={styles.cardIconContainer}>
+    <Building size={24} color="#2563EB" strokeWidth={2} />
+  </View>
+  <View style={styles.cardContent}>
+    <Text style={styles.cardTitle}>Visit MyUNPension</Text>
+    <Text style={styles.cardDescription}>
+      Jump straight to the main landing page
+    </Text>
+  </View>
+  <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
+</TouchableOpacity>
         </View>
 
         {/* Quick Tools Section */}
@@ -237,6 +264,11 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     alignItems: 'center',
+  },
+  headerLogo: {
+    width: 120,
+    height: 120,
+    marginBottom: 16,   // a bit more spacing from the title
   },
   welcomeTitle: {
     fontSize: 32,
