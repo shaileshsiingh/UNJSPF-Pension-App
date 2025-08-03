@@ -113,107 +113,100 @@ export default function LandingPage() {
 
         {/* Enhanced Key Features */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Key Features</Text>
-            <Text style={styles.sectionSubtitle}>Your Complete Separation Benefits Guide</Text>
-          </View>
-          
-          {/* Single Combined Features Card */}
-          <View style={styles.featureCard}>
-            <View style={styles.featureHeader}>
-              <View style={styles.featureIconContainer}>
-                <Text style={styles.featureIcon}>🛠️</Text>
-              </View>
-              <Text style={styles.featureTitle}>UNJSPF Toolkit</Text>
-            </View>
-            <Text style={styles.featureDesc}>Complete coverage of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.</Text>
-            
-            <View style={styles.featureList}>
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Benefit Calculator:</Text> Our award-winning UNJSPF calculator, including:
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Benefits Applications:</Text> Understand how your contributory service and salary directly influence your final benefit amount, giving you full transparency and control over
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Your Benefits at a Glance:</Text> Get your final details benefit amount after Cost of Living Adjustments and After Tax on Health Insurance deductions.
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Document Checklist:</Text> Useful document organization to ensure a seamless separation process.
-                </Text>
-              </View>
-            </View>
-
-            {/* Employing Organization Benefits Section */}
-            <View style={styles.featureSubHeader}>
-              <View style={styles.featureIconContainer}>
-                <Text style={styles.featureIcon}>🏢</Text>
-              </View>
-              <Text style={styles.featureSubTitle}>Employing Organization Benefits</Text>
-            </View>
-            <Text style={styles.featureDesc}>Easy access to all the entitlements, including:</Text>
-            
-            <View style={styles.featureList}>
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Separation grant</Text>
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Repatriation grant</Text>
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Leave encashment</Text>
-                </Text>
-              </View>
-              
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Travel to home country</Text>
-                </Text>
-              </View>
-            </View>
-          </View>
+  <View style={styles.sectionHeader}>
+    <Text style={styles.sectionTitle}>Key Features</Text>
+    <Text style={styles.sectionSubtitle}>Your Complete Separation Benefits Guide</Text>
+  </View>
+  
+  {/* Single Combined Features Card */}
+  <View style={styles.featureCard}>
+    <View style={styles.featureHeader}>
+      <View style={styles.featureIconContainer}>
+        <Text style={styles.featureIcon}>🛠️</Text>
+      </View>
+      <Text style={styles.featureTitle}>UNJSPF Toolkit</Text>
+    </View>
+    <Text style={styles.featureDesc}>Complete coverage of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.</Text>
+    
+    <View style={styles.featureList}>
+      <View style={styles.featureItemCompact}>
+        <View style={styles.bulletContainer}>
+          <Text style={styles.bullet}>✓</Text>
         </View>
+        <Text style={styles.featureTextCompact}>
+          <Text style={styles.boldText}>Benefit Calculator:</Text> Our award-winning UNJSPF calculator, including:
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemCompact}>
+        <View style={styles.bulletContainer}>
+          <Text style={styles.bullet}>✓</Text>
+        </View>
+        <Text style={styles.featureTextCompact}>
+          <Text style={styles.boldText}>Benefits Applications:</Text> Understand how your contributory service and salary directly influence your final benefit amount, giving you full transparency and control over
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemCompact}>
+        <View style={styles.bulletContainer}>
+          <Text style={styles.bullet}>✓</Text>
+        </View>
+        <Text style={styles.featureTextCompact}>
+          <Text style={styles.boldText}>Your Benefits at a Glance:</Text> Get your final details benefit amount after Cost of Living Adjustments and After Tax on Health Insurance deductions.
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemCompact}>
+        <View style={styles.bulletContainer}>
+          <Text style={styles.bullet}>✓</Text>
+        </View>
+        <Text style={styles.featureTextCompact}>
+          <Text style={styles.boldText}>Document Checklist:</Text> Useful document organization to ensure a seamless separation process.
+        </Text>
+      </View>
+    </View>
+
+    {/* Employing Organization Benefits Section */}
+    <View style={styles.featureSubHeaderCompact}>
+      <View style={styles.featureIconContainer}>
+        <Text style={styles.featureIcon}>🏢</Text>
+      </View>
+      <Text style={styles.featureSubTitle}>Employing Organization Benefits</Text>
+    </View>
+    <Text style={styles.featureDescCompact}>Easy access to all the entitlements, including:</Text>
+    
+    <View style={styles.featureListCompact}>
+      <View style={styles.featureItemTight}>
+        <Text style={styles.bullet}>✓</Text>
+        <Text style={styles.featureTextTight}>
+          <Text style={styles.boldText}>Separation grant</Text>
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemTight}>
+        <Text style={styles.bullet}>✓</Text>
+        <Text style={styles.featureTextTight}>
+          <Text style={styles.boldText}>Repatriation grant</Text>
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemTight}>
+        <Text style={styles.bullet}>✓</Text>
+        <Text style={styles.featureTextTight}>
+          <Text style={styles.boldText}>Leave encashment</Text>
+        </Text>
+      </View>
+      
+      <View style={styles.featureItemTight}>
+        <Text style={styles.bullet}>✓</Text>
+        <Text style={styles.featureTextTight}>
+          <Text style={styles.boldText}>End of assignment travel expenses</Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+
 
         {/* Enhanced About UN Pension Fund */}
         <View style={styles.aboutSection}> 
@@ -580,6 +573,20 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced Feature Cards
+
+//   featureItemCompact: {
+//   flexDirection: 'row',
+//   alignItems: 'flex-start',
+//   marginBottom: 6, // Reduced from default
+//   paddingVertical: 2, // Reduced padding
+// },
+// featureTextCompact: {
+//   flex: 1,
+//   fontSize: 14,
+//   lineHeight: 18, // Reduced line height
+//   color: '#4B5563',
+//   paddingLeft: 8,
+// },
   featureCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
@@ -684,6 +691,47 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
+featureItemCompact: {
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  marginBottom: 6, // Reduced from default
+  paddingVertical: 2, // Reduced padding
+},
+featureTextCompact: {
+  flex: 1,
+  fontSize: 14,
+  lineHeight: 18, // Reduced line height
+  color: '#4B5563',
+  paddingLeft: 8,
+},
+featureSubHeaderCompact: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: 16,
+  marginBottom: 4, // Reduced spacing
+},
+featureDescCompact: {
+  fontSize: 14,
+  color: '#6B7280',
+  marginBottom: 8, // Reduced spacing
+  lineHeight: 16,
+},
+featureListCompact: {
+  marginTop: 0, // No extra margin
+},
+featureItemTight: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: 3, // Very tight spacing
+  paddingVertical: 1,
+},
+featureTextTight: {
+  fontSize: 13,
+  lineHeight: 16,
+  color: '#4B5563',
+  marginLeft: 6, // Direct margin instead of padding
+},
 
   // Enhanced About Section
   aboutSubtitle: {

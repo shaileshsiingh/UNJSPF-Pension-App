@@ -208,7 +208,7 @@ export default function LandingPage() {
                   <Text style={styles.bullet}>✓</Text>
                 </View>
                 <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Travel to home country</Text>
+          <Text style={styles.boldText}>End of assignment travel expenses</Text>
                 </Text>
               </View>
             </View>
