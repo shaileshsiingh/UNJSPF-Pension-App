@@ -158,8 +158,8 @@ export default function SignupScreen() {
 
   return (
     <ImageBackground 
-      source={{ uri: 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MDg3IiwicCI6InB5aSIsInNpZyI6ImQwMWE1ZTgzYzEyNzE1YzdhYmJlNzJkM2U5ZGE4YzA2MWFkOTc4NzQ0ZTNiMDdiMzBkZTQ3MTE3YWRkNTI0ZGQiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==' }} // Replace with your image URL
-      style={styles.background}
+    source={{ uri: 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MjgyIiwicCI6InB5aSIsInNpZyI6ImJlOTlkZDgxZjY4MDI1OWFmYzMxYjc0ZDJmOTU1ODQ0ODIyNzJlNTUzNWQ3MGJkMDkyN2M4MDJiYTkxYjA2YjIiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==' }} // Replace with your image URL
+    style={styles.background}
       resizeMode="cover"
     >
       {/* Overlay for better readability */}
