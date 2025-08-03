@@ -41,7 +41,6 @@ export default function LandingPage() {
   }, [user, loading]);
 
   if (loading) return null;
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0EA5E9" />
@@ -215,28 +214,28 @@ export default function LandingPage() {
             <Text style={styles.aboutSubtitle}>Your pension is managed by a globally trusted institution</Text>
           </View>
           
-          <View style={styles.statsContainer}>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>$96B</Text>
-              <Text style={styles.statLabel}>Asset Value</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>111%</Text>
-              <Text style={styles.statLabel}>Funded Ratio</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>24</Text>
-              <Text style={styles.statLabel}>Participating Organizations</Text>  
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>1,50,000</Text>
-              <Text style={styles.statLabel}>Active staff</Text>
-            </View>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>89,000</Text>
-              <Text style={styles.statLabel}>Retirees</Text>
-            </View>
-          </View>
+           <View style={styles.statsContainer}>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>$96B</Text>
+             <Text style={styles.statLabel}>Asset Value</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>111%</Text>
+             <Text style={styles.statLabel}>Funded Ratio</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>24</Text>
+             <Text style={styles.statLabel}>Participating Organizations</Text>  
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>1,50,000</Text>
+             <Text style={styles.statLabel}>Active staff</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>89,000</Text>
+             <Text style={styles.statLabel}>Retirees</Text>
+           </View>
+           </View>
 
           <View style={styles.aboutCard}>
   {[
@@ -326,7 +325,18 @@ export default function LandingPage() {
     </SafeAreaView>
   );
 }
-
+// Updated Styles
+const getCardWidth = () => {
+  if (isSmallScreen) {
+    return (width - 60) / 3 - 8; // 2 cards per row on very small screens
+  // } else if (isMediumScreen) {
+  //   return (width - 80) / 3 - 8; // 3 cards per row on medium screens
+  } else if (isTablet) {
+    return (width - 120) / 5 - 12; // 5 cards per row on tablets
+  } else {
+    return (width - 100) / 4 - 10; // 4 cards per row on regular screens
+  }
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -743,47 +753,51 @@ featureTextTight: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '500',
   },
-  statsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginBottom: 40,
-    gap: isSmallScreen ? 8 : 12,
-  },
-  statCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: isSmallScreen ? 16 : 20,
-    alignItems: 'center',
-    minWidth: isSmallScreen ? '28%' : '18%',
-    maxWidth: isSmallScreen ? '30%' : '19%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.1,
-    shadowRadius: 16,
-    elevation: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-  },
-  statNumber: {
-    fontSize: isSmallScreen ? 16 : 20,
-    fontWeight: '900',
-    color: '#0EA5E9',
-    marginBottom: 6,
-    letterSpacing: -0.5,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  statLabel: {
-    fontSize: isSmallScreen ? 10 : 11,
-    color: '#6b7280',
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: 0.3,
-    textTransform: 'uppercase',
-    lineHeight: 14,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
+   statsContainer: {
+     flexDirection: 'row',
+     flexWrap: 'wrap',
+     justifyContent: 'space-around',
+     alignItems: 'stretch',
+     marginBottom: 40,
+     paddingHorizontal: isSmallScreen ? 20 : 30,
+     gap: isSmallScreen ? 8 : 12,
+   },
+   statCard: {
+     backgroundColor: '#ffffff',
+     borderRadius: 20,
+     padding: isSmallScreen ? 12 : isMediumScreen ? 14 : 18,
+     alignItems: 'center',
+     justifyContent: 'center',
+     width: getCardWidth(),
+     minHeight: isSmallScreen ? 80 : 90,
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 6 },
+     shadowOpacity: 0.1,
+     shadowRadius: 16,
+     elevation: 6,
+     borderWidth: 1,
+     borderColor: 'rgba(14, 165, 233, 0.1)',
+     marginBottom: isSmallScreen ? 12 : 8,
+   },
+   statNumber: {
+     fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
+     fontWeight: '900',
+     color: '#0EA5E9',
+     marginBottom: 4,
+     letterSpacing: -0.5,
+     textAlign: 'center',
+     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+   },
+   statLabel: {
+     fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
+     color: '#6b7280',
+     fontWeight: '700',
+     textAlign: 'center',
+     letterSpacing: 0.3,
+     textTransform: 'uppercase',
+     lineHeight: isSmallScreen ? 12 : 14,
+     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+   },
   aboutCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
