@@ -98,9 +98,9 @@ export default function LandingPage() {
         <View style={styles.whoSection}>
           <View style={styles.whoCard}>
             <View style={styles.whoHeader}>
-              <View style={styles.whoIconContainer}>
+              {/* <View style={styles.whoIconContainer}>
                 <Text style={styles.whoIcon}>👥</Text>
-              </View>
+              </View> */}
               <Text style={styles.whoTitle}>Who is MyUNPension for?</Text>
             </View>
             <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text>
@@ -233,7 +233,7 @@ export default function LandingPage() {
             </View>
             <View style={styles.statCard}>
               <Text style={styles.statNumber}>24</Text>
-              <Text style={styles.statLabel}>Participant</Text>
+              <Text style={styles.statLabel}>Participating Organizations</Text>  
             </View>
             <View style={styles.statCard}>
               <Text style={styles.statNumber}>1,50,000</Text>
@@ -246,24 +246,26 @@ export default function LandingPage() {
           </View>
 
           <View style={styles.aboutCard}>
-            {[
-              { icon: '🏛️', text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
-              { icon: '💰', text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
-              { icon: '✅', text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
-              { icon: '📊', text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
-              { icon: '💼', text: 'Your age, years of pension contribution, salary grade and step at the time of retirement decides the value of your pension' },
-              { icon: '🏦', text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-              { icon: '📈', text: 'Your Pension is adjusted based on inflation and paid for life' },
-              { icon: '👨‍👩‍👧‍👦', text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
-              { icon: '🚪', text: 'You can separate at any time you want' }
-            ].map((item, index) => (
-              <View key={index} style={styles.aboutItem}>
-                <Text style={styles.aboutIcon}>{item.icon}</Text>
-                <Text style={styles.aboutText}>{item.text}</Text>
-              </View>
-            ))}
-            <Text style={styles.sourceText}>Source: UNJSPF</Text>
-          </View>
+  {[
+    { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
+    { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
+    { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
+    { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
+    { text: 'Your age, years of pension contribution, salary grade and step at the time of retirement decides the value of your pension' },
+    { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
+    { text: 'Your Pension is adjusted based on inflation and paid for life' },
+    { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
+    { text: 'You can separate at any time you want' }
+  ].map((item, index) => (
+    <View key={index} style={styles.aboutItem}>
+      <View style={styles.aboutBulletContainer}>
+        <Text style={styles.aboutBullet}>•</Text>
+      </View>
+      <Text style={styles.aboutText}>{item.text}</Text>
+    </View>
+  ))}
+  <Text style={styles.sourceText}>Source: UNJSPF</Text>
+</View>
         </View>
 
         {/* Enhanced How It Works */}
@@ -359,7 +361,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#0EA5E9', // Sky blue
+    backgroundColor: '#f4f6f8', // soft light grey similar to reference
   },
   heroContent: {
     alignItems: 'center',
@@ -368,30 +370,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   heroIconContainer: {
-    width: isSmallScreen ? 80 : 100,
-    height: isSmallScreen ? 80 : 100,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    width: isSmallScreen ? 120 : 140,
+    height: isSmallScreen ? 120 : 140,
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 8,
-    borderWidth: 3,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    // Remove or set padding to 0
-    // padding: 0,
   },
   heroLogo: {
     width: '100%',
     height: '100%',
     borderRadius: 0,
-    backgroundColor: '#fff', // optional
   },
   heroTitle: {
-    color: '#ffffff',
+    color: '#2563EB',
     fontSize: isSmallScreen ? 32 : isTablet ? 48 : 36,
     fontWeight: '900',
     textAlign: 'center',
@@ -403,8 +395,26 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
   },
+  aboutBulletContainer: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#e0f2fe',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+    marginTop: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.2)',
+  },
+  aboutBullet: {
+    color: '#0EA5E9',
+    fontSize: 12,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
   heroSubtitle: {
-    color: 'rgba(255, 255, 255, 0.95)',
+    color: '#2563EB',
     fontSize: isSmallScreen ? 18 : isTablet ? 26 : 22,
     fontWeight: '600',
     textAlign: 'center',
@@ -413,7 +423,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   heroDesc: {
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: 'rgba(62, 88, 112, 0.9)',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
@@ -466,7 +476,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   trustText: {
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: 'rgba(49, 47, 47, 0.9)',
     fontSize: isSmallScreen ? 12 : 14,
     fontWeight: '600',
     letterSpacing: 0.5,
