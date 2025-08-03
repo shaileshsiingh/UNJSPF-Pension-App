@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: '#2563EB',
+    color: '#0072CE',
     fontSize: isSmallScreen ? 32 : isTablet ? 48 : 36,
     fontWeight: '900',
     textAlign: 'center',

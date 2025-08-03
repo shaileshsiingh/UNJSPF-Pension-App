@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: '#2563EB',
+    color: '#0072CE',
     fontSize: isSmallScreen ? 32 : isTablet ? 48 : 36,
     fontWeight: '900',
     textAlign: 'center',
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   heroDesc: {
-    color: 'rgba(62, 88, 112, 0.9)',
+    color: '#rgba(62, 88, 112, 0.9)',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
