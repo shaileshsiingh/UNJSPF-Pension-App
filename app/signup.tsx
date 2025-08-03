@@ -1,15 +1,25 @@
-
-
-// ==========================================
-// SIGNUP SCREEN - SEPARATE FILE
-// ==========================================
-
 // SignupScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet, Alert, KeyboardAvoidingView, Platform, ToastAndroid, ImageBackground } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  Pressable, 
+  StyleSheet, 
+  Alert, 
+  KeyboardAvoidingView, 
+  Platform, 
+  ToastAndroid, 
+  Image,
+  ScrollView,
+  Dimensions
+} from 'react-native';
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+
+const { width, height } = Dimensions.get('window');
+const isSmallScreen = width < 380;
 
 export default function SignupScreen() {
   const { signUp } = useAuth();
@@ -157,96 +167,165 @@ export default function SignupScreen() {
   };
 
   return (
-    <ImageBackground 
-    source={{ uri: 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MjgyIiwicCI6InB5aSIsInNpZyI6ImJlOTlkZDgxZjY4MDI1OWFmYzMxYjc0ZDJmOTU1ODQ0ODIyNzJlNTUzNWQ3MGJkMDkyN2M4MDJiYTkxYjA2YjIiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ==' }} // Replace with your image URL
-    style={styles.background}
-      resizeMode="cover"
-    >
-      {/* Overlay for better readability */}
+    <View style={styles.container}>
+      {/* Clean gradient background - same as login */}
       <LinearGradient
-        colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.1)', 'rgba(0,0,0,0.3)']}
-        style={styles.overlay}
+        colors={['#ffffff', '#f8fafc', '#ffffff']}
+        style={styles.background}
       >
         <KeyboardAvoidingView
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={styles.keyboardView}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <View style={styles.card}>
-            <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.subtitle}>Join us today</Text>
-            
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.input, emailError ? styles.inputError : null]}
-                placeholder="Email"
-                value={email}
-                onChangeText={handleEmailChange}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                placeholderTextColor="#9CA3AF"
-                autoCorrect={false}
-              />
-              {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          <ScrollView 
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            {/* Logo Section - same as login */}
+            <View style={styles.logoSection}>
+              <View style={styles.heroIconContainer}>
+                <Image
+                  source={{ 
+                    uri: 'https://chatgpt.com/backend-api/public_content/enc/eyJpZCI6Im1fNjg3NDViOWYyOGY0ODE5MWJjMjI0ODRiYTI0ZjFjZTM6ZmlsZV8wMDAwMDAwMGVhZjA2MWZkOGJjNWQxMjVjODdlZGU4MyIsInRzIjoiNDg3MjgyIiwicCI6InB5aSIsInNpZyI6ImJlOTlkZDgxZjY4MDI1OWFmYzMxYjc0ZDJmOTU1ODQ0ODIyNzJlNTUzNWQ3MGJkMDkyN2M4MDJiYTkxYjA2YjIiLCJ2IjoiMCIsImdpem1vX2lkIjpudWxsfQ=='
+                  }}
+                  style={styles.heroLogo}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text style={styles.appName}>MyUNPension</Text>
+              <Text style={styles.appTagline}>Your UN Retirement Benefits Calculator</Text>
             </View>
 
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.input, passwordError ? styles.inputError : null]}
-                placeholder="Password"
-                value={password}
-                onChangeText={handlePasswordChange}
-                secureTextEntry
-                placeholderTextColor="#9CA3AF"
-                autoCorrect={false}
-              />
-              {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+            {/* Signup Card - keeping existing styling */}
+            <View style={styles.card}>
+              <Text style={styles.title}>Create Account</Text>
+              <Text style={styles.subtitle}>Join us today</Text>
+              
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={[styles.input, emailError ? styles.inputError : null]}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={handleEmailChange}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  placeholderTextColor="#9CA3AF"
+                  autoCorrect={false}
+                />
+                {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+              </View>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={[styles.input, passwordError ? styles.inputError : null]}
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={handlePasswordChange}
+                  secureTextEntry
+                  placeholderTextColor="#9CA3AF"
+                  autoCorrect={false}
+                />
+                {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+              </View>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={[styles.input, confirmPasswordError ? styles.inputError : null]}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChangeText={handleConfirmPasswordChange}
+                  secureTextEntry
+                  placeholderTextColor="#9CA3AF"
+                  autoCorrect={false}
+                />
+                {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
+              </View>
+
+              <Pressable 
+                style={[styles.button, loading ? styles.buttonDisabled : null]} 
+                onPress={handleSignup} 
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>
+                  {loading ? 'Creating Account...' : 'Sign Up'}
+                </Text>
+              </Pressable>
+              
+              <Pressable onPress={() => router.push('/login')} style={styles.link}>
+                <Text style={styles.linkText}>Already have an account? Login</Text>
+              </Pressable>
             </View>
 
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.input, confirmPasswordError ? styles.inputError : null]}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={handleConfirmPasswordChange}
-                secureTextEntry
-                placeholderTextColor="#9CA3AF"
-                autoCorrect={false}
-              />
-              {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
-            </View>
-
-            <Pressable 
-              style={[styles.button, loading ? styles.buttonDisabled : null]} 
-              onPress={handleSignup} 
-              disabled={loading}
-            >
-              <Text style={styles.buttonText}>
-                {loading ? 'Creating Account...' : 'Sign Up'}
-              </Text>
-            </Pressable>
-            
-            <Pressable onPress={() => router.push('/login')} style={styles.link}>
-              <Text style={styles.linkText}>Already have an account? Login</Text>
-            </Pressable>
-          </View>
+            {/* Bottom Spacing */}
+            <View style={styles.bottomSpacing} />
+          </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   background: {
     flex: 1,
   },
-  overlay: {
+  keyboardView: {
     flex: 1,
   },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+  },
+  
+  // Logo Section - same as login
+  logoSection: {
+    alignItems: 'center',
+    marginBottom: isSmallScreen ? 30 : 40,
+  },
+  heroIconContainer: {
+    width: isSmallScreen ? 120 : 140,
+    height: isSmallScreen ? 120 : 140,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  heroLogo: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 0,
+  },
+  appName: {
+    fontSize: isSmallScreen ? 24 : 28,
+    fontWeight: '900',
+    color: '#0EA5E9', // Blue color to match landing page
+    marginBottom: 8,
+    textAlign: 'center',
+    letterSpacing: -0.5,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  appTagline: {
+    fontSize: isSmallScreen ? 14 : 16,
+    color: '#6b7280', // Gray color for subtitle
+    textAlign: 'center',
+    fontWeight: '500',
+    letterSpacing: 0.2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+
+  // Signup Card - keeping existing styling but updating to match login structure
   card: {
-    width: 340,
+    width: isSmallScreen ? width - 40 : 340,
     backgroundColor: 'rgba(255, 255, 255, 0.95)', // Semi-transparent white
     borderRadius: 24,
-    padding: 32,
+    padding: isSmallScreen ? 24 : 32,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
@@ -255,18 +334,27 @@ const styles = StyleSheet.create({
     elevation: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
+    alignSelf: 'center',
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: isSmallScreen ? 24 : 28,
+    fontWeight: '800',
     marginBottom: 8,
     color: '#F59E42', // Orange color for signup
+    textAlign: 'center',
+    letterSpacing: -0.5,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: isSmallScreen ? 15 : 16,
     color: '#6B7280',
     marginBottom: 24,
+    textAlign: 'center',
+    fontWeight: '500',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
+  // Input Styles
   inputContainer: {
     width: '100%',
     marginBottom: 16,
@@ -276,10 +364,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(229, 231, 235, 0.8)',
     borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
+    padding: isSmallScreen ? 14 : 16,
+    fontSize: isSmallScreen ? 15 : 16,
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    color: '#222',
+    color: '#1f2937',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '400',
   },
   inputError: {
     borderColor: '#EF4444',
@@ -291,11 +381,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginLeft: 4,
     fontWeight: '500',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
+  // Button Styles
   button: {
     width: '100%',
     backgroundColor: '#F59E42', // Orange color for signup
-    paddingVertical: 16,
+    paddingVertical: isSmallScreen ? 14 : 16,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 8,
@@ -311,16 +404,26 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontWeight: '800',
+    fontSize: isSmallScreen ? 16 : 18,
     letterSpacing: 0.5,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
+  // Link Styles
   link: {
     marginTop: 8,
   },
   linkText: {
     color: '#F59E42', // Orange color for signup
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: isSmallScreen ? 14 : 15,
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+
+  // Bottom spacing
+  bottomSpacing: {
+    height: isSmallScreen ? 20 : 40,
   },
 });
