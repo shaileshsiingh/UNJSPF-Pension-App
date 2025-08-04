@@ -62,21 +62,20 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>UN Retirement Benefits Calculator</Text>
+            <Text style={styles.heroSubtitle}>Your Complete Guide to UN Separation Benefits</Text>
             <Text style={styles.heroDesc}>
-              Empowers you to better plan for your retirement by giving you a complete overview of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.
-            </Text>
-            <TouchableOpacity 
+           Take Control of your retirement planning. <br/> This app gives you a complete overview of all your retirment benefits from UN Pension Fund and Employing Organization            </Text>
+            {/* <TouchableOpacity 
               style={styles.primaryBtn} 
               onPress={() => router.push('/calculator')}
               activeOpacity={0.9}
             >
               <Text style={styles.primaryBtnText}>Calculate Your Pension Now</Text>
               <Text style={styles.primaryBtnIcon}>→</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
             {/* Enhanced trust indicators */}
-            <View style={styles.trustIndicators}>
+            {/* <View style={styles.trustIndicators}>
               <View style={styles.trustItem}>
                 <Text style={styles.trustIcon}>🔒</Text>
                 <Text style={styles.trustText}>Secure</Text>
@@ -89,11 +88,8 @@ export default function LandingPage() {
                 <Text style={styles.trustIcon}>⚡</Text>
                 <Text style={styles.trustText}>Instant</Text>
               </View>
-            </View>
-          </View>
-        </Animated.View>
-
-        {/* Who is MyUNPension for? Section */}
+            </View> */}
+             {/* Who is MyUNPension for? Section */}
         <View style={styles.whoSection}>
           <View style={styles.whoCard}>
             <View style={styles.whoHeader}>
@@ -102,109 +98,117 @@ export default function LandingPage() {
               </View> */}
               <Text style={styles.whoTitle}>Who is MyUNPension for?</Text>
             </View>
-            <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text>
+            {/* <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text> */}
             <Text style={styles.whoDesc}>
-              Whether you're just starting and want to understand your future benefits, nearing retirement and working to make critical decisions, 
-              or already separated and want to verify the accuracy of your pension payment, this app is for you.
+            Whether you're a new UN staff member, planning early retirement, approaching separation or already retired. <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your UNJSPF benefits with confidence.
             </Text>
           </View>
         </View>
+          </View>
+        </Animated.View>
+
+       
 
         {/* Enhanced Key Features */}
         <View style={styles.section}>
-  <View style={styles.sectionHeader}>
-    <Text style={styles.sectionTitle}>Key Features</Text>
-    <Text style={styles.sectionSubtitle}>Your Complete Separation Benefits Guide</Text>
-  </View>
-  
-  {/* Single Combined Features Card */}
-  <View style={styles.featureCard}>
-    <View style={styles.featureHeader}>
-      <View style={styles.featureIconContainer}>
-        <Text style={styles.featureIcon}>🛠️</Text>
-      </View>
-      <Text style={styles.featureTitle}>UNJSPF Toolkit</Text>
-    </View>
-    <Text style={styles.featureDesc}>Complete coverage of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.</Text>
-    
-    <View style={styles.featureList}>
-      <View style={styles.featureItemCompact}>
-        <View style={styles.bulletContainer}>
-          <Text style={styles.bullet}>✓</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
+            <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
+          </View>
+          
+          {/* Compact Features List */}
+          <View style={styles.featureCard}>
+            <View style={styles.featureListCompact}>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Actuarial Age Calculator</Text>{'\n'}
+                  Find your Actuarial Age, Early, and Normal Retirement Ages based on UNJSPF rules
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Pension Calculator</Text>{'\n'}
+                  Get precise estimates of your monthly pension using your salary and service history
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Monthly Pension Snapshot</Text>{'\n'}
+                  Apply Adjustments for Cost-of-Living and After-Service Health Insurance contributions
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Required Documents</Text>{'\n'}
+                  Access a checklist of mandatory documents for timely processing of your pension
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>HR Entitlements from Your Employing Organization</Text>{'\n'}
+                  Procedures to help you claim HR benefits of separation
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Organization Grant</Text>{'\n'}
+                  Separation Grant
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Leave Encashment</Text>{'\n'}
+                  End-of-Assignment Travel
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Post Retirement Resources</Text>{'\n'}
+                  Support for life after UN service
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Financial Planning Tools</Text>{'\n'}
+                  Smart strategies to maximize your pension income effectively
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Relocation Support</Text>{'\n'}
+                  Information on settling in your retirement destination
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Community & Services</Text>{'\n'}
+                  Connect with UN retirees and access country-specific support
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
-        <Text style={styles.featureTextCompact}>
-          <Text style={styles.boldText}>Benefit Calculator:</Text> Our award-winning UNJSPF calculator, including:
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemCompact}>
-        <View style={styles.bulletContainer}>
-          <Text style={styles.bullet}>✓</Text>
-        </View>
-        <Text style={styles.featureTextCompact}>
-          <Text style={styles.boldText}>Benefits Applications:</Text> Understand how your contributory service and salary directly influence your final benefit amount, giving you full transparency and control over
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemCompact}>
-        <View style={styles.bulletContainer}>
-          <Text style={styles.bullet}>✓</Text>
-        </View>
-        <Text style={styles.featureTextCompact}>
-          <Text style={styles.boldText}>Your Benefits at a Glance:</Text> Get your final details benefit amount after Cost of Living Adjustments and After Tax on Health Insurance deductions.
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemCompact}>
-        <View style={styles.bulletContainer}>
-          <Text style={styles.bullet}>✓</Text>
-        </View>
-        <Text style={styles.featureTextCompact}>
-          <Text style={styles.boldText}>Document Checklist:</Text> Useful document organization to ensure a seamless separation process.
-        </Text>
-      </View>
-    </View>
-
-    {/* Employing Organization Benefits Section */}
-    <View style={styles.featureSubHeaderCompact}>
-      <View style={styles.featureIconContainer}>
-        <Text style={styles.featureIcon}>🏢</Text>
-      </View>
-      <Text style={styles.featureSubTitle}>Employing Organization Benefits</Text>
-    </View>
-    <Text style={styles.featureDescCompact}>Easy access to all the entitlements, including:</Text>
-    
-    <View style={styles.featureListCompact}>
-      <View style={styles.featureItemTight}>
-        <Text style={styles.bullet}>✓</Text>
-        <Text style={styles.featureTextTight}>
-          <Text style={styles.boldText}>Separation grant</Text>
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemTight}>
-        <Text style={styles.bullet}>✓</Text>
-        <Text style={styles.featureTextTight}>
-          <Text style={styles.boldText}>Repatriation grant</Text>
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemTight}>
-        <Text style={styles.bullet}>✓</Text>
-        <Text style={styles.featureTextTight}>
-          <Text style={styles.boldText}>Leave encashment</Text>
-        </Text>
-      </View>
-      
-      <View style={styles.featureItemTight}>
-        <Text style={styles.bullet}>✓</Text>
-        <Text style={styles.featureTextTight}>
-          <Text style={styles.boldText}>End of assignment travel expenses</Text>
-        </Text>
-      </View>
-    </View>
-  </View>
-</View>
 
 
         {/* Enhanced About UN Pension Fund */}
@@ -243,9 +247,9 @@ export default function LandingPage() {
     { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
     { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
     { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
-    { text: 'Your age, years of pension contribution, salary grade and step at the time of retirement decides the value of your pension' },
+    { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
     { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-    { text: 'Your Pension is adjusted based on inflation and paid for life' },
+    { text: 'Your Pension is adjusted based on cost of living and paid for life' },
     { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
     { text: 'You can separate at any time you want' }
   ].map((item, index) => (
@@ -273,9 +277,9 @@ export default function LandingPage() {
             { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
           ].map((step, index) => (
             <View key={index} style={styles.stepCard}>
-              <View style={styles.stepIconMain}>
+              {/* <View style={styles.stepIconMain}>
                 <Text style={styles.stepMainEmoji}>{step.icon}</Text>
-              </View>
+              </View> */}
               <Text style={styles.stepTitle}>{step.title}</Text>
               <Text style={styles.stepDesc}>{step.desc}</Text>
             </View>
@@ -293,7 +297,7 @@ export default function LandingPage() {
             activeOpacity={0.9}
           >
             <Text style={styles.ctaBtnText}>Get Started for Free</Text>
-            <Text style={styles.ctaBtnIcon}>🚀</Text>
+            {/* <Text style={styles.ctaBtnIcon}>🚀</Text> */}
           </TouchableOpacity>
         </View>
 
@@ -352,7 +356,7 @@ const styles = StyleSheet.create({
   // Enhanced Hero Section with Sky Blue Theme
   heroSection: {
     position: 'relative',
-    paddingVertical: isSmallScreen ? 50 : 70,
+    paddingVertical: isSmallScreen ? 20 : 50,
     paddingHorizontal: 20,
     minHeight: height * 0.7,
     justifyContent: 'center',
@@ -387,8 +391,8 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 32 : isTablet ? 48 : 36,
-    fontWeight: '900',
+    fontSize: isSmallScreen ? 24 : isTablet ? 32 : 28,
+    fontWeight: '600',
     textAlign: 'center',
     marginBottom: 16,
     lineHeight: isSmallScreen ? 40 : isTablet ? 56 : 44,
@@ -417,9 +421,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   heroSubtitle: {
-    color: '#2563EB',
+    color: 'black',
     fontSize: isSmallScreen ? 18 : isTablet ? 26 : 22,
-    fontWeight: '600',
+    fontWeight: '500',
     textAlign: 'center',
     marginBottom: 24,
     letterSpacing: -0.5,
@@ -488,7 +492,7 @@ const styles = StyleSheet.create({
 
   // Enhanced Who Section
   whoSection: {
-    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingVertical: isSmallScreen ? 1 : 26,
     paddingHorizontal: 20,
     backgroundColor: '#f0f9ff',
   },
@@ -563,9 +567,9 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   sectionTitle: {
-    fontSize: isSmallScreen ? 28 : isTablet ? 36 : 32,
+    fontSize: isSmallScreen ? 16 : isTablet ? 24 : 22,
     fontWeight: '900',
-    color: '#1f2937',
+    color: '#0EA5E9',
     textAlign: 'center',
     marginBottom: 12,
     lineHeight: isSmallScreen ? 36 : 42,
@@ -573,7 +577,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   sectionSubtitle: {
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: isSmallScreen ? 14 : 16,
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: 28,
@@ -584,19 +588,6 @@ const styles = StyleSheet.create({
 
   // Enhanced Feature Cards
 
-//   featureItemCompact: {
-//   flexDirection: 'row',
-//   alignItems: 'flex-start',
-//   marginBottom: 6, // Reduced from default
-//   paddingVertical: 2, // Reduced padding
-// },
-// featureTextCompact: {
-//   flex: 1,
-//   fontSize: 14,
-//   lineHeight: 18, // Reduced line height
-//   color: '#4B5563',
-//   paddingLeft: 8,
-// },
   featureCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
@@ -702,46 +693,46 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   
-featureItemCompact: {
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  marginBottom: 6, // Reduced from default
-  paddingVertical: 2, // Reduced padding
-},
-featureTextCompact: {
-  flex: 1,
-  fontSize: 14,
-  lineHeight: 18, // Reduced line height
-  color: '#4B5563',
-  paddingLeft: 8,
-},
-featureSubHeaderCompact: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginTop: 16,
-  marginBottom: 4, // Reduced spacing
-},
-featureDescCompact: {
-  fontSize: 14,
-  color: '#6B7280',
-  marginBottom: 8, // Reduced spacing
-  lineHeight: 16,
-},
-featureListCompact: {
-  marginTop: 0, // No extra margin
-},
-featureItemTight: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginBottom: 3, // Very tight spacing
-  paddingVertical: 1,
-},
-featureTextTight: {
-  fontSize: 13,
-  lineHeight: 16,
-  color: '#4B5563',
-  marginLeft: 6, // Direct margin instead of padding
-},
+  featureItemCompact: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 6, // Reduced from default
+    paddingVertical: 2, // Reduced padding
+  },
+  featureTextCompact: {
+    flex: 1,
+    fontSize: 14,
+    lineHeight: 18, // Reduced line height
+    color: '#4B5563',
+    paddingLeft: 8,
+  },
+  featureSubHeaderCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 4, // Reduced spacing
+  },
+  featureDescCompact: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 8, // Reduced spacing
+    lineHeight: 16,
+  },
+  featureListCompact: {
+    marginTop: 0, // No extra margin
+  },
+  featureItemTight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3, // Very tight spacing
+    paddingVertical: 1,
+  },
+  featureTextTight: {
+    fontSize: 13,
+    lineHeight: 16,
+    color: '#4B5563',
+    marginLeft: 6, // Direct margin instead of padding
+  },
 
   // Enhanced About Section
   aboutSubtitle: {
@@ -845,8 +836,8 @@ featureTextTight: {
   stepCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
-    padding: isSmallScreen ? 24 : 32,
-    marginBottom: 24,
+    padding: isSmallScreen ? 16 : 24,
+    marginBottom: 6,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
@@ -856,30 +847,30 @@ featureTextTight: {
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
   },
-  stepIconMain: {
-    width: isSmallScreen ? 80 : 96,
-    height: isSmallScreen ? 80 : 96,
-    borderRadius: isSmallScreen ? 40 : 48,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-    shadowColor: '#0EA5E9',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 8,
-    borderWidth: 3,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
+  // stepIconMain: {
+  //   width: isSmallScreen ? 80 : 96,
+  //   height: isSmallScreen ? 80 : 96,
+  //   borderRadius: isSmallScreen ? 40 : 48,
+  //   backgroundColor: '#e0f2fe',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginBottom: 24,
+  //   shadowColor: '#0EA5E9',
+  //   shadowOffset: { width: 0, height: 8 },
+  //   shadowOpacity: 0.2,
+  //   shadowRadius: 16,
+  //   elevation: 8,
+  //   borderWidth: 3,
+  //   borderColor: 'rgba(14, 165, 233, 0.2)',
+  // },
   stepMainEmoji: {
     fontSize: isSmallScreen ? 32 : 40,
   },
   stepTitle: {
-    fontSize: isSmallScreen ? 20 : 24,
-    fontWeight: '800',
-    color: '#0EA5E9',
-    marginBottom: 16,
+    fontSize: isSmallScreen ? 18 : 20,
+    fontWeight: '600',
+    color: 'black',
+    marginBottom: 6,
     textAlign: 'center',
     lineHeight: 30,
     letterSpacing: -0.6,
@@ -898,8 +889,8 @@ featureTextTight: {
   // Enhanced CTA Section
   ctaSection: {
     position: 'relative',
-    backgroundColor: '#0EA5E9',
-    paddingVertical: isSmallScreen ? 48 : 64,
+    backgroundColor: '#ffffff',
+    paddingVertical: isSmallScreen ? 24 : 32,
     paddingHorizontal: 20,
     alignItems: 'center',
     overflow: 'hidden',
@@ -910,11 +901,11 @@ featureTextTight: {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#0EA5E9',
+    backgroundColor: '#ffffff',
   },
   ctaTitle: {
-    color: '#ffffff',
-    fontSize: isSmallScreen ? 28 : 32,
+    color: 'black',
+    fontSize: isSmallScreen ? 30 : 32,
     fontWeight: '900',
     textAlign: 'center',
     marginBottom: 20,
@@ -927,7 +918,7 @@ featureTextTight: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   ctaDesc: {
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: 'black',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
@@ -967,7 +958,7 @@ featureTextTight: {
 
   // Enhanced Footer
   footer: {
-    backgroundColor: '#1e293b',
+    backgroundColor: 'rgb(66, 65, 65)',
     paddingVertical: isSmallScreen ? 40 : 56,
     paddingHorizontal: 24,
     alignItems: 'center',
@@ -982,7 +973,7 @@ featureTextTight: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   footerText: {
-    color: '#94a3b8',
+    color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 20 : 24,
@@ -1004,13 +995,13 @@ featureTextTight: {
     borderRadius: 12,
   },
   footerLink: {
-    color: '#60a5fa',
+    color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
     fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   footerCopyright: {
-    color: '#64748b',
+    color: 'cyan',
     fontSize: isSmallScreen ? 12 : 13,
     textAlign: 'center',
     fontWeight: '600',

@@ -115,103 +115,100 @@ export default function LandingPage() {
         </View>
 
         {/* Enhanced Key Features */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Key Features</Text>
-            <Text style={styles.sectionSubtitle}>Your Complete Separation Benefits Guide</Text>
+        <View style={styles.sectionCompact}>
+          <View style={styles.sectionHeaderCompact}>
+            <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
+            <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
           </View>
           
-          {/* Single Combined Features Card */}
+          {/* Compact Features List */}
           <View style={styles.featureCard}>
-            <View style={styles.featureHeader}>
-              <View style={styles.featureIconContainer}>
-                <Text style={styles.featureIcon}>🛠️</Text>
-              </View>
-              <Text style={styles.featureTitle}>UNJSPF Toolkit</Text>
-            </View>
-            <Text style={styles.featureDesc}>Complete coverage of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.</Text>
-            
-            <View style={styles.featureList}>
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Benefit Calculator:</Text> Our award-winning UNJSPF calculator, including:
+            <View style={styles.featureListCompact}>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Actuarial Age Calculator</Text>{'\n'}
+                  Find your Actuarial Age, Early, and Normal Retirement Ages based on UNJSPF rules
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Benefits Applications:</Text> Understand how your contributory service and salary directly influence your final benefit amount, giving you full transparency and control over
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Pension Calculator</Text>{'\n'}
+                  Get precise estimates of your monthly pension using your salary and service history
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Your Benefits at a Glance:</Text> Get your final details benefit amount after Cost of Living Adjustments and After Tax on Health Insurance deductions.
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Monthly Pension Snapshot</Text>{'\n'}
+                  Apply Adjustments for Cost-of-Living and After-Service Health Insurance contributions
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Document Checklist:</Text> Useful document organization to ensure a seamless separation process.
-                </Text>
-              </View>
-            </View>
-
-            {/* Employing Organization Benefits Section */}
-            <View style={styles.featureSubHeader}>
-              <View style={styles.featureIconContainer}>
-                <Text style={styles.featureIcon}>🏢</Text>
-              </View>
-              <Text style={styles.featureSubTitle}>Employing Organization Benefits</Text>
-            </View>
-            <Text style={styles.featureDesc}>Easy access to all the entitlements, including:</Text>
-            
-            <View style={styles.featureList}>
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Separation grant</Text>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Required Documents</Text>{'\n'}
+                  Access a checklist of mandatory documents for timely processing of your pension
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Repatriation grant</Text>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>HR Entitlements from Your Employing Organization</Text>{'\n'}
+                  Procedures to help you claim HR benefits of separation
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-                  <Text style={styles.boldText}>Leave encashment</Text>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Organization Grant</Text>{'\n'}
+                  Separation Grant
                 </Text>
               </View>
               
-              <View style={styles.featureItem}>
-                <View style={styles.bulletContainer}>
-                  <Text style={styles.bullet}>✓</Text>
-                </View>
-                <Text style={styles.featureText}>
-          <Text style={styles.boldText}>End of assignment travel expenses</Text>
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Leave Encashment</Text>{'\n'}
+                  End-of-Assignment Travel
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Post Retirement Resources</Text>{'\n'}
+                  Support for life after UN service
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Financial Planning Tools</Text>{'\n'}
+                  Smart strategies to maximize your pension income effectively
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Relocation Support</Text>{'\n'}
+                  Information on settling in your retirement destination
+                </Text>
+              </View>
+              
+              <View style={styles.featureItemTight}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.featureTextTight}>
+                  <Text style={styles.boldText}>Community & Services</Text>{'\n'}
+                  Connect with UN retirees and access country-specific support
                 </Text>
               </View>
             </View>
@@ -273,26 +270,28 @@ export default function LandingPage() {
         </View>
 
         {/* Enhanced How It Works */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>How It Works</Text>
-            <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
-          </View>
-          
-          {[
-            { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
-            { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
-            { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
-          ].map((step, index) => (
-            <View key={index} style={styles.stepCard}>
-              <View style={styles.stepIconMain}>
-                <Text style={styles.stepMainEmoji}>{step.icon}</Text>
-              </View>
-              <Text style={styles.stepTitle}>{step.title}</Text>
-              <Text style={styles.stepDesc}>{step.desc}</Text>
-            </View>
-          ))}
-        </View>
+        <View style={styles.sectionCompact}>
+  <View style={styles.sectionHeaderCompact}>
+    <Text style={styles.sectionTitle}>How It Works</Text>
+    <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
+  </View>
+  
+  {[
+    { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
+    { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
+    { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
+  ].map((step, index) => (
+    <View key={index} style={styles.stepCardCompact}>
+      <View style={styles.stepIconCompact}>
+        <Text style={styles.stepEmojiCompact}>{step.icon}</Text>
+      </View>
+      <View style={styles.stepContent}>
+        <Text style={styles.stepTitleCompact}>{step.title}</Text>
+        <Text style={styles.stepDescCompact}>{step.desc}</Text>
+      </View>
+    </View>
+  ))}
+</View>
 
         {/* Enhanced Final Call to Action */}
         <View style={styles.ctaSection}>
@@ -561,38 +560,62 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced Sections
-  section: {
-    paddingVertical: isSmallScreen ? 40 : 56,
-    paddingHorizontal: 20,
-    backgroundColor: '#ffffff',
-  },
-  aboutSection: {
-    paddingVertical: isSmallScreen ? 40 : 56,
-    paddingHorizontal: 20,
-    backgroundColor: '#f0f9ff',
-  },
-  sectionHeader: {
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: isSmallScreen ? 28 : isTablet ? 36 : 32,
-    fontWeight: '900',
-    color: '#1f2937',
-    textAlign: 'center',
-    marginBottom: 12,
-    lineHeight: isSmallScreen ? 36 : 42,
-    letterSpacing: -1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  sectionSubtitle: {
-    fontSize: isSmallScreen ? 16 : 18,
-    color: '#6b7280',
-    textAlign: 'center',
-    lineHeight: 28,
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '500',
-  },
+  sectionCompact: {
+      paddingVertical: isSmallScreen ? 24 : 32, // Reduced from 40-56
+      paddingHorizontal: 20,
+      backgroundColor: '#ffffff',
+    },
+    sectionHeaderCompact: {
+      marginBottom: isSmallScreen ? 16 : 20, // Reduced from 32
+    },
+    stepCardCompact: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#ffffff',
+      borderRadius: 16,
+      padding: isSmallScreen ? 16 : 20,
+      marginBottom: isSmallScreen ? 12 : 16, // Reduced spacing
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.08,
+      shadowRadius: 12,
+      elevation: 4,
+      borderWidth: 1,
+      borderColor: 'rgba(14, 165, 233, 0.1)',
+    },
+    stepIconCompact: {
+      width: isSmallScreen ? 50 : 60,
+      height: isSmallScreen ? 50 : 60,
+      backgroundColor: 'rgba(14, 165, 233, 0.1)',
+      borderRadius: isSmallScreen ? 25 : 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 16,
+      flexShrink: 0,
+    },
+    stepEmojiCompact: {
+      fontSize: isSmallScreen ? 20 : 24,
+    },
+    stepContent: {
+      flex: 1,
+    },
+    stepTitleCompact: {
+      fontSize: isSmallScreen ? 16 : 18,
+      fontWeight: '800',
+      color: '#1f2937',
+      marginBottom: 4, // Reduced from default
+      lineHeight: isSmallScreen ? 20 : 24,
+      letterSpacing: -0.3,
+      fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    },
+    stepDescCompact: {
+      fontSize: isSmallScreen ? 13 : 14,
+      color: '#6b7280',
+      lineHeight: isSmallScreen ? 18 : 20, // Tighter line height
+      letterSpacing: -0.1,
+      fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+      fontWeight: '400',
+    },
 
   // Enhanced Feature Cards
   featureCard: {
@@ -973,5 +996,21 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  featureListCompact: {
+    gap: 12,
+  },
+  featureItemTight: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  featureTextTight: {
+    color: '#374151',
+    fontSize: isSmallScreen ? 14 : 15,
+    lineHeight: isSmallScreen ? 20 : 24,
+    flex: 1,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '400',
   },
 });
