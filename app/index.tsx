@@ -212,56 +212,56 @@ export default function LandingPage() {
 
 
         {/* Enhanced About UN Pension Fund */}
-        <View style={styles.aboutSection}> 
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>United Nations Joint Staff Pension Fund</Text>
-            <Text style={styles.aboutSubtitle}>Your pension is managed by a globally trusted institution</Text>
+        <View style={styles.aboutSectionCompact}> 
+          <View style={styles.sectionHeaderCompact}>
+            <Text style={styles.sectionTitleCompact}>United Nations Joint Staff Pension Fund</Text>
+            <Text style={styles.aboutSubtitleCompact}>Your pension is managed by a globally trusted institution</Text>
           </View>
           
-           <View style={styles.statsContainer}>
-           <View style={styles.statCard}>
-             <Text style={styles.statNumber}>$96B</Text>
-             <Text style={styles.statLabel}>Asset Value</Text>
-           </View>
-           <View style={styles.statCard}>
-             <Text style={styles.statNumber}>111%</Text>
-             <Text style={styles.statLabel}>Funded Ratio</Text>
-           </View>
-           <View style={styles.statCard}>
-             <Text style={styles.statNumber}>24</Text>
-             <Text style={styles.statLabel}>Participating Organizations</Text>  
-           </View>
-           <View style={styles.statCard}>
-             <Text style={styles.statNumber}>1,50,000</Text>
-             <Text style={styles.statLabel}>Active staff</Text>
-           </View>
-           <View style={styles.statCard}>
-             <Text style={styles.statNumber}>89,000</Text>
-             <Text style={styles.statLabel}>Retirees</Text>
-           </View>
-           </View>
+          <View style={styles.statsContainerCompact}>
+            <View style={styles.statCardCompact}>
+              <Text style={styles.statNumberCompact}>$96B</Text>
+              <Text style={styles.statLabelCompact}>Asset Value</Text>
+            </View>
+            <View style={styles.statCardCompact}>
+              <Text style={styles.statNumberCompact}>111%</Text>
+              <Text style={styles.statLabelCompact}>Funded Ratio</Text>
+            </View>
+            <View style={styles.statCardCompact}>
+              <Text style={styles.statNumberCompact}>24</Text>
+              <Text style={styles.statLabelCompact}>Participating Organizations</Text>  
+            </View>
+            <View style={styles.statCardCompact}>
+              <Text style={styles.statNumberCompact}>1,50,000</Text>
+              <Text style={styles.statLabelCompact}>Active staff</Text>
+            </View>
+            <View style={styles.statCardCompact}>
+              <Text style={styles.statNumberCompact}>89,000</Text>
+              <Text style={styles.statLabelCompact}>Retirees</Text>
+            </View>
+          </View>
 
-          <View style={styles.aboutCard}>
-  {[
-    { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
-    { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
-    { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
-    { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
-    { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
-    { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-    { text: 'Your Pension is adjusted based on cost of living and paid for life' },
-    { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
-    { text: 'You can separate at any time you want' }
-  ].map((item, index) => (
-    <View key={index} style={styles.aboutItem}>
-      <View style={styles.aboutBulletContainer}>
-        <Text style={styles.aboutBullet}>•</Text>
-      </View>
-      <Text style={styles.aboutText}>{item.text}</Text>
-    </View>
-  ))}
-  <Text style={styles.sourceText}>Source: UNJSPF</Text>
-</View>
+          <View style={styles.aboutCardCompact}>
+            {[
+              { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
+              { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
+              { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
+              { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
+              { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
+              { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
+              { text: 'Your Pension is adjusted based on cost of living and paid for life' },
+              { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
+              { text: 'You can separate at any time you want' }
+            ].map((item, index) => (
+              <View key={index} style={styles.aboutItemCompact}>
+                <View style={styles.aboutBulletContainerCompact}>
+                  <Text style={styles.aboutBulletCompact}></Text>
+                </View>
+                <Text style={styles.aboutTextCompact}>{item.text}</Text>
+              </View>
+            ))}
+            <Text style={styles.sourceTextCompact}>Source: UNJSPF</Text>
+          </View>
         </View>
 
         {/* Enhanced How It Works */}
@@ -735,6 +735,134 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced About Section
+  aboutSectionCompact: {
+    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingHorizontal: 20,
+    backgroundColor: '#f0f9ff',
+  },
+  sectionHeaderCompact: {
+    marginBottom: 16,
+  },
+  sectionTitleCompact: {
+    fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
+    fontWeight: '900',
+    color: '#0EA5E9',
+    textAlign: 'center',
+    marginBottom: 8,
+    lineHeight: isSmallScreen ? 28 : 32,
+    letterSpacing: -0.8,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  aboutSubtitleCompact: {
+    fontSize: isSmallScreen ? 14 : 16,
+    color: '#6b7280',
+    textAlign: 'center',
+    lineHeight: 24,
+    letterSpacing: -0.2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '500',
+  },
+  statsContainerCompact: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+    marginBottom: 24,
+    paddingHorizontal: isSmallScreen ? 20 : 30,
+    gap: isSmallScreen ? 8 : 12,
+  },
+  statCardCompact: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: isSmallScreen ? 8 : isMediumScreen ? 10 : 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: getCardWidth(),
+    minHeight: isSmallScreen ? 60 : 70,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
+    marginBottom: isSmallScreen ? 12 : 8,
+  },
+  statNumberCompact: {
+    fontSize: isSmallScreen ? 12 : isMediumScreen ? 14 : 16,
+    fontWeight: '900',
+    color: '#0EA5E9',
+    marginBottom: 2,
+    letterSpacing: -0.5,
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  statLabelCompact: {
+    fontSize: isSmallScreen ? 8 : isMediumScreen ? 9 : 10,
+    color: '#6b7280',
+    fontWeight: '700',
+    textAlign: 'center',
+    letterSpacing: 0.3,
+    textTransform: 'uppercase',
+    lineHeight: isSmallScreen ? 10 : 12,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  aboutCardCompact: {
+    backgroundColor: '#ffffff',
+    borderRadius: 24,
+    padding: isSmallScreen ? 16 : 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 8,
+    gap: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
+  },
+  aboutItemCompact: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 8,
+  },
+  aboutBulletContainerCompact: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: 'rgba(14, 165, 233, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+    marginTop: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.2)',
+  },
+  aboutBulletCompact: {
+    color: '#0EA5E9',
+    fontSize: 10,
+    fontWeight: '800',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  aboutTextCompact: {
+    color: '#374151',
+    fontSize: isSmallScreen ? 12 : 14,
+    lineHeight: isSmallScreen ? 18 : 20,
+    flex: 1,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '400',
+  },
+  sourceTextCompact: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(14, 165, 233, 0.1)',
+    fontSize: 11,
+    color: '#6b7280',
+    fontWeight: '600',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
   aboutSubtitle: {
     color: '#374151',
     fontSize: isSmallScreen ? 16 : 18,
