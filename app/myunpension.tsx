@@ -66,21 +66,20 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>UN Retirement Benefits Calculator</Text>
+            <Text style={styles.heroSubtitle}>Your Complete Guide to UN Separation Benefits</Text>
             <Text style={styles.heroDesc}>
-              Empowers you to better plan for your retirement by giving you a complete overview of all your benefits from the UN Pension Fund and your employing organization in one easy-to-use platform.
-            </Text>
-            <TouchableOpacity 
+           Take Control of your retirement planning. <br/> This app gives you a complete overview of all your retirment benefits from UN Pension Fund and Employing Organization            </Text>
+            {/* <TouchableOpacity 
               style={styles.primaryBtn} 
-              onPress={() => router.push('/(tabs)')}
+              onPress={() => router.push('/calculator')}
               activeOpacity={0.9}
             >
               <Text style={styles.primaryBtnText}>Calculate Your Pension Now</Text>
               <Text style={styles.primaryBtnIcon}>→</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
             {/* Enhanced trust indicators */}
-            <View style={styles.trustIndicators}>
+            {/* <View style={styles.trustIndicators}>
               <View style={styles.trustItem}>
                 <Text style={styles.trustIcon}>🔒</Text>
                 <Text style={styles.trustText}>Secure</Text>
@@ -93,11 +92,8 @@ export default function LandingPage() {
                 <Text style={styles.trustIcon}>⚡</Text>
                 <Text style={styles.trustText}>Instant</Text>
               </View>
-            </View>
-          </View>
-        </Animated.View>
-
-        {/* Who is MyUNPension for? Section */}
+            </View> */}
+             {/* Who is MyUNPension for? Section */}
         <View style={styles.whoSection}>
           <View style={styles.whoCard}>
             <View style={styles.whoHeader}>
@@ -106,17 +102,20 @@ export default function LandingPage() {
               </View> */}
               <Text style={styles.whoTitle}>Who is MyUNPension for?</Text>
             </View>
-            <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text>
+            {/* <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text> */}
             <Text style={styles.whoDesc}>
-              Whether you're just starting and want to understand your future benefits, nearing retirement and working to make critical decisions, 
-              or already separated and want to verify the accuracy of your pension payment, this app is for you.
+            Whether you're a new UN staff member, planning early retirement, approaching separation or already retired. <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your UNJSPF benefits with confidence.
             </Text>
           </View>
         </View>
+          </View>
+        </Animated.View>
+
+       
 
         {/* Enhanced Key Features */}
-        <View style={styles.sectionCompact}>
-          <View style={styles.sectionHeaderCompact}>
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
             <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
           </View>
@@ -215,6 +214,7 @@ export default function LandingPage() {
           </View>
         </View>
 
+
         {/* Enhanced About UN Pension Fund */}
         <View style={styles.aboutSection}> 
           <View style={styles.sectionHeader}>
@@ -222,29 +222,28 @@ export default function LandingPage() {
             <Text style={styles.aboutSubtitle}>Your pension is managed by a globally trusted institution</Text>
           </View>
           
-          <View style={styles.statsContainer}>
-  <View style={styles.statCard}>
-    <Text style={styles.statNumber}>$96B</Text>
-    <Text style={styles.statLabel}>Asset Value</Text>
-  </View>
-  <View style={styles.statCard}>
-    <Text style={styles.statNumber}>111%</Text>
-    <Text style={styles.statLabel}>Funded Ratio</Text>
-  </View>
-  <View style={styles.statCard}>
-    <Text style={styles.statNumber}>24</Text>
-    <Text style={styles.statLabel}>Participating Organizations</Text>  
-  </View>
-  <View style={styles.statCard}>
-    <Text style={styles.statNumber}>1,50,000</Text>
-    <Text style={styles.statLabel}>Active staff</Text>
-  </View>
-  <View style={styles.statCard}>
-    <Text style={styles.statNumber}>89,000</Text>
-    <Text style={styles.statLabel}>Retirees</Text>
-  </View>
-  </View>
-  
+           <View style={styles.statsContainer}>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>$96B</Text>
+             <Text style={styles.statLabel}>Asset Value</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>111%</Text>
+             <Text style={styles.statLabel}>Funded Ratio</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>24</Text>
+             <Text style={styles.statLabel}>Participating Organizations</Text>  
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>1,50,000</Text>
+             <Text style={styles.statLabel}>Active staff</Text>
+           </View>
+           <View style={styles.statCard}>
+             <Text style={styles.statNumber}>89,000</Text>
+             <Text style={styles.statLabel}>Retirees</Text>
+           </View>
+           </View>
 
           <View style={styles.aboutCard}>
   {[
@@ -252,9 +251,9 @@ export default function LandingPage() {
     { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
     { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
     { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
-    { text: 'Your age, years of pension contribution, salary grade and step at the time of retirement decides the value of your pension' },
+    { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
     { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-    { text: 'Your Pension is adjusted based on inflation and paid for life' },
+    { text: 'Your Pension is adjusted based on cost of living and paid for life' },
     { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
     { text: 'You can separate at any time you want' }
   ].map((item, index) => (
@@ -270,28 +269,26 @@ export default function LandingPage() {
         </View>
 
         {/* Enhanced How It Works */}
-        <View style={styles.sectionCompact}>
-  <View style={styles.sectionHeaderCompact}>
-    <Text style={styles.sectionTitle}>How It Works</Text>
-    <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
-  </View>
-  
-  {[
-    { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
-    { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
-    { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
-  ].map((step, index) => (
-    <View key={index} style={styles.stepCardCompact}>
-      <View style={styles.stepIconCompact}>
-        <Text style={styles.stepEmojiCompact}>{step.icon}</Text>
-      </View>
-      <View style={styles.stepContent}>
-        <Text style={styles.stepTitleCompact}>{step.title}</Text>
-        <Text style={styles.stepDescCompact}>{step.desc}</Text>
-      </View>
-    </View>
-  ))}
-</View>
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>How It Works</Text>
+            <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
+          </View>
+          
+          {[
+            { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
+            { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
+            { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
+          ].map((step, index) => (
+            <View key={index} style={styles.stepCard}>
+              {/* <View style={styles.stepIconMain}>
+                <Text style={styles.stepMainEmoji}>{step.icon}</Text>
+              </View> */}
+              <Text style={styles.stepTitle}>{step.title}</Text>
+              <Text style={styles.stepDesc}>{step.desc}</Text>
+            </View>
+          ))}
+        </View>
 
         {/* Enhanced Final Call to Action */}
         <View style={styles.ctaSection}>
@@ -304,7 +301,7 @@ export default function LandingPage() {
             activeOpacity={0.9}
           >
             <Text style={styles.ctaBtnText}>Get Started for Free</Text>
-            <Text style={styles.ctaBtnIcon}>🚀</Text>
+            {/* <Text style={styles.ctaBtnIcon}>🚀</Text> */}
           </TouchableOpacity>
         </View>
 
@@ -338,16 +335,16 @@ export default function LandingPage() {
 }
 // Updated Styles
 const getCardWidth = () => {
-    if (isSmallScreen) {
-      return (width - 60) / 3 -  10; // 2 cards per row on very small screens
-    } else if (isMediumScreen) {
-      return (width - 80) / 3 - 10; // 3 cards per row on medium screens
-    } else if (isTablet) {
-      return (width - 120) / 5 - 10; // 5 cards per row on tablets
-    } else {
-      return (width - 100) / 4 - 10; // 4 cards per row on regular screens
-    }
-  };
+  if (isSmallScreen) {
+    return (width - 60) / 3 - 10; // 2 cards per row on very small screens
+  } else if (isMediumScreen) {
+    return (width - 80) / 3 - 10; // 3 cards per row on medium screens
+  } else if (isTablet) {
+    return (width - 120) / 5 - 12; // 5 cards per row on tablets
+  } else {
+    return (width - 100) / 4 - 10; // 4 cards per row on regular screens
+  }
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -363,7 +360,7 @@ const styles = StyleSheet.create({
   // Enhanced Hero Section with Sky Blue Theme
   heroSection: {
     position: 'relative',
-    paddingVertical: isSmallScreen ? 50 : 70,
+    paddingVertical: isSmallScreen ? 20 : 50,
     paddingHorizontal: 20,
     minHeight: height * 0.7,
     justifyContent: 'center',
@@ -398,8 +395,8 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 32 : isTablet ? 48 : 36,
-    fontWeight: '900',
+    fontSize: isSmallScreen ? 24 : isTablet ? 32 : 28,
+    fontWeight: '600',
     textAlign: 'center',
     marginBottom: 16,
     lineHeight: isSmallScreen ? 40 : isTablet ? 56 : 44,
@@ -428,16 +425,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   heroSubtitle: {
-    color: '#2563EB',
+    color: 'black',
     fontSize: isSmallScreen ? 18 : isTablet ? 26 : 22,
-    fontWeight: '600',
+    fontWeight: '500',
     textAlign: 'center',
     marginBottom: 24,
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   heroDesc: {
-    color: 'rgba(62, 88, 112, 0.9)',
+    color: '#rgba(62, 88, 112, 0.9)',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
@@ -499,7 +496,7 @@ const styles = StyleSheet.create({
 
   // Enhanced Who Section
   whoSection: {
-    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingVertical: isSmallScreen ? 1 : 26,
     paddingHorizontal: 20,
     backgroundColor: '#f0f9ff',
   },
@@ -560,64 +557,41 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced Sections
-  sectionCompact: {
-      paddingVertical: isSmallScreen ? 24 : 32, // Reduced from 40-56
-      paddingHorizontal: 20,
-      backgroundColor: '#ffffff',
-    },
-    sectionHeaderCompact: {
-      marginBottom: isSmallScreen ? 16 : 20, // Reduced from 32
-    },
-    stepCardCompact: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: '#ffffff',
-      borderRadius: 16,
-      padding: isSmallScreen ? 16 : 20,
-      marginBottom: isSmallScreen ? 12 : 16, // Reduced spacing
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.08,
-      shadowRadius: 12,
-      elevation: 4,
-      borderWidth: 1,
-      borderColor: 'rgba(14, 165, 233, 0.1)',
-    },
-    stepIconCompact: {
-      width: isSmallScreen ? 50 : 60,
-      height: isSmallScreen ? 50 : 60,
-      backgroundColor: 'rgba(14, 165, 233, 0.1)',
-      borderRadius: isSmallScreen ? 25 : 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: 16,
-      flexShrink: 0,
-    },
-    stepEmojiCompact: {
-      fontSize: isSmallScreen ? 20 : 24,
-    },
-    stepContent: {
-      flex: 1,
-    },
-    stepTitleCompact: {
-      fontSize: isSmallScreen ? 16 : 18,
-      fontWeight: '800',
-      color: '#1f2937',
-      marginBottom: 4, // Reduced from default
-      lineHeight: isSmallScreen ? 20 : 24,
-      letterSpacing: -0.3,
-      fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    },
-    stepDescCompact: {
-      fontSize: isSmallScreen ? 13 : 14,
-      color: '#6b7280',
-      lineHeight: isSmallScreen ? 18 : 20, // Tighter line height
-      letterSpacing: -0.1,
-      fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-      fontWeight: '400',
-    },
+  section: {
+    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingHorizontal: 20,
+    backgroundColor: '#ffffff',
+  },
+  aboutSection: {
+    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingHorizontal: 20,
+    backgroundColor: '#f0f9ff',
+  },
+  sectionHeader: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontSize: isSmallScreen ? 16 : isTablet ? 24 : 22,
+    fontWeight: '900',
+    color: '#0EA5E9',
+    textAlign: 'center',
+    marginBottom: 12,
+    lineHeight: isSmallScreen ? 36 : 42,
+    letterSpacing: -1,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  sectionSubtitle: {
+    fontSize: isSmallScreen ? 14 : 16,
+    color: '#6b7280',
+    textAlign: 'center',
+    lineHeight: 28,
+    letterSpacing: -0.2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '500',
+  },
 
   // Enhanced Feature Cards
+
   featureCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
@@ -722,6 +696,47 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
+  featureItemCompact: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 6, // Reduced from default
+    paddingVertical: 2, // Reduced padding
+  },
+  featureTextCompact: {
+    flex: 1,
+    fontSize: 14,
+    lineHeight: 18, // Reduced line height
+    color: '#4B5563',
+    paddingLeft: 8,
+  },
+  featureSubHeaderCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 4, // Reduced spacing
+  },
+  featureDescCompact: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 8, // Reduced spacing
+    lineHeight: 16,
+  },
+  featureListCompact: {
+    marginTop: 0, // No extra margin
+  },
+  featureItemTight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3, // Very tight spacing
+    paddingVertical: 1,
+  },
+  featureTextTight: {
+    fontSize: 13,
+    lineHeight: 16,
+    color: '#4B5563',
+    marginLeft: 6, // Direct margin instead of padding
+  },
 
   // Enhanced About Section
   aboutSubtitle: {
@@ -733,51 +748,51 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '500',
   },
-  statsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    marginBottom: 40,
-    paddingHorizontal: isSmallScreen ? 20 : 30,
-    gap: isSmallScreen ? 8 : 12,
-  },
-  statCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: isSmallScreen ? 12 : isMediumScreen ? 14 : 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getCardWidth(),
-    minHeight: isSmallScreen ? 80 : 90,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.1,
-    shadowRadius: 16,
-    elevation: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-    marginBottom: isSmallScreen ? 12 : 8,
-  },
-  statNumber: {
-    fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
-    fontWeight: '900',
-    color: '#0EA5E9',
-    marginBottom: 4,
-    letterSpacing: -0.5,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  statLabel: {
-    fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
-    color: '#6b7280',
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: 0.3,
-    textTransform: 'uppercase',
-    lineHeight: isSmallScreen ? 12 : 14,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
+   statsContainer: {
+     flexDirection: 'row',
+     flexWrap: 'wrap',
+     justifyContent: 'space-around',
+     alignItems: 'stretch',
+     marginBottom: 40,
+     paddingHorizontal: isSmallScreen ? 20 : 30,
+     gap: isSmallScreen ? 8 : 12,
+   },
+   statCard: {
+     backgroundColor: '#ffffff',
+     borderRadius: 20,
+     padding: isSmallScreen ? 12 : isMediumScreen ? 14 : 18,
+     alignItems: 'center',
+     justifyContent: 'center',
+     width: getCardWidth(),
+     minHeight: isSmallScreen ? 80 : 90,
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 6 },
+     shadowOpacity: 0.1,
+     shadowRadius: 16,
+     elevation: 6,
+     borderWidth: 1,
+     borderColor: 'rgba(14, 165, 233, 0.1)',
+     marginBottom: isSmallScreen ? 12 : 8,
+   },
+   statNumber: {
+     fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
+     fontWeight: '900',
+     color: '#0EA5E9',
+     marginBottom: 4,
+     letterSpacing: -0.5,
+     textAlign: 'center',
+     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+   },
+   statLabel: {
+     fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
+     color: '#6b7280',
+     fontWeight: '700',
+     textAlign: 'center',
+     letterSpacing: 0.3,
+     textTransform: 'uppercase',
+     lineHeight: isSmallScreen ? 12 : 14,
+     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+   },
   aboutCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
@@ -825,8 +840,8 @@ const styles = StyleSheet.create({
   stepCard: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
-    padding: isSmallScreen ? 24 : 32,
-    marginBottom: 24,
+    padding: isSmallScreen ? 16 : 24,
+    marginBottom: 6,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
@@ -836,30 +851,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
   },
-  stepIconMain: {
-    width: isSmallScreen ? 80 : 96,
-    height: isSmallScreen ? 80 : 96,
-    borderRadius: isSmallScreen ? 40 : 48,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-    shadowColor: '#0EA5E9',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 8,
-    borderWidth: 3,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
+  // stepIconMain: {
+  //   width: isSmallScreen ? 80 : 96,
+  //   height: isSmallScreen ? 80 : 96,
+  //   borderRadius: isSmallScreen ? 40 : 48,
+  //   backgroundColor: '#e0f2fe',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginBottom: 24,
+  //   shadowColor: '#0EA5E9',
+  //   shadowOffset: { width: 0, height: 8 },
+  //   shadowOpacity: 0.2,
+  //   shadowRadius: 16,
+  //   elevation: 8,
+  //   borderWidth: 3,
+  //   borderColor: 'rgba(14, 165, 233, 0.2)',
+  // },
   stepMainEmoji: {
     fontSize: isSmallScreen ? 32 : 40,
   },
   stepTitle: {
-    fontSize: isSmallScreen ? 20 : 24,
-    fontWeight: '800',
-    color: '#0EA5E9',
-    marginBottom: 16,
+    fontSize: isSmallScreen ? 18 : 20,
+    fontWeight: '600',
+    color: 'black',
+    marginBottom: 6,
     textAlign: 'center',
     lineHeight: 30,
     letterSpacing: -0.6,
@@ -878,8 +893,8 @@ const styles = StyleSheet.create({
   // Enhanced CTA Section
   ctaSection: {
     position: 'relative',
-    backgroundColor: '#0EA5E9',
-    paddingVertical: isSmallScreen ? 48 : 64,
+    backgroundColor: '#ffffff',
+    paddingVertical: isSmallScreen ? 24 : 32,
     paddingHorizontal: 20,
     alignItems: 'center',
     overflow: 'hidden',
@@ -890,11 +905,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#0EA5E9',
+    backgroundColor: '#ffffff',
   },
   ctaTitle: {
-    color: '#ffffff',
-    fontSize: isSmallScreen ? 28 : 32,
+    color: 'black',
+    fontSize: isSmallScreen ? 30 : 32,
     fontWeight: '900',
     textAlign: 'center',
     marginBottom: 20,
@@ -907,7 +922,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   ctaDesc: {
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: 'black',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
@@ -947,7 +962,7 @@ const styles = StyleSheet.create({
 
   // Enhanced Footer
   footer: {
-    backgroundColor: '#1e293b',
+    backgroundColor: 'rgb(66, 65, 65)',
     paddingVertical: isSmallScreen ? 40 : 56,
     paddingHorizontal: 24,
     alignItems: 'center',
@@ -962,7 +977,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   footerText: {
-    color: '#94a3b8',
+    color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 20 : 24,
@@ -984,33 +999,17 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   footerLink: {
-    color: '#60a5fa',
+    color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
     fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   footerCopyright: {
-    color: '#64748b',
+    color: 'cyan',
     fontSize: isSmallScreen ? 12 : 13,
     textAlign: 'center',
     fontWeight: '600',
     letterSpacing: 0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  featureListCompact: {
-    gap: 12,
-  },
-  featureItemTight: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-  },
-  featureTextTight: {
-    color: '#374151',
-    fontSize: isSmallScreen ? 14 : 15,
-    lineHeight: isSmallScreen ? 20 : 24,
-    flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
   },
 });
