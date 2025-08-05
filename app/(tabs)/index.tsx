@@ -55,7 +55,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
             <Text style={styles.heroTitle}>MyUNPension</Text>
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
-            <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName}` : ''}!</Text>
+            <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
             <Text style={styles.welcomeSubtitle}>
               Your Comprehensive Guide to United Nations Pension
             </Text>

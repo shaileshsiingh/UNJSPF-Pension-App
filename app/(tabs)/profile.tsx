@@ -26,6 +26,7 @@ import {
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { auth } from '@/firebaseConfig';
 
 const { width } = Dimensions.get('window');
 
@@ -360,10 +361,10 @@ export default function ProfileScreen() {
             </View>
             
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>First Name</Text>
+              <Text style={styles.label}>First Name</Text>  
               <TextInput
                 style={styles.input}
-                value={formData.firstName}
+                value={formData.firstName||auth.currentUser?.displayName?.split(' ')[0]}
                 onChangeText={(value) => handleInputChange('firstName', value)}
                 placeholder="Enter your first name"
                 placeholderTextColor="#9CA3AF"
@@ -374,7 +375,7 @@ export default function ProfileScreen() {
               <Text style={styles.label}>Last Name</Text>
               <TextInput
                 style={styles.input}
-                value={formData.lastName}
+                value={formData.lastName||auth.currentUser?.displayName?.split(' ')[1]}
                 onChangeText={(value) => handleInputChange('lastName', value)}
                 placeholder="Enter your last name"
                 placeholderTextColor="#9CA3AF"
@@ -753,10 +754,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   retirementSectionTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     color: '#1E40AF',
-    marginLeft: 8,
+    marginLeft: 2,
   },
   infoButton: {
     padding: 8,
