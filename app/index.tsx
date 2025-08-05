@@ -271,19 +271,18 @@ export default function LandingPage() {
             <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
           </View>
           
-          {[
-            { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
-            { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
-            { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
-          ].map((step, index) => (
-            <View key={index} style={styles.stepCard}>
-              {/* <View style={styles.stepIconMain}>
-                <Text style={styles.stepMainEmoji}>{step.icon}</Text>
-              </View> */}
-              <Text style={styles.stepTitle}>{step.title}</Text>
-              <Text style={styles.stepDesc}>{step.desc}</Text>
-            </View>
-          ))}
+          <View style={[styles.stepsContainer, {borderWidth: 1, borderColor: '#ddd', borderRadius: 10, padding: 20}]}>
+            {[
+              { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
+              { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
+              { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
+            ].map((step, index) => (
+              <View key={index} style={styles.stepCard}>
+                <Text style={styles.stepTitle}>{step.title}</Text>
+                <Text style={styles.stepDesc}>{step.desc}</Text>
+              </View>
+            ))}
+          </View>
         </View>
 
         {/* Enhanced Final Call to Action */}
@@ -301,29 +300,31 @@ export default function LandingPage() {
           </TouchableOpacity>
         </View>
 
-        {/* Enhanced Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerTitle}>Disclaimer</Text>
-          <Text style={styles.footerText}>
-            MyUNPension is an independent, third-party tool, developed by a former UN staff member who recently retired, and is not affiliated with, endorsed by, or in any way officially connected with the United Nations, the UNJSPF, or any of its subsidiary organizations. All calculations are estimates provided for planning purposes only and should be verified with the UNJSPF before making any financial decisions.
-          </Text>
-          
-          <View style={styles.footerLinks}>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>About Us</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Contact</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Privacy Policy</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Terms of Service</Text>
-            </TouchableOpacity>
+        {/* Footer */}
+        <View style={styles.footerWrapper}>
+          <View style={styles.footer}>
+            <Text style={styles.footerTitle}>Disclaimer</Text>
+            <Text style={styles.footerText}>
+              MyUNPension is an independent, third-party tool, developed by a former UN staff member who recently retired, and is not affiliated with, endorsed by, or in any way officially connected with the United Nations, the UNJSPF, or any of its subsidiary organizations. All calculations are estimates provided for planning purposes only and should be verified with the UNJSPF before making any financial decisions.
+            </Text>
+            
+            <View style={styles.footerLinks}>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>About Us</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Contact</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Privacy Policy</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Terms of Service</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.footerCopyright}>© 2025 MyUNPension. All Rights Reserved.</Text>
           </View>
-          
-          <Text style={styles.footerCopyright}>© 2025 MyUNPension. All Rights Reserved.</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   heroLogo: {
     width: '100%',
@@ -401,6 +402,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
+    marginTop:-12,
   },
   aboutBulletContainer: {
     width: 20,
@@ -530,7 +532,7 @@ const styles = StyleSheet.create({
   whoTitle: {
     fontSize: isSmallScreen ? 22 : 26,
     fontWeight: '800',
-    color: '#0EA5E9',
+    color: '#0072CE',
     flex: 1,
     lineHeight: 32,
     letterSpacing: -0.8,
@@ -538,7 +540,7 @@ const styles = StyleSheet.create({
   },
   whoSubtitle: {
     fontSize: isSmallScreen ? 16 : 18,
-    color: '#374151',
+    color: '#0072CE',
     fontWeight: '600',
     marginBottom: 16,
     lineHeight: 26,
@@ -569,7 +571,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: isSmallScreen ? 16 : isTablet ? 24 : 22,
     fontWeight: '900',
-    color: '#0EA5E9',
+    color: '#0072CE',
     textAlign: 'center',
     marginBottom: 12,
     lineHeight: isSmallScreen ? 36 : 42,
@@ -622,7 +624,7 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: isSmallScreen ? 20 : 24,
     fontWeight: '800',
-    color: '#0EA5E9',
+    color: '#0072CE',
     flex: 1,
     lineHeight: 30,
     letterSpacing: -0.6,
@@ -669,8 +671,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   boldText: {
-    fontWeight: '700',
-    color: '#0EA5E9',
+    fontWeight: '900',
+    color: '#0072CE',
     letterSpacing: -0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -746,7 +748,7 @@ const styles = StyleSheet.create({
   sectionTitleCompact: {
     fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
     fontWeight: '900',
-    color: '#0EA5E9',
+    color: '#0072CE',
     textAlign: 'center',
     marginBottom: 8,
     lineHeight: isSmallScreen ? 28 : 32,
@@ -864,7 +866,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   aboutSubtitle: {
-    color: '#374151',
+    color: '#0072CE',
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: 28,
@@ -901,7 +903,7 @@ const styles = StyleSheet.create({
    statNumber: {
      fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
      fontWeight: '900',
-     color: '#0EA5E9',
+     color: '#0072CE',
      marginBottom: 4,
      letterSpacing: -0.5,
      textAlign: 'center',
@@ -909,7 +911,7 @@ const styles = StyleSheet.create({
    },
    statLabel: {
      fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
-     color: '#6b7280',
+     color: '#0072CE',
      fontWeight: '700',
      textAlign: 'center',
      letterSpacing: 0.3,
@@ -940,7 +942,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   aboutText: {
-    color: '#374151',
+    color: '#0072CE',
     fontSize: isSmallScreen ? 14 : 15,
     lineHeight: isSmallScreen ? 20 : 24,
     flex: 1,
@@ -961,25 +963,27 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced Step Cards - Removed numbering, made icons prominent
-  stepCard: {
+  stepsContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: isSmallScreen ? 16 : 24,
-    marginBottom: 6,
-    alignItems: 'center',
+    borderRadius: 20,
+    padding: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 8,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
+    gap: 16,
+  },
+  stepCard: {
+    backgroundColor: '#f8fafc',
+    borderRadius: 16,
+    padding: isSmallScreen ? 16 : 20,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
   },
-  // stepIconMain: {
-  //   width: isSmallScreen ? 80 : 96,
-  //   height: isSmallScreen ? 80 : 96,
-  //   borderRadius: isSmallScreen ? 40 : 48,
-  //   backgroundColor: '#e0f2fe',
   //   justifyContent: 'center',
   //   alignItems: 'center',
   //   marginBottom: 24,
@@ -1073,7 +1077,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ctaBtnText: {
-    color: '#0EA5E9',
+    color: '#0072CE',
     fontWeight: '800',
     fontSize: isSmallScreen ? 16 : 18,
     marginRight: 8,
@@ -1085,11 +1089,19 @@ const styles = StyleSheet.create({
   },
 
   // Enhanced Footer
+  footerWrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: '#f8fafc',
+  },
   footer: {
     backgroundColor: 'rgb(66, 65, 65)',
     paddingVertical: isSmallScreen ? 40 : 56,
     paddingHorizontal: 24,
     alignItems: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
   },
   footerTitle: {
     color: '#ffffff',

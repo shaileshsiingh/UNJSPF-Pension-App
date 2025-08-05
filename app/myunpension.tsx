@@ -202,7 +202,7 @@ export default function LandingPage() {
             <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
           </View>
           
-          <View style={styles.stepsContainer}>
+          <View style={[styles.stepsContainer, styles.borderedRoundedContainer]}>
             {[
               { 
                 title: 'Create Your Free Account', 
@@ -243,28 +243,30 @@ export default function LandingPage() {
         </View>
 
         {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerTitle}>Disclaimer</Text>
-          <Text style={styles.footerText}>
-            MyUNPension is an independent, third-party tool, developed by a former UN staff member who recently retired, and is not affiliated with, endorsed by, or in any way officially connected with the United Nations, the UNJSPF, or any of its subsidiary organizations. All calculations are estimates provided for planning purposes only and should be verified with the UNJSPF before making any financial decisions.
-          </Text>
-          
-          <View style={styles.footerLinks}>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>About Us</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Contact</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Privacy Policy</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Terms of Service</Text>
-            </TouchableOpacity>
+        <View style={styles.footerWrapper}>
+          <View style={styles.footer}>
+            <Text style={styles.footerTitle}>Disclaimer</Text>
+            <Text style={styles.footerText}>
+              MyUNPension is an independent, third-party tool, developed by a former UN staff member who recently retired, and is not affiliated with, endorsed by, or in any way officially connected with the United Nations, the UNJSPF, or any of its subsidiary organizations. All calculations are estimates provided for planning purposes only and should be verified with the UNJSPF before making any financial decisions.
+            </Text>
+            
+            <View style={styles.footerLinks}>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>About Us</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Contact</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Privacy Policy</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink}>Terms of Service</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.footerCopyright}>© 2025 MyUNPension. All Rights Reserved.</Text>
           </View>
-          
-          <Text style={styles.footerCopyright}>© 2025 MyUNPension. All Rights Reserved.</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -399,7 +401,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9fafb',
     borderRadius: 16,
     padding: 20,
-    borderLeft: 4,
+    borderLeftWidth: 4,
     borderLeftColor: '#0EA5E9',
   },
   categoryTitle: {
@@ -609,12 +611,34 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
+  // Steps Container
+  borderedRoundedContainer: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
+    padding: 20,
+    backgroundColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+
   // Footer
+  footerWrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: '#f8fafc',
+  },
   footer: {
     backgroundColor: 'rgb(66, 65, 65)',
     paddingVertical: isSmallScreen ? 40 : 56,
     paddingHorizontal: 24,
     alignItems: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
   },
   footerTitle: {
     color: '#ffffff',
