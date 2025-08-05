@@ -566,14 +566,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f9ff',
   },
   sectionHeader: {
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   sectionTitle: {
     fontSize: isSmallScreen ? 16 : isTablet ? 24 : 22,
     fontWeight: '900',
     color: '#0072CE',
     textAlign: 'center',
-    marginBottom: 12,
+    // marginBottom: 12,
     lineHeight: isSmallScreen ? 36 : 42,
     letterSpacing: -1,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -738,7 +738,7 @@ const styles = StyleSheet.create({
 
   // Enhanced About Section
   aboutSectionCompact: {
-    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingVertical: isSmallScreen ? 24 : 32,
     paddingHorizontal: 20,
     backgroundColor: '#f0f9ff',
   },
@@ -1096,7 +1096,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: 'rgb(66, 65, 65)',
-    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingVertical: isSmallScreen ? 24 : 32,
     paddingHorizontal: 24,
     alignItems: 'center',
     borderRadius: 20,
