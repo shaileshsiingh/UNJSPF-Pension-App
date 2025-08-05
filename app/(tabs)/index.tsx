@@ -74,7 +74,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/(tabs)/profile')}
           >
             <View style={styles.buttonContent}>
-              <User size={24} color="#FFFFFF" strokeWidth={2} />
+              {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
               <View style={styles.buttonTextContainer}>
                 <Text style={styles.primaryButtonText}>Start Profile Setup</Text>
                 <Text style={styles.primaryButtonSubtext}>
