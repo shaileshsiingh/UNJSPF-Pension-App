@@ -565,6 +565,8 @@ export default function EligibilityScreen() {
                   label="Length of Your Contributory Service"
                   unit=" years"
                   // hideRange={true}
+                  // hideMax={true}
+                  // hideMin={true}
                 />
                 
                 
@@ -603,7 +605,8 @@ export default function EligibilityScreen() {
                   label="Your Current Age"
                   unit=" years"
                   // hideRange={true}
-
+                  // hideMax={true}
+                  // hideMin={true}
                 />
                 
                 

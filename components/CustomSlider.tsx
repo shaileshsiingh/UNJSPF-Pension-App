@@ -11,6 +11,8 @@ interface CustomSliderProps {
   unit?: string;
   color?: string;
   hideRange?: boolean;
+  hideMin?: boolean;
+  hideMax?: boolean;
 }
 
 export default function CustomSlider({
@@ -19,10 +21,12 @@ export default function CustomSlider({
   value,
   onValueChange,
   step = 1,
-  label,
+  label, 
   unit = '',
   color = '#2563EB',
-  hideRange = false
+  hideRange = false,
+  hideMin = false,
+  hideMax = false
 }: CustomSliderProps) {
   const screenWidth = Dimensions.get('window').width;
   const sliderWidth = screenWidth - 80; // Account for padding
@@ -124,8 +128,8 @@ export default function CustomSlider({
       </View>
       {!hideRange && (
         <View style={styles.rangeContainer}>
-          <Text style={styles.rangeText}>{min.toLocaleString()}{unit}</Text>
-          <Text style={styles.rangeText}>{max.toLocaleString()}{unit}</Text>
+         {hideMin ? null : <Text style={styles.rangeText}>{min.toLocaleString()}{unit}</Text>}
+         {hideMax ? null : <Text style={styles.rangeText}>{max.toLocaleString()}{unit}</Text>}
         </View>
       )}
     </View>

@@ -880,7 +880,7 @@ export default function CalculatorScreen() {
               </View>
 
               {/* B) Annual Pension (early retirement...) */}
-              {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0 && (
+              {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0? (
                 <View style={styles.resultCard}>
                   <Text style={styles.resultLabel}>
                     Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction?.toFixed(2)}%)
@@ -889,7 +889,7 @@ export default function CalculatorScreen() {
                     {formatCurrency(calculation.annualPension * (1 - (calculation.earlyRetirementReduction ?? 0) / 100))}
                   </Text>
                 </View>
-              )}
+              ) : null}
 
               {/* C) Monthly Pension (before commutation) */}
               <View style={styles.resultCard}>
