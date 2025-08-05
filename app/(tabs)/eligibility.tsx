@@ -315,6 +315,17 @@ export default function EligibilityScreen() {
     return `${parts.years} years, ${parts.months} months, ${parts.days} days`;
   }
 
+  // Convert decimal years to years, months, days format for real-time display
+  function convertDecimalYearsToYMD(decimalYears: number): { years: number, months: number, days: number } {
+    const years = Math.floor(decimalYears);
+    const remainingDecimal = decimalYears - years;
+    const totalDays = Math.round(remainingDecimal * 365.25);
+    const months = Math.floor(totalDays / 30.44); // Average days per month
+    const days = Math.round(totalDays - (months * 30.44));
+    
+    return { years, months, days };
+  }
+
   const renderScenarioCard = (scenario: any, idx: number) => {
     const isEligible = scenario.eligible;
     const cardStyle = {
@@ -553,7 +564,9 @@ export default function EligibilityScreen() {
                   color="#2563EB"
                   label="Length of Your Contributory Service"
                   unit=" years"
+                  // hideRange={true}
                 />
+                
                 
                 <View style={{ position: 'relative', height: 20, width: '100%', marginTop:'-60px'}}>
                   {[0, 5, 10, 20, 30, 38.75].map((mark) => (
@@ -572,8 +585,9 @@ export default function EligibilityScreen() {
                     </View>
                   ))}
                 </View>
-                
-                <Text style={styles.sliderValue}>{formatYearsMonthsDaysObj(serviceLengthParts)}</Text>
+                <Text style={[styles.sliderValue, { marginTop: 30, marginBottom: 10 }]}>
+                  {formatYearsMonthsDaysObj(convertDecimalYearsToYMD(yearsOfService))}
+                </Text>
                 <Text style={styles.sliderNote}>Maximum total accrual: 70% of FAR (after 38.75 years of service)</Text>
               </View>
               
@@ -582,21 +596,24 @@ export default function EligibilityScreen() {
                 <CustomSlider
                   value={currentAge}
                   onValueChange={setCurrentAge}
-                  min={25}
+                  min={18}
                   max={70}
                   step={1}
                   color="#059669"
                   label="Your Current Age"
                   unit=" years"
+                  // hideRange={true}
+
                 />
                 
+                
                 <View style={{ position: 'relative', height: 28, width: '100%', marginTop:'-60px' }}>
-                  {[25, 35, 45, ERA, NRA, 70].map((mark) => (
+                  {[18, 25, 35, 45, ERA, NRA, 70].map((mark) => (
                     <View
                       key={mark}
                       style={{
                         position: 'absolute',
-                        left: `${((mark - 25) / (70 - 25)) * 100}%`,
+                        left: `${((mark - 18) / (70 - 18)) * 100}%`,
                         transform: [{ translateX: -12 }],
                         alignItems: 'center',
                         width: 24,
@@ -621,9 +638,9 @@ export default function EligibilityScreen() {
                     </View>
                   ))}
                 </View>
-                
-                <Text style={styles.sliderValue}>{currentAge} years</Text>
-                
+                <Text style={[styles.sliderValue, { marginTop: 30, marginBottom: 10 }]}>
+                  {currentAge} years
+                </Text>
                 {/* ERA/NRA Info */}
                 <View style={styles.eraNraInfo}>
                   <Text style={styles.eraNraInfoText}>
@@ -997,7 +1014,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sliderContainer: {
-    marginBottom: 24,
+    // marginBottom: 24,
+    paddingVertical: 6,
   },
   sliderLabel: {
     fontSize: 16,
@@ -1016,6 +1034,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 16,
     paddingHorizontal: 8,
+    paddingVertical: 16,
   },
   sliderTrack: {
     position: 'absolute',

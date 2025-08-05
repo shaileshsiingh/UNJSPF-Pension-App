@@ -875,7 +875,7 @@ export default function CalculatorScreen() {
 
               {/* A) Annual Pension Amount (for normal retirement) */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>A) Annual Pension Amount (for normal retirement)</Text>
+                <Text style={styles.resultLabel}>Annual Pension Amount (for normal retirement)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.annualPension)}</Text>
               </View>
 
@@ -883,7 +883,7 @@ export default function CalculatorScreen() {
               {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0 && (
                 <View style={styles.resultCard}>
                   <Text style={styles.resultLabel}>
-                    B) Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction?.toFixed(2)}%)
+                    Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction?.toFixed(2)}%)
                   </Text>
                   <Text style={styles.resultValue}>
                     {formatCurrency(calculation.annualPension * (1 - (calculation.earlyRetirementReduction ?? 0) / 100))}
@@ -893,7 +893,7 @@ export default function CalculatorScreen() {
 
               {/* C) Monthly Pension (before commutation) */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>C) Monthly Pension (before commutation)</Text>
+                <Text style={styles.resultLabel}>Monthly Pension (before commutation)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.monthlyPension)}</Text>
               </View>
 
@@ -901,11 +901,11 @@ export default function CalculatorScreen() {
               {electLumpSum && calculation.eligibilityType !== 'Deferred Retirement Benefit (Article 30)' && (
                 <>
                   <View style={styles.resultCard}>
-                    <Text style={styles.resultLabel}>D) Total Lump Sum Received ({lumpSumPercentage.toFixed(2)}%)</Text>
+                    <Text style={styles.resultLabel}>Total Lump Sum Received ({lumpSumPercentage.toFixed(2)}%)</Text>
                     <Text style={styles.resultValue}>{formatCurrency(calculation.lumpSum)}</Text>
                   </View>
                   <View style={styles.resultCard}>
-                    <Text style={styles.resultLabel}>E) Monthly Pension Commuted Value</Text>
+                    <Text style={styles.resultLabel}>Monthly Pension Commuted Value</Text>
                     <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(calculation.monthlyPension - calculation.reducedMonthlyPension)}</Text>
                   </View>
                 </>
@@ -913,31 +913,31 @@ export default function CalculatorScreen() {
 
               {/* F) Reduced Monthly Pension */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>F) Reduced Monthly Pension</Text>
+                <Text style={styles.resultLabel}>Reduced Monthly Pension</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.reducedMonthlyPension)}</Text>
               </View>
 
               {/* G) Add: COLA (2.8%) */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>G) Add: COLA (2.8%)</Text>
+                <Text style={styles.resultLabel}>Add: COLA (2.8%)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension - calculation.reducedMonthlyPension)}</Text>
               </View>
 
               {/* H) Monthly Pension (after COLA) */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>H) Monthly Pension (after COLA)</Text>
+                <Text style={styles.resultLabel}>Monthly Pension (after COLA)</Text>
                 <Text style={styles.resultValue}>{formatCurrency(calculation.colaAdjustedPension)}</Text>
               </View>
 
               {/* I) Less: ASHI Contribution */}
               <View style={styles.resultCard}>
-                <Text style={styles.resultLabel}>I) Less: ASHI Contribution</Text>
+                <Text style={styles.resultLabel}>Less: ASHI Contribution</Text>
                 <Text style={[styles.resultValue, { color: '#DC2626' }]}>-{formatCurrency(ashiContribution)}</Text>
               </View>
 
               {/* J) Your Periodic Retirement Benefit */}
               <View style={[styles.resultCard, styles.highlightCard]}>
-                <Text style={styles.resultLabel}>J) Your Periodic Retirement Benefit</Text>
+                <Text style={styles.resultLabel}>Your Periodic Retirement Benefit</Text>
                 <Text style={[styles.resultValue, styles.highlightValue]}>{formatCurrency(calculation.finalPeriodicBenefit || 0)}</Text>
               </View>
 
@@ -1097,6 +1097,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#374151',
     fontWeight: '600',
+    marginTop: 12,
   },
   helpText: {
     fontSize: 14,
