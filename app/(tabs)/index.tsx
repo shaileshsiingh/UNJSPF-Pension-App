@@ -28,7 +28,7 @@ import { useAuth } from '../../components/AuthContext';
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
 export default function HomeScreen() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
@@ -53,8 +53,9 @@ export default function HomeScreen() {
                 resizeMode="contain"
               />
             </TouchableOpacity>
+            <Text style={styles.heroTitle}>MyUNPension</Text>
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
-            <Text style={styles.welcomeTitle}>Welcome</Text>
+            <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName}` : ''}!</Text>
             <Text style={styles.welcomeSubtitle}>
               Your Comprehensive Guide to United Nations Pension
             </Text>
@@ -270,6 +271,20 @@ const styles = StyleSheet.create({
     height: 120,
     marginBottom: 16,   // a bit more spacing from the title
   },
+   heroTitle: {
+      color: '#0072CE',
+      fontSize:  24,
+      fontWeight: '600',
+      textAlign: 'center',
+      marginBottom: 16,
+      lineHeight: 40,
+      letterSpacing: -1.2,
+      fontFamily: 'System',
+      textShadowColor: 'rgba(0, 0, 0, 0.3)',
+      textShadowOffset: { width: 0, height: 2 },
+      textShadowRadius: 8,
+      marginTop:-35,
+    },  
   welcomeTitle: {
     fontSize: 32,
     fontWeight: '800',

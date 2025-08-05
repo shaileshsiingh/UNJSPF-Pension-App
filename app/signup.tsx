@@ -21,17 +21,31 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
+const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
 export default function SignupScreen() {
   const { signUp } = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  // Name validation function
+  const validateName = (name) => {
+    if (!name) {
+      return 'Name is required';
+    }
+    if (name.length < 2) {
+      return 'Name must be at least 2 characters long';
+    }
+    return '';
+  };
 
   // Email validation function
   const validateEmail = (email) => {
@@ -86,6 +100,13 @@ export default function SignupScreen() {
   };
 
   // Handle input changes
+  const handleNameChange = (text) => {
+    setName(text);
+    if (nameError) {
+      setNameError('');
+    }
+  };
+
   const handleEmailChange = (text) => {
     setEmail(text);
     if (emailError) {
@@ -113,15 +134,17 @@ export default function SignupScreen() {
 
   // Validate form before submission
   const validateForm = () => {
+    const nameErr = validateName(name);
     const emailErr = validateEmail(email);
     const passwordErr = validatePassword(password);
     const confirmPasswordErr = validateConfirmPassword(confirmPassword);
     
+    setNameError(nameErr);
     setEmailError(emailErr);
     setPasswordError(passwordErr);
     setConfirmPasswordError(confirmPasswordErr);
     
-    return !emailErr && !passwordErr && !confirmPasswordErr;
+    return !nameErr && !emailErr && !passwordErr && !confirmPasswordErr;
   };
 
   const handleSignup = async () => {
@@ -132,7 +155,7 @@ export default function SignupScreen() {
 
     setLoading(true);
     try {
-      await signUp(email, password);
+      await signUp(email, password, name);
       showToast('Account created successfully!');
       router.replace('/');
     } catch (e) {
@@ -189,7 +212,7 @@ export default function SignupScreen() {
                 <TouchableOpacity onPress={() => router.push('/')}>
                                <Image 
                                  source={{ 
-                                   uri: 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png'
+                                   uri: LOGO_URL
                                  }}
                                  style={styles.heroLogo}
                                  resizeMode="contain"
@@ -205,6 +228,20 @@ export default function SignupScreen() {
               <Text style={styles.title}>Create Account</Text>
               <Text style={styles.subtitle}>Join us today</Text>
               
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={[styles.input, nameError ? styles.inputError : null]}
+                  placeholder="Name"
+                  value={name}
+                  onChangeText={handleNameChange}
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  placeholderTextColor="#9CA3AF"
+
+                />
+                {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+              </View>
+
               <View style={styles.inputContainer}>
                 <TextInput
                   style={[styles.input, emailError ? styles.inputError : null]}

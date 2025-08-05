@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
 
@@ -7,7 +7,7 @@ interface AuthContextProps {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, name?: string) => Promise<void>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithApple: () => Promise<void>;
@@ -31,8 +31,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (email: string, password: string, name?: string) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Update the user's display name if provided
+    if (name && userCredential.user) {
+      await updateProfile(userCredential.user, {
+        displayName: name
+      });
+    }
   };
 
   const signOut = async () => {
@@ -44,20 +51,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // TODO: Implement Google sign-in
     throw new Error('Google sign-in not implemented yet');
   };
+  
   const signInWithApple = async () => {
     // TODO: Implement Apple sign-in
     throw new Error('Apple sign-in not implemented yet');
   };
 
-  return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut, signInWithGoogle, signInWithApple }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    user,
+    loading,
+    signIn,
+    signUp,
+    signOut,
+    signInWithGoogle,
+    signInWithApple,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
   return context;
-}; 
+};

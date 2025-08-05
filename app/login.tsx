@@ -18,7 +18,7 @@ import {
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import MyImage from '../assets/images/logo.png';
+// import MyImage from '../assets/images/logo.png';
 
 
 const { width, height } = Dimensions.get('window');
@@ -32,6 +32,7 @@ export default function LoginScreen() {
   const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
   // Email validation function
   const validateEmail = (email) => {
@@ -151,8 +152,7 @@ export default function LoginScreen() {
                 <TouchableOpacity onPress={() => router.push('/')}>
                 <Image 
                   source={{
-                    uri: 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png'
-                  }}
+                    uri: LOGO_URL }}
                   style={styles.heroLogo}
                   resizeMode="contain"
                 />
