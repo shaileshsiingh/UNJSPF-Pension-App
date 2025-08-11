@@ -226,7 +226,7 @@ export default function SignupScreen() {
             {/* Signup Card - keeping existing styling */}
             <View style={styles.card}>
               <Text style={styles.title}>Create Account</Text>
-              <Text style={styles.subtitle}>Join us today</Text>
+              {/* <Text style={styles.subtitle}>Join us today</Text> */}
               
               <View style={styles.inputContainer}>
                 <TextInput
@@ -335,18 +335,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   heroLogo: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 0,
+    width: 120,
+    height: 120,
+    // marginBottom: 6,
   },
   appName: {
     fontSize: isSmallScreen ? 24 : 28,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
+    marginTop: -12,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',

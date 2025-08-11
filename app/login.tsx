@@ -268,18 +268,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   heroLogo: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 0,
+    width: 120,
+    height: 120,
+    marginBottom: 6,
   },
   appName: {
     fontSize: isSmallScreen ? 24 : 28,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
+    marginTop: -12,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -313,6 +314,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 24 : 28,
     fontWeight: '800',
     marginBottom: 8,
+    marginTop: -12,
     color: '#0EA5E9', // Match the blue theme
     textAlign: 'center',
     letterSpacing: -0.5,
