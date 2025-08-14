@@ -757,10 +757,10 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   aboutSubtitleCompact: {
-    fontSize: isSmallScreen ? 14 : 16,
+    fontSize: isSmallScreen ? 12 : 16,
     color: '#6b7280',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 4,
     letterSpacing: -0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '500',
