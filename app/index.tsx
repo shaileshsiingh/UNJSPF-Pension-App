@@ -1102,7 +1102,7 @@ const styles = StyleSheet.create({
   footerText: {
     color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
-    textAlign: 'center',
+    textAlign: 'left',
     lineHeight: isSmallScreen ? 20 : 24,
     marginBottom: 6,
     maxWidth: 520,
