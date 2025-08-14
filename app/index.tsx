@@ -232,11 +232,11 @@ export default function LandingPage() {
               <Text style={styles.statLabelCompact}>Participating Organizations</Text>  
             </View>
             <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>1,50,000</Text>
-              <Text style={styles.statLabelCompact}>Active staff</Text>
+              <Text style={styles.statNumberCompact}>150K</Text>
+              <Text style={styles.statLabelCompact}>Active Staff</Text>
             </View>
             <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>89,000</Text>
+              <Text style={styles.statNumberCompact}>89K</Text>
               <Text style={styles.statLabelCompact}>Retirees</Text>
             </View>
           </View>
@@ -246,7 +246,7 @@ export default function LandingPage() {
               { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
               { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
               { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
-              { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
+              // { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
               { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
               { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
               { text: 'Your Pension is adjusted based on cost of living and paid for life' },
@@ -254,9 +254,7 @@ export default function LandingPage() {
               { text: 'You can separate at any time you want' }
             ].map((item, index) => (
               <View key={index} style={styles.aboutItemCompact}>
-                <View style={styles.aboutBulletContainerCompact}>
-                  <Text style={styles.aboutBulletCompact}></Text>
-                </View>
+                <View style={styles.aboutBlueDot} />
                 <Text style={styles.aboutTextCompact}>{item.text}</Text>
               </View>
             ))}
@@ -323,7 +321,7 @@ export default function LandingPage() {
               </TouchableOpacity>
             </View>
             
-            <Text style={styles.footerCopyright}>© 2025 MyUNPension. All Rights Reserved.</Text>
+            <Text style={styles.footerCopyright}> 2025 MyUNPension. All Rights Reserved.</Text>
           </View>
         </View>
       </ScrollView>
@@ -739,9 +737,10 @@ const styles = StyleSheet.create({
 
   // Enhanced About Section
   aboutSectionCompact: {
-    paddingVertical: isSmallScreen ? 24 : 32,
-    paddingHorizontal: 20,
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#f8fafc',
+    paddingVertical: isSmallScreen ? 20 : 32,
+    paddingHorizontal: isSmallScreen ? 16 : 24,
+    marginBottom: 16,
   },
   sectionHeaderCompact: {
     marginBottom: 16,
@@ -768,28 +767,24 @@ const styles = StyleSheet.create({
   statsContainerCompact: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    marginBottom: 24,
-    paddingHorizontal: isSmallScreen ? 20 : 30,
-    gap: isSmallScreen ? 8 : 12,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    paddingHorizontal: 4,
   },
   statCardCompact: {
     backgroundColor: '#ffffff',
-    borderRadius: 20,
+    borderRadius: isSmallScreen ? 12 : 16,
     padding: isSmallScreen ? 8 : isMediumScreen ? 10 : 12,
     alignItems: 'center',
     justifyContent: 'center',
-    width: getCardWidth(),
+    width: '30%',
     minHeight: isSmallScreen ? 60 : 70,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
-    shadowRadius: 16,
-    elevation: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-    marginBottom: isSmallScreen ? 12 : 8,
+    shadowRadius: 8,
+    elevation: 4,
   },
   statNumberCompact: {
     fontSize: isSmallScreen ? 12 : isMediumScreen ? 14 : 16,
@@ -810,41 +805,32 @@ const styles = StyleSheet.create({
     lineHeight: isSmallScreen ? 10 : 12,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
+  
   aboutCardCompact: {
     backgroundColor: '#ffffff',
     borderRadius: 24,
-    padding: isSmallScreen ? 16 : 20,
+    padding: isSmallScreen ? 12 : 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.1,
     shadowRadius: 20,
     elevation: 8,
-    gap: 16,
+    gap: 6,
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
   },
   aboutItemCompact: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    // marginBottom: 6,
   },
-  aboutBulletContainerCompact: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: 'rgba(14, 165, 233, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
+  aboutBlueDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 4,
+    backgroundColor: '#0EA5E9',
     marginRight: 12,
-    marginTop: 2,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
-  aboutBulletCompact: {
-    color: '#0EA5E9',
-    fontSize: 10,
-    fontWeight: '800',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    marginTop: 6,
   },
   aboutTextCompact: {
     color: '#374151',
@@ -855,7 +841,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   sourceTextCompact: {
-    marginTop: 16,
+    // marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
     borderTopColor: 'rgba(14, 165, 233, 0.1)',
