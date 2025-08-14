@@ -36,6 +36,7 @@ export default function HomeScreen() {
         <View style={{ flex: 1 }} />
         <TouchableOpacity
           onPress={signOut}
+          
           style={styles.logoutButton}
           accessibilityLabel="Logout"
         >
@@ -57,8 +58,7 @@ export default function HomeScreen() {
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
             <Text style={styles.welcomeSubtitle}>
-              Your Comprehensive Guide to United Nations Pension
-            </Text>
+View Your Complete Separation Benefits Package            </Text>
           </View>
         </View>
 
@@ -76,9 +76,9 @@ export default function HomeScreen() {
             <View style={styles.buttonContent}>
               {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
               <View style={styles.buttonTextContainer}>
-                <Text style={styles.primaryButtonText}>Start Profile Setup</Text>
+                <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
                 <Text style={styles.primaryButtonSubtext}>
-                  Enter your employment history for accurate calculations
+                  Explore the methodology used to estimate your pension based on UNJSPF regulations and rules
                 </Text>
               </View>
             </View>
@@ -147,29 +147,29 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle1}>Quick Tools</Text>
           <Text style={styles.sectionSubtitle1}>
-            Access essential pension tools and resources
+            Access essential pension tools and resources here
           </Text>
           
           <View style={styles.toolsGrid}>
             <TouchableOpacity 
               style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/eligibility')}
+              onPress={() => router.push('/(tabs)/profile')}
             >
-              <Shield size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Eligibility</Text>
+              <Calculator size={32} color="#2563EB" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Calculator</Text>
               <Text style={styles.toolDescription}>
-                Check your pension eligibility
+                Find your retirement age options.
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/calculator')}
+              onPress={() => router.push('/(tabs)/eligibility')}
             >
-              <Calculator size={32} color="#DC2626" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Calculator</Text>
+              <TrendingUp size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Pension</Text>
               <Text style={styles.toolDescription}>
-                Calculate your pension benefits
+                Estimate, adjust, and view your pension.
               </Text>
             </TouchableOpacity>
 
@@ -178,9 +178,20 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/resources')}
             >
               <FileText size={32} color="#D97706" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Resources</Text>
+              <Text style={styles.toolTitle}>Entitlements</Text>
               <Text style={styles.toolDescription}>
-                Forms and documentation
+                Claim your final HR benefits.
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.toolCard}
+              onPress={() => router.push('/(tabs)/planner')}
+            >
+              <Users size={32} color="#7C3AED" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Planner</Text>
+              <Text style={styles.toolDescription}>
+                Explore financial planning tips.
               </Text>
             </TouchableOpacity>
 
@@ -188,10 +199,21 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/info')}
             >
-              <Users size={32} color="#7C3AED" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Info</Text>
+              <TrendingUp size={32} color="#DC2626" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Relocation</Text>
               <Text style={styles.toolDescription}>
-                Contact and support
+                Get guidance for your move.
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.toolCard}
+              onPress={() => router.push('/(tabs)/info')}
+            >
+              <Building size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Community</Text>
+              <Text style={styles.toolDescription}>
+                Connect with retirees and support.
               </Text>
             </TouchableOpacity>
           </View>

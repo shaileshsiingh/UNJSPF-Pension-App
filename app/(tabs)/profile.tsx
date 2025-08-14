@@ -22,7 +22,10 @@ import {
   X,
   Save,
   Check,
-  Info
+  Info,
+  Calculator,
+  DollarSign,
+  ArrowRight
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
@@ -617,6 +620,30 @@ export default function ProfileScreen() {
             </View>
           </View>
 
+          {/* Advanced Calculator Section */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Calculator size={20} color="#2563EB" strokeWidth={2} />
+              <Text style={styles.sectionTitle}>Advanced Pension Calculator</Text>
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.calculatorButton}
+              onPress={() => router.push('/(tabs)/calculator')}
+            >
+              <View style={styles.calculatorButtonContent}>
+                {/* <DollarSign size={24} color="#FFFFFF" strokeWidth={2} /> */}
+                <View style={styles.calculatorButtonTextContainer}>
+                  <Text style={styles.calculatorButtonText}>Calculate Pension Benefits</Text>
+                  <Text style={styles.calculatorButtonSubtext}>
+                    Get detailed pension calculations.
+                  </Text>
+                </View>
+              </View>
+              <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+            </TouchableOpacity>
+          </View>
+
           {/* Save Button */}
           <View style={styles.saveSection}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -920,5 +947,34 @@ const styles = StyleSheet.create({
     color: '#111827',
     flex: 1,
     paddingRight: 12,
+  },
+  calculatorButton: {
+    backgroundColor: '#2563EB',
+    borderRadius: 16,
+    padding: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+  },
+  calculatorButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  calculatorButtonTextContainer: {
+    marginLeft: 12,
+  },
+  calculatorButtonText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  calculatorButtonSubtext: {
+    fontSize: 14,
+    color: '#FFFFFF',
   },
 });

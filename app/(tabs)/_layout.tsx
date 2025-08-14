@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'expo-router';
-import { Home, User, Shield, Calculator, FileText, Info } from 'lucide-react-native';
+import { Home, Calculator, TrendingUp, FileSliders, FileText, Info } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -36,7 +36,7 @@ export default function TabsLayout() {
           elevation: 8,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 9,
           fontWeight: '600',
           marginTop: 4,
         },
@@ -57,24 +57,6 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ size, color }) => (
-            <User size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="eligibility"
-        options={{
-          title: 'Eligibility',
-          tabBarIcon: ({ size, color }) => (
-            <Shield size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="calculator"
-        options={{
           title: 'Calculator',
           tabBarIcon: ({ size, color }) => (
             <Calculator size={size} color={color} strokeWidth={2} />
@@ -82,9 +64,27 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="eligibility"
+        options={{
+          title: 'Pension',
+          tabBarIcon: ({ size, color }) => (
+            <TrendingUp size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="planner"
+        options={{
+          title: 'Planner',
+          tabBarIcon: ({ size, color }) => (
+            <FileSliders size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="resources"
         options={{
-          title: 'Resources',
+          title: 'Entitlement',
           tabBarIcon: ({ size, color }) => (
             <FileText size={size} color={color} strokeWidth={2} />
           ),
@@ -97,6 +97,12 @@ export default function TabsLayout() {
           tabBarIcon: ({ size, color }) => (
             <Info size={size} color={color} strokeWidth={2} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="calculator"
+        options={{
+          href: null, // Hide from tab bar
         }}
       />
     </Tabs>
