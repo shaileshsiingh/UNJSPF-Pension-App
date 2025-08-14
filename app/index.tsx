@@ -767,9 +767,9 @@ const styles = StyleSheet.create({
   statsContainerCompact: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    paddingHorizontal: 4,
+    justifyContent: 'space-around',
+    // marginBottom: 20,
+    paddingHorizontal: 2,
   },
   statCardCompact: {
     backgroundColor: '#ffffff',
