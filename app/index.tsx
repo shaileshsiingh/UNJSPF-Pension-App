@@ -265,7 +265,7 @@ export default function LandingPage() {
         </View>
 
         {/* Enhanced How It Works */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>How It Works</Text>
             <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
@@ -283,7 +283,7 @@ export default function LandingPage() {
               </View>
             ))}
           </View>
-        </View>
+        </View> */}
 
         {/* Enhanced Final Call to Action */}
         <View style={styles.ctaSection}>
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop:-12,
+    marginTop:-27,
   },
   aboutBulletContainer: {
     width: 20,
@@ -424,10 +424,10 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: 'black',
-    fontSize: isSmallScreen ? 18 : isTablet ? 26 : 22,
+    fontSize: isSmallScreen ? 14: isTablet ? 26 : 22,
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 8,
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 16 : 18,
     textAlign: 'center',
     lineHeight: isSmallScreen ? 24 : 28,
-    marginBottom: 40,
+    marginBottom: 8,
     paddingHorizontal: 10,
     maxWidth: 520,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -530,19 +530,20 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   whoTitle: {
-    fontSize: isSmallScreen ? 22 : 26,
+    fontSize: isSmallScreen ? 16 : 26,
     fontWeight: '800',
     color: '#0072CE',
     flex: 1,
-    lineHeight: 32,
+    lineHeight: 2,
     letterSpacing: -0.8,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    textAlign: 'center',
   },
   whoSubtitle: {
     fontSize: isSmallScreen ? 16 : 18,
     color: '#0072CE',
     fontWeight: '600',
-    marginBottom: 16,
+    // marginBottom: 16,
     lineHeight: 26,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -556,7 +557,7 @@ const styles = StyleSheet.create({
 
   // Enhanced Sections
   section: {
-    paddingVertical: isSmallScreen ? 40 : 56,
+    paddingVertical: isSmallScreen ? 0 : 56,
     paddingHorizontal: 20,
     backgroundColor: '#ffffff',
   },
@@ -579,10 +580,10 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   sectionSubtitle: {
-    fontSize: isSmallScreen ? 14 : 16,
+    fontSize: isSmallScreen ? 12 : 16,
     color: '#6b7280',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 8,
     letterSpacing: -0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '500',

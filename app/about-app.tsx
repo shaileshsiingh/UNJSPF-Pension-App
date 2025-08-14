@@ -48,7 +48,7 @@ export default function CombinedAboutScreen() {
 
   const renderPensionContent = () => (
     <View>
-      <View style={styles.section}>
+      {/* <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Building size={24} color="#2563EB" strokeWidth={2} />
           <Text style={styles.sectionTitle}>UNJSPF Pension Fund</Text>
@@ -57,14 +57,14 @@ export default function CombinedAboutScreen() {
           The United Nations Joint Staff Pension Fund (UNJSPF) is a defined benefit plan serving over 240,000 members worldwide. 
           It provides retirement, disability, and survivor benefits with a funding ratio exceeding 100%, ensuring long-term solvency.
         </Text>
-      </View>
+      </View> */}
 
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
+      {/* <View style={styles.section}> */}
+        {/* <View style={styles.sectionHeader}>
           <Info size={24} color="#2563EB" strokeWidth={2} />
           <Text style={styles.sectionTitle}>About the UNJSPF</Text>
-        </View>
-        <View style={styles.card}>
+        </View> */}
+        {/* <View style={styles.card}>
           <Text style={styles.cardDescription}>
             • <Text style={{ fontWeight: 'bold' }}>Established in 1949 by the United Nations General Assembly</Text>, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits for staff of the United Nations and other member organizations.{"\n\n"}
             • <Text style={{ fontWeight: 'bold' }}>Strong Funding:</Text> The Fund is one of the world's strongest, with over $35 billion in assets and a 111% funded ratio—more than enough to meet obligations for the next 30 to 40 years.{"\n\n"}
@@ -75,16 +75,16 @@ export default function CombinedAboutScreen() {
             • <Text style={{ fontWeight: 'bold' }}>Global Payments:</Text> It is institution-adjusted, paid for life, and deposited directly into your bank account in your local currency.{"\n\n"}
             • <Text style={{ fontWeight: 'bold' }}>Survivor Benefits:</Text> After your death, benefits are transferred to your dependent spouse.
           </Text>
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
 
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
+      {/* <View style={styles.section}> */}
+        {/* <View style={styles.sectionHeader}>
           <Calculator size={24} color="#2563EB" strokeWidth={2} />
           <Text style={styles.sectionTitle}>Benefit Calculation</Text>
-        </View>
+        </View> */}
         
-        <View style={styles.factorList}>
+        {/* <View style={styles.factorList}>
           <View style={styles.factorItem}>
             <Clock size={20} color="#6B7280" strokeWidth={2} />
             <Text style={styles.factorText}>Rate of Accumulation (Years of Service)</Text>
@@ -98,8 +98,8 @@ export default function CombinedAboutScreen() {
           <View style={styles.factorItem}>
             <Text style={styles.factorText}>• Cost of Living Adjustments</Text>
           </View>
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
 
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
