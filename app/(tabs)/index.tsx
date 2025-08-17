@@ -71,14 +71,17 @@ View Your Complete Separation Benefits Package            </Text>
           
           <TouchableOpacity 
             style={styles.primaryButton}
-            onPress={() => router.push('/about-app')}
+            onPress={() => {
+              // Scroll to Quick Tools section or stay on current screen
+              router.push('/benefit_guide');
+            }}
           >
             <View style={styles.buttonContent}>
               {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
               <View style={styles.buttonTextContainer}>
                 <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
                 <Text style={styles.primaryButtonSubtext}>
-                  Explore the methodology used to estimate your pension based on UNJSPF regulations and rules
+                  Access essential pension tools and resources to estimate your benefits
                 </Text>
               </View>
             </View>
@@ -160,6 +163,16 @@ View Your Complete Separation Benefits Package            </Text>
               <Text style={styles.toolTitle}>Community</Text>
               <Text style={styles.toolDescription}>
                 Connect with retirees and support.
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.toolCard}
+              onPress={() => router.push('/benefit_guide')}
+            >
+              <FileText size={32} color="#8B5CF6" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Methodology</Text>
+              <Text style={styles.toolDescription}>
+                Learn calculation methodology and rules.
               </Text>
             </TouchableOpacity>
           </View>
