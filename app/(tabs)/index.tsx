@@ -19,7 +19,8 @@ import {
   Calculator,
   Users,
   TrendingUp,
-  LogOut
+  LogOut,
+  MapPin
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useAuth } from '../../components/AuthContext';
@@ -57,17 +58,17 @@ export default function HomeScreen() {
             <Text style={styles.heroTitle}>MyUNPension</Text>
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
-            <Text style={styles.welcomeSubtitle}>
-View Your Complete Separation Benefits Package            </Text>
+            {/* <Text style={styles.welcomeSubtitle}>
+View Your Complete Separation Benefits Package            </Text> */}
           </View>
         </View>
 
         {/* Quick Actions Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Get Started</Text>
+         <View style={styles.section}>
+          {/* <Text style={styles.sectionTitle}>Get Started</Text>
           <Text style={styles.sectionSubtitle}>
             Begin your pension journey with these essential steps
-          </Text>
+          </Text> */} 
           
           <TouchableOpacity 
             style={styles.primaryButton}
@@ -81,7 +82,7 @@ View Your Complete Separation Benefits Package            </Text>
               <View style={styles.buttonTextContainer}>
                 <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
                 <Text style={styles.primaryButtonSubtext}>
-                  Access essential pension tools and resources to estimate your benefits
+                Learn the concepts, methodology & formulas behind your retirement benefit calculations.
                 </Text>
               </View>
             </View>
@@ -148,7 +149,7 @@ View Your Complete Separation Benefits Package            </Text>
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/info')}
             >
-              <TrendingUp size={32} color="#DC2626" strokeWidth={2} />
+              <MapPin size={32} color="#DC2626" strokeWidth={2} />
               <Text style={styles.toolTitle}>Relocation</Text>
               <Text style={styles.toolDescription}>
                 Get guidance for your move.
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
   headerLogo: {
     width: 120,
     height: 120,
-    marginBottom: 16,   // a bit more spacing from the title
+    marginBottom: 6,   // a bit more spacing from the title
   },
    heroTitle: {
       color: '#0072CE',
@@ -326,8 +327,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     color: '#111827',
-    marginTop: 16,
-    marginBottom: 8,
+    // marginTop: 16,
+    // marginBottom: 8,
     textAlign: 'center',
   },
   welcomeSubtitle: {
