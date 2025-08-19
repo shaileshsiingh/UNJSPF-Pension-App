@@ -147,9 +147,9 @@ const styles = StyleSheet.create({
   },
   section: {
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
-    marginVertical: 8,
-    padding: 20,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    padding: 4,
     borderRadius: 12,
     borderColor: '#E5E7EB',
     borderWidth: 1,
@@ -158,6 +158,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 18,
