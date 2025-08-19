@@ -15,284 +15,334 @@ import {
   Users, 
   Building, 
   Smartphone, 
-  Target 
+  Target,
+  BookOpen,
+  TrendingUp,
+  Settings
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 export default function CombinedAboutScreen() {
-  const [activeTab, setActiveTab] = useState('pension'); // 'pension' or 'app'
+  const [activeTab, setActiveTab] = useState('app'); // 'app', 'concepts', 'formulas', 'scenarios'
 
   const renderTabButtons = () => (
     <View style={styles.tabContainer}>
       <TouchableOpacity
-        style={[styles.tabButton, activeTab === 'pension' && styles.activeTab]}
-        onPress={() => setActiveTab('pension')}
+        style={[styles.tabButton, activeTab === 'app' && styles.activeTab]}
+        onPress={() => setActiveTab('app')}
       >
-        <Building size={20} color={activeTab === 'pension' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
-        <Text style={[styles.tabText, activeTab === 'pension' && styles.activeTabText]}>
-          UN Pension Fund
+        <Smartphone size={16} color={activeTab === 'app' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
+        <Text style={[styles.tabText, activeTab === 'app' && styles.activeTabText]}>
+          About App
         </Text>
       </TouchableOpacity>
       
       <TouchableOpacity
-        style={[styles.tabButton, activeTab === 'app' && styles.activeTab]}
-        onPress={() => setActiveTab('app')}
+        style={[styles.tabButton, activeTab === 'concepts' && styles.activeTab]}
+        onPress={() => setActiveTab('concepts')}
       >
-        <Smartphone size={20} color={activeTab === 'app' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
-        <Text style={[styles.tabText, activeTab === 'app' && styles.activeTabText]}>
-          About This App
+        <BookOpen size={16} color={activeTab === 'concepts' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
+        <Text style={[styles.tabText, activeTab === 'concepts' && styles.activeTabText]}>
+          Concepts
         </Text>
       </TouchableOpacity>
-    </View>
-  );
 
-  const renderPensionContent = () => (
-    <View>
-      {/* <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Building size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>UNJSPF Pension Fund</Text>
-        </View>
-        <Text style={styles.description}>
-          The United Nations Joint Staff Pension Fund (UNJSPF) is a defined benefit plan serving over 240,000 members worldwide. 
-          It provides retirement, disability, and survivor benefits with a funding ratio exceeding 100%, ensuring long-term solvency.
+      <TouchableOpacity
+        style={[styles.tabButton, activeTab === 'formulas' && styles.activeTab]}
+        onPress={() => setActiveTab('formulas')}
+      >
+        <Calculator size={16} color={activeTab === 'formulas' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
+        <Text style={[styles.tabText, activeTab === 'formulas' && styles.activeTabText]}>
+          Formulas
         </Text>
-      </View> */}
+      </TouchableOpacity>
 
-      {/* <View style={styles.section}> */}
-        {/* <View style={styles.sectionHeader}>
-          <Info size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>About the UNJSPF</Text>
-        </View> */}
-        {/* <View style={styles.card}>
-          <Text style={styles.cardDescription}>
-            • <Text style={{ fontWeight: 'bold' }}>Established in 1949 by the United Nations General Assembly</Text>, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits for staff of the United Nations and other member organizations.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Strong Funding:</Text> The Fund is one of the world's strongest, with over $35 billion in assets and a 111% funded ratio—more than enough to meet obligations for the next 30 to 40 years.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Reliable Payments:</Text> The Fund pays an average of $400,000 per year to over 83,000 retirees. In its 75-year history, the Fund has never missed a pension payment.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Retirement Age:</Text> UN retirement age is 60 to 65 (typically 24 to 25 years for men and 26 to 28 years for women), with life expectancy decreasing by 2 to 3 years if retiring at age 65.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Flexible Separation:</Text> You can separate at any time you want.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Pension Calculation:</Text> Your pension is based on your wages, years of contributions, salary grade, and step.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Global Payments:</Text> It is institution-adjusted, paid for life, and deposited directly into your bank account in your local currency.{"\n\n"}
-            • <Text style={{ fontWeight: 'bold' }}>Survivor Benefits:</Text> After your death, benefits are transferred to your dependent spouse.
-          </Text>
-        </View> */}
-      {/* </View> */}
-
-      {/* <View style={styles.section}> */}
-        {/* <View style={styles.sectionHeader}>
-          <Calculator size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Benefit Calculation</Text>
-        </View> */}
-        
-        {/* <View style={styles.factorList}>
-          <View style={styles.factorItem}>
-            <Clock size={20} color="#6B7280" strokeWidth={2} />
-            <Text style={styles.factorText}>Rate of Accumulation (Years of Service)</Text>
-          </View>
-          <View style={styles.factorItem}>
-            <Text style={styles.factorText}>• Final Average Remuneration (Best 36 months in last 60 months)</Text>
-          </View>
-          <View style={styles.factorItem}>
-            <Text style={styles.factorText}>• Early Retirement Reduction Factors</Text>
-          </View>
-          <View style={styles.factorItem}>
-            <Text style={styles.factorText}>• Cost of Living Adjustments</Text>
-          </View>
-        </View> */}
-      {/* </View> */}
-
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Users size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Separation Scenarios & Options</Text>
-        </View>
-        
-        {/* Less than 5 years of Contributory Service: No Pension Rights */}
-        <View style={styles.card}>
-          <Text style={[styles.cardTitle, { color: '#B91C1C' }]}>Less than 5 years of Contributory Service: No Pension Rights</Text>
-          <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 2 options:</Text>
-          <Text style={styles.cardDescription}>
-            <Text style={{ fontWeight: 'bold' }}>Option 1: Withdrawal Settlement (Article 31){'\n'}</Text>
-            One-time payment equal to your own contributions plus 3.25% compound interest. This is a final decision—no more pension from the Fund after this. No child benefit is paid under this option.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 2: Deferment or Benefit for 36 Months (Article 32){'\n'}</Text>
-            You can delay taking your withdrawal settlement for up to 36 months. If you go back to work with the same pension plan within those 36 months, your membership is treated as continuous (as long as you haven't taken the money). If you don't go back to work, you must submit your payment instructions before the 36 months end. If you do nothing by the end of 36 months, the Fund will automatically give you a Withdrawal Settlement.
-          </Text>
-        </View>
-
-        {/* 5+ years before Early Retirement Age */}
-        <View style={styles.card}>
-          <Text style={[styles.cardTitle, { color: '#2563EB' }]}>5+ Years of Contributory Service Before Early Retirement Age</Text>
-          <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 3 options:</Text>
-          <Text style={styles.cardDescription}>
-            <Text style={{ fontWeight: 'bold' }}>Option 1: Deferred Retirement Benefit (Article 30){'\n'}</Text>
-            Receive your benefit at normal retirement age (or earlier with a reduction). This gives you a monthly pension when you're older. No child benefit is paid under this option.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 2: Withdrawal Settlement (Article 31){'\n'}</Text>
-            One-time payment equal to your own contributions plus interest. You give up all rights to future pension benefits. This is a final decision—no more pension from the Fund after this.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 3: Deferment of Choice or Benefit for 36 Months (Article 32){'\n'}</Text>
-            Delay your decision (between Option 1 and 2) for up to 36 months from when you leave your job. If you go back to work with the same pension plan within those 36 months, your membership is treated as continuous. If you do nothing by the end of 36 months, the Fund will automatically give you a Deferred Retirement Benefit.
-          </Text>
-        </View>
-
-        {/* 5+ years after Early Retirement Age but before Normal Retirement Age */}
-        <View style={styles.card}>
-          <Text style={[styles.cardTitle, { color: '#F59E42' }]}>5+ Years of Contributory Service After Early Retirement Age but Before Normal Retirement Age</Text>
-          <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>You have 4 options:</Text>
-          <Text style={styles.cardDescription}>
-            <Text style={{ fontWeight: 'bold' }}>Option 1: Early Retirement Benefit (Article 29){'\n'}</Text>
-            Start receiving monthly payments before reaching normal retirement age. These payments may be reduced since you retire early. You can choose to commute (convert) up to one-third of the pension into a lump sum (one-time payment). The rest will be paid as monthly pension for life.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 2: Deferred Retirement Benefit (Article 30){'\n'}</Text>
-            Delay your pension until you reach normal retirement age (or take it earlier with reductions). No child benefit is included with this option.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 3: Withdrawal Settlement (Article 31){'\n'}</Text>
-            One-time payment equal to your own contributions plus interest. You give up all rights to any future rights to pension benefits. This is a final decision—no more pension from the Fund after this.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>Option 4: Deferment of Choice for 36 Months (Article 32){'\n'}</Text>
-            You can take up to 36 months to choose between the above 3 options. If you go back to work and rejoin the Fund within those 36 months, your service is treated as continuous. If you do nothing by the end of 36 months, the Fund will automatically give you a Deferred Retirement Benefit (Option 2).
-          </Text>
-        </View>
-
-        {/* 5+ years at Normal Retirement Age */}
-        <View style={styles.card}>
-          <Text style={[styles.cardTitle, { color: '#059669' }]}>5+ Years of Contributory Service at Normal Retirement Age</Text>
-          <Text style={{ fontStyle: 'italic', color: '#6B7280', marginBottom: 4 }}>Your only option:</Text>
-          <Text style={styles.cardDescription}>
-            <Text style={{ fontWeight: 'bold' }}>Option: Normal Retirement Benefit (Article 28){'\n'}</Text>
-            You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment). The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments with no lump sum.
-          </Text>
-        </View>
-      </View>
+      <TouchableOpacity
+        style={[styles.tabButton, activeTab === 'scenarios' && styles.activeTab]}
+        onPress={() => setActiveTab('scenarios')}
+      >
+        <TrendingUp size={16} color={activeTab === 'scenarios' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
+        <Text style={[styles.tabText, activeTab === 'scenarios' && styles.activeTabText]}>
+          Scenarios
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 
   const renderAppContent = () => (
     <View>
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Smartphone size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>UN Pension Application</Text>
-        </View>
-        <Text style={styles.description}>
-          This app is designed specifically for UNJSPF participants. It incorporates the Fund's defined benefit formula, vested rights criteria (5 or more years of contributory service), and a range of separation options. Available on iOS, Android, and web platforms, it provides benefit estimates based on official UNJSPF regulations, using your contributory service and final average remuneration.
-        </Text>
-      </View>
-
+      {/* App Features */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Target size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Key Features</Text>
+          <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
         </View>
+        <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
         
         <View style={styles.featureList}>
-          <View style={styles.featureItem}>
-            <Calculator size={20} color="#6B7280" strokeWidth={2} />
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>UNJSPF Pension Calculator</Text>
-              <Text style={styles.featureDescription}>
-                Calculate your estimated pension benefits based on UNJSPF formula and your service details
-              </Text>
-            </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Actuarial calculator for precise pension estimates</Text>
           </View>
-
-          <View style={styles.featureItem}>
-            <Shield size={20} color="#6B7280" strokeWidth={2} />
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Separation Scenario Analysis</Text>
-              <Text style={styles.featureDescription}>
-                Check eligibility and benefits for different separation scenarios (before/after retirement ages)
-              </Text>
-            </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Pension calculator with multiple scenarios</Text>
           </View>
-
-          <View style={styles.featureItem}>
-            <Users size={20} color="#6B7280" strokeWidth={2} />
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>UN Organization Profiles</Text>
-              <Text style={styles.featureDescription}>
-                Select your UN organization to get accurate UNJSPF calculations
-              </Text>
-            </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Essential documents and forms library</Text>
           </View>
-
-          <View style={styles.featureItem}>
-            <Clock size={20} color="#6B7280" strokeWidth={2} />
-            <View style={styles.featureContent}>
-              <Text style={styles.featureTitle}>Benefit Options Comparison</Text>
-              <Text style={styles.featureDescription}>
-                Compare withdrawal settlement vs deferred retirement benefits
-              </Text>
-            </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>HR entitlements and benefits overview</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Grants and financial assistance information</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Retirement planning resources and guides</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Financial planning tools and calculators</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Relocation support and guidance</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Community services and support networks</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Offline functionality for privacy protection</Text>
+          </View>
+          <View style={styles.featureItemTight}>
+            <View style={styles.blueDot} />
+            <Text style={styles.featureTextTight}>Regular updates with latest UNJSPF regulations</Text>
           </View>
         </View>
       </View>
 
-      {/* <View style={styles.section}>
+      {/* App Info */}
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Shield size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>UNJSPF-Specific Features</Text>
+          <Info size={24} color="#2563EB" strokeWidth={2} />
+          <Text style={styles.sectionTitle}>About This Application</Text>
         </View>
         <Text style={styles.description}>
-          This app is specifically designed for UNJSPF participants, incorporating the fund's defined benefit formula, 
-          vested rights criteria (5+ years), and separation scenarios. All calculations follow UNJSPF regulations 
-          and provide estimates based on your contributory service and final average remuneration.
+          This comprehensive UN Pension application is designed to help current and former UN staff members 
+          navigate their retirement benefits with confidence. Built by a former UN staff member who recently 
+          completed the retirement process, this app provides accurate calculations and guidance based on 
+          official UNJSPF regulations.
         </Text>
       </View>
 
+      {/* Privacy & Security */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Shield size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Data Privacy & Security</Text>
+          <Shield size={24} color="#059669" strokeWidth={2} />
+          <Text style={styles.sectionTitle}>Privacy & Security</Text>
         </View>
         <Text style={styles.description}>
           Your personal information is stored locally on your device and is not transmitted to external servers. 
           All calculations are performed on your device to ensure maximum privacy and security.
         </Text>
-      </View> */}
+      </View>
+    </View>
+  );
 
+  const renderConceptsContent = () => (
+    <View>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Target size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>How to Use</Text>
+          <BookOpen size={24} color="#2563EB" strokeWidth={2} />
+          <Text style={styles.sectionTitle}>Key Pension Concepts</Text>
         </View>
-        
-        <View style={styles.stepList}>
-          <View style={styles.stepItem}>
-            <View style={styles.stepNumber}>
-              <Text style={styles.stepNumberText}>1</Text>
-            </View>
-            <Text style={styles.stepText}>Complete your profile with employment details</Text>
-          </View>
-          
-          <View style={styles.stepItem}>
-            <View style={styles.stepNumber}>
-              <Text style={styles.stepNumberText}>2</Text>
-            </View>
-            <Text style={styles.stepText}>Select your organization from the dropdown</Text>
-          </View>
-          
-          <View style={styles.stepItem}>
-            <View style={styles.stepNumber}>
-              <Text style={styles.stepNumberText}>3</Text>
-            </View>
-            <Text style={styles.stepText}>Check your eligibility for pension benefits</Text>
-          </View>
-          
-          <View style={styles.stepItem}>
-            <View style={styles.stepNumber}>
-              <Text style={styles.stepNumberText}>4</Text>
-            </View>
-            <Text style={styles.stepText}>Use the calculator to estimate your pension</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.disclaimer}>
-        <Text style={styles.disclaimerTitle}>Disclaimer</Text>
-        <Text style={styles.disclaimerText}>
-          This application provides estimates only. Actual pension benefits may vary based on your organization's 
-          specific rules, regulations, and any changes to the pension scheme. Always consult with your HR department 
-          or pension administrator for official calculations and advice.
+        <Text style={styles.conceptText}>
+          <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
+          {'\n\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
+          {'\n\n'}<Text style={styles.bold}>Final Average Remuneration (FAR):</Text> Is the average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service. It represents your final salary level used to calculate your pension benefit.
+          {'\n\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> Is the percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
+          {'\n\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor):</Text> The Actuarial Factor, also called the Commutation Factor, is a statistical value used to convert part of your annual pension into a one-time lump sum payment at the time of retirement.
+          {'\n\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
+          {'\n\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
+          {'\n\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
+          {'\n\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
+          {'\n\n'}<Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement, the lump sum reduces your future monthly pension proportions.
+          {'\n\n'}<Text style={styles.bold}>Actuarial Present Value (APV) or Commutation Factor:</Text> The discounted value of your full lifetime pension benefit, based on life expectancy and interest rates.
         </Text>
       </View>
     </View>
   );
+
+  const renderFormulasContent = () => (
+    <View>
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Calculator size={24} color="#2563EB" strokeWidth={2} />
+          <Text style={styles.sectionTitle}>Key Formulas Applied</Text>
+        </View>
+      </View>
+
+      {/* 1. Withdrawal Settlement Formula */}
+      <View style={styles.formulaSection}>
+        <Text style={styles.formulaTitle}>1. Withdrawal Settlement Formula (Article 31)</Text>
+        <Text style={styles.formulaContent}>
+          <Text style={styles.bold}>Applicable to all staff separating from service (mandatory for CS &lt; 5 years; optional for CS ≥ 5 years)</Text>
+          {'\n\n'}For CS &lt; 5 years = Own Contributions + Compound Interest (3.25% per year) + No Bonus
+          {'\n\n'}For CS ≥ 5 years = Own Contributions + Compound Interest (3.25% per year) + Bonus (if CS ≥ 5 years)
+          {'\n\n'}• 5 ≤ CS ≤ 15 years: + 10% per year of CS after year 5, up to 100%
+          {'\n'}• CS > 15 years: + 100% bonus (maximum allowed)
+        </Text>
+      </View>
+
+      {/* 2. Periodic Retirement Benefit Formula */}
+      <View style={styles.formulaSection}>
+        <Text style={styles.formulaTitle}>2. Periodic Retirement Benefit Formula (Annual Pension Amount)</Text>
+        <Text style={styles.formulaContent}>
+          <Text style={styles.bold}>Applicable to Staff with CS ≥ 5 years, opting for Normal, Early, or Deferred Retirement Benefit:</Text>
+          {'\n\n'}Annual Pension = FAR × ROA × Years of CS
+          {'\n\n'}Notes: FAR is typically based on the average pensionable remuneration over the highest 36 consecutive months in the last 5 years of CS.
+        </Text>
+      </View>
+
+      {/* 3. Early Retirement Reduction */}
+      <View style={styles.formulaSection}>
+        <Text style={styles.formulaTitle}>3. Early Retirement Reduction (Applied to Periodic Benefit)</Text>
+        <Text style={styles.formulaContent}>
+          Reduced Pension = Annual Pension × (1 - Reduction Factor)
+          {'\n\n'}The Reduction Factor is determined based on how many years/months before NRA the benefit begins.
+          {'\n\n'}The reduction typically ranges between 3% to 6% per year depending on actuarial rules at the time of entry.
+        </Text>
+      </View>
+
+      {/* 4. Deferred Retirement Benefit */}
+      <View style={styles.formulaSection}>
+        <Text style={styles.formulaTitle}>4. Deferred Retirement Benefit</Text>
+        <Text style={styles.formulaContent}>
+          No additional formula — same as periodic pension, but deferred until ERA or NRA
+          {'\n\n'}• No actuarial reduction if collected at NRA
+          {'\n'}• Payable at choice of staff at ERA or NRA
+        </Text>
+      </View>
+
+      {/* 5. Lump Sum */}
+      <View style={styles.formulaSection}>
+        <Text style={styles.formulaTitle}>5. Lump Sum</Text>
+        <Text style={styles.formulaContent}>
+          Lump Sum = 1/3 × Annual Pension × Commutation Factor
+        </Text>
+      </View>
+    </View>
+  );
+
+  const renderScenariosContent = () => (
+    <View>
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <TrendingUp size={24} color="#2563EB" strokeWidth={2} />
+          <Text style={styles.sectionTitle}>Benefits Scenarios & Options</Text>
+        </View>
+      </View>
+
+      {/* Scenario 1: Normal Retirement */}
+      <View style={styles.scenarioSection}>
+        <Text style={styles.scenarioTitle}>Scenario 1: Normal Retirement (Age 65)</Text>
+        <Text style={styles.scenarioContent}>
+          <Text style={styles.bold}>Eligibility:</Text> Staff with 5+ years of contributory service
+          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
+          {'\n'}• Full periodic pension (no reduction)
+          {'\n'}• Optional lump sum (up to 1/3 of pension)
+          {'\n'}• Survivor benefits for eligible dependents
+          {'\n\n'}<Text style={styles.bold}>Calculation:</Text> Annual Pension = FAR × ROA × Years of CS
+        </Text>
+      </View>
+
+      {/* Scenario 2: Early Retirement */}
+      <View style={styles.scenarioSection}>
+        <Text style={styles.scenarioTitle}>Scenario 2: Early Retirement (Age 60-64)</Text>
+        <Text style={styles.scenarioContent}>
+          <Text style={styles.bold}>Eligibility:</Text> Staff with 25+ years of contributory service
+          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
+          {'\n'}• Reduced periodic pension
+          {'\n'}• Optional lump sum (up to 1/3 of reduced pension)
+          {'\n'}• Survivor benefits for eligible dependents
+          {'\n\n'}<Text style={styles.bold}>Reduction Factors:</Text>
+          {'\n'}• Age 60: Up to 25% reduction
+          {'\n'}• Age 61: Up to 18.75% reduction
+          {'\n'}• Age 62: Up to 12.5% reduction
+          {'\n'}• Age 63: Up to 6.25% reduction
+          {'\n'}• Age 64: Up to 3% reduction
+        </Text>
+      </View>
+
+      {/* Scenario 3: Deferred Retirement */}
+      <View style={styles.scenarioSection}>
+        <Text style={styles.scenarioTitle}>Scenario 3: Deferred Retirement</Text>
+        <Text style={styles.scenarioContent}>
+          <Text style={styles.bold}>Eligibility:</Text> Staff with 5+ years of contributory service who separate before retirement age
+          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
+          {'\n'}• Pension payable at ERA (with reduction) or NRA (full pension)
+          {'\n'}• No lump sum option
+          {'\n'}• Survivor benefits during deferral period
+          {'\n\n'}<Text style={styles.bold}>Key Features:</Text>
+          {'\n'}• Pension amount frozen at separation
+          {'\n'}• No cost-of-living adjustments during deferral
+          {'\n'}• Can convert to withdrawal settlement before age 60
+        </Text>
+      </View>
+
+      {/* Scenario 4: Withdrawal Settlement */}
+      <View style={styles.scenarioSection}>
+        <Text style={styles.scenarioTitle}>Scenario 4: Withdrawal Settlement</Text>
+        <Text style={styles.scenarioContent}>
+          <Text style={styles.bold}>Eligibility:</Text> All staff upon separation (mandatory for CS &lt; 5 years)
+          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
+          {'\n'}• Lump sum payment of contributions + interest + bonus
+          {'\n'}• Immediate payment upon separation
+          {'\n'}• No future pension rights
+          {'\n\n'}<Text style={styles.bold}>Bonus Structure:</Text>
+          {'\n'}• CS &lt; 5 years: No bonus
+          {'\n'}• 5-15 years: 10% per year after year 5 (max 100%)
+          {'\n'}• CS > 15 years: 100% bonus
+        </Text>
+      </View>
+
+      {/* Scenario 5: Disability Benefits */}
+      <View style={styles.scenarioSection}>
+        <Text style={styles.scenarioTitle}>Scenario 5: Disability Benefits</Text>
+        <Text style={styles.scenarioContent}>
+          <Text style={styles.bold}>Eligibility:</Text> Staff who become disabled while in service
+          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
+          {'\n'}• Immediate pension regardless of age or service
+          {'\n'}• Minimum pension guarantee
+          {'\n'}• Survivor benefits for dependents
+          {'\n\n'}<Text style={styles.bold}>Calculation:</Text>
+          {'\n'}• Based on actual service and projected service to NRA
+          {'\n'}• Subject to medical certification
+        </Text>
+      </View>
+    </View>
+  );
+
+  const getTabContent = () => {
+    switch (activeTab) {
+      case 'app':
+        return renderAppContent();
+      case 'concepts':
+        return renderConceptsContent();
+      case 'formulas':
+        return renderFormulasContent();
+      case 'scenarios':
+        return renderScenariosContent();
+      default:
+        return renderAppContent();
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -303,13 +353,13 @@ export default function CombinedAboutScreen() {
         >
           <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
         </TouchableOpacity>
-        <Text style={styles.title}>About UN Pension</Text>
+        <Text style={styles.title}>About MyUNPension</Text>
       </View>
 
       {renderTabButtons()}
 
       <View style={styles.content}>
-        {activeTab === 'pension' ? renderPensionContent() : renderAppContent()}
+        {getTabContent()}
 
         {/* Common Important Note Section */}
         <View style={styles.importantNote}>
@@ -322,13 +372,6 @@ export default function CombinedAboutScreen() {
             Your suggestions for improvements are welcome. <Text style={{ color: '#2563EB', textDecorationLine: 'underline' }}>Contact us</Text> (link coming soon).
           </Text>
         </View>
-
-        <TouchableOpacity 
-          style={styles.startButton}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.startButtonText}>Start Using the App</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -551,5 +594,74 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+  },
+  conceptText: {
+    fontSize: 16,
+    color: '#6B7280',
+    lineHeight: 24,
+  },
+  bold: {
+    fontWeight: '700',
+  },
+  formulaSection: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  formulaTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  formulaContent: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
+  },
+  scenarioSection: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  scenarioTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  scenarioContent: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
+  },
+  featureItemTight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  featureTextTight: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
+    marginLeft: 8,
+  },
+  blueDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#2563EB',
+    marginRight: 8,
+  },
+  sectionSubtitle: {
+    fontSize: 16,
+    color: '#6B7280',
+    marginBottom: 16,
   },
 });
