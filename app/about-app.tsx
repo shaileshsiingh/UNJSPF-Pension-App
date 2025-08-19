@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
+    paddingVertical: 8,
     paddingHorizontal: 12,
     backgroundColor: '#F9FAFB',
   },
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2563EB',
   },
   tabText: {
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '600',
     color: '#6B7280',
     marginLeft: 8,
