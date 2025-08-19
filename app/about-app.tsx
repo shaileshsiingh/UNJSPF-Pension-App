@@ -223,7 +223,7 @@ export default function CombinedAboutScreen() {
         </View>
       </View>
 
-      <View style={styles.section}>
+      {/* <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Shield size={24} color="#2563EB" strokeWidth={2} />
           <Text style={styles.sectionTitle}>UNJSPF-Specific Features</Text>
@@ -244,7 +244,7 @@ export default function CombinedAboutScreen() {
           Your personal information is stored locally on your device and is not transmitted to external servers. 
           All calculations are performed on your device to ensure maximum privacy and security.
         </Text>
-      </View>
+      </View> */}
 
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
