@@ -152,6 +152,17 @@ export default function CombinedAboutScreen() {
           All calculations are performed on your device to ensure maximum privacy and security.
         </Text>
       </View>
+
+      {/* Important Note - Only in App Tab */}
+      <View style={styles.importantNote}>
+        <Text style={styles.importantTitle}>Important Note</Text>
+        <Text style={styles.importantText}>
+          This app created by a former UN staff member who recently completed the retirement process. It walks you through key steps to take before retirement and provides benefit estimates based on the official UNJSPF Regulations and Rules.{"\n\n"}
+          While we aim to provide accurate and current guidance, we are not official representatives of the United Nations Joint Staff Pension Fund and cannot speak on its behalf. Do not enter or share your personal information on this app. For official and personalized pension estimates, always refer to the UNJSPF Member Self-Service.{"\n\n"}
+          <Text style={{ fontWeight: 'bold' }}>We're here to help make your retirement journey easier—let's get started!</Text>{"\n"}
+          Your suggestions for improvements are welcome. <Text style={{ color: '#2563EB', textDecorationLine: 'underline' }}>Contact us</Text> (link coming soon).
+        </Text>
+      </View>
     </View>
   );
 
@@ -360,18 +371,6 @@ export default function CombinedAboutScreen() {
 
       <View style={styles.content}>
         {getTabContent()}
-
-        {/* Common Important Note Section */}
-        <View style={styles.importantNote}>
-          <Text style={styles.importantTitle}>Important Note</Text>
-          <Text style={styles.importantText}>
-            This app created by a former UN staff member who recently completed the retirement process. It walks you through key steps to take before retirement and provides benefit estimates based on the official UNJSPF Regulations and Rules.{"\n\n"}
-            {/* <Text style={{ fontWeight: 'bold' }}>Please note:</Text>{"\n"} */}
-            While we aim to provide accurate and current guidance, we are not official representatives of the United Nations Joint Staff Pension Fund and cannot speak on its behalf. Do not enter or share your personal information on this app. For official and personalized pension estimates, always refer to the UNJSPF Member Self-Service.{"\n\n"}
-            <Text style={{ fontWeight: 'bold' }}>We're here to help make your retirement journey easier—let's get started!</Text>{"\n"}
-            Your suggestions for improvements are welcome. <Text style={{ color: '#2563EB', textDecorationLine: 'underline' }}>Contact us</Text> (link coming soon).
-          </Text>
-        </View>
       </View>
     </ScrollView>
   );
