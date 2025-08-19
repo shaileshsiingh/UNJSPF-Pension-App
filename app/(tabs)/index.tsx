@@ -58,8 +58,8 @@ export default function HomeScreen() {
             <Text style={styles.heroTitle}>MyUNPension</Text>
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
-            {/* <Text style={styles.welcomeSubtitle}>
-View Your Complete Separation Benefits Package            </Text> */}
+            <Text style={styles.welcomeSubtitle}>
+            Begin your pension journey with these essential steps           </Text>
           </View>
         </View>
 
@@ -332,10 +332,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   welcomeSubtitle: {
-    fontSize: 16,
-    color: '#6B7280',
+    fontSize: 12,
+    color: '#111827',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 16,
     maxWidth: 300,
   },
   section: {
