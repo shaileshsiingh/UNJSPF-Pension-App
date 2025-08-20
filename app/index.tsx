@@ -62,7 +62,7 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>Your Complete Guide to UN Separation Benefits</Text>
+            <Text style={styles.heroSubtitle}>Your complete guide to UN separation benefits</Text>
             <Text style={styles.heroDesc}>
            Take Control of your retirement planning. <br/> This app gives you a complete overview of all your retirment benefits from UN Pension Fund and Employing Organization            </Text>
             {/* <TouchableOpacity 
@@ -96,11 +96,13 @@ export default function LandingPage() {
               {/* <View style={styles.whoIconContainer}>
                 <Text style={styles.whoIcon}>👥</Text>
               </View> */}
-              <Text style={styles.whoTitle}>Who is MyUNPension for?</Text>
+              {/* <Text style={styles.whoTitle}>Who is MyUNPension for?</Text> */}
+              <Text style={styles.whoTitle1}>Who is
+              <Text style={styles.whoTitle}> MyUNPension </Text>for?</Text>
             </View>
             {/* <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text> */}
             <Text style={styles.whoDesc}>
-            Whether you're a new UN staff member, planning early retirement, approaching separation or already retired. <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your UNJSPF benefits with confidence.
+            Whether you're a new UN staff member, planning early retirement, approaching separation or already retired, <Text style={styles.boldText}><br></br>MyUNPension</Text> helps you understand, estimate, and track your UNJSPF benefits with confidence.
             </Text>
           </View>
         </View>
@@ -112,17 +114,21 @@ export default function LandingPage() {
         {/* Enhanced Key Features */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
-            <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
+            {/* <Text style={styles.sectionTitle}>Key features of this application</Text> */}
+            {/* <Text style={styles.sectionSubtitle}>From UNJSPF</Text> */}
           </View>
           
           {/* Compact Features List */}
           <View style={styles.featureCard}>
+          <Text style={styles.sectionTitle}>Key features of this application</Text>
+          <Text style={styles.sectionSubtitle1}>From UNJSPF</Text>
+
+
             <View style={styles.featureListCompact}>
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Actuarial Age Calculator</Text>{'\n'}
+                  <Text style={styles.boldText1}>Actuarial Age Calculator</Text>{'\n'}
                   Find your Actuarial Age, Early, and Normal Retirement Ages based on UNJSPF rules
                 </Text>
               </View>
@@ -130,7 +136,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Pension Calculator</Text>{'\n'}
+                  <Text style={styles.boldText1}>Pension Calculator</Text>{'\n'}
                   Get precise estimates of your monthly pension using your salary and service history
                 </Text>
               </View>
@@ -138,7 +144,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Monthly Pension Snapshot</Text>{'\n'}
+                  <Text style={styles.boldText1}>Monthly Pension Snapshot</Text>{'\n'}
                   Apply Adjustments for Cost-of-Living and After-Service Health Insurance contributions
                 </Text>
               </View>
@@ -146,15 +152,18 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Required Documents</Text>{'\n'}
+                  <Text style={styles.boldText1}>Required Documents</Text>{'\n'}
                   Access a checklist of mandatory documents for timely processing of your pension
                 </Text>
               </View>
-              
+
+              <br></br>
+              <Text style={styles.sectionSubtitle1}>From Your Employing Organization</Text>
+
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>HR Entitlements from Your Employing Organization</Text>{'\n'}
+                  {/* <Text style={styles.boldText1}>HR Entitlements from Your Employing Organization</Text>{'\n'} */}
                   Procedures to help you claim HR benefits of separation
                 </Text>
               </View>
@@ -162,7 +171,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Organization Grant</Text>{'\n'}
+                  {/* <Text style={styles.boldText1}>Separation Grant</Text>{'\n'} */}
                   Separation Grant
                 </Text>
               </View>
@@ -170,7 +179,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Leave Encashment</Text>{'\n'}
+                  <Text style={styles.boldText1}>Leave Encashment</Text>{'\n'}
                   End-of-Assignment Travel
                 </Text>
               </View>
@@ -178,7 +187,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Post Retirement Resources</Text>{'\n'}
+                  <Text style={styles.boldText1}>Post Retirement Resources</Text>{'\n'}
                   Support for life after UN service
                 </Text>
               </View>
@@ -186,7 +195,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Financial Planning Tools</Text>{'\n'}
+                  <Text style={styles.boldText1}>Financial Planning Tools</Text>{'\n'}
                   Smart strategies to maximize your pension income effectively
                 </Text>
               </View>
@@ -194,7 +203,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Relocation Support</Text>{'\n'}
+                  <Text style={styles.boldText1}>Relocation Support</Text>{'\n'}
                   Information on settling in your retirement destination
                 </Text>
               </View>
@@ -202,7 +211,7 @@ export default function LandingPage() {
               <View style={styles.featureItemTight}>
                 <Text style={styles.bullet}>•</Text>
                 <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText}>Community & Services</Text>{'\n'}
+                  <Text style={styles.boldText1}>Community & Services</Text>{'\n'}
                   Connect with UN retirees and access country-specific support
                 </Text>
               </View>
@@ -215,7 +224,7 @@ export default function LandingPage() {
         <View style={styles.aboutSectionCompact}> 
           <View style={styles.sectionHeaderCompact}>
             <Text style={styles.sectionTitleCompact}>United Nations Joint Staff Pension Fund</Text>
-            <Text style={styles.aboutSubtitleCompact}>Your pension is managed by a globally trusted institution</Text>
+            {/* <Text style={styles.aboutSubtitleCompact}>Your pension is managed by a globally trusted institution</Text> */}
           </View>
           
           <View style={styles.statsContainerCompact}>
@@ -229,7 +238,7 @@ export default function LandingPage() {
             </View>
             <View style={styles.statCardCompact}>
               <Text style={styles.statNumberCompact}>24</Text>
-              <Text style={styles.statLabelCompact}>Participating Organizations</Text>  
+              <Text style={styles.statLabelCompact}>Organizations</Text>  
             </View>
             <View style={styles.statCardCompact}>
               <Text style={styles.statNumberCompact}>150K</Text>
@@ -243,14 +252,15 @@ export default function LandingPage() {
 
           <View style={styles.aboutCardCompact}>
             {[
+              { text: 'Your pension is managed by a globally trusted institution' },
               { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
-              { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
               { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
-              // { text: 'UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24-28 years at the time of their retirement besides the value of your pension' },
+              { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
+              { text: 'UN retirees, typically aged 60-75, have an average post-retirement life expectancy of about 23-24 years for men, and 26-28 years for women' },
               { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
-              { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-              { text: 'Your Pension is adjusted based on cost of living and paid for life' },
+              { text: 'Your Pension is adjusted for cost of living, after service health insurance, and paid for life' },
               { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
+              { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
               { text: 'You can separate at any time you want' }
             ].map((item, index) => (
               <View key={index} style={styles.aboutItemCompact}>
@@ -316,11 +326,13 @@ export default function LandingPage() {
               <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
                 <Text style={styles.footerLink}>Privacy Policy</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>Terms of Service</Text>
-              </TouchableOpacity>
+              {/* <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink1}>Terms of Service</Text>
+              </TouchableOpacity> */}
             </View>
-            
+            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
+                <Text style={styles.footerLink1}>Terms of Service</Text>
+              </TouchableOpacity>
             <Text style={styles.footerCopyright}> 2025 MyUNPension. All Rights Reserved.</Text>
           </View>
         </View>
@@ -357,7 +369,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingVertical: isSmallScreen ? 20 : 50,
     paddingHorizontal: 20,
-    minHeight: height * 0.7,
+    minHeight: height * 0.4,
     justifyContent: 'center',
     overflow: 'hidden',
   },
@@ -384,23 +396,23 @@ const styles = StyleSheet.create({
     // marginBottom: 32,
   },
   heroLogo: {
-    width: '100%',
-    height: '100%',
+    width: 90,
+    height: 70,
     borderRadius: 0,
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 24 : isTablet ? 32 : 28,
+    fontSize: isSmallScreen ? 16 : isTablet ? 26 : 22,
     fontWeight: '600',
     textAlign: 'center',
-    marginBottom: 16,
+    // marginBottom: 16,
     lineHeight: isSmallScreen ? 40 : isTablet ? 56 : 44,
     letterSpacing: -1.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop:-27,
+    marginTop:-39,
   },
   aboutBulletContainer: {
     width: 20,
@@ -425,15 +437,15 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 14: isTablet ? 26 : 22,
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: 8,
+    // marginBottom: 8,
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   heroDesc: {
     color: '#rgba(62, 88, 112, 0.9)',
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: isSmallScreen ? 12 : 18,
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 24 : 28,
+    lineHeight: isSmallScreen ? 20 : 20,
     marginBottom: 8,
     paddingHorizontal: 10,
     maxWidth: 520,
@@ -497,6 +509,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f9ff',
   },
   whoCard: {
+    width: 361,
     backgroundColor: '#ffffff',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -537,20 +550,31 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textAlign: 'center',
   },
+  whoTitle1: {
+    fontSize: isSmallScreen ? 16 : 26,
+    fontWeight: '500',
+    color: 'black',
+    flex: 1,
+    lineHeight: 2,
+    letterSpacing: -0.8,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    textAlign: 'center',
+  },
   whoSubtitle: {
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: isSmallScreen ? 13 : 18,
     color: '#0072CE',
     fontWeight: '600',
     // marginBottom: 16,
-    lineHeight: 26,
+    lineHeight: 20,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   whoDesc: {
     color: '#6b7280',
-    fontSize: isSmallScreen ? 15 : 16,
+    fontSize: isSmallScreen ? 13 : 16,
     lineHeight: isSmallScreen ? 22 : 26,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '400',
+    textAlign:'justify'
   },
 
   // Enhanced Sections
@@ -582,6 +606,16 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: 8,
+    letterSpacing: -0.2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '500',
+  },
+
+  sectionSubtitle1: {
+    fontSize: isSmallScreen ? 10 : 12,
+    color: '#0072CE',
+    textAlign: 'center',
+    // lineHeight: 8,
     letterSpacing: -0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '500',
@@ -660,6 +694,8 @@ const styles = StyleSheet.create({
     color: '#0EA5E9',
     fontSize: 14,
     fontWeight: '800',
+    display: 'none',
+    
   },
   featureText: {
     color: '#374151',
@@ -672,6 +708,12 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: '900',
     color: '#0072CE',
+    letterSpacing: -0.2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  boldText1: {
+    fontWeight: '900',
+    color: 'black',
     letterSpacing: -0.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -738,12 +780,12 @@ const styles = StyleSheet.create({
   // Enhanced About Section
   aboutSectionCompact: {
     backgroundColor: '#f8fafc',
-    paddingVertical: isSmallScreen ? 20 : 32,
-    paddingHorizontal: isSmallScreen ? 16 : 24,
+    paddingVertical: isSmallScreen ? 8 : 32,
+    paddingHorizontal: isSmallScreen ? 8 : 24,
     marginBottom: 16,
   },
   sectionHeaderCompact: {
-    marginBottom: 16,
+    // marginBottom: 16,
   },
   sectionTitleCompact: {
     fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
@@ -767,7 +809,7 @@ const styles = StyleSheet.create({
   statsContainerCompact: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     // marginBottom: 20,
     paddingHorizontal: 2,
   },
@@ -777,7 +819,7 @@ const styles = StyleSheet.create({
     padding: isSmallScreen ? 8 : isMediumScreen ? 10 : 12,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '30%',
+    width: '26%',
     minHeight: isSmallScreen ? 60 : 70,
     marginBottom: 12,
     shadowColor: '#000',
@@ -796,12 +838,12 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   statLabelCompact: {
-    fontSize: isSmallScreen ? 8 : isMediumScreen ? 9 : 10,
+    fontSize: isSmallScreen ? 9 : isMediumScreen ? 9 : 10,
     color: '#6b7280',
     fontWeight: '700',
     textAlign: 'center',
     letterSpacing: 0.3,
-    textTransform: 'uppercase',
+    // textTransform: 'lowercase',
     lineHeight: isSmallScreen ? 10 : 12,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -864,7 +906,7 @@ const styles = StyleSheet.create({
    statsContainer: {
      flexDirection: 'row',
      flexWrap: 'wrap',
-     justifyContent: 'space-around',
+     justifyContent: 'center',
      alignItems: 'stretch',
      marginBottom: 40,
      paddingHorizontal: isSmallScreen ? 20 : 30,
@@ -1009,8 +1051,8 @@ const styles = StyleSheet.create({
   ctaSection: {
     position: 'relative',
     backgroundColor: '#ffffff',
-    paddingVertical: isSmallScreen ? 24 : 32,
-    paddingHorizontal: 20,
+    paddingVertical: isSmallScreen ? 12 : 32,
+    paddingHorizontal: isSmallScreen ? 8 : 20,
     alignItems: 'center',
     overflow: 'hidden',
   },
@@ -1024,7 +1066,7 @@ const styles = StyleSheet.create({
   },
   ctaTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 16 : 22,
+    fontSize: isSmallScreen ? 14 : 22,
     fontWeight: '900',
     textAlign: 'center',
     // marginBottom: 20,
@@ -1050,8 +1092,8 @@ const styles = StyleSheet.create({
   ctaBtn: {
     backgroundColor: '#ffffff',
     borderRadius: 50,
-    paddingVertical: isSmallScreen ? 16 : 20,
-    paddingHorizontal: isSmallScreen ? 32 : 44,
+    paddingVertical: isSmallScreen ? 12 : 20,
+    paddingHorizontal: isSmallScreen ? 24 : 44,
     flexDirection: 'row',
     alignItems: 'center',
     shadowColor: '#000',
@@ -1066,7 +1108,7 @@ const styles = StyleSheet.create({
   ctaBtnText: {
     color: '#0072CE',
     fontWeight: '800',
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: isSmallScreen ? 14 : 18,
     marginRight: 8,
     letterSpacing: -0.3,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -1102,23 +1144,25 @@ const styles = StyleSheet.create({
   footerText: {
     color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
-    textAlign: 'left',
-    lineHeight: isSmallScreen ? 20 : 24,
-    marginBottom: 6,
+    textAlign: 'justify',
+    lineHeight: isSmallScreen ? 18 : 24,
+    marginBottom: 4,
     maxWidth: 520,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '400',
+
   },
   footerLinks: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    marginBottom: 28,
-    gap: 12,
+    marginBottom: 4,
+    // gap: 6,
+    alignItems: 'center',
   },
   footerLinkItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
     borderRadius: 12,
   },
   footerLink: {
@@ -1126,6 +1170,15 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 13 : 14,
     fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  footerLink1: {
+    color: 'cyan',
+    fontSize: isSmallScreen ? 13 : 14,
+    fontWeight: '600',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   footerCopyright: {
     color: 'cyan',

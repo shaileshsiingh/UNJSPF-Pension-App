@@ -61,7 +61,7 @@ export default function CombinedAboutScreen() {
         style={[styles.tabButton, activeTab === 'scenarios' && styles.activeTab]}
         onPress={() => setActiveTab('scenarios')}
       >
-        <TrendingUp size={16} color={activeTab === 'scenarios' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
+        <Info size={16} color={activeTab === 'scenarios' ? '#FFFFFF' : '#6B7280'} strokeWidth={2} />
         <Text style={[styles.tabText, activeTab === 'scenarios' && styles.activeTabText]}>
           Scenarios
         </Text>
@@ -255,7 +255,7 @@ export default function CombinedAboutScreen() {
     <View>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <TrendingUp size={24} color="#2563EB" strokeWidth={2} />
+          <Info size={24} color="#2563EB" strokeWidth={2} />
           <Text style={styles.sectionTitle}>Benefits Scenarios & Options</Text>
         </View>
       </View>
