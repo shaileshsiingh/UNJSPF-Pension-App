@@ -229,7 +229,7 @@ export default function LandingPage() {
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
-            © 2025 MyUNPension. All Rights Reserved.
+            2025 MyUNPension. All Rights Reserved.
           </Text>
         </View>
       </ScrollView>
@@ -298,17 +298,17 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 16 : isTablet ? 26 : 22,
+    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
     fontWeight: '600',
     textAlign: 'center',
     // marginBottom: 16,
-    lineHeight: isSmallScreen ? 40 : isTablet ? 56 : 44,
+    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -1.2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop:-39,
+    marginTop: -20,
   },
   aboutBulletContainer: {
     width: 20,
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: 'black',
-    fontSize: isSmallScreen ? 13: isTablet ? 26 : 22,
+    fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
     fontWeight: '500',
     textAlign: 'center',
     // marginBottom: 8,
@@ -339,9 +339,9 @@ const styles = StyleSheet.create({
   },
   heroDesc: {
     color: '#rgba(62, 88, 112, 0.9)',
-    fontSize: isSmallScreen ? 12 : 18,
+    fontSize: isSmallScreen ? 14 : isTablet ? 16 : 15,
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 20 : 20,
+    lineHeight: isSmallScreen ? 20 : isTablet ? 22 : 21,
     marginBottom: 8,
     paddingHorizontal: 10,
     maxWidth: 520,
@@ -351,12 +351,13 @@ const styles = StyleSheet.create({
 
   // Enhanced Who Section - ORIGINAL KEPT
   whoSection: {
-    paddingVertical: isSmallScreen ? 1 : 26,
+    paddingVertical: isSmallScreen ? 16 : 26,
     paddingHorizontal: 20,
     backgroundColor: '#f0f9ff',
   },
   whoCard: {
-    width: 361,
+    maxWidth: 600,
+    width: '100%',
     backgroundColor: '#ffffff',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -367,6 +368,7 @@ const styles = StyleSheet.create({
     elevation: 8,
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
+    alignSelf: 'center',
   },
   whoHeader: {
     flexDirection: 'row',
@@ -374,32 +376,32 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   whoTitle: {
-    fontSize: isSmallScreen ? 16 : 26,
+    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
     fontWeight: '800',
     color: '#0072CE',
     flex: 1,
-    lineHeight: 2,
+    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -0.8,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textAlign: 'center',
   },
   whoTitle1: {
-    fontSize: isSmallScreen ? 16 : 26,
+    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
     fontWeight: '500',
     color: 'black',
     flex: 1,
-    lineHeight: 2,
+    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -0.8,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textAlign: 'center',
   },
   whoDesc: {
     color: '#6b7280',
-    fontSize: isSmallScreen ? 13 : 16,
-    lineHeight: isSmallScreen ? 22 : 26,
+    fontSize: isSmallScreen ? 14 : isTablet ? 16 : 15,
+    lineHeight: isSmallScreen ? 20 : isTablet ? 22 : 21,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '400',
-    textAlign:'justify'
+    textAlign:'justify',
   },
   boldText: {
     fontWeight: '600',
