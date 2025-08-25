@@ -348,10 +348,9 @@ export default function ProfileScreen() {
           <View style={styles.headerIconContainer}>
             <User size={32} color="#2563EB" strokeWidth={2} />
           </View>
-          <Text style={styles.headerTitle}>Your Retirement Age Calculator</Text>
+          <Text style={styles.headerTitle}>Retirement Age Calculator</Text>
           <Text style={styles.headerSubtitle}>
-            Enter your employment history for accurate benefit calculations
-          </Text>
+          Explore when you can retire under UNJSPF rules.<br></br>Calculate Normal, Early, Deferred Retirement Ages          </Text>
         </View>
 
         {/* Form */}

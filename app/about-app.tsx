@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { 
   ArrowLeft, 
@@ -168,25 +169,81 @@ export default function CombinedAboutScreen() {
 
   const renderConceptsContent = () => (
     <View>
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <BookOpen size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Key Pension Concepts</Text>
-        </View>
-        <Text style={styles.conceptText}>
-          <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
-          {'\n\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
-          {'\n\n'}<Text style={styles.bold}>Final Average Remuneration (FAR):</Text> Is the average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service. It represents your final salary level used to calculate your pension benefit.
-          {'\n\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> Is the percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
-          {'\n\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor):</Text> The Actuarial Factor, also called the Commutation Factor, is a statistical value used to convert part of your annual pension into a one-time lump sum payment at the time of retirement.
-          {'\n\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
-          {'\n\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
-          {'\n\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
-          {'\n\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
-          {'\n\n'}<Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement, the lump sum reduces your future monthly pension proportions.
-          {'\n\n'}<Text style={styles.bold}>Actuarial Present Value (APV) or Commutation Factor:</Text> The discounted value of your full lifetime pension benefit, based on life expectancy and interest rates.
-        </Text>
-      </View>
+    <View style={styles.section}>
+  <Text style={styles.sectionTitle}>Key Pension Concepts</Text>
+  
+  {/* A. Retirement Ages */}
+  <Text style={styles.subSectionTitle}>A. Retirement Ages</Text>
+  <Text style={styles.content}>
+    <Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
+    {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
+    {'\n'}• Joined before 1990 → NRA = 60
+    {'\n'}• Joined 1990–2013 → NRA = 62
+    {'\n'}• Joined 2014 or later → NRA = 65
+    {'\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
+    {'\n'}• Joined before 2014 → ERA = 55
+    {'\n'}• Joined 2014 or later → ERA = 58
+  </Text>
+
+  {/* B. Service & Eligibility */}
+  <Text style={styles.subSectionTitle}>B. Service & Eligibility</Text>
+  <Text style={styles.content}>
+    <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
+    {'\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
+  </Text>
+
+  {/* C. Pension Calculation Factors */}
+  <Text style={styles.subSectionTitle}>C. Pension Calculation Factors</Text>
+  <Text style={styles.content}>
+    <Text style={styles.bold}>Final Average Remuneration (FAR):</Text> The average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service. It represents your final salary level used to calculate your pension benefit.
+    {'\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> The percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
+  </Text>
+
+  {/* ROA Table */}
+  <View style={styles.roaTable}>
+    <View style={styles.roaHeaderRow}>
+      <Text style={styles.roaHeaderText}>CS</Text>
+      <Text style={styles.roaHeaderText}>ROA</Text>
+      <Text style={styles.roaHeaderText}>Max Accrual</Text>
+    </View>
+    <View style={styles.roaRow}>
+      <Text style={styles.roaCell}>First 5 years</Text>
+      <Text style={styles.roaCell}>1.50%</Text>
+      <Text style={styles.roaCell}>7.50%</Text>
+    </View>
+    <View style={styles.roaRow}>
+      <Text style={styles.roaCell}>Next 5 years</Text>
+      <Text style={styles.roaCell}>1.75%</Text>
+      <Text style={styles.roaCell}>8.75%</Text>
+    </View>
+    <View style={styles.roaRow}>
+      <Text style={styles.roaCell}>Next 25 years</Text>
+      <Text style={styles.roaCell}>2.00%</Text>
+      <Text style={styles.roaCell}>50.00%</Text>
+    </View>
+    <View style={styles.roaRow}>
+      <Text style={styles.roaCell}>Beyond 35 years</Text>
+      <Text style={styles.roaCell}>1.00%</Text>
+      <Text style={styles.roaCell}>3.75%</Text>
+    </View>
+  </View>
+
+  <Text style={styles.content}>
+    <Text style={styles.bold}>Notes:</Text>
+    {'\n'}• Maximum ROA = 70% of FAR. Reached after 38.75 years of CS.
+    {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
+    {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement. It represents the discounted value of your full lifetime pension benefit, based on life expectancy and interest rates.
+  </Text>
+
+  {/* D. Benefit Payment Options */}
+  <Text style={styles.subSectionTitle}>D. Benefit Payment Options</Text>
+  <Text style={styles.content}>
+    <Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement. The lump sum reduces your future monthly pension.
+    {'\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
+    {'\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
+    {'\n'}<Text style={styles.bold}>Two-Track Estimate:</Text> A tool in MSS for retirees (post–Aug 2015) that compares pension values in USD vs. local currency using a 36-month average exchange rate.
+  </Text>
+</View>
     </View>
   );
 
@@ -441,6 +498,53 @@ const styles = StyleSheet.create({
     color: '#111827',
     marginLeft: 12,
   },
+  // Updated styles with reduced spacing:
+subSectionTitle: {
+  fontSize: 16,
+  fontWeight: '600',
+  color: '#0EA5E9',
+  marginTop: 12,
+  marginBottom: 4,
+  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+},
+
+// ROA Table Styles - Compact
+roaTable: {
+  backgroundColor: '#ffffff',
+  borderRadius: 8,
+  marginVertical: 8,
+  borderWidth: 1,
+  borderColor: '#e5e7eb',
+  overflow: 'hidden',
+},
+roaHeaderRow: {
+  flexDirection: 'row',
+  backgroundColor: '#f8fafc',
+  paddingVertical: 8,
+  paddingHorizontal: 6,
+},
+roaHeaderText: {
+  flex: 1,
+  fontSize: 13,
+  fontWeight: '600',
+  color: '#0EA5E9',
+  textAlign: 'center',
+  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+},
+roaRow: {
+  flexDirection: 'row',
+  paddingVertical: 6,
+  paddingHorizontal: 6,
+  borderTopWidth: 1,
+  borderTopColor: '#e5e7eb',
+},
+roaCell: {
+  flex: 1,
+  fontSize: 12,
+  color: '#374151',
+  textAlign: 'center',
+  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+},
   description: {
     fontSize: 16,
     color: '#6B7280',

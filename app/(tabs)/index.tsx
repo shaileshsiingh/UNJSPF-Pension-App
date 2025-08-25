@@ -106,7 +106,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Calculator size={32} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Calculator</Text>
+              <Text style={styles.toolTitle}>Pension Fund Benefits(from UNJSPF)</Text>
               <Text style={styles.toolDescription}>
                 Find your retirement age options.
               </Text>
@@ -166,74 +166,11 @@ export default function HomeScreen() {
                 Connect with retirees and support.
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.toolCard}
-              onPress={() => router.push('/benefit_guide')}
-            >
-              <FileText size={32} color="#8B5CF6" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Methodology</Text>
-              <Text style={styles.toolDescription}>
-                Learn calculation methodology and rules.
-              </Text>
-            </TouchableOpacity>
+           
           </View>
         </View>
 
-          {/* Information Cards Section */}
-          <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Know Your Pension</Text>
-          <Text style={styles.sectionSubtitle}>
-            Understand your vested pension rights, benefit options, and separation entitlements
-          </Text>
-          
-          {/* <TouchableOpacity 
-            style={styles.infoCard}
-            onPress={() => router.push('/about-pension')}
-          >
-            <View style={styles.cardIconContainer}>
-              <FileText size={24} color="#2563EB" strokeWidth={2} />
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>Your Pension Fund</Text>
-              <Text style={styles.cardDescription}>
-                Learn about UNJSPF, vested rights, and separation scenarios
-              </Text>
-            </View>
-            <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
-          </TouchableOpacity> */}
-
-          <TouchableOpacity 
-            style={styles.infoCard}
-            onPress={() => router.push('/about-app')}
-          >
-            <View style={styles.cardIconContainer}>
-              <Smartphone size={24} color="#2563EB" strokeWidth={2} />
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>Key features of this Application</Text>
-              <Text style={styles.cardDescription}>
-                Key features of this Application
-              </Text>
-            </View>
-            <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
-          </TouchableOpacity>
-          {/* Quick link to Landing Page */}
-<TouchableOpacity
-  style={styles.infoCard}
-  onPress={() => router.push('/myunpension')}
->
-  <View style={styles.cardIconContainer}>
-    <Building size={24} color="#2563EB" strokeWidth={2} />
-  </View>
-  <View style={styles.cardContent}>
-    <Text style={styles.cardTitle}>Visit MyUNPension</Text>
-    <Text style={styles.cardDescription}>
-      Jump straight to the main landing page
-    </Text>
-  </View>
-  <ArrowRight size={20} color="#6B7280" strokeWidth={2} />
-</TouchableOpacity>
-        </View>
+        
 
         {/* Stats Section */}
         {/* <View style={styles.section}>
@@ -252,12 +189,7 @@ export default function HomeScreen() {
         </View> */}
 
         {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            This app provides estimates based on your inputs.
-            For official figures, please use the UNJSPF Member Self-Service portal
-          </Text>
-        </View>
+       
       </ScrollView>
     </SafeAreaView>
   );

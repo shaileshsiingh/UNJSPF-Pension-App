@@ -32,22 +32,7 @@ export default function BenefitGuideScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         
         {/* Key Pension Concepts */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Pension Concepts</Text>
-          <Text style={styles.content}>
-            <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
-            {'\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
-            {'\n'}<Text style={styles.bold}>Final Average Remuneration (FAR):</Text> Is the average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service. It represents your final salary level used to calculate your pension benefit.
-            {'\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> Is the percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
-            {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor):</Text> The Actuarial Factor, also called the Commutation Factor, is a statistical value used to convert part of your annual pension into a one-time lump sum payment at the time of retirement.
-            {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
-            {'\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
-            {'\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
-            {'\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
-            {'\n'}<Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement, the lump sum reduces your future monthly pension proportions.
-            {'\n'}<Text style={styles.bold}>Actuarial Present Value (APV) or Commutation Factor:</Text> The discounted value of your full lifetime pension benefit, based on life expectancy and interest rates.
-          </Text>
-        </View>
+      
 
         {/* Key Formulae */}
         <View style={styles.section}>

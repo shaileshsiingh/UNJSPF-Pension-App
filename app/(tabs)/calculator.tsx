@@ -545,7 +545,7 @@ export default function CalculatorScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Calculator size={32} color="#2563EB" strokeWidth={2} />
-        <Text style={styles.title}>Benefits Calculator</Text>
+        <Text style={styles.title}>Pension Benefits Calculator</Text>
         <Text style={styles.subtitle}>Calculate your estimated pension benefits with comprehensive options</Text>
       </View>
 
@@ -684,7 +684,7 @@ export default function CalculatorScreen() {
         {!useFarInput && (
           <View style={{ marginVertical: 16 }}>
             <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 36 months before retiring month.</Text>
-            <Text style={styles.helpText}>You may find these figures in your monthly pay slips.</Text>
+            <Text style={styles.helpText}>You may find these figures in your monthly payslips.</Text>
             {rows.map((row, rowIdx) => (
               <ScrollView
                 key={rowIdx}
@@ -1057,7 +1057,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: '700',
     color: '#111827',
     marginTop: 12,
