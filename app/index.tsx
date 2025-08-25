@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     color: '#0072CE',
   },
 
-  // NEW SECTIONS - MINIMAL SPACING FOR IPHONE
+  // NEW SECTIONS - UNIFORM FONT SIZES MATCHING HERO/WHO SECTIONS
   // App at a Glance Section
   appGlanceSection: {
     paddingVertical: 0,
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   sectionTitleCenter: {
-    fontSize: isSmallScreen ? 16 : 20,
+    fontSize: isSmallScreen ? 16 : 22,
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
@@ -446,19 +446,19 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   glanceTitle: {
-    fontSize: 9,
+    fontSize: isSmallScreen ? 11 : 14,
     fontWeight: '600',
     color: '#1d4ed8',
     textAlign: 'center',
-    lineHeight: 11,
+    lineHeight: isSmallScreen ? 13 : 16,
     marginBottom: 2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   glanceDesc: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     textAlign: 'center',
-    lineHeight: 9,
+    lineHeight: isSmallScreen ? 12 : 14,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   overviewMainTitle: {
-    fontSize: isSmallScreen ? 14 : 18,
+    fontSize: isSmallScreen ? 16 : 20,
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
@@ -485,13 +485,13 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   overviewSubtitle: {
-    fontSize: 10,
+    fontSize: isSmallScreen ? 12 : 16,
     color: '#6b7280',
     textAlign: 'center',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   overviewNote: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#9ca3af',
     textAlign: 'center',
     marginTop: 2,
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
 
   // Category Titles
   categoryTitle: {
-    fontSize: 11,
+    fontSize: isSmallScreen ? 14 : 18,
     fontWeight: '600',
     color: '#2563eb',
     textAlign: 'center',
@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
   statCard: {
     backgroundColor: '#ffffff',
     borderRadius: 6,
-    padding: 4,
+    padding: 6,
     alignItems: 'center',
     flex: 1,
     shadowColor: '#000',
@@ -546,31 +546,31 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   statIcon: {
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 2,
   },
   statValue: {
-    fontSize: 11,
+    fontSize: isSmallScreen ? 14 : 16,
     fontWeight: 'bold',
     color: '#1d4ed8',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   statLabel: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     textAlign: 'center',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
-  // About Cards
+  // About Cards - INCREASED FONT SIZES TO MATCH HERO/WHO SECTIONS
   aboutCardsContainer: {
-    gap: 2,
+    gap: 4,
     marginBottom: 8,
   },
   aboutCard: {
     backgroundColor: '#ffffff',
     borderRadius: 6,
-    padding: 4,
+    padding: 8,
     flexDirection: 'row',
     alignItems: 'flex-start',
     shadowColor: '#000',
@@ -580,43 +580,43 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     borderColor: '#e5e7eb',
-    gap: 6,
+    gap: 8,
   },
   aboutIcon: {
-    fontSize: 10,
+    fontSize: 14,
     color: '#7c3aed',
-    marginTop: 1,
+    marginTop: 2,
   },
   aboutText: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 12 : 14,
     color: '#374151',
-    lineHeight: 10,
+    lineHeight: isSmallScreen ? 16 : 18,
     flex: 1,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
   // CTA Section
   ctaTitle: {
-    fontSize: 12,
+    fontSize: isSmallScreen ? 16 : 18,
     fontWeight: '600',
     color: '#1e40af',
     textAlign: 'center',
-    marginBottom: 2,
-    marginTop: 8,
+    marginBottom: 4,
+    marginTop: 12,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   ctaSubtitle: {
-    fontSize: 10,
+    fontSize: isSmallScreen ? 12 : 14,
     color: '#6b7280',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
     paddingHorizontal: 16,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   ctaButton: {
     backgroundColor: '#2563eb',
     paddingHorizontal: 16,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 20,
     alignSelf: 'center',
     shadowColor: '#000',
@@ -624,11 +624,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   ctaButtonText: {
     color: '#ffffff',
-    fontSize: 10,
+    fontSize: isSmallScreen ? 12 : 14,
     fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -643,16 +643,16 @@ const styles = StyleSheet.create({
   footerLinksSmall: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 4,
+    marginTop: 6,
   },
   footerLink: {
-    fontSize: 10,
+    fontSize: isSmallScreen ? 12 : 14,
     color: '#2563eb',
     fontWeight: '500',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   footerLinkSmall: {
-    fontSize: 9,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
@@ -663,43 +663,43 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fecaca',
     borderRadius: 8,
-    padding: 6,
-    marginTop: 8,
+    padding: 8,
+    marginTop: 12,
   },
   disclaimerHeader: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 6,
+    gap: 8,
   },
   disclaimerIcon: {
-    fontSize: 10,
+    fontSize: 14,
     color: '#dc2626',
-    marginTop: 1,
+    marginTop: 2,
   },
   disclaimerContent: {
     flex: 1,
   },
   disclaimerTitle: {
-    fontSize: 10,
+    fontSize: isSmallScreen ? 12 : 14,
     fontWeight: '600',
     color: '#b91c1c',
-    marginBottom: 2,
+    marginBottom: 4,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   disclaimerText: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#b91c1c',
-    lineHeight: 10,
+    lineHeight: isSmallScreen ? 14 : 16,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
   // Copyright
   copyright: {
-    fontSize: 8,
+    fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     textAlign: 'center',
-    marginTop: 6,
-    marginBottom: 4,
+    marginTop: 8,
+    marginBottom: 6,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 });
