@@ -10,14 +10,14 @@ import {
   SafeAreaView,
   StatusBar,
   Platform,
-  Animated
+  Animated,
+  Linking
 } from 'react-native';
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 const { width, height } = Dimensions.get('window');
-
 
 const isTablet = width > 768;
 const isSmallScreen = width < 380;
@@ -40,7 +40,12 @@ export default function LandingPage() {
     }).start();
   }, [user, loading]);
 
+  const handleLinkPress = (url) => {
+    Linking.openURL(url);
+  };
+
   if (loading) return null;
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0EA5E9" />
@@ -62,279 +67,170 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>Your complete guide to UN separation benefits</Text>
+            <Text style={styles.heroSubtitle}>All your pension benefits in one place</Text>
             <Text style={styles.heroDesc}>
-           Take Control of your retirement planning. <br/> This app gives you a complete overview of all your retirment benefits from UN Pension Fund and Employing Organization            </Text>
-            {/* <TouchableOpacity 
-              style={styles.primaryBtn} 
-              onPress={() => router.push('/calculator')}
-              activeOpacity={0.9}
-            >
-              <Text style={styles.primaryBtnText}>Calculate Your Pension Now</Text>
-              <Text style={styles.primaryBtnIcon}>→</Text>
-            </TouchableOpacity> */}
+            Everything you need for retirement planning is here. {'\n'} This App brings together your UN Pension Fund and employing organization benefits            </Text>
             
-            {/* Enhanced trust indicators */}
-            {/* <View style={styles.trustIndicators}>
-              <View style={styles.trustItem}>
-                <Text style={styles.trustIcon}>🔒</Text>
-                <Text style={styles.trustText}>Secure</Text>
-              </View>
-              <View style={styles.trustItem}>
-                <Text style={styles.trustIcon}>💯</Text>
-                <Text style={styles.trustText}>Free</Text>
-              </View>
-              <View style={styles.trustItem}>
-                <Text style={styles.trustIcon}>⚡</Text>
-                <Text style={styles.trustText}>Instant</Text>
-              </View>
-            </View> */}
              {/* Who is MyUNPension for? Section */}
         <View style={styles.whoSection}>
           <View style={styles.whoCard}>
             <View style={styles.whoHeader}>
-              {/* <View style={styles.whoIconContainer}>
-                <Text style={styles.whoIcon}>👥</Text>
-              </View> */}
-              {/* <Text style={styles.whoTitle}>Who is MyUNPension for?</Text> */}
               <Text style={styles.whoTitle1}>Who is
               <Text style={styles.whoTitle}> MyUNPension </Text>for?</Text>
             </View>
-            {/* <Text style={styles.whoSubtitle}>MyUNPension was built for UN staff members at every stage of their career.</Text> */}
             <Text style={styles.whoDesc}>
-            Whether you're a new UN staff member, planning early retirement, approaching separation or already retired, <Text style={styles.boldText}><br></br>MyUNPension</Text> helps you understand, estimate, and track your UNJSPF benefits with confidence.
+            Whether you are new to the UN, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>{'\n'}MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
             </Text>
           </View>
         </View>
           </View>
         </Animated.View>
 
-       
-
-        {/* Enhanced Key Features */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            {/* <Text style={styles.sectionTitle}>Key features of this application</Text> */}
-            {/* <Text style={styles.sectionSubtitle}>From UNJSPF</Text> */}
-          </View>
-          
-          {/* Compact Features List */}
-          <View style={styles.featureCard}>
-          <Text style={styles.sectionTitle}>Key features of this application</Text>
-          <Text style={styles.sectionSubtitle1}>From UNJSPF</Text>
-
-
-            <View style={styles.featureListCompact}>
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Actuarial Age Calculator</Text>{'\n'}
-                  Find your Actuarial Age, Early, and Normal Retirement Ages based on UNJSPF rules
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Pension Calculator</Text>{'\n'}
-                  Get precise estimates of your monthly pension using your salary and service history
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Monthly Pension Snapshot</Text>{'\n'}
-                  Apply Adjustments for Cost-of-Living and After-Service Health Insurance contributions
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Required Documents</Text>{'\n'}
-                  Access a checklist of mandatory documents for timely processing of your pension
-                </Text>
-              </View>
-
-              <br></br>
-              <Text style={styles.sectionSubtitle1}>From Your Employing Organization</Text>
-
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  {/* <Text style={styles.boldText1}>HR Entitlements from Your Employing Organization</Text>{'\n'} */}
-                  Procedures to help you claim HR benefits of separation
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  {/* <Text style={styles.boldText1}>Separation Grant</Text>{'\n'} */}
-                  Separation Grant
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Leave Encashment</Text>{'\n'}
-                  End-of-Assignment Travel
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Post Retirement Resources</Text>{'\n'}
-                  Support for life after UN service
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Financial Planning Tools</Text>{'\n'}
-                  Smart strategies to maximize your pension income effectively
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Relocation Support</Text>{'\n'}
-                  Information on settling in your retirement destination
-                </Text>
-              </View>
-              
-              <View style={styles.featureItemTight}>
-                <Text style={styles.bullet}>•</Text>
-                <Text style={styles.featureTextTight}>
-                  <Text style={styles.boldText1}>Community & Services</Text>{'\n'}
-                  Connect with UN retirees and access country-specific support
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
-
-        {/* Enhanced About UN Pension Fund */}
-        <View style={styles.aboutSectionCompact}> 
-          <View style={styles.sectionHeaderCompact}>
-            <Text style={styles.sectionTitleCompact}>United Nations Joint Staff Pension Fund</Text>
-            {/* <Text style={styles.aboutSubtitleCompact}>Your pension is managed by a globally trusted institution</Text> */}
-          </View>
-          
-          <View style={styles.statsContainerCompact}>
-            <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>$96B</Text>
-              <Text style={styles.statLabelCompact}>Asset Value</Text>
-            </View>
-            <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>111%</Text>
-              <Text style={styles.statLabelCompact}>Funded Ratio</Text>
-            </View>
-            <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>24</Text>
-              <Text style={styles.statLabelCompact}>Organizations</Text>  
-            </View>
-            <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>150K</Text>
-              <Text style={styles.statLabelCompact}>Active Staff</Text>
-            </View>
-            <View style={styles.statCardCompact}>
-              <Text style={styles.statNumberCompact}>89K</Text>
-              <Text style={styles.statLabelCompact}>Retirees</Text>
-            </View>
-          </View>
-
-          <View style={styles.aboutCardCompact}>
+        {/* App at a Glance Section */}
+        <View style={styles.appGlanceSection}>
+          <Text style={styles.sectionTitleCenter}>App at a Glance</Text>
+          <View style={styles.glanceCardsContainer}>
             {[
-              { text: 'Your pension is managed by a globally trusted institution' },
-              { text: 'Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits' },
-              { text: 'In its 75-year history, the Fund has never missed a pension payment. It has adequate resources to meet the obligations in the next 30-40 years' },
-              { text: 'The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners' },
-              { text: 'UN retirees, typically aged 60-75, have an average post-retirement life expectancy of about 23-24 years for men, and 26-28 years for women' },
-              { text: 'Your age, length of contributory service, salary grade and step at the time of retirement decides the value of your pension' },
-              { text: 'Your Pension is adjusted for cost of living, after service health insurance, and paid for life' },
-              { text: 'After your death, benefits are transferred to your dependent spouse or eligible survivors' },
-              { text: 'You can receive your pension in your home country\'s currency in your preferred bank account' },
-              { text: 'You can separate at any time you want' }
-            ].map((item, index) => (
-              <View key={index} style={styles.aboutItemCompact}>
-                <View style={styles.aboutBlueDot} />
-                <Text style={styles.aboutTextCompact}>{item.text}</Text>
-              </View>
-            ))}
-            <Text style={styles.sourceTextCompact}>Source: UNJSPF</Text>
-          </View>
-        </View>
-
-        {/* Enhanced How It Works */}
-        {/* <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>How It Works</Text>
-            <Text style={styles.sectionSubtitle}>Ready in 3 Simple Steps</Text>
-          </View>
-          
-          <View style={[styles.stepsContainer, {borderWidth: 1, borderColor: '#ddd', borderRadius: 10, padding: 20}]}>
-            {[
-              { title: 'Create Your Free Account', desc: 'Sign up in seconds to get started.', icon: '👤' },
-              { title: 'Input Your Service Details', desc: 'Enter your key information like years of contribution, salary, grade, and step.', icon: '📝' },
-              { title: 'Explore & Compare', desc: 'Instantly see your pension projections and model different retirement scenarios to plan your future.', icon: '📊' }
-            ].map((step, index) => (
-              <View key={index} style={styles.stepCard}>
-                <Text style={styles.stepTitle}>{step.title}</Text>
-                <Text style={styles.stepDesc}>{step.desc}</Text>
+              {
+                icon: "📊",
+                title: "Pension Fund Benefits (From UNJSPF)",
+                desc: "Your pension, explained and simplified"
+              },
+              {
+                icon: "✈️",
+                title: "Separation Benefits (From Your Employing Organization)",
+                desc: "Smooth transition after UN service"
+              },
+              {
+                icon: "👥",
+                title: "Post-Retirement Resources",
+                desc: "Guidance to plan, settle, and stay connected"
+              }
+            ].map((item, idx) => (
+              <View key={idx} style={styles.glanceCard}>
+                <Text style={styles.glanceIcon}>{item.icon}</Text>
+                <Text style={styles.glanceTitle}>{item.title}</Text>
+                <Text style={styles.glanceDesc}>{item.desc}</Text>
               </View>
             ))}
           </View>
-        </View> */}
+        </View>
 
-        {/* Enhanced Final Call to Action */}
-        <View style={styles.ctaSection}>
-          <View style={styles.ctaBackground} />
+        {/* Visual Gap */}
+        <View style={styles.visualGap} />
+
+        {/* UNJSPF Overview Section */}
+        <View style={styles.overviewSection}>
+          {/* Title */}
+          <Text style={styles.overviewMainTitle}>United Nations Joint Staff Pension Fund</Text>
+          <Text style={styles.overviewSubtitle}>Key Facts at a Glance</Text>
+          <Text style={styles.overviewNote}>Figures based on latest actuarial valuation (2024)</Text>
+
+          {/* Financials */}
+          <Text style={styles.categoryTitle}>Financials</Text>
+          <View style={styles.twoCardRow}>
+            <View style={styles.statCard}>
+              <Text style={styles.statIcon}>💰</Text>
+              <Text style={styles.statValue}>$96B</Text>
+              <Text style={styles.statLabel}>Assets</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statIcon}>📈</Text>
+              <Text style={styles.statValue}>111%</Text>
+              <Text style={styles.statLabel}>Funded Ratio</Text>
+            </View>
+          </View>
+
+          {/* Membership */}
+          <Text style={[styles.categoryTitle, styles.membershipTitle]}>Membership</Text>
+          <View style={styles.threeCardRow}>
+            <View style={styles.statCard}>
+              <Text style={styles.statIcon}>🏢</Text>
+              <Text style={styles.statValue}>24</Text>
+              <Text style={styles.statLabel}>Organizations</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statIcon}>👥</Text>
+              <Text style={styles.statValue}>150K</Text>
+              <Text style={styles.statLabel}>Active Staff</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statIcon}>💼</Text>
+              <Text style={styles.statValue}>89K</Text>
+              <Text style={styles.statLabel}>Retirees</Text>
+            </View>
+          </View>
+
+          {/* About the Fund */}
+          <Text style={[styles.categoryTitle, styles.aboutTitle]}>About the Fund</Text>
+          <View style={styles.aboutCardsContainer}>
+            {[
+              "Established in 1949 by the General Assembly, UNJSPF is a defined benefit plan providing retirement, death, disability, and related benefits.",
+              "The Fund currently pays out an average of $40,000 per pensioner annually to over 89,000 pensioners.",
+              "In its 75-year history, the Fund has never missed a pension payment and has adequate resources to meet obligations in the next 30-40 years.",
+              "UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24–28 years at the time of retirement.",
+              "Your age, contributory service, and salary grade/step determine your pension value.",
+              "You can receive your pension in your home country's currency in your preferred bank account.",
+              "Your pension is adjusted based on cost of living and paid for life.",
+              "After death, benefits transfer to your dependent spouse or eligible survivors.",
+              "You can separate at any time you want.",
+              "Your pension is managed by a globally trusted institution."
+            ].map((point, idx) => (
+              <View key={idx} style={styles.aboutCard}>
+                <Text style={styles.aboutIcon}>ℹ️</Text>
+                <Text style={styles.aboutText}>{point}</Text>
+              </View>
+            ))}
+          </View>
+
+          {/* CTA Section */}
           <Text style={styles.ctaTitle}>Ready to see your retirement future?</Text>
-          <Text style={styles.ctaDesc}>Take control of your retirement planning today. Make informed decisions with clear, accurate data.</Text>
+          <Text style={styles.ctaSubtitle}>
+            Take control of your retirement planning today. Make informed decisions with clear, accurate data.
+          </Text>
           <TouchableOpacity 
-            style={styles.ctaBtn} 
-            onPress={() => router.push('/signup')}
-            activeOpacity={0.9}
+            style={styles.ctaButton}
+            onPress={() => router.push('/calculator')}
           >
-            <Text style={styles.ctaBtnText}>Get Started for Free</Text>
-            {/* <Text style={styles.ctaBtnIcon}>🚀</Text> */}
+            <Text style={styles.ctaButtonText}>Get Started for Free</Text>
           </TouchableOpacity>
-        </View>
 
-        {/* Footer */}
-        <View style={styles.footerWrapper}>
-          <View style={styles.footer}>
-            <Text style={styles.footerTitle}>Disclaimer</Text>
-            <Text style={styles.footerText}>
-              MyUNPension is an independent, third-party tool, developed by a former UN staff member who recently retired, and is not affiliated with, endorsed by, or in any way officially connected with the United Nations, the UNJSPF, or any of its subsidiary organizations. All calculations are estimates provided for planning purposes only and should be verified with the UNJSPF before making any financial decisions.
-            </Text>
-            
-            <View style={styles.footerLinks}>
-              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>About Us</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>Contact</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>Privacy Policy</Text>
-              </TouchableOpacity>
-              {/* <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink1}>Terms of Service</Text>
-              </TouchableOpacity> */}
-            </View>
-            <TouchableOpacity style={styles.footerLinkItem} activeOpacity={0.7}>
-                <Text style={styles.footerLink1}>Terms of Service</Text>
-              </TouchableOpacity>
-            <Text style={styles.footerCopyright}> 2025 MyUNPension. All Rights Reserved.</Text>
+          {/* Footer Links */}
+          <View style={styles.footerLinks}>
+            <TouchableOpacity onPress={() => handleLinkPress('#about')}>
+              <Text style={styles.footerLink}>About Us</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLinkPress('#contact')}>
+              <Text style={styles.footerLink}>Contact</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLinkPress('#privacy')}>
+              <Text style={styles.footerLink}>Privacy Policy</Text>
+            </TouchableOpacity>
           </View>
+          
+          <View style={styles.footerLinksSmall}>
+            <TouchableOpacity onPress={() => handleLinkPress('#terms')}>
+              <Text style={styles.footerLinkSmall}>Terms of Service</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Disclaimer Section */}
+          <View style={styles.disclaimerContainer}>
+            <View style={styles.disclaimerHeader}>
+              <Text style={styles.disclaimerIcon}>⚠️</Text>
+              <View style={styles.disclaimerContent}>
+                <Text style={styles.disclaimerTitle}>Disclaimer</Text>
+                <Text style={styles.disclaimerText}>
+                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the United Nations Joint Staff Pension Fund (UNJSPF) or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Footer Copyright */}
+          <Text style={styles.copyright}>
+            © 2025 MyUNPension. All Rights Reserved.
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -364,7 +260,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 
-  // Enhanced Hero Section with Sky Blue Theme
+  // Enhanced Hero Section with Sky Blue Theme - ORIGINAL KEPT
   heroSection: {
     position: 'relative',
     paddingVertical: isSmallScreen ? 20 : 50,
@@ -434,7 +330,7 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: 'black',
-    fontSize: isSmallScreen ? 14: isTablet ? 26 : 22,
+    fontSize: isSmallScreen ? 13: isTablet ? 26 : 22,
     fontWeight: '500',
     textAlign: 'center',
     // marginBottom: 8,
@@ -452,57 +348,8 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontWeight: '400',
   },
-  primaryBtn: {
-    backgroundColor: '#ffffff',
-    borderRadius: 50,
-    paddingVertical: isSmallScreen ? 16 : 20,
-    paddingHorizontal: isSmallScreen ? 28 : 40,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.3,
-    shadowRadius: 24,
-    elevation: 12,
-    marginBottom: 36,
-    minWidth: isSmallScreen ? 280 : 320,
-    justifyContent: 'center',
-  },
-  primaryBtnText: {
-    color: '#0EA5E9',
-    fontWeight: '800',
-    fontSize: isSmallScreen ? 16 : 18,
-    marginRight: 8,
-    letterSpacing: -0.3,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  primaryBtnIcon: {
-    color: '#0EA5E9',
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  trustIndicators: {
-    flexDirection: 'row',
-    gap: isSmallScreen ? 24 : 32,
-    marginTop: 8,
-  },
-  trustItem: {
-    alignItems: 'center',
-    opacity: 0.95,
-  },
-  trustIcon: {
-    fontSize: isSmallScreen ? 20 : 24,
-    marginBottom: 8,
-  },
-  trustText: {
-    color: 'rgba(49, 47, 47, 0.9)',
-    fontSize: isSmallScreen ? 12 : 14,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
 
-  // Enhanced Who Section
+  // Enhanced Who Section - ORIGINAL KEPT
   whoSection: {
     paddingVertical: isSmallScreen ? 1 : 26,
     paddingHorizontal: 20,
@@ -526,20 +373,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  whoIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-    borderWidth: 2,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
-  whoIcon: {
-    fontSize: 28,
-  },
   whoTitle: {
     fontSize: isSmallScreen ? 16 : 26,
     fontWeight: '800',
@@ -560,14 +393,6 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     textAlign: 'center',
   },
-  whoSubtitle: {
-    fontSize: isSmallScreen ? 13 : 18,
-    color: '#0072CE',
-    fontWeight: '600',
-    // marginBottom: 16,
-    lineHeight: 20,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
   whoDesc: {
     color: '#6b7280',
     fontSize: isSmallScreen ? 13 : 16,
@@ -576,616 +401,305 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign:'justify'
   },
-
-  // Enhanced Sections
-  section: {
-    paddingVertical: isSmallScreen ? 0 : 56,
-    paddingHorizontal: 20,
-    backgroundColor: '#ffffff',
-  },
-  aboutSection: {
-    paddingVertical: isSmallScreen ? 40 : 56,
-    paddingHorizontal: 20,
-    backgroundColor: '#f0f9ff',
-  },
-  sectionHeader: {
-    // marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: isSmallScreen ? 16 : isTablet ? 24 : 22,
-    fontWeight: '900',
-    color: '#0072CE',
-    textAlign: 'center',
-    // marginBottom: 12,
-    lineHeight: isSmallScreen ? 36 : 42,
-    letterSpacing: -1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  sectionSubtitle: {
-    fontSize: isSmallScreen ? 12 : 16,
-    color: '#6b7280',
-    textAlign: 'center',
-    lineHeight: 8,
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '500',
-  },
-
-  sectionSubtitle1: {
-    fontSize: isSmallScreen ? 10 : 12,
-    color: '#0072CE',
-    textAlign: 'center',
-    // lineHeight: 8,
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '500',
-  },
-
-  // Enhanced Feature Cards
-
-  featureCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: isSmallScreen ? 24 : 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-  },
-  featureHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  featureIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 18,
-    borderWidth: 2,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
-  featureIcon: {
-    fontSize: 28,
-  },
-  featureTitle: {
-    fontSize: isSmallScreen ? 20 : 24,
-    fontWeight: '800',
-    color: '#0072CE',
-    flex: 1,
-    lineHeight: 30,
-    letterSpacing: -0.6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  featureDesc: {
-    color: '#374151',
-    fontSize: isSmallScreen ? 15 : 16,
-    lineHeight: isSmallScreen ? 22 : 26,
-    marginBottom: 24,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
-  featureList: {
-    gap: 16,
-  },
-  featureItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  bulletContainer: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-    marginTop: 2,
-    borderWidth: 2,
-    borderColor: 'rgba(14, 165, 233, 0.3)',
-  },
-  bullet: {
-    color: '#0EA5E9',
-    fontSize: 14,
-    fontWeight: '800',
-    display: 'none',
-    
-  },
-  featureText: {
-    color: '#374151',
-    fontSize: isSmallScreen ? 14 : 15,
-    lineHeight: isSmallScreen ? 20 : 24,
-    flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
   boldText: {
-    fontWeight: '900',
+    fontWeight: '600',
     color: '#0072CE',
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  boldText1: {
-    fontWeight: '900',
-    color: 'black',
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  featureSubHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 32,
-    marginBottom: 20,
-    paddingTop: 24,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(14, 165, 233, 0.1)',
-  },
-  featureSubTitle: {
-    fontSize: isSmallScreen ? 18 : 20,
-    fontWeight: '700',
-    color: '#0EA5E9',
-    flex: 1,
-    lineHeight: 28,
-    letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  
-  featureItemCompact: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 6, // Reduced from default
-    paddingVertical: 2, // Reduced padding
-  },
-  featureTextCompact: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 18, // Reduced line height
-    color: '#4B5563',
-    paddingLeft: 8,
-  },
-  featureSubHeaderCompact: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 4, // Reduced spacing
-  },
-  featureDescCompact: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 8, // Reduced spacing
-    lineHeight: 16,
-  },
-  featureListCompact: {
-    marginTop: 0, // No extra margin
-  },
-  featureItemTight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 3, // Very tight spacing
-    paddingVertical: 1,
-  },
-  featureTextTight: {
-    fontSize: 13,
-    lineHeight: 16,
-    color: '#4B5563',
-    marginLeft: 6, // Direct margin instead of padding
   },
 
-  // Enhanced About Section
-  aboutSectionCompact: {
-    backgroundColor: '#f8fafc',
-    paddingVertical: isSmallScreen ? 8 : 32,
-    paddingHorizontal: isSmallScreen ? 8 : 24,
-    marginBottom: 16,
+  // NEW SECTIONS - MINIMAL SPACING FOR IPHONE
+  // App at a Glance Section
+  appGlanceSection: {
+    paddingVertical: 0,
+    paddingHorizontal: 20,
+    backgroundColor: '#ffffff',
   },
-  sectionHeaderCompact: {
-    // marginBottom: 16,
-  },
-  sectionTitleCompact: {
-    fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
-    fontWeight: '900',
-    color: '#0072CE',
+  sectionTitleCenter: {
+    fontSize: isSmallScreen ? 16 : 20,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: 8,
-    lineHeight: isSmallScreen ? 28 : 32,
-    letterSpacing: -0.8,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  aboutSubtitleCompact: {
-    fontSize: isSmallScreen ? 12 : 16,
-    color: '#6b7280',
-    textAlign: 'center',
-    lineHeight: 4,
-    letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '500',
-  },
-  statsContainerCompact: {
+  glanceCardsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    // marginBottom: 20,
-    paddingHorizontal: 2,
-  },
-  statCardCompact: {
-    backgroundColor: '#ffffff',
-    borderRadius: isSmallScreen ? 12 : 16,
-    padding: isSmallScreen ? 8 : isMediumScreen ? 10 : 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '26%',
-    minHeight: isSmallScreen ? 60 : 70,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  statNumberCompact: {
-    fontSize: isSmallScreen ? 12 : isMediumScreen ? 14 : 16,
-    fontWeight: '900',
-    color: '#0EA5E9',
-    marginBottom: 2,
-    letterSpacing: -0.5,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  statLabelCompact: {
-    fontSize: isSmallScreen ? 9 : isMediumScreen ? 9 : 10,
-    color: '#6b7280',
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: 0.3,
-    // textTransform: 'lowercase',
-    lineHeight: isSmallScreen ? 10 : 12,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  
-  aboutCardCompact: {
-    backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: isSmallScreen ? 12 : 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 8,
+    justifyContent: 'space-between',
     gap: 6,
+    marginBottom: 0,
+  },
+  glanceCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 6,
+    padding: 6,
+    alignItems: 'center',
+    width: (width - 52) / 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
     borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
+    borderColor: '#e5e7eb',
   },
-  aboutItemCompact: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    // marginBottom: 6,
+  glanceIcon: {
+    fontSize: 16,
+    marginBottom: 2,
   },
-  aboutBlueDot: {
-    width: 4,
-    height: 4,
-    borderRadius: 4,
-    backgroundColor: '#0EA5E9',
-    marginRight: 12,
-    marginTop: 6,
-  },
-  aboutTextCompact: {
-    color: '#374151',
-    fontSize: isSmallScreen ? 12 : 14,
-    lineHeight: isSmallScreen ? 18 : 20,
-    flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
-  sourceTextCompact: {
-    // marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(14, 165, 233, 0.1)',
-    fontSize: 11,
-    color: '#6b7280',
+  glanceTitle: {
+    fontSize: 9,
     fontWeight: '600',
+    color: '#1d4ed8',
     textAlign: 'center',
-    fontStyle: 'italic',
+    lineHeight: 11,
+    marginBottom: 2,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  aboutSubtitle: {
-    color: '#0072CE',
-    fontSize: isSmallScreen ? 16 : 18,
+  glanceDesc: {
+    fontSize: 8,
+    color: '#6b7280',
     textAlign: 'center',
-    lineHeight: 28,
-    letterSpacing: -0.2,
+    lineHeight: 9,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '500',
   },
-   statsContainer: {
-     flexDirection: 'row',
-     flexWrap: 'wrap',
-     justifyContent: 'center',
-     alignItems: 'stretch',
-     marginBottom: 40,
-     paddingHorizontal: isSmallScreen ? 20 : 30,
-     gap: isSmallScreen ? 8 : 12,
-   },
-   statCard: {
-     backgroundColor: '#ffffff',
-     borderRadius: 20,
-     padding: isSmallScreen ? 12 : isMediumScreen ? 14 : 18,
-     alignItems: 'center',
-     justifyContent: 'center',
-     width: getCardWidth(),
-     minHeight: isSmallScreen ? 80 : 90,
-     shadowColor: '#000',
-     shadowOffset: { width: 0, height: 6 },
-     shadowOpacity: 0.1,
-     shadowRadius: 16,
-     elevation: 6,
-     borderWidth: 1,
-     borderColor: 'rgba(14, 165, 233, 0.1)',
-     marginBottom: isSmallScreen ? 12 : 8,
-   },
-   statNumber: {
-     fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
-     fontWeight: '900',
-     color: '#0072CE',
-     marginBottom: 4,
-     letterSpacing: -0.5,
-     textAlign: 'center',
-     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-   },
-   statLabel: {
-     fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
-     color: '#0072CE',
-     fontWeight: '700',
-     textAlign: 'center',
-     letterSpacing: 0.3,
-     textTransform: 'uppercase',
-     lineHeight: isSmallScreen ? 12 : 14,
-     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-   },
+
+  // Visual Gap
+  visualGap: {
+    height: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+    marginHorizontal: 20,
+  },
+
+  // UNJSPF Overview Section
+  overviewSection: {
+    paddingVertical: 0,
+    paddingHorizontal: 20,
+    backgroundColor: '#ffffff',
+  },
+  overviewMainTitle: {
+    fontSize: isSmallScreen ? 14 : 18,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+    textAlign: 'center',
+    marginBottom: 2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  overviewSubtitle: {
+    fontSize: 10,
+    color: '#6b7280',
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  overviewNote: {
+    fontSize: 8,
+    color: '#9ca3af',
+    textAlign: 'center',
+    marginTop: 2,
+    marginBottom: 8,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+
+  // Category Titles
+  categoryTitle: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#2563eb',
+    textAlign: 'center',
+    marginBottom: 4,
+    marginTop: 6,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  membershipTitle: {
+    color: '#16a34a',
+  },
+  aboutTitle: {
+    color: '#7c3aed',
+  },
+
+  // Card Containers
+  twoCardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 6,
+    marginBottom: 6,
+  },
+  threeCardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 6,
+    marginBottom: 6,
+  },
+
+  // Stat Cards
+  statCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 6,
+    padding: 4,
+    alignItems: 'center',
+    flex: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  statIcon: {
+    fontSize: 14,
+    marginBottom: 2,
+  },
+  statValue: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#1d4ed8',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  statLabel: {
+    fontSize: 8,
+    color: '#6b7280',
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+
+  // About Cards
+  aboutCardsContainer: {
+    gap: 2,
+    marginBottom: 8,
+  },
   aboutCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: isSmallScreen ? 24 : 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    elevation: 8,
-    gap: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-  },
-  aboutItem: {
+    borderRadius: 6,
+    padding: 4,
     flexDirection: 'row',
     alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    gap: 6,
   },
   aboutIcon: {
-    fontSize: 24,
-    marginRight: 16,
-    marginTop: 2,
+    fontSize: 10,
+    color: '#7c3aed',
+    marginTop: 1,
   },
   aboutText: {
-    color: '#0072CE',
-    fontSize: isSmallScreen ? 14 : 15,
-    lineHeight: isSmallScreen ? 20 : 24,
+    fontSize: 8,
+    color: '#374151',
+    lineHeight: 10,
     flex: 1,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
-  sourceText: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(14, 165, 233, 0.1)',
-    fontSize: 13,
-    color: '#6b7280',
-    fontWeight: '600',
-    textAlign: 'center',
-    fontStyle: 'italic',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
-  // Enhanced Step Cards - Removed numbering, made icons prominent
-  stepsContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 4,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-    gap: 16,
-  },
-  stepCard: {
-    backgroundColor: '#f8fafc',
-    borderRadius: 16,
-    padding: isSmallScreen ? 16 : 20,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
-  },
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   marginBottom: 24,
-  //   shadowColor: '#0EA5E9',
-  //   shadowOffset: { width: 0, height: 8 },
-  //   shadowOpacity: 0.2,
-  //   shadowRadius: 16,
-  //   elevation: 8,
-  //   borderWidth: 3,
-  //   borderColor: 'rgba(14, 165, 233, 0.2)',
-  // },
-  stepMainEmoji: {
-    fontSize: isSmallScreen ? 32 : 40,
-  },
-  stepTitle: {
-    fontSize: isSmallScreen ? 18 : 20,
-    fontWeight: '600',
-    color: 'black',
-    marginBottom: 6,
-    textAlign: 'center',
-    lineHeight: 30,
-    letterSpacing: -0.6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  },
-  stepDesc: {
-    color: '#374151',
-    fontSize: isSmallScreen ? 15 : 16,
-    textAlign: 'center',
-    lineHeight: isSmallScreen ? 22 : 26,
-    maxWidth: 300,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
-
-  // Enhanced CTA Section
-  ctaSection: {
-    position: 'relative',
-    backgroundColor: '#ffffff',
-    paddingVertical: isSmallScreen ? 12 : 32,
-    paddingHorizontal: isSmallScreen ? 8 : 20,
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  ctaBackground: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#ffffff',
-  },
+  // CTA Section
   ctaTitle: {
-    color: '#0072CE',
-    fontSize: isSmallScreen ? 14 : 22,
-    fontWeight: '900',
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#1e40af',
     textAlign: 'center',
-    // marginBottom: 20,
-    lineHeight: isSmallScreen ? 24 : 28,
-    letterSpacing: -1,
-    zIndex: 1,
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 8,
+    marginBottom: 2,
+    marginTop: 8,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  ctaDesc: {
-    color: 'black',
-    fontSize: isSmallScreen ? 16 : 18,
+  ctaSubtitle: {
+    fontSize: 10,
+    color: '#6b7280',
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 24 : 28,
-    marginBottom: 4,
-    maxWidth: 420,
-    zIndex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
-  },
-  ctaBtn: {
-    backgroundColor: '#ffffff',
-    borderRadius: 50,
-    paddingVertical: isSmallScreen ? 12 : 20,
-    paddingHorizontal: isSmallScreen ? 24 : 44,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.3,
-    shadowRadius: 24,
-    elevation: 12,
-    zIndex: 1,
-    minWidth: isSmallScreen ? 240 : 280,
-    justifyContent: 'center',
-  },
-  ctaBtnText: {
-    color: '#0072CE',
-    fontWeight: '800',
-    fontSize: isSmallScreen ? 14 : 18,
-    marginRight: 8,
-    letterSpacing: -0.3,
+    marginBottom: 8,
+    paddingHorizontal: 16,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  ctaBtnIcon: {
-    fontSize: 18,
-  },
-
-  // Enhanced Footer
-  footerWrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: '#f8fafc',
-  },
-  footer: {
-    backgroundColor: 'rgb(66, 65, 65)',
-    paddingVertical: isSmallScreen ? 24 : 32,
-    paddingHorizontal: 24,
-    alignItems: 'center',
+  ctaButton: {
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 16,
+    paddingVertical: 6,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.1)',
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    marginBottom: 8,
   },
-  footerTitle: {
+  ctaButtonText: {
     color: '#ffffff',
-    fontSize: isSmallScreen ? 20 : 24,
-    fontWeight: '800',
-    marginBottom: 4,
-    textAlign: 'center',
-    letterSpacing: -0.5,
+    fontSize: 10,
+    fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  footerText: {
-    color: 'cyan',
-    fontSize: isSmallScreen ? 13 : 14,
-    textAlign: 'justify',
-    lineHeight: isSmallScreen ? 18 : 24,
-    marginBottom: 4,
-    maxWidth: 520,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    fontWeight: '400',
 
-  },
+  // Footer Links
   footerLinks: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    marginBottom: 4,
-    // gap: 6,
-    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    marginTop: 8,
   },
-  footerLinkItem: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 12,
+  footerLinksSmall: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 4,
   },
   footerLink: {
-    color: 'cyan',
-    fontSize: isSmallScreen ? 13 : 14,
-    fontWeight: '600',
+    fontSize: 10,
+    color: '#2563eb',
+    fontWeight: '500',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  footerLink1: {
-    color: 'cyan',
-    fontSize: isSmallScreen ? 13 : 14,
-    fontWeight: '600',
+  footerLinkSmall: {
+    fontSize: 9,
+    color: '#6b7280',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  footerCopyright: {
-    color: 'cyan',
-    fontSize: isSmallScreen ? 12 : 13,
+
+  // Disclaimer Section
+  disclaimerContainer: {
+    backgroundColor: '#fef2f2',
+    borderWidth: 1,
+    borderColor: '#fecaca',
+    borderRadius: 8,
+    padding: 6,
+    marginTop: 8,
+  },
+  disclaimerHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+  },
+  disclaimerIcon: {
+    fontSize: 10,
+    color: '#dc2626',
+    marginTop: 1,
+  },
+  disclaimerContent: {
+    flex: 1,
+  },
+  disclaimerTitle: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#b91c1c',
+    marginBottom: 2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  disclaimerText: {
+    fontSize: 8,
+    color: '#b91c1c',
+    lineHeight: 10,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+
+  // Copyright
+  copyright: {
+    fontSize: 8,
+    color: '#6b7280',
     textAlign: 'center',
-    fontWeight: '600',
-    letterSpacing: 0.2,
+    marginTop: 6,
+    marginBottom: 4,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 });
