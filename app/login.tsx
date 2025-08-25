@@ -273,10 +273,10 @@ const styles = StyleSheet.create({
   heroLogo: {
     width: 120,
     height: 120,
-    marginBottom: 6,
+    marginBottom: -20,
   },
   appName: {
-    fontSize: isSmallScreen ? 24 : 28,
+    fontSize: isSmallScreen ? 18 : 28,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    fontSize: isSmallScreen ? 24 : 28,
+    fontSize: isSmallScreen ? 18 : 28,
     fontWeight: '800',
     marginBottom: 8,
     marginTop: -12,
