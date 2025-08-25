@@ -74,7 +74,7 @@ export default function HomeScreen() {
             style={styles.primaryButton}
             onPress={() => {
               // Scroll to Quick Tools section or stay on current screen
-              router.push('/benefit_guide');
+              router.push('/about-app');
             }}
           >
             <View style={styles.buttonContent}>
