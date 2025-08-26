@@ -19,9 +19,41 @@ import { useRouter } from 'expo-router';
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 const { width, height } = Dimensions.get('window');
 
-const isTablet = width > 768;
-const isSmallScreen = width < 380;
-const isMediumScreen = width < 480;
+// Enhanced responsive breakpoints
+const isXSmallScreen = width < 360;
+const isSmallScreen = width < 414;
+const isMediumScreen = width < 768;
+const isLargeScreen = width < 1024;
+const isTablet = width >= 768;
+
+// Responsive scaling functions
+const scaleFont = (small, medium = small * 1.2, large = small * 1.4) => {
+  if (isXSmallScreen) return small * 0.9;
+  if (isSmallScreen) return small;
+  if (isMediumScreen) return medium;
+  return large;
+};
+
+const scaleSize = (small, medium = small * 1.2, large = small * 1.4) => {
+  if (isXSmallScreen) return small * 0.9;
+  if (isSmallScreen) return small;
+  if (isMediumScreen) return medium;
+  return large;
+};
+
+const getHorizontalPadding = () => {
+  if (isXSmallScreen) return 16;
+  if (isSmallScreen) return 20;
+  if (isMediumScreen) return 32;
+  return 40;
+};
+
+const getCardGap = () => {
+  if (isXSmallScreen) return 4;
+  if (isSmallScreen) return 6;
+  if (isMediumScreen) return 8;
+  return 10;
+};
 
 export default function LandingPage() {
   const { user, loading } = useAuth();
@@ -217,7 +249,6 @@ export default function LandingPage() {
           {/* Disclaimer Section */}
           <View style={styles.disclaimerContainer}>
             <View style={styles.disclaimerHeader}>
-              {/* <Text style={styles.disclaimerIcon}>⚠️</Text> */}
               <View style={styles.disclaimerContent}>
                 <Text style={styles.disclaimerTitle}>Disclaimer</Text>
                 <Text style={styles.disclaimerText}>
@@ -236,18 +267,7 @@ export default function LandingPage() {
     </SafeAreaView>
   );
 }
-// Updated Styles
-const getCardWidth = () => {
-  if (isSmallScreen) {
-    return (width - 60) / 3 - 10; // 2 cards per row on very small screens
-  } else if (isMediumScreen) {
-    return (width - 80) / 3 - 10; // 3 cards per row on medium screens
-  } else if (isTablet) {
-    return (width - 120) / 5 - 12; // 5 cards per row on tablets
-  } else {
-    return (width - 100) / 4 - 10; // 4 cards per row on regular screens
-  }
-};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -260,16 +280,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 
-  // Enhanced Hero Section with Sky Blue Theme - ORIGINAL KEPT
+  // Enhanced Hero Section - Fully Responsive
   heroSection: {
     position: 'relative',
-    paddingVertical: isSmallScreen ? 16 : 26,
-    paddingHorizontal: 20,
-    minHeight: height * 0.4,
+    paddingVertical: scaleSize(16, 20, 26),
+    paddingHorizontal: getHorizontalPadding(),
+    minHeight: height * (isSmallScreen ? 0.45 : isTablet ? 0.35 : 0.4),
     justifyContent: 'center',
     overflow: 'hidden',
-    // height: height * 0.6,
-
   },
   heroBackground: {
     position: 'absolute',
@@ -277,93 +295,73 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#f4f6f8', // soft light grey similar to reference
+    backgroundColor: '#f4f6f8',
   },
   heroContent: {
     alignItems: 'center',
-    maxWidth: 600,
+    maxWidth: isTablet ? 800 : 600,
+    width: '100%',
     alignSelf: 'center',
     zIndex: 1,
   },
   heroIconContainer: {
-    width: isSmallScreen ? 120 : 140,
-    height: isSmallScreen ? 120 : 140,
+    width: scaleSize(100, 120, 140),
+    height: scaleSize(100, 120, 140),
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
   },
   heroLogo: {
-    width: 90,
-    height: 70,
+    width: scaleSize(70, 85, 100),
+    height: scaleSize(55, 65, 80),
     borderRadius: 0,
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
+    fontSize: scaleFont(20, 24, 28),
     fontWeight: '600',
     textAlign: 'center',
-    // marginBottom: 16,
-    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
+    lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -1.2,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: -40,
-    marginBottom: 4,
-
-  },
-  aboutBulletContainer: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#e0f2fe',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
-    marginTop: 2,
-    borderWidth: 1,
-    borderColor: 'rgba(14, 165, 233, 0.2)',
-  },
-  aboutBullet: {
-    color: '#0EA5E9',
-    fontSize: 12,
-    fontWeight: '800',
-    textAlign: 'center',
+    marginTop: scaleSize(-30, -35, -30),
+    marginBottom: scaleSize(4, 6, 8),
   },
   heroSubtitle: {
     color: 'black',
-    fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
+    fontSize: scaleFont(16, 18, 20),
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: 6,
+    marginBottom: scaleSize(6, 8, 10),
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
   heroDesc: {
-    color: '#rgba(62, 88, 112, 0.9)',
-    fontSize: isSmallScreen ? 14 : isTablet ? 16 : 15,
+    color: 'rgba(62, 88, 112, 0.9)',
+    fontSize: scaleFont(13, 15, 16),
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 20 : isTablet ? 22 : 21,
-    marginBottom: 8,
-    paddingHorizontal: 10,
-    maxWidth: 520,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    lineHeight: scaleFont(20, 21, 22),
+    marginBottom: scaleSize(8, 10, 12),
+    paddingHorizontal: scaleSize(10, 15, 20),
+    maxWidth: isTablet ? 600 : 520,
+    fontFamily: 'Roboto',
     fontWeight: '400',
   },
 
-  // Enhanced Who Section - ORIGINAL KEPT
+  // Enhanced Who Section - Fully Responsive
   whoSection: {
-    // paddingVertical: isSmallScreen ? 16 : 26,
-    paddingHorizontal: 20,
+    paddingHorizontal: getHorizontalPadding(),
     backgroundColor: '#f0f9ff',
   },
   whoCard: {
-    maxWidth: 600,
+    maxWidth: isTablet ? 700 : 600,
     width: '100%',
     backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: isSmallScreen ? 24 : 32,
+    borderRadius: scaleSize(20, 24, 28),
+    padding: scaleSize(20, 28, 32),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.1,
@@ -376,68 +374,70 @@ const styles = StyleSheet.create({
   whoHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: scaleSize(16, 20, 24),
   },
   whoTitle: {
-    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
+    fontSize: scaleFont(20, 24, 28),
     fontWeight: '800',
     color: '#0072CE',
     flex: 1,
-    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
+    lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
     textAlign: 'center',
   },
   whoTitle1: {
-    fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
+    fontSize: scaleFont(20, 24, 28),
     fontWeight: '500',
     color: 'black',
     flex: 1,
-    lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
+    lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
     textAlign: 'center',
   },
   whoDesc: {
     color: '#6b7280',
-    fontSize: isSmallScreen ? 14 : isTablet ? 16 : 15,
-    lineHeight: isSmallScreen ? 20 : isTablet ? 22 : 21,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontSize: scaleFont(14, 15, 16),
+    lineHeight: scaleFont(20, 21, 22),
+    fontFamily: 'Roboto',
     fontWeight: '400',
-    textAlign:'justify',
+    textAlign: 'justify',
   },
   boldText: {
     fontWeight: '600',
     color: '#0072CE',
   },
 
-  // NEW SECTIONS - UNIFORM FONT SIZES MATCHING HERO/WHO SECTIONS
-  // App at a Glance Section
+  // App at a Glance Section - Fully Responsive
   appGlanceSection: {
     paddingVertical: 0,
-    paddingHorizontal: 20,
+    paddingHorizontal: getHorizontalPadding(),
     backgroundColor: '#ffffff',
   },
   sectionTitleCenter: {
-    fontSize: isSmallScreen ? 16 : 22,
+    fontSize: scaleFont(16, 20, 24),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
-    marginBottom: 8,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginBottom: scaleSize(8, 10, 12),
+    fontFamily: 'Roboto',
   },
   glanceCardsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 6,
+    gap: getCardGap(),
     marginBottom: 0,
+    flexWrap: isXSmallScreen ? 'wrap' : 'nowrap',
   },
   glanceCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 6,
-    padding: 6,
+    borderRadius: scaleSize(6, 8, 10),
+    padding: scaleSize(6, 8, 10),
     alignItems: 'center',
-    width: (width - 52) / 3,
+    width: isXSmallScreen ? (width - getHorizontalPadding() * 2 - getCardGap() * 2) / 2 : 
+           (width - getHorizontalPadding() * 2 - getCardGap() * 2) / 3,
+    minWidth: isXSmallScreen ? 140 : 120,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -447,73 +447,73 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   glanceIcon: {
-    fontSize: 16,
-    marginBottom: 2,
+    fontSize: scaleSize(16, 18, 20),
+    marginBottom: scaleSize(2, 3, 4),
   },
   glanceTitle: {
-    fontSize: isSmallScreen ? 11 : 14,
+    fontSize: scaleFont(11, 12, 14),
     fontWeight: '600',
     color: '#1d4ed8',
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 13 : 16,
-    marginBottom: 2,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    lineHeight: scaleFont(13, 14, 16),
+    marginBottom: scaleSize(2, 3, 4),
+    fontFamily: 'Roboto',
   },
   glanceDesc: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 12 : 14,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    lineHeight: scaleFont(12, 13, 14),
+    fontFamily: 'Roboto',
   },
 
   // Visual Gap
   visualGap: {
-    height: 8,
+    height: scaleSize(8, 10, 12),
     borderTopWidth: 1,
     borderTopColor: '#e5e7eb',
-    marginHorizontal: 20,
+    marginHorizontal: getHorizontalPadding(),
   },
 
-  // UNJSPF Overview Section
+  // UNJSPF Overview Section - Fully Responsive
   overviewSection: {
     paddingVertical: 0,
-    paddingHorizontal: 20,
+    paddingHorizontal: getHorizontalPadding(),
     backgroundColor: '#ffffff',
   },
   overviewMainTitle: {
-    fontSize: isSmallScreen ? 16 : 20,
+    fontSize: scaleFont(16, 18, 22),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
-    marginBottom: 2,
-    marginTop: 10,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginBottom: scaleSize(8, 6, 8),
+    marginTop: scaleSize(10, 12, 14),
+    fontFamily: 'Roboto',
   },
   overviewSubtitle: {
-    fontSize: isSmallScreen ? 12 : 16,
+    fontSize: scaleFont(12, 14, 16),
     color: '#6b7280',
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
   overviewNote: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#9ca3af',
     textAlign: 'center',
-    marginTop: 2,
-    marginBottom: 8,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginTop: scaleSize(2, 3, 4),
+    marginBottom: scaleSize(8, 10, 12),
+    fontFamily: 'Roboto',
   },
 
   // Category Titles
   categoryTitle: {
-    fontSize: isSmallScreen ? 14 : 18,
+    fontSize: scaleFont(14, 16, 18),
     fontWeight: '600',
     color: '#2563eb',
     textAlign: 'center',
-    marginBottom: 4,
-    marginTop: 6,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginBottom: scaleSize(4, 5, 6),
+    marginTop: scaleSize(6, 8, 10),
+    fontFamily: 'Roboto',
   },
   membershipTitle: {
     color: '#16a34a',
@@ -522,28 +522,29 @@ const styles = StyleSheet.create({
     color: '#7c3aed',
   },
 
-  // Card Containers
+  // Card Containers - Responsive
   twoCardRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 4,
-    marginBottom: 6,
-    marginHorizontal: 30,
+    justifyContent: 'center',
+    gap: getCardGap(),
+    marginBottom: scaleSize(6, 8, 10),
+    paddingHorizontal: isSmallScreen ? 50 : 70,
   },
   threeCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 6,
-    marginBottom: 6,
+    gap: getCardGap(),
+    marginBottom: scaleSize(6, 8, 10),
   },
 
-  // Stat Cards
+  // Stat Cards - Responsive
   statCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 6,
-    padding: 6,
+    borderRadius: scaleSize(6, 8, 10),
+    padding: scaleSize(6, 8, 10),
     alignItems: 'center',
     flex: 1,
+    minHeight: scaleSize(60, 70, 80),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -553,31 +554,31 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   statIcon: {
-    fontSize: 16,
-    marginBottom: 2,
+    fontSize: scaleSize(16, 18, 20),
+    marginBottom: scaleSize(2, 3, 4),
   },
   statValue: {
-    fontSize: isSmallScreen ? 14 : 16,
+    fontSize: scaleFont(14, 16, 18),
     fontWeight: 'bold',
     color: '#1d4ed8',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
   statLabel: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
 
-  // About Cards - INCREASED FONT SIZES TO MATCH HERO/WHO SECTIONS
+  // About Cards - Responsive
   aboutCardsContainer: {
-    gap: 4,
-    marginBottom: 8,
+    gap: scaleSize(4, 5, 6),
+    marginBottom: scaleSize(8, 10, 12),
   },
   aboutCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 6,
-    padding: 8,
+    borderRadius: scaleSize(6, 8, 10),
+    padding: scaleSize(8, 10, 12),
     flexDirection: 'row',
     alignItems: 'flex-start',
     shadowColor: '#000',
@@ -587,129 +588,125 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     borderColor: '#e5e7eb',
-    gap: 8,
+    gap: scaleSize(8, 10, 12),
   },
   aboutIcon: {
-    fontSize: 14,
+    fontSize: scaleSize(14, 16, 18),
     color: '#7c3aed',
-    marginTop: 2,
+    marginTop: scaleSize(2, 3, 4),
   },
   aboutText: {
-    fontSize: isSmallScreen ? 12 : 14,
+    fontSize: scaleFont(12, 13, 14),
     color: '#374151',
-    lineHeight: isSmallScreen ? 16 : 18,
+    lineHeight: scaleFont(16, 17, 18),
     flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
 
-  // CTA Section
+  // CTA Section - Responsive
   ctaTitle: {
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: scaleFont(16, 17, 18),
     fontWeight: '600',
     color: '#1e40af',
     textAlign: 'center',
-    marginBottom: 4,
-    marginTop: 12,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginBottom: scaleSize(4, 5, 6),
+    marginTop: scaleSize(12, 14, 16),
+    fontFamily: 'Roboto',
   },
   ctaSubtitle: {
-    fontSize: isSmallScreen ? 12 : 14,
+    fontSize: scaleFont(12, 13, 14),
     color: '#6b7280',
     textAlign: 'center',
-    marginBottom: 12,
-    paddingHorizontal: 16,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginBottom: scaleSize(12, 14, 16),
+    paddingHorizontal: scaleSize(16, 20, 24),
+    fontFamily: 'Roboto',
   },
   ctaButton: {
     backgroundColor: '#2563eb',
-    paddingHorizontal: 80,
-    paddingVertical: 20,
-    borderRadius: 20,
+    paddingHorizontal: scaleSize(60, 70, 80),
+    paddingVertical: scaleSize(16, 18, 20),
+    borderRadius: scaleSize(20, 22, 24),
     alignSelf: 'center',
+    minWidth: scaleSize(200, 220, 240),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
-    marginBottom: 12,
+    marginBottom: scaleSize(12, 14, 16),
   },
   ctaButtonText: {
     color: '#ffffff',
-    fontSize: isSmallScreen ? 18 : 20,
+    fontSize: scaleFont(16, 17, 18),
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
+    textAlign: 'center',
   },
 
-  // Footer Links
+  // Footer Links - Responsive
   footerLinks: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
-    marginTop: 8,
+    gap: scaleSize(16, 20, 24),
+    marginTop: scaleSize(8, 10, 12),
+    flexWrap: 'wrap',
   },
   footerLinksSmall: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 6,
+    marginTop: scaleSize(6, 8, 10),
   },
   footerLink: {
-    fontSize: isSmallScreen ? 12 : 14,
+    fontSize: scaleFont(12, 13, 14),
     color: '#2563eb',
     fontWeight: '500',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
   footerLinkSmall: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
 
-  // Disclaimer Section
+  // Disclaimer Section - Responsive
   disclaimerContainer: {
     backgroundColor: '#fef2f2',
     borderWidth: 1,
     borderColor: '#fecaca',
-    borderRadius: 8,
-    padding: 8,
-    marginTop: 12,
+    borderRadius: scaleSize(8, 10, 12),
+    padding: scaleSize(8, 10, 12),
+    marginTop: scaleSize(12, 14, 16),
   },
   disclaimerHeader: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 8,
-
+    gap: scaleSize(8, 10, 12),
   },
-  // disclaimerIcon: {
-  //   fontSize: 14,
-  //   color: '#dc2626',
-  //   marginTop: 2,
-  //   textAlign: 'center',
-  // },
   disclaimerContent: {
     flex: 1,
   },
   disclaimerTitle: {
-    fontSize: isSmallScreen ? 12 : 14,
+    fontSize: scaleFont(12, 13, 14),
     fontWeight: '600',
     color: '#b91c1c',
-    marginBottom: 4,
+    marginBottom: scaleSize(4, 5, 6),
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    fontFamily: 'Roboto',
   },
   disclaimerText: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#b91c1c',
-    lineHeight: isSmallScreen ? 14 : 16,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    lineHeight: scaleFont(14, 15, 16),
+    fontFamily: 'Roboto',
   },
 
-  // Copyright
+  // Copyright - Responsive
   copyright: {
-    fontSize: isSmallScreen ? 10 : 12,
+    fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
     textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 6,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
+    marginTop: scaleSize(8, 10, 12),
+    marginBottom: scaleSize(6, 8, 10),
+    fontFamily: 'Roboto',
   },
 });
