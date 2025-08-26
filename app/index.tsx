@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     minHeight: height * 0.4,
     justifyContent: 'center',
     overflow: 'hidden',
-    height: height * 0.6,
+    // height: height * 0.6,
 
   },
   heroBackground: {
