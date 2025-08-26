@@ -146,7 +146,7 @@ export default function LandingPage() {
           <View style={styles.threeCardRow}>
             <View style={styles.statCard}>
               <Text style={styles.statIcon}>🏢</Text>
-              <Text style={styles.statValue}>24</Text>
+              <Text style={styles.statValue}>25</Text>
               <Text style={styles.statLabel}>Organizations</Text>
             </View>
             <View style={styles.statCard}>
@@ -170,7 +170,7 @@ export default function LandingPage() {
               "In its 75-year history, the Fund has never missed a pension payment and has adequate resources to meet obligations in the next 30-40 years.",
               "UN retirees, typically aged 60-65, have an average post-retirement life expectancy of about 24–28 years at the time of retirement.",
               "Your age, contributory service, and salary grade/step determine your pension value.",
-              "You can receive your pension in your home country's currency in your preferred bank account.",
+              "You can receive your pension in your home country's currency.",
               "Your pension is adjusted based on cost of living and paid for life.",
               "After death, benefits transfer to your dependent spouse or eligible survivors.",
               "You can separate at any time you want.",
@@ -217,7 +217,7 @@ export default function LandingPage() {
           {/* Disclaimer Section */}
           <View style={styles.disclaimerContainer}>
             <View style={styles.disclaimerHeader}>
-              <Text style={styles.disclaimerIcon}>⚠️</Text>
+              {/* <Text style={styles.disclaimerIcon}>⚠️</Text> */}
               <View style={styles.disclaimerContent}>
                 <Text style={styles.disclaimerTitle}>Disclaimer</Text>
                 <Text style={styles.disclaimerText}>
@@ -263,11 +263,13 @@ const styles = StyleSheet.create({
   // Enhanced Hero Section with Sky Blue Theme - ORIGINAL KEPT
   heroSection: {
     position: 'relative',
-    paddingVertical: isSmallScreen ? 20 : 50,
+    paddingVertical: isSmallScreen ? 16 : 26,
     paddingHorizontal: 20,
     minHeight: height * 0.4,
     justifyContent: 'center',
     overflow: 'hidden',
+    height: height * 0.6,
+
   },
   heroBackground: {
     position: 'absolute',
@@ -289,7 +291,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginBottom: 32,
   },
   heroLogo: {
     width: 90,
@@ -304,11 +305,13 @@ const styles = StyleSheet.create({
     // marginBottom: 16,
     lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -1.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: -20,
+    marginTop: -40,
+    marginBottom: 4,
+
   },
   aboutBulletContainer: {
     width: 20,
@@ -333,9 +336,9 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 16 : isTablet ? 20 : 18,
     fontWeight: '500',
     textAlign: 'center',
-    // marginBottom: 8,
+    marginBottom: 6,
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   heroDesc: {
     color: '#rgba(62, 88, 112, 0.9)',
@@ -345,13 +348,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingHorizontal: 10,
     maxWidth: 520,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
     fontWeight: '400',
   },
 
   // Enhanced Who Section - ORIGINAL KEPT
   whoSection: {
-    paddingVertical: isSmallScreen ? 16 : 26,
+    // paddingVertical: isSmallScreen ? 16 : 26,
     paddingHorizontal: 20,
     backgroundColor: '#f0f9ff',
   },
@@ -382,7 +385,7 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
     textAlign: 'center',
   },
   whoTitle1: {
@@ -392,14 +395,14 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: isSmallScreen ? 28 : isTablet ? 36 : 32,
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
     textAlign: 'center',
   },
   whoDesc: {
     color: '#6b7280',
     fontSize: isSmallScreen ? 14 : isTablet ? 16 : 15,
     lineHeight: isSmallScreen ? 20 : isTablet ? 22 : 21,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
     fontWeight: '400',
     textAlign:'justify',
   },
@@ -421,7 +424,7 @@ const styles = StyleSheet.create({
     color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: 8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   glanceCardsContainer: {
     flexDirection: 'row',
@@ -454,14 +457,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: isSmallScreen ? 13 : 16,
     marginBottom: 2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   glanceDesc: {
     fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: isSmallScreen ? 12 : 14,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // Visual Gap
@@ -484,13 +487,14 @@ const styles = StyleSheet.create({
     color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: 2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    marginTop: 10,
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   overviewSubtitle: {
     fontSize: isSmallScreen ? 12 : 16,
     color: '#6b7280',
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   overviewNote: {
     fontSize: isSmallScreen ? 10 : 12,
@@ -498,7 +502,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 2,
     marginBottom: 8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // Category Titles
@@ -509,7 +513,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 4,
     marginTop: 6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   membershipTitle: {
     color: '#16a34a',
@@ -522,8 +526,9 @@ const styles = StyleSheet.create({
   twoCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 6,
+    gap: 4,
     marginBottom: 6,
+    marginHorizontal: 30,
   },
   threeCardRow: {
     flexDirection: 'row',
@@ -555,13 +560,13 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 14 : 16,
     fontWeight: 'bold',
     color: '#1d4ed8',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   statLabel: {
     fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // About Cards - INCREASED FONT SIZES TO MATCH HERO/WHO SECTIONS
@@ -594,7 +599,7 @@ const styles = StyleSheet.create({
     color: '#374151',
     lineHeight: isSmallScreen ? 16 : 18,
     flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // CTA Section
@@ -605,7 +610,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 4,
     marginTop: 12,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   ctaSubtitle: {
     fontSize: isSmallScreen ? 12 : 14,
@@ -613,12 +618,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 12,
     paddingHorizontal: 16,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   ctaButton: {
     backgroundColor: '#2563eb',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 80,
+    paddingVertical: 20,
     borderRadius: 20,
     alignSelf: 'center',
     shadowColor: '#000',
@@ -630,9 +635,9 @@ const styles = StyleSheet.create({
   },
   ctaButtonText: {
     color: '#ffffff',
-    fontSize: isSmallScreen ? 12 : 14,
+    fontSize: isSmallScreen ? 18 : 20,
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // Footer Links
@@ -651,12 +656,12 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 12 : 14,
     color: '#2563eb',
     fontWeight: '500',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   footerLinkSmall: {
     fontSize: isSmallScreen ? 10 : 12,
     color: '#6b7280',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // Disclaimer Section
@@ -672,12 +677,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 8,
+
   },
-  disclaimerIcon: {
-    fontSize: 14,
-    color: '#dc2626',
-    marginTop: 2,
-  },
+  // disclaimerIcon: {
+  //   fontSize: 14,
+  //   color: '#dc2626',
+  //   marginTop: 2,
+  //   textAlign: 'center',
+  // },
   disclaimerContent: {
     flex: 1,
   },
@@ -686,13 +693,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#b91c1c',
     marginBottom: 4,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
   disclaimerText: {
     fontSize: isSmallScreen ? 10 : 12,
     color: '#b91c1c',
     lineHeight: isSmallScreen ? 14 : 16,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 
   // Copyright
@@ -702,6 +710,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: Platform.OS === 'ios' ? 'Roboto' : 'Roboto',
   },
 });
