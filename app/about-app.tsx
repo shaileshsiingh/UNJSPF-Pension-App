@@ -72,96 +72,57 @@ export default function CombinedAboutScreen() {
 
   const renderAppContent = () => (
     <View>
-      {/* App Features */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Target size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Key Features Of This Application</Text>
-        </View>
-        <Text style={styles.sectionSubtitle}>Everything you need to estimate and manage your UN pension</Text>
-        
-        <View style={styles.featureList}>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Actuarial calculator for precise pension estimates</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Pension calculator with multiple scenarios</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Essential documents and forms library</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>HR entitlements and benefits overview</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Grants and financial assistance information</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Retirement planning resources and guides</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Financial planning tools and calculators</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Relocation support and guidance</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Community services and support networks</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Offline functionality for privacy protection</Text>
-          </View>
-          <View style={styles.featureItemTight}>
-            <View style={styles.blueDot} />
-            <Text style={styles.featureTextTight}>Regular updates with latest UNJSPF regulations</Text>
-          </View>
-        </View>
+      {/* One App, All Devices */}
+      <View style={styles.conceptSection}>
+        <Text style={styles.conceptTitle}>One App, All Devices</Text>
+        <Text style={styles.conceptContent}>
+          Available on Android, iOS, and web.{'\n'}
+          A single account gives you seamless access to all features across mobile and desktop platforms.{'\n'}
+          Optimized for security, speed, and accessibility.
+        </Text>
       </View>
 
-      {/* App Info */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Info size={24} color="#2563EB" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>About This Application</Text>
-        </View>
-        <Text style={styles.description}>
-          This comprehensive UN Pension application is designed to help current and former UN staff members 
-          navigate their retirement benefits with confidence. Built by a former UN staff member who recently 
-          completed the retirement process, this app provides accurate calculations and guidance based on 
-          official UNJSPF regulations.
+      {/* Pension Fund Benefits */}
+      <View style={styles.conceptSection}>
+        <Text style={styles.conceptTitle}>🔹 Pension Fund Benefits (From UNJSPF)</Text>
+        <Text style={styles.conceptSubtitle}>Your pension, explained and simplified</Text>
+        <Text style={styles.conceptContent}>
+          <Text style={styles.bold}>Actuarial Age Calculator</Text> → Find your actuarial, early, normal, and mandatory separation ages / dates.
+          {'\n'}<Text style={styles.bold}>Pension Calculator</Text> → Estimate your monthly pension using salary and service history.
+          {'\n'}<Text style={styles.bold}>Monthly Pension Snapshot</Text> → View your final monthly pension after cost-of-living and after service health insurance adjustments.
+          {'\n'}<Text style={styles.bold}>Required Documents</Text> → Access a checklist for smooth pension processing.
+        </Text>
+      </View>
+
+      {/* Separation Benefits */}
+      <View style={styles.conceptSection}>
+        <Text style={styles.conceptTitle}>🔹 Separation Benefits (From your employing organization)</Text>
+        <Text style={styles.conceptSubtitle}>Procedures to help claim HR benefits on separation</Text>
+        <Text style={styles.conceptContent}>
+          <Text style={styles.bold}>Relocation Grant</Text> → Financial support for moving your household after separation.
+          {'\n'}<Text style={styles.bold}>Repatriation Grant</Text> → Cash benefit to help you resettle in your home country.
+          {'\n'}<Text style={styles.bold}>Final Payments</Text> → Accrued annual leave and any other dues owed.
+          {'\n'}<Text style={styles.bold}>End-of-Assignment Travel</Text> → Travel entitlements for you and eligible family members.
+        </Text>
+      </View>
+
+      {/* Post-Retirement Resources */}
+      <View style={styles.conceptSection}>
+        <Text style={styles.conceptTitle}>🔹 Post-Retirement Resources</Text>
+        <Text style={styles.conceptSubtitle}>Guidance to plan, settle, and stay connected</Text>
+        <Text style={styles.conceptContent}>
+          <Text style={styles.bold}>Financial Planning Tools</Text> → Strategies to make the most of your pension income.
+          {'\n'}<Text style={styles.bold}>Relocation Support</Text> → Guidance for settling in your retirement destination.
+          {'\n'}<Text style={styles.bold}>Community & Services</Text> → Connect with retirees and local support networks.
         </Text>
       </View>
 
       {/* Privacy & Security */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Shield size={24} color="#059669" strokeWidth={2} />
-          <Text style={styles.sectionTitle}>Privacy & Security</Text>
-        </View>
-        <Text style={styles.description}>
-          Your personal information is stored locally on your device and is not transmitted to external servers. 
+      <View style={styles.conceptSection}>
+        <Text style={styles.conceptTitle}>Privacy & Security</Text>
+        <Text style={styles.conceptContent}>
+          Your personal information is stored locally on your device and is not transmitted to external servers.{'\n'}
           All calculations are performed on your device to ensure maximum privacy and security.
-        </Text>
-      </View>
-
-      {/* Important Note - Only in App Tab */}
-      <View style={styles.importantNote}>
-        <Text style={styles.importantTitle}>Important Note</Text>
-        <Text style={styles.importantText}>
-          This app created by a former UN staff member who recently completed the retirement process. It walks you through key steps to take before retirement and provides benefit estimates based on the official UNJSPF Regulations and Rules.{"\n\n"}
-          While we aim to provide accurate and current guidance, we are not official representatives of the United Nations Joint Staff Pension Fund and cannot speak on its behalf. Do not enter or share your personal information on this app. For official and personalized pension estimates, always refer to the UNJSPF Member Self-Service.{"\n\n"}
-          <Text style={{ fontWeight: 'bold' }}>We're here to help make your retirement journey easier—let's get started!</Text>{"\n"}
-          Your suggestions for improvements are welcome. <Text style={{ color: '#2563EB', textDecorationLine: 'underline' }}>Contact us</Text> (link coming soon).
         </Text>
       </View>
     </View>
@@ -498,53 +459,50 @@ const styles = StyleSheet.create({
     color: '#111827',
     marginLeft: 12,
   },
-  // Updated styles with reduced spacing:
-subSectionTitle: {
-  fontSize: 16,
-  fontWeight: '600',
-  color: '#0EA5E9',
-  marginTop: 12,
-  marginBottom: 4,
-  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-},
-
-// ROA Table Styles - Compact
-roaTable: {
-  backgroundColor: '#ffffff',
-  borderRadius: 8,
-  marginVertical: 8,
-  borderWidth: 1,
-  borderColor: '#e5e7eb',
-  overflow: 'hidden',
-},
-roaHeaderRow: {
-  flexDirection: 'row',
-  backgroundColor: '#f8fafc',
-  paddingVertical: 8,
-  paddingHorizontal: 6,
-},
-roaHeaderText: {
-  flex: 1,
-  fontSize: 13,
-  fontWeight: '600',
-  color: '#0EA5E9',
-  textAlign: 'center',
-  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-},
-roaRow: {
-  flexDirection: 'row',
-  paddingVertical: 6,
-  paddingHorizontal: 6,
-  borderTopWidth: 1,
-  borderTopColor: '#e5e7eb',
-},
-roaCell: {
-  flex: 1,
-  fontSize: 12,
-  color: '#374151',
-  textAlign: 'center',
-  fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
-},
+  subSectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#0EA5E9',
+    marginTop: 12,
+    marginBottom: 4,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  roaTable: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    overflow: 'hidden',
+  },
+  roaHeaderRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f8fafc',
+    paddingVertical: 8,
+    paddingHorizontal: 6,
+  },
+  roaHeaderText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#0EA5E9',
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  roaRow: {
+    flexDirection: 'row',
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+  },
+  roaCell: {
+    flex: 1,
+    fontSize: 12,
+    color: '#374151',
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
   description: {
     fontSize: 16,
     color: '#6B7280',
@@ -766,5 +724,29 @@ roaCell: {
     fontSize: 16,
     color: '#6B7280',
     marginBottom: 16,
+  },
+  conceptSection: {
+    backgroundColor: '#F7F7F7',
+    padding: 16,
+    borderRadius: 12,
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  conceptTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  conceptSubtitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 8,
+  },
+  conceptContent: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
   },
 });
