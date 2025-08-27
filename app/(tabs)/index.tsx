@@ -237,13 +237,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerLogo: {
-    width: 120,
-    height: 120,
+    width: 80,
+    height: 80,
     marginBottom: 6,   // a bit more spacing from the title
   },
    heroTitle: {
       color: '#0072CE',
-      fontSize:  24,
+      fontSize:  20,
       fontWeight: '600',
       textAlign: 'center',
       marginBottom: 16,
@@ -253,10 +253,10 @@ const styles = StyleSheet.create({
       textShadowColor: 'rgba(0, 0, 0, 0.3)',
       textShadowOffset: { width: 0, height: 2 },
       textShadowRadius: 8,
-      marginTop:-35,
+      marginTop:-30,
     },  
   welcomeTitle: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: '800',
     color: '#111827',
     // marginTop: 16,
