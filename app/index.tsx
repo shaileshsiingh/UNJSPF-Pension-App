@@ -698,6 +698,7 @@ const styles = StyleSheet.create({
     color: '#b91c1c',
     lineHeight: scaleFont(14, 15, 16),
     fontFamily: 'Roboto',
+    textAlign: 'justify',
   },
 
   // Copyright - Responsive
