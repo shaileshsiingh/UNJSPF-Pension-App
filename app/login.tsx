@@ -159,12 +159,12 @@ export default function LoginScreen() {
                 </TouchableOpacity>
               </View>
               <Text style={styles.appName}>MyUNPension</Text>
-              <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text>
+              {/* <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text> */}
             </View>
 
             {/* Login Card */}
             <View style={styles.card}>
-              <Text style={styles.title}>Welcome Back</Text>
+              {/* <Text style={styles.title}>Welcome Back</Text> */}
               <Text style={styles.subtitle}>Sign in to continue</Text>
               
               <View style={styles.inputContainer}>
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -30,
+    marginTop: -25,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -296,7 +296,8 @@ const styles = StyleSheet.create({
 
   // Login Card - Restored simpler styling
   card: {
-    width: isSmallScreen ? width - 40 : 340,
+    width: isSmallScreen ? width - 40 : 300,
+    height: isSmallScreen ? height - 40 : 340,
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -309,13 +310,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
     alignSelf: 'center',
+    marginTop: -25,
   },
   title: {
     fontSize: isSmallScreen ? 18 : 28,
     fontWeight: '800',
     marginBottom: 8,
     marginTop: -12,
-    color: '#0EA5E9', // Match the blue theme
+    color: 'rgb(29, 78, 216)',
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',

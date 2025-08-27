@@ -220,7 +220,7 @@ export default function SignupScreen() {
                                </TouchableOpacity>
               </View>
               <Text style={styles.appName}>MyUNPension</Text>
-              <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text>
+              {/* <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text> */}
             </View>
 
             {/* Signup Card - keeping existing styling */}
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -30,
+    marginTop: -25,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',

@@ -100,7 +100,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>One App, All Devices</Text>
         <Text style={styles.uniformContent}>
-          Available on Android, iOS, and web.{'\n'}
+         <Text style={styles.uniformSubtitle}>Available on Android, iOS, and web.</Text>{'\n'}
           A single account gives you seamless access to all features across mobile and desktop platforms.{'\n'}
           Optimized for security, speed, and accessibility.
         </Text>
@@ -108,7 +108,7 @@ export default function CombinedAboutScreen() {
 
       {/* Pension Fund Benefits */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Pension Fund Benefits (From UNJSPF)</Text>
+        <Text style={styles.uniformTitle}>Benefits from UNJSPF</Text>
         <Text style={styles.uniformSubtitle}>Your pension, explained and simplified</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Actuarial Age Calculator</Text> - Find your actuarial, early, normal, and mandatory separation ages / dates.
@@ -120,7 +120,7 @@ export default function CombinedAboutScreen() {
 
       {/* Separation Benefits */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Separation Benefits (From your employing organization)</Text>
+        <Text style={styles.uniformTitle}>Benefits from your employing organization</Text>
         <Text style={styles.uniformSubtitle}>Procedures to help claim HR benefits on separation</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Relocation Grant</Text> - Financial support for moving your household after separation.
@@ -143,8 +143,8 @@ export default function CombinedAboutScreen() {
 
       {/* Privacy & Security */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Privacy & Security</Text>
-        <Text style={styles.uniformContent}>
+        <Text style={styles.uniformTitle1}>Privacy & Security</Text>
+        <Text style={styles.uniformContent1}>
           Your personal information is stored locally on your device and is not transmitted to external servers.{'\n'}
           All calculations are performed on your device to ensure maximum privacy and security.
         </Text>
@@ -158,7 +158,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformMainTitle}>Key Pension Concepts</Text>
         
         {/* A. Retirement Ages */}
-        <Text style={styles.uniformSectionTitle}>A. Retirement Ages</Text>
+        <Text style={styles.uniformSectionTitle}>Retirement Ages</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
           {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
@@ -173,7 +173,7 @@ export default function CombinedAboutScreen() {
 
       {/* B. Service & Eligibility */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformSectionTitle}>B. Service & Eligibility</Text>
+        <Text style={styles.uniformSectionTitle}>Service & Eligibility</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
           {'\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
@@ -182,7 +182,7 @@ export default function CombinedAboutScreen() {
 
       {/* C. Pension Calculation Factors */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformSectionTitle}>C. Pension Calculation Factors</Text>
+        <Text style={styles.uniformSectionTitle}>Pension Calculation Factors</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Final Average Remuneration (FAR):</Text> The average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service.
           {'\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> The percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
@@ -218,16 +218,19 @@ export default function CombinedAboutScreen() {
         </View>
 
         <Text style={styles.uniformContent}>
+        <Text style={styles.italic}>
           <Text style={styles.bold}>Notes:</Text>
+         
           {'\n'}• Maximum ROA = 70% of FAR. Reached after 38.75 years of CS.
           {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
+          </Text>
           {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement.
         </Text>
       </View>
 
       {/* D. Benefit Payment Options */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformSectionTitle}>D. Benefit Payment Options</Text>
+        <Text style={styles.uniformSectionTitle}>Benefit Payment Options</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement.
           {'\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
@@ -415,7 +418,10 @@ export default function CombinedAboutScreen() {
         </TouchableOpacity>
         <Text style={styles.title}>Quick Tools</Text>
       </View>
+<View >
+<Text style={styles.title4}>Benefits Estimator Guide</Text>
 
+</View>
       {renderTabButtons()}
 
       <View style={styles.content}>
@@ -442,10 +448,18 @@ const styles = StyleSheet.create({
     marginRight: scaleSize(16),
   },
   title: {
-    fontSize: scaleFont(20),
+    fontSize: scaleFont(16),
     fontWeight: '700',
     color: '#111827',
     fontFamily: 'Roboto',
+  },
+  title4: {
+    fontSize: scaleFont(18),
+    fontWeight: '700',
+    color: '#111827',
+    fontFamily: 'Roboto',
+    paddingVertical: scaleSize(8),
+    paddingHorizontal: scaleSize(8),
   },
   tabContainer: {
     flexDirection: 'row',
@@ -503,10 +517,17 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(6),
     fontFamily: 'Roboto',
   },
+  uniformTitle1: {
+    fontSize: scaleFont(14),
+    fontWeight: '600',
+    color: 'red',
+    marginBottom: scaleSize(6),
+    fontFamily: 'Roboto',
+  },
   uniformSectionTitle: {
     fontSize: scaleFont(14),
     fontWeight: '600',
-    color: '#2563EB',
+    color: 'black',
     marginTop: scaleSize(8),
     marginBottom: scaleSize(4),
     fontFamily: 'Roboto',
@@ -516,16 +537,30 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     marginBottom: scaleSize(6),
     fontFamily: 'Roboto',
+    fontStyle:'italic'
+  },
+  bold: {
+    fontWeight: '600',
+    color: '#374151',
+    marginTop:10,
+  },
+  italic: {
+    fontStyle:'italic',
+    fontSize:scaleFont(10)
   },
   uniformContent: {
     fontSize: scaleFont(12),
     color: '#6B7280',
     lineHeight: scaleFont(16),
     fontFamily: 'Roboto',
+    // fontStyle:'italic'
   },
-  bold: {
-    fontWeight: '600',
-    color: '#374151',
+  uniformContent1: {
+    fontSize: scaleFont(12),
+    color: 'red',
+    lineHeight: scaleFont(16),
+    fontFamily: 'Roboto',
+    // fontStyle:'italic'
   },
   
   // ROA Table - Responsive

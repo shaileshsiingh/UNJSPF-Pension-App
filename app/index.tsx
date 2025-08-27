@@ -105,33 +105,36 @@ export default function LandingPage() {
             
              {/* Who is MyUNPension for? Section */}
         <View style={styles.whoSection}>
-          <View style={styles.whoCard}>
+          <View style={styles.whoCard1}>
             <View style={styles.whoHeader}>
               <Text style={styles.whoTitle1}>Who is
               <Text style={styles.whoTitle}> MyUNPension </Text>for?</Text>
             </View>
             <Text style={styles.whoDesc}>
-            Whether you are new to the UN, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>{'\n'}MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
+            Whether you are new to the UN, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
             </Text>
-          </View>
+            </View>
+          
         </View>
           </View>
         </Animated.View>
 
         {/* App at a Glance Section */}
+        <View style={styles.whoCard}>
+
         <View style={styles.appGlanceSection}>
           <Text style={styles.sectionTitleCenter}>App at a Glance</Text>
           <View style={styles.glanceCardsContainer}>
             {[
               {
                 icon: "📊",
-                title: "Pension Fund Benefits (From UNJSPF)",
+                title: "Bnefits from UNJSPF",
                 desc: "Your pension, explained and simplified"
               },
               {
                 icon: "✈️",
-                title: "Separation Benefits (From Your Employing Organization)",
-                desc: "Smooth transition after UN service"
+                title: "Benefits from Your Employing Organization",
+                desc: "Your HR entitlements"
               },
               {
                 icon: "👥",
@@ -147,16 +150,18 @@ export default function LandingPage() {
             ))}
           </View>
         </View>
-
+        </View>
         {/* Visual Gap */}
         <View style={styles.visualGap} />
 
         {/* UNJSPF Overview Section */}
+        <View style={styles.whoCard}>
         <View style={styles.overviewSection}>
           {/* Title */}
+
           <Text style={styles.overviewMainTitle}>United Nations Joint Staff Pension Fund</Text>
-          <Text style={styles.overviewSubtitle}>Key Facts at a Glance</Text>
-          <Text style={styles.overviewNote}>Figures based on latest actuarial valuation (2024)</Text>
+          <Text style={styles.overviewSubtitle}>Key facts at a glance</Text>
+          <Text style={styles.overviewNote}>Figures based on latest actuarial valuation (2025)</Text>
 
           {/* Financials */}
           <Text style={styles.categoryTitle}>Financials</Text>
@@ -192,6 +197,8 @@ export default function LandingPage() {
               <Text style={styles.statLabel}>Retirees</Text>
             </View>
           </View>
+          <View/ >
+
 
           {/* About the Fund */}
           <Text style={[styles.categoryTitle, styles.aboutTitle]}>About the Fund</Text>
@@ -209,7 +216,7 @@ export default function LandingPage() {
               "Your pension is managed by a globally trusted institution."
             ].map((point, idx) => (
               <View key={idx} style={styles.aboutCard}>
-                <Text style={styles.aboutIcon}>ℹ️</Text>
+                {/* <Text style={styles.aboutIcon}>ℹ️</Text> */}
                 <Text style={styles.aboutText}>{point}</Text>
               </View>
             ))}
@@ -252,7 +259,7 @@ export default function LandingPage() {
               <View style={styles.disclaimerContent}>
                 <Text style={styles.disclaimerTitle}>Disclaimer</Text>
                 <Text style={styles.disclaimerText}>
-                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the United Nations Joint Staff Pension Fund (UNJSPF) or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
+                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the United Nations Joint Staff Pension Fund or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
                 </Text>
               </View>
             </View>
@@ -262,6 +269,7 @@ export default function LandingPage() {
           <Text style={styles.copyright}>
             2025 MyUNPension. All Rights Reserved.
           </Text>
+        </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -317,14 +325,14 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: '#0072CE',
+    color: 'rgb(29, 78, 216)',
     fontSize: scaleFont(20, 24, 28),
     fontWeight: '600',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -1.2,
     fontFamily: 'Roboto',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
     marginTop: scaleSize(-30, -35, -30),
@@ -358,7 +366,22 @@ const styles = StyleSheet.create({
   },
   whoCard: {
     maxWidth: isTablet ? 700 : 600,
-    width: '100%',
+    width: '111%',
+    backgroundColor: '#ffffff',
+    borderRadius: scaleSize(50, 50, 50),
+    padding: scaleSize(20, 28, 32),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(14, 165, 233, 0.1)',
+    alignSelf: 'center',
+  },
+  whoCard1: {
+    maxWidth: isTablet ? 700 : 600,
+    width: '131%',
     backgroundColor: '#ffffff',
     borderRadius: scaleSize(20, 24, 28),
     padding: scaleSize(20, 28, 32),
@@ -371,6 +394,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(14, 165, 233, 0.1)',
     alignSelf: 'center',
   },
+ 
   whoHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -379,7 +403,7 @@ const styles = StyleSheet.create({
   whoTitle: {
     fontSize: scaleFont(20, 24, 28),
     fontWeight: '800',
-    color: '#0072CE',
+    color: 'rgb(29, 78, 216)',
     flex: 1,
     lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -0.8,
@@ -492,17 +516,20 @@ const styles = StyleSheet.create({
   },
   overviewSubtitle: {
     fontSize: scaleFont(12, 14, 16),
-    color: '#6b7280',
+    color: 'black',
     textAlign: 'center',
     fontFamily: 'Roboto',
+    fontWeight: '600',
+
   },
   overviewNote: {
     fontSize: scaleFont(10, 11, 12),
-    color: '#9ca3af',
+    color: 'black',
     textAlign: 'center',
     marginTop: scaleSize(2, 3, 4),
     marginBottom: scaleSize(8, 10, 12),
     fontFamily: 'Roboto',
+    fontWeight: '600',
   },
 
   // Category Titles
@@ -568,6 +595,7 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     textAlign: 'center',
     fontFamily: 'Roboto',
+    fontWeight: '600',
   },
 
   // About Cards - Responsive
@@ -601,6 +629,7 @@ const styles = StyleSheet.create({
     lineHeight: scaleFont(16, 17, 18),
     flex: 1,
     fontFamily: 'Roboto',
+    textAlign:'justify'
   },
 
   // CTA Section - Responsive

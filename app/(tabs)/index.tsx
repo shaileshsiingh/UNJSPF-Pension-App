@@ -106,7 +106,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Calculator size={32} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension Fund Benefits(from UNJSPF)</Text>
+              <Text style={styles.toolTitle}>Pension Fund Benefits</Text>
               <Text style={styles.toolDescription}>
                 Find your retirement age options.
               </Text>
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
       marginTop:-30,
     },  
   welcomeTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: '800',
     color: '#111827',
     // marginTop: 16,
@@ -332,6 +332,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 4,
+    textAlign: 'center',
   },
   primaryButtonSubtext: {
     fontSize: 14,
