@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: isXSmallScreen ? (width - getHorizontalPadding() * 2 - getCardGap() * 2) / 2 : 
            (width - getHorizontalPadding() * 2 - getCardGap() * 2) / 3,
-    minWidth: isXSmallScreen ? 140 : 120,
+    minWidth: isXSmallScreen ? 140 : 109,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
