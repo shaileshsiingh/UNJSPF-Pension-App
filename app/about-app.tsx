@@ -382,7 +382,7 @@ export default function CombinedAboutScreen() {
         >
           <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
         </TouchableOpacity>
-        <Text style={styles.title}>About MyUNPension</Text>
+        <Text style={styles.title}>Quick Tools</Text>
       </View>
 
       {renderTabButtons()}
