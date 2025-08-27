@@ -299,84 +299,91 @@ export default function CombinedAboutScreen() {
   const renderScenariosContent = () => (
     <View>
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformMainTitle}>Benefits Scenarios & Options</Text>
+        <Text style={styles.uniformMainTitle}>Separation Scenarios & Options</Text>
       </View>
 
-      {/* Scenario 1: Normal Retirement */}
+      {/* Scenario 1: Less than 5 years of Contributory Service */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Scenario 1: Normal Retirement (Age 65)</Text>
+        <Text style={styles.uniformTitle}>Less than 5 years of Contributory Service: No Pension Rights</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Eligibility:</Text> Staff with 5+ years of contributory service
-          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
-          {'\n'}• Full periodic pension (no reduction)
-          {'\n'}• Optional lump sum (up to 1/3 of pension)
-          {'\n'}• Survivor benefits for eligible dependents
-          {'\n\n'}<Text style={styles.bold}>Calculation:</Text> Annual Pension = FAR × ROA × Years of CS
+          <Text style={styles.bold}>You have 2 options:</Text>
+          {'\n'}<Text style={styles.bold}>Option 1: Withdrawal Settlement (Article 31)</Text>
+          {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
+          {'\n'}This is a final decision—no more pension from the Fund after this. No child benefit
+          {'\n'}is paid under this option.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 2: Deferment or Benefit for 36 Months (Article 32)</Text>
+          {'\n'}You can delay taking your withdrawal settlement for up to 36 months. If you go
+          {'\n'}back to work with the same pension plan within those 36 months, your
+          {'\n'}membership is treated as continuous (as long as you haven't taken the money). If
+          {'\n'}you don't go back to work, you must submit your payment instructions before the
+          {'\n'}36 months end. If you do nothing by the end of 36 months, the Fund will
+          {'\n'}automatically give you a Withdrawal Settlement.
         </Text>
       </View>
 
-      {/* Scenario 2: Early Retirement */}
+      {/* Scenario 2: 5+ Years of Contributory Service Before Early Retirement Age */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Scenario 2: Early Retirement (Age 60-64)</Text>
+        <Text style={styles.uniformTitle}>5+ Years of Contributory Service Before Early Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Eligibility:</Text> Staff with 25+ years of contributory service
-          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
-          {'\n'}• Reduced periodic pension
-          {'\n'}• Optional lump sum (up to 1/3 of reduced pension)
-          {'\n'}• Survivor benefits for eligible dependents
-          {'\n\n'}<Text style={styles.bold}>Reduction Factors:</Text>
-          {'\n'}• Age 60: Up to 25% reduction
-          {'\n'}• Age 61: Up to 18.75% reduction
-          {'\n'}• Age 62: Up to 12.5% reduction
-          {'\n'}• Age 63: Up to 6.25% reduction
-          {'\n'}• Age 64: Up to 3% reduction
+          <Text style={styles.bold}>You have 3 options:</Text>
+          {'\n'}<Text style={styles.bold}>Option 1: Deferred Retirement Benefit (Article 30)</Text>
+          {'\n'}Receive your benefit at normal retirement age (or earlier with a reduction). This
+          {'\n'}gives you a monthly pension when you're older. No child benefit is paid under this
+          {'\n'}option.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 2: Withdrawal Settlement (Article 31)</Text>
+          {'\n'}One-time payment equal to your own contributions plus interest. You give up all
+          {'\n'}rights to future pension benefits. This is a final decision—no more pension from
+          {'\n'}the Fund after this.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 3: Deferment of Choice of Benefit for 36 Months (Article 32)</Text>
+          {'\n'}Delay your decision (between Option 1 and 2) for up to 36 months from when you
+          {'\n'}leave your job. If you go back to work with the same pension plan within those 36
+          {'\n'}months, your membership is treated as continuous. If you do nothing by the end of
+          {'\n'}36 months, the Fund will automatically give you a Deferred Retirement Benefit.
         </Text>
       </View>
 
-      {/* Scenario 3: Deferred Retirement */}
+      {/* Scenario 3: 5+ Years of Contributory Service After Early Retirement Age but Before Normal Retirement Age */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Scenario 3: Deferred Retirement</Text>
+        <Text style={styles.uniformTitle}>5+ Years of Contributory Service After Early Retirement Age but Before Normal Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Eligibility:</Text> Staff with 5+ years of contributory service who separate before retirement age
-          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
-          {'\n'}• Pension payable at ERA (with reduction) or NRA (full pension)
-          {'\n'}• No lump sum option
-          {'\n'}• Survivor benefits during deferral period
-          {'\n\n'}<Text style={styles.bold}>Key Features:</Text>
-          {'\n'}• Pension amount frozen at separation
-          {'\n'}• No cost-of-living adjustments during deferral
-          {'\n'}• Can convert to withdrawal settlement before age 60
+          <Text style={styles.bold}>You have 4 options:</Text>
+          {'\n'}<Text style={styles.bold}>Option 1: Early Retirement Benefit (Article 29)</Text>
+          {'\n'}Start receiving monthly payments before reaching normal retirement age. These
+          {'\n'}payments may be reduced since you retire early. You can choose to commute
+          {'\n'}(convert) up to one-third of the pension into a lump sum (one-time payment). The
+          {'\n'}rest will be paid as monthly pension for life.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 2: Deferred Retirement Benefit (Article 30)</Text>
+          {'\n'}Delay your pension until you reach normal retirement age (or take it earlier with
+          {'\n'}reductions). No child benefit is included with this option.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 3: Withdrawal Settlement (Article 31)</Text>
+          {'\n'}One-time payment equal to your own contributions plus interest. You give up all
+          {'\n'}rights to any future rights to pension benefits. This is a final decision—no more
+          {'\n'}pension from the Fund after this.
+          
+          {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
+          {'\n'}You have up to 36 months to choose between the above 3 options. If you go
+          {'\n'}back to work with the same pension plan within those 36 months, your service
+          {'\n'}as continuous. If you do nothing by the end of 36 months, the Fund will
+          {'\n'}automatically give you a Deferred Retirement Benefit (Option 2).
         </Text>
       </View>
 
-      {/* Scenario 4: Withdrawal Settlement */}
+      {/* Scenario 4: 5+ Years of Contributory Service at Normal Retirement Age */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Scenario 4: Withdrawal Settlement</Text>
+        <Text style={styles.uniformTitle}>5+ Years of Contributory Service at Normal Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Eligibility:</Text> All staff upon separation (mandatory for CS {'<'} 5 years)
-          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
-          {'\n'}• Lump sum payment of contributions + interest + bonus
-          {'\n'}• Immediate payment upon separation
-          {'\n'}• No future pension rights
-          {'\n\n'}<Text style={styles.bold}>Bonus Structure:</Text>
-          {'\n'}• CS {'<'} 5 years: No bonus
-          {'\n'}• 5-15 years: 10% per year after year 5 (max 100%)
-          {'\n'}• CS {'>'} 15 years: 100% bonus
-        </Text>
-      </View>
-
-      {/* Scenario 5: Disability Benefits */}
-      <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Scenario 5: Disability Benefits</Text>
-        <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Eligibility:</Text> Staff who become disabled while in service
-          {'\n\n'}<Text style={styles.bold}>Benefits Available:</Text>
-          {'\n'}• Immediate pension regardless of age or service
-          {'\n'}• Minimum pension guarantee
-          {'\n'}• Survivor benefits for dependents
-          {'\n\n'}<Text style={styles.bold}>Calculation:</Text>
-          {'\n'}• Based on actual service and projected service to NRA
-          {'\n'}• Subject to medical certification
+          <Text style={styles.bold}>Your only option:</Text>
+          {'\n'}<Text style={styles.bold}>Option 1: Normal Retirement Benefit (Article 28)</Text>
+          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for
+          {'\n'}life. You can choose to commute (convert) up to one-third of this benefit into a
+          {'\n'}lump sum (one-time payment). The rest will be paid as monthly income for the rest
+          {'\n'}of your life. If you prefer, you can take the full benefit as monthly payments all
+          {'\n'}along with.
         </Text>
       </View>
     </View>
