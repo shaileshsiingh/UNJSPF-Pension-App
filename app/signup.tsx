@@ -338,16 +338,16 @@ const styles = StyleSheet.create({
     // marginBottom: 32,
   },
   heroLogo: {
-    width: 120,
-    height: 120,
+    width: 80,
+    height: 80,
     marginBottom: -20,
   },
   appName: {
-    fontSize: isSmallScreen ? 18 : 28,
+    fontSize: isSmallScreen ? 18 : 20,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -12,
+    marginTop: -30,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
