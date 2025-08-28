@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   primaryButtonText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 4,

@@ -161,11 +161,11 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformSectionTitle}>Retirement Ages</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
-          {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
+          {'\n'} {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
           {'\n'}• Joined before 1990 = NRA 60
           {'\n'}• Joined 1990-2013 = NRA 62
           {'\n'}• Joined 2014 or later = NRA 65
-          {'\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
+          {'\n'} {'\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
           {'\n'}• Joined before 2014 = ERA 55
           {'\n'}• Joined 2014 or later = ERA 58
         </Text>
@@ -176,7 +176,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformSectionTitle}>Service & Eligibility</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Contributory Service (CS):</Text> The total duration during which you contributed to the UNJSPF while in pay status.
-          {'\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
+          {'\n'} {'\n'}<Text style={styles.bold}>Vested Pension Rights:</Text> Earned after 5 years of CS. Grants access to periodic retirement benefits.
         </Text>
       </View>
 
@@ -185,7 +185,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformSectionTitle}>Pension Calculation Factors</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Final Average Remuneration (FAR):</Text> The average of your highest pensionable salaries over 36 consecutive months within the last 5 years of service.
-          {'\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> The percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
+          {'\n'} {'\n'}<Text style={styles.bold}>Rate of Accumulation (ROA):</Text> The percentage of your FAR that you earn as annual pension credit for each year of CS to the UNJSPF.
         </Text>
 
         {/* ROA Table */}
@@ -223,8 +223,8 @@ export default function CombinedAboutScreen() {
          
           {'\n'}• Maximum ROA = 70% of FAR. Reached after 38.75 years of CS.
           {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
-          </Text>
-          {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement.
+            </Text>
+          {'\n'} {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement.
         </Text>
       </View>
 
@@ -233,9 +233,9 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformSectionTitle}>Benefit Payment Options</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Lump Sum:</Text> A one-time, optional payment (up to 1/3 of pension) at retirement under Normal or Early Retirement.
-          {'\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
-          {'\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
-          {'\n'}<Text style={styles.bold}>Two-Track Estimate:</Text> A tool in MSS for retirees (post-Aug 2015) that compares pension values in USD vs. local currency using a 36-month average exchange rate.
+          {'\n'} {'\n'}<Text style={styles.bold}>Withdrawal Settlement:</Text> A final lump-sum payout of your own contributions plus interest. Ends your rights with the Fund.
+          {'\n'} {'\n'}<Text style={styles.bold}>Deferred Retirement Benefit:</Text> A future pension you elect to receive later, typically upon reaching ERA or NRA.
+          {'\n'} {'\n'}<Text style={styles.bold}>Two-Track Estimate:</Text> A tool in MSS for retirees (post-Aug 2015) that compares pension values in USD vs. local currency using a 36-month average exchange rate.
         </Text>
       </View>
     </View>
@@ -243,57 +243,51 @@ export default function CombinedAboutScreen() {
 
   const renderFormulasContent = () => (
     <View>
+      {/* Withdrawal Settlement */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformMainTitle}>Key Formulas Applied</Text>
-      </View>
-
-      {/* 1. Withdrawal Settlement Formula */}
-      <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>1. Withdrawal Settlement Formula (Article 31)</Text>
+        <Text style={styles.uniformTitle}>Withdrawal Settlement</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Applicable to all staff separating from service (mandatory for CS {'<'} 5 years; optional for CS {'>='} 5 years)</Text>
-          {'\n\n'}For CS {'<'} 5 years = Own Contributions + Compound Interest (3.25% per year) + No Bonus
-          {'\n\n'}For CS {'>='} 5 years = Own Contributions + Compound Interest (3.25% per year) + Bonus (if CS {'>='} 5 years)
-          {'\n\n'}• 5 ≤ CS {'<='} 15 years: + 10% per year of CS after year 5, up to 100%
-          {'\n'}• CS {'>'} 15 years: + 100% bonus (maximum allowed)
+          <Text style={styles.bold}>CS &lt; 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>No Bonus</Text>
+          {'\n'}<Text style={styles.bold}>CS ≥ 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>Bonus</Text>
+          {'\n'}<Text style={styles.bold}>5-15 yrs</Text> = +10% per year after year 5 (max 100%)
+          {'\n'}<Text style={styles.bold}>15 yrs</Text> = +100% Bonus
         </Text>
       </View>
 
-      {/* 2. Periodic Retirement Benefit Formula */}
+      {/* Periodic Retirement Benefit */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>2. Periodic Retirement Benefit Formula (Annual Pension Amount)</Text>
+        <Text style={styles.uniformTitle}>Periodic Retirement Benefit (Annual Pension)</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Applicable to Staff with CS ≥ 5 years, opting for Normal, Early, or Deferred Retirement Benefit:</Text>
-          {'\n\n'}Annual Pension = FAR × ROA × Years of CS
-          {'\n\n'}Notes: FAR is typically based on the average pensionable remuneration over the highest 36 consecutive months in the last 5 years of CS.
+          <Text style={styles.bold}>Annual Pension = FAR × ROA × Years of CS</Text>
+          {'\n'}{'\n'}<Text style={styles.bold}>FAR</Text> = Final Average Remuneration (avg. of top 36 months)
+          {'\n'}<Text style={styles.bold}>ROA</Text> = Rate of Accumulation
+          {'\n'}<Text style={styles.bold}>CS</Text> = Contributory Service
         </Text>
       </View>
 
-      {/* 3. Early Retirement Reduction */}
+      {/* Early Retirement Reduction */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>3. Early Retirement Reduction (Applied to Periodic Benefit)</Text>
+        <Text style={styles.uniformTitle}>Early Retirement Reduction</Text>
         <Text style={styles.uniformContent}>
-          Reduced Pension = Annual Pension × (1 - Reduction Factor)
-          {'\n\n'}The Reduction Factor is determined based on how many years/months before NRA the benefit begins.
-          {'\n\n'}The reduction typically ranges between 3% to 6% per year depending on actuarial rules at the time of entry.
+          <Text style={styles.bold}>Reduced Pension = Annual Pension × (1 - Reduction Factor)</Text>
+          {'\n'}{'\n'}Reduction Factor = 3%-6% per year before NRA
         </Text>
       </View>
 
-      {/* 4. Deferred Retirement Benefit */}
+      {/* Deferred Retirement Benefit */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>4. Deferred Retirement Benefit</Text>
+        <Text style={styles.uniformTitle}>Deferred Retirement Benefit</Text>
         <Text style={styles.uniformContent}>
-          No additional formula — same as periodic pension, but deferred until ERA or NRA
-          {'\n\n'}• No actuarial reduction if collected at NRA
-          {'\n'}• Payable at choice of staff at ERA or NRA
+          Same formula as Annual Pension, Payable at ERA or NRA
+          {'\n'}No reduction if collected at NRA
         </Text>
       </View>
 
-      {/* 5. Lump Sum */}
+      {/* Lump Sum */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>5. Lump Sum</Text>
+        <Text style={styles.uniformTitle}>Lump Sum (Commutation)</Text>
         <Text style={styles.uniformContent}>
-          Lump Sum = 1/3 × Annual Pension × Commutation Factor
+          <Text style={styles.bold}>Lump Sum = ⅓ × Annual Pension × Commutation Factor</Text>
         </Text>
       </View>
     </View>
@@ -460,6 +454,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     paddingVertical: scaleSize(8),
     paddingHorizontal: scaleSize(8),
+    textAlign: 'center',
   },
   tabContainer: {
     flexDirection: 'row',
