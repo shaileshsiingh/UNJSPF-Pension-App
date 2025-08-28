@@ -245,20 +245,21 @@ export default function CombinedAboutScreen() {
     <View>
       {/* Withdrawal Settlement */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Withdrawal Settlement</Text>
+        <Text style={styles.uniformTitle}>Withdrawal Settlement With CS</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>CS &lt; 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>No Bonus</Text>
           {'\n'}<Text style={styles.bold}>CS ≥ 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>Bonus</Text>
-          {'\n'}<Text style={styles.bold}>5-15 yrs</Text> = +10% per year after year 5 (max 100%)
-          {'\n'}<Text style={styles.bold}>15 yrs</Text> = +100% Bonus
+          {'\n'}<Text style={styles.bold}>5-15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +10% per year after year 5 (max 100%)
+          {'\n'}<Text style={styles.bold}>≥ 15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +100%
         </Text>
       </View>
 
       {/* Periodic Retirement Benefit */}
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformTitle}>Periodic Retirement Benefit (Annual Pension)</Text>
+        <Text style={styles.uniformTitle}>Periodic Retirement Benefits</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Annual Pension = FAR × ROA × Years of CS</Text>
+          {'\n'}<Text style={styles.bold}>Monthly Pension = Annual Pension / 12 + COLA - ASHI Premium</Text>
           {'\n'}{'\n'}<Text style={styles.bold}>FAR</Text> = Final Average Remuneration (avg. of top 36 months)
           {'\n'}<Text style={styles.bold}>ROA</Text> = Rate of Accumulation
           {'\n'}<Text style={styles.bold}>CS</Text> = Contributory Service
@@ -270,7 +271,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformTitle}>Early Retirement Reduction</Text>
         <Text style={styles.uniformContent}>
           <Text style={styles.bold}>Reduced Pension = Annual Pension × (1 - Reduction Factor)</Text>
-          {'\n'}{'\n'}Reduction Factor = 3%-6% per year before NRA
+          {'\n'}Reduction Factor = 3%-6% per year before NRA
         </Text>
       </View>
 

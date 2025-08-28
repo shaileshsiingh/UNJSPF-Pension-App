@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
       fontSize:  20,
       fontWeight: '600',
       textAlign: 'center',
-      marginBottom: 16,
+      marginBottom: 2,
       lineHeight: 40,
       letterSpacing: -1.2,
       fontFamily: 'System',
