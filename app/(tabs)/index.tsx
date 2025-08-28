@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   welcomeSubtitle: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#111827',
     textAlign: 'center',
     lineHeight: 16,
