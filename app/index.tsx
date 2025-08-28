@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   sectionTitleCenter: {
-    fontSize: scaleFont(16, 20, 24),
+    fontSize: scaleFont(20, 20, 20),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
