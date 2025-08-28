@@ -130,6 +130,30 @@ export default function LoginScreen() {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+      showToast('Google sign-in successful!');
+      router.replace('/');
+    } catch (e) {
+      console.error('Google sign-in error:', e);
+      let errorMessage = 'Google sign-in failed. Please try again.';
+      
+      if (e.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-in was cancelled';
+      } else if (e.code === 'auth/popup-blocked') {
+        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+      
+      showToast(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Clean gradient background */}
@@ -208,8 +232,7 @@ export default function LoginScreen() {
                 <Text style={styles.linkText}>Don't have an account? Sign up</Text>
               </Pressable>
 
-              {/* Social Login Options - Commented out for now */}
-              {/* 
+              {/* Social Login Options */}
               <View style={styles.divider}>
                 <View style={styles.dividerLine} />
                 <Text style={styles.dividerText}>or</Text>
@@ -217,17 +240,21 @@ export default function LoginScreen() {
               </View>
 
               <View style={styles.socialButtons}>
-                <Pressable style={styles.socialButton} onPress={() => signInWithGoogle()}>
+                <Pressable 
+                  style={[styles.socialButton, loading ? styles.buttonDisabled : null]} 
+                  onPress={handleGoogleSignIn}
+                  disabled={loading}
+                >
                   <Text style={styles.socialButtonText}>Continue with Google</Text>
                 </Pressable>
                 
-                {Platform.OS === 'ios' && (
+                {/* {Platform.OS === 'ios' && (
                   <Pressable style={styles.socialButton} onPress={() => signInWithApple()}>
                     <Text style={styles.socialButtonText}>Continue with Apple</Text>
                   </Pressable>
-                )}
+                )} */}
               </View>
-              */}
+
             </View>
 
             {/* Bottom Spacing */}
@@ -296,8 +323,8 @@ const styles = StyleSheet.create({
 
   // Login Card - Restored simpler styling
   card: {
-    width: isSmallScreen ? width - 40 : 300,
-    height: isSmallScreen ? height - 40 : 340,
+    width: isSmallScreen ? width - 40:300,
+    height:  height - 40, 
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -310,7 +337,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
     alignSelf: 'center',
-    marginTop: -25,
+    marginTop: -28,
   },
   title: {
     fontSize: isSmallScreen ? 18 : 28,
@@ -399,8 +426,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
 
-  // Social Login Styles - Commented out for now
-  /*
+  // Social Login Styles
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -443,7 +469,6 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 14 : 15,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-  */
 
   // Bottom spacing
   bottomSpacing: {

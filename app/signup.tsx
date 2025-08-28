@@ -24,7 +24,7 @@ const isSmallScreen = width < 380;
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
 export default function SignupScreen() {
-  const { signUp } = useAuth();
+  const { signUp, signInWithGoogle } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -189,7 +189,31 @@ export default function SignupScreen() {
       setLoading(false);
     }
   };
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+      showToast('Google sign-in successful!');
+      router.replace('/');
+    } catch (e) {
+      console.error('Google sign-in error:', e);
+      let errorMessage = 'Google sign-in failed. Please try again.';
+      
+      if (e.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-in was cancelled';
+      } else if (e.code === 'auth/popup-blocked') {
+        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+      
+      showToast(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  
   return (
     <View style={styles.container}>
       {/* Clean gradient background - same as login */}
@@ -296,7 +320,32 @@ export default function SignupScreen() {
                 <Text style={styles.linkText}>Already have an account? Login</Text>
               </Pressable>
             </View>
+            {/* <Pressable onPress={() => router.push('/login')} style={styles.link}>
+                <Text style={styles.linkText}>Already have an account? Login</Text>
+              </Pressable> */}
 
+              {/* Social Login Options */}
+              <View style={styles.divider}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>or</Text>
+                <View style={styles.dividerLine} />
+              </View>
+
+              <View style={styles.socialButtons}>
+                <Pressable 
+                  style={[styles.socialButton, loading ? styles.buttonDisabled : null]} 
+                  onPress={handleGoogleSignIn}
+                  disabled={loading}
+                >
+                  <Text style={styles.socialButtonText}>Continue with Google</Text>
+                </Pressable>
+                
+                {/* {Platform.OS === 'ios' && (
+                  <Pressable style={styles.socialButton} onPress={() => signInWithApple()}>
+                    <Text style={styles.socialButtonText}>Continue with Apple</Text>
+                  </Pressable>
+                )} */}
+              </View>
             {/* Bottom Spacing */}
             <View style={styles.bottomSpacing} />
           </ScrollView>
@@ -462,7 +511,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
-
+  // Social Login Styles
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+    width: '100%',
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'rgba(229, 231, 235, 0.8)',
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    color: '#9CA3AF',
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  },
+  socialButtons: {
+    width: '100%',
+    gap: 12,
+  },
+  socialButton: {
+     width: '100%',
+     backgroundColor: 'rgba(255, 255, 255, 0.9)',
+     borderWidth: 2,
+     borderColor: 'rgba(229, 231, 235, 0.8)',
+     paddingVertical: isSmallScreen ? 12 : 14,
+     borderRadius: 16,
+     alignItems: 'center',
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 2 },
+     shadowOpacity: 0.1,
+     shadowRadius: 4,
+     elevation: 2,
+   },
+   socialButtonText: {
+     color: '#374151',
+     fontWeight: '600',
+     fontSize: isSmallScreen ? 14 : 15,
+     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+   },
   // Bottom spacing
   bottomSpacing: {
     height: isSmallScreen ? 20 : 40,

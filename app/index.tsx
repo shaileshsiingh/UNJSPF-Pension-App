@@ -198,7 +198,7 @@ export default function LandingPage() {
             </View>
           </View>
           <View/ >
-
+          </View>
 
           {/* About the Fund */}
           <Text style={[styles.categoryTitle, styles.aboutTitle]}>About the Fund</Text>
@@ -270,7 +270,7 @@ export default function LandingPage() {
             2025 MyUNPension. All Rights Reserved.
           </Text>
         </View>
-        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
