@@ -309,7 +309,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>Less than 5 years of Contributory Service: No Pension Rights</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>You have 2 options:</Text>
+          <Text style={styles.italic}>You have 2 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
           {'\n'}This is a final decision—no more pension from the Fund after this. No child benefit
@@ -329,7 +329,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>5+ Years of Contributory Service Before Early Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>You have 3 options:</Text>
+          <Text style={styles.italic}>You have 3 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Deferred Retirement Benefit (Article 30)</Text>
           {'\n'}Receive your benefit at normal retirement age (or earlier with a reduction). This
           {'\n'}gives you a monthly pension when you're older. No child benefit is paid under this
@@ -352,7 +352,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>5+ Years of Contributory Service After Early Retirement Age but Before Normal Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>You have 4 options:</Text>
+          <Text style={styles.italic}>You have 4 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Early Retirement Benefit (Article 29)</Text>
           {'\n'}Start receiving monthly payments before reaching normal retirement age. These
           {'\n'}payments may be reduced since you retire early. You can choose to commute
@@ -380,7 +380,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>5+ Years of Contributory Service at Normal Retirement Age</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Your only option:</Text>
+          <Text style={styles.italic}>Your only option:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Normal Retirement Benefit (Article 28)</Text>
           {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for
           {'\n'}life. You can choose to commute (convert) up to one-third of this benefit into a
