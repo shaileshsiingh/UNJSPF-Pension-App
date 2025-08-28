@@ -319,10 +319,9 @@ export default function EligibilityScreen() {
   function convertDecimalYearsToYMD(decimalYears: number): { years: number, months: number, days: number } {
     const years = Math.floor(decimalYears);
     const remainingDecimal = decimalYears - years;
-    const totalMonths = remainingDecimal * 12;
-    const months = Math.floor(totalMonths);
-    const remainingMonthsDecimal = totalMonths - months;
-    const days = Math.round(remainingMonthsDecimal * 30.44); // Average days per month
+    const totalDays = Math.round(remainingDecimal * 365.25);
+    const months = Math.floor(totalDays / 30.44); // Average days per month
+    const days = Math.round(totalDays - (months * 30.44));
     
     return { years, months, days };
   }
