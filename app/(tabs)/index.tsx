@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: -26,
+    marginTop: -24,
     marginBottom: 4,
       
     }, 
