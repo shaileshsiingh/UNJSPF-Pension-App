@@ -34,7 +34,7 @@ import { auth } from '@/firebaseConfig';
 const { width } = Dimensions.get('window');
 
 const organizations = [
-  'United Nations Secretariat including Peacekeeping Missions',
+  'United Nations Secretariat including Peacekeeping Missions (UNS)',
   'Preparatory Commission for the Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO)',
   'European and Mediterranean Plant Protection Organization (EPPO)',
   'Food and Agriculture Organization of the United Nations (FAO)',
@@ -419,7 +419,7 @@ export default function ProfileScreen() {
             
             {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Your Employing Organization(Participating in Pension Fund)</Text>
+              <Text style={styles.label}>Select your employing organization from the list of 25</Text>
               <TouchableOpacity
                 style={styles.dropdownInput}
                 onPress={() => setShowOrgModal(true)}
@@ -480,7 +480,7 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 ) : null}
               </View>
-              <Text style={styles.helpText}>Enter your preferred date of separation, if other than early, normal, or mandatory age of separation</Text>
+              <Text style={styles.helpText}>This is your mandatory separation date. You may still choose when to separate, enter your preferred date if different.</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
@@ -501,8 +501,8 @@ export default function ProfileScreen() {
           <View style={styles.retirementSection}>
             <View style={styles.retirementHeader}>
               <View style={styles.sectionHeader}>
-                <Calendar size={20} color="#1E40AF" strokeWidth={2} />
-                <Text style={styles.retirementSectionTitle}>Retirement Information (Calculated)</Text>
+                {/* <Calendar size={14} color="#1E40AF" strokeWidth={2} /> */}
+                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates {'\n'} separation (Calculated)</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setShowRetirementInfo(!showRetirementInfo)}
@@ -514,7 +514,26 @@ export default function ProfileScreen() {
 
             {showRetirementInfo && (
               <View style={styles.retirementInfoCard}>
-                <Text style={styles.retirementInfoTitle}>Retirement Categories (Based on Entry Date):</Text>
+                {/* <Text style={styles.retirementInfoTitle}>Retirement Categories (Based on Entry Date):</Text> */}
+                <View style={styles.retirementInfoItem}>
+                  <Text style={styles.retirementInfoLabel}>Mandatory Age of Separation (MAS): </Text>
+                  <Text style={styles.retirementInfoValue}>
+                    {(() => {
+                      const dob = formData.dateOfBirth;
+                      const entry = formData.dateOfEntry;
+                      const masDate = calculateMAS(dob);
+                      let masAge = 65;
+                      const entryDate = parseDMY(entry);
+                      if (entryDate) {
+                        const entry1990 = new Date(1990, 0, 1);
+                        const entry2014 = new Date(2014, 0, 1);
+                        if (entryDate < entry1990) masAge = 60;
+                        else if (entryDate < entry2014) masAge = 65;
+                      }
+                      return masDate ? `${masAge} years on ${masDate}` : '—';
+                    })()}
+                  </Text>
+                </View>
                 <View style={styles.retirementInfoItem}>
                   <Text style={styles.retirementInfoLabel}>Normal Retirement Age (NRA): </Text>
                   <Text style={styles.retirementInfoValue}>
@@ -568,7 +587,7 @@ export default function ProfileScreen() {
                   </Text>
                 </View>
                 <Text style={styles.retirementHelpText}>
-                Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on your entry date into the UN Pension Fund. If unsure, refer to your official pension statement or contact UNJSPF.
+                Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on when you joined the UNJSPF; Unless stated otherwise, your retirement date is your last contract day or the last day of your birth month (the day before if born on the 1st). If unsure, check your pension statement or contact UNJSPF.
                 </Text>
               </View>
             )}
@@ -618,13 +637,20 @@ export default function ProfileScreen() {
               </Text>
             </View>
           </View>
-
+ {/* Save Button */}
+ <View style={styles.saveSection}>
+            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+              <Save size={20} color="#FFFFFF" strokeWidth={2} />
+              <Text style={styles.saveButtonText}>Save Profile</Text>
+            </TouchableOpacity>
+          </View>
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Calculator size={20} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.sectionTitle}>Advanced Pension Calculator</Text>
-            </View>
+          {/* <Calculator size={20} color="#2563EB" strokeWidth={2} /> */}
+
+            {/* <View style={styles.sectionHeader}> */}
+              {/* <Text style={styles.sectionTitle}>Advanced Pension Calculator</Text> */}
+            {/* </View> */}
             
             <TouchableOpacity 
               style={styles.calculatorButton}
@@ -633,7 +659,7 @@ export default function ProfileScreen() {
               <View style={styles.calculatorButtonContent}>
                 {/* <DollarSign size={24} color="#FFFFFF" strokeWidth={2} /> */}
                 <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>Calculate Pension Benefits</Text>
+                  <Text style={styles.calculatorButtonText}>Benefits Calculator</Text>
                   <Text style={styles.calculatorButtonSubtext}>
                     Get detailed pension calculations.
                   </Text>
@@ -643,13 +669,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Save Button */}
-          <View style={styles.saveSection}>
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Save size={20} color="#FFFFFF" strokeWidth={2} />
-              <Text style={styles.saveButtonText}>Save Profile</Text>
-            </TouchableOpacity>
-          </View>
+         
         </View>
       </ScrollView>
 
@@ -754,7 +774,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 6,
   },
   sectionTitle: {
     fontSize: 18,
@@ -776,14 +796,15 @@ const styles = StyleSheet.create({
   retirementHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
+    // justifyContent: 'space-between',
+    // marginBottom: 16,
   },
   retirementSectionTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1E40AF',
-    marginLeft: 2,
+    // marginLeft: 2,
+    textAlign: 'center',
   },
   infoButton: {
     padding: 8,
@@ -950,8 +971,8 @@ const styles = StyleSheet.create({
   calculatorButton: {
     backgroundColor: '#2563EB',
     borderRadius: 16,
-    padding: 18,
-    flexDirection: 'row',
+    padding: 12,
+    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     elevation: 3,
@@ -961,19 +982,21 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   calculatorButtonContent: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
   },
   calculatorButtonTextContainer: {
-    marginLeft: 12,
+    // marginLeft: 12,
   },
   calculatorButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: '#FFFFFF',
+    textAlign: 'center',
   },
   calculatorButtonSubtext: {
     fontSize: 14,
     color: '#FFFFFF',
+    textAlign: 'center',
   },
 });
