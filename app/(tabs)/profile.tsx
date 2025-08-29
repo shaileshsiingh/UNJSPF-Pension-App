@@ -13,6 +13,7 @@ import {
   Platform,
   ToastAndroid,
   Dimensions,
+  Animated,
 } from 'react-native';
 import { 
   User, 
@@ -255,7 +256,29 @@ export default function ProfileScreen() {
 
   const [showOrgModal, setShowOrgModal] = useState(false);
   const [showRetirementInfo, setShowRetirementInfo] = useState(false);
+  const scaleAnim = new Animated.Value(1);
 
+  useEffect(() => {
+    // Create pulsating animation
+    const pulseAnimation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(scaleAnim, {
+          toValue: 1.3,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scaleAnim, {
+          toValue: 1,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    
+    pulseAnimation.start();
+    
+    return () => pulseAnimation.stop();
+  }, []);
   // When dateOfBirth changes, always set dateOfSeparation to MAS
   useEffect(() => {
     if (formData.dateOfBirth) {
@@ -499,18 +522,19 @@ export default function ProfileScreen() {
 
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
-            <View style={styles.retirementHeader}>
-              <View style={styles.sectionHeader}>
-                {/* <Calendar size={14} color="#1E40AF" strokeWidth={2} /> */}
-                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => setShowRetirementInfo(!showRetirementInfo)}
-                style={styles.infoButton}
-              >
-                <Info size={16} color="#1E40AF" strokeWidth={2} />
-              </TouchableOpacity>
-            </View>
+          <View style={styles.retirementHeader}>
+  <View style={styles.sectionHeader}>
+    <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
+  </View>
+  <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+    <TouchableOpacity
+      onPress={() => setShowRetirementInfo(!showRetirementInfo)}
+      style={styles.animatedInfoButton}
+    >
+      <Info size={18} color="#FF6B35" strokeWidth={2.5} />
+    </TouchableOpacity>
+  </Animated.View>
+</View>
 
             {showRetirementInfo && (
               <View style={styles.retirementInfoCard}>
@@ -793,11 +817,30 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
   },
+  // retirementHeader: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   // justifyContent: 'space-between',
+  //   // marginBottom: 16,
+  // },
+  animatedInfoButton: {
+    padding: 2,
+    borderRadius: 20,
+    backgroundColor: 'rgba(81, 57, 218, 0.1)',
+    borderWidth: 2,
+    borderColor: 'rgba(25, 113, 228, 0.3)',
+    shadowColor: 'rgba(25, 113, 228, 0.3)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
   retirementHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    // justifyContent: 'space-between',
-    // marginBottom: 16,
+    justifyContent: 'space-between',
+    marginBottom: 12,
+    paddingHorizontal: 4,
   },
   retirementSectionTitle: {
     fontSize: 16,
