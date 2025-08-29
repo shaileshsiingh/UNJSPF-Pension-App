@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -37,
+    marginTop: -26,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   // Login Card - Restored simpler styling
   card: {
     width: isSmallScreen ? width - 40:300,
-    height:  height - 30, 
+    height:  420, 
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -352,9 +352,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,
     color: '#6B7280',
-    marginBottom: 28,
+    marginBottom: 16,
     textAlign: 'center',
-    fontWeight: '500',
+    fontWeight: '600',
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
   },
   

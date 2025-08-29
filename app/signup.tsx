@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 18 : 20,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
-    marginBottom: 8,
+    marginBottom: -16,
     marginTop: -25,
     textAlign: 'center',
     letterSpacing: -0.5,
