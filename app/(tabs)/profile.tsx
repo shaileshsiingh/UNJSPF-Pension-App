@@ -502,7 +502,7 @@ export default function ProfileScreen() {
             <View style={styles.retirementHeader}>
               <View style={styles.sectionHeader}>
                 {/* <Calendar size={14} color="#1E40AF" strokeWidth={2} /> */}
-                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates {'\n'} separation (Calculated)</Text>
+                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
               </View>
               <TouchableOpacity
                 onPress={() => setShowRetirementInfo(!showRetirementInfo)}
@@ -803,8 +803,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#1E40AF',
-    // marginLeft: 2,
+    marginBottom: 4,
     textAlign: 'center',
+    lineHeight: 22,
+    marginLeft:2
   },
   infoButton: {
     padding: 8,
