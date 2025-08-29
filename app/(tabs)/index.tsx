@@ -106,9 +106,9 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Calculator size={32} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension Fund Benefits</Text>
+              <Text style={styles.toolTitle}>Benefits from UNJSPF</Text>
               <Text style={styles.toolDescription}>
-                Find your retirement age options.
+                See your age of eligibility and benefits.
               </Text>
             </TouchableOpacity>
 
@@ -128,9 +128,9 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/resources')}
             >
               <FileText size={32} color="#D97706" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Entitlements</Text>
+              <Text style={styles.toolTitle}>Benefits from Your Employing Organization</Text>
               <Text style={styles.toolDescription}>
-                Claim your final HR benefits.
+                See your entitlements and steps to receive them.
               </Text>
             </TouchableOpacity>
 
