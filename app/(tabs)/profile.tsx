@@ -300,16 +300,18 @@ export default function ProfileScreen() {
     // Calculate length of contributory service
     const serviceLength = formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation));
 
-    // Validate required fields
-    const requiredFields = [
-      'firstName',
-      'lastName',
-      'organization',
-      'dateOfBirth',
-      'dateOfEntry',
-      'dateOfSeparation',
-    ];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    // Get effective values (including fallbacks from auth)
+    const effectiveFirstName = formData.firstName || auth.currentUser?.displayName?.split(' ')[0] || '';
+    const effectiveLastName = formData.lastName || auth.currentUser?.displayName?.split(' ')[1] || '';
+
+    // Validate required fields with effective values
+    const missingFields = [];
+    if (!effectiveFirstName) missingFields.push('First Name');
+    if (!effectiveLastName) missingFields.push('Last Name');
+    if (!formData.organization) missingFields.push('Organization');
+    if (!formData.dateOfBirth) missingFields.push('Date of Birth');
+    if (!formData.dateOfEntry) missingFields.push('Date of Entry');
+    if (!formData.dateOfSeparation) missingFields.push('Date of Separation');
     if (!serviceLength) missingFields.push('Length of Contributory Service');
 
     if (missingFields.length > 0) {
@@ -324,6 +326,8 @@ export default function ProfileScreen() {
     // Save profile data to AsyncStorage (all dates in DD-MM-YYYY)
     const profileToSave = {
       ...formData,
+      firstName: effectiveFirstName,
+      lastName: effectiveLastName,
       dateOfBirth: formatDateDMY(formData.dateOfBirth),
       dateOfEntry: formatDateDMY(formData.dateOfEntry),
       dateOfSeparation: formatDateDMY(formData.dateOfSeparation),
@@ -347,8 +351,8 @@ export default function ProfileScreen() {
     router.push({
       pathname: '/(tabs)/eligibility',
       params: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        firstName: effectiveFirstName,
+        lastName: effectiveLastName,
         organization: formData.organization,
         dateOfBirth: formatDateDMY(formData.dateOfBirth),
         dateOfEntry: formatDateDMY(formData.dateOfEntry),
@@ -665,7 +669,7 @@ export default function ProfileScreen() {
  <View style={styles.saveSection}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Save size={20} color="#FFFFFF" strokeWidth={2} />
-              <Text style={styles.saveButtonText}>Save Profile</Text>
+              <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
           </View>
           {/* Advanced Calculator Section */}
@@ -947,13 +951,13 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   saveSection: {
-    marginTop: 20,
-    marginBottom: 40,
+    marginTop: 10,
+    marginBottom: 10,
   },
   saveButton: {
     backgroundColor: '#2563EB',
     borderRadius: 16,
-    padding: 18,
+    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -964,7 +968,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   saveButtonText: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '700',
     color: '#FFFFFF',
     marginLeft: 12,

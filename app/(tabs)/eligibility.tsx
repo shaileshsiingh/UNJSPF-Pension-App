@@ -210,9 +210,18 @@ export default function EligibilityScreen() {
           setOrgContact(orgEmailMap[org] || 'your HR office');
           // Set yearsOfService and currentAge from profile
           if (parsed.serviceLength) {
-            // Extract years as float from string like '10 years, 2 months, 5 days'
-            const match = parsed.serviceLength.match(/(\d+(?:\.\d+)?)/);
-            if (match) setYearsOfService(parseFloat(match[1]));
+            // Parse full service length string like '10 years, 2 months, 5 days'
+            const yearsMatch = parsed.serviceLength.match(/(\d+)\s*years?/);
+            const monthsMatch = parsed.serviceLength.match(/(\d+)\s*months?/);
+            const daysMatch = parsed.serviceLength.match(/(\d+)\s*days?/);
+            
+            const years = yearsMatch ? parseInt(yearsMatch[1]) : 0;
+            const months = monthsMatch ? parseInt(monthsMatch[1]) : 0;
+            const days = daysMatch ? parseInt(daysMatch[1]) : 0;
+            
+            // Convert to decimal years for slider
+            const decimalYears = years + (months / 12) + (days / 365.25);
+            setYearsOfService(decimalYears);
           }
           if (parsed.dateOfBirth) {
             // Calculate current age from DOB
