@@ -99,7 +99,7 @@ export default function LandingPage() {
               />
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>All your pension benefits in one place</Text>
+            <Text style={styles.heroSubtitle}>All your pension benefits in one place.</Text>
             <Text style={styles.heroDesc}>
             Everything you need for retirement planning is here. {'\n'} This App brings together your UN Pension Fund and employing organization benefits            </Text>
             
@@ -340,11 +340,11 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: 'black',
-    fontSize: scaleFont(16, 16, 16),
+    fontSize: scaleFont(14, 14, 14),
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: scaleSize(6, 6, 6),
-    letterSpacing: -0.5,
+    marginBottom: scaleSize(3, 3, 3),
+    letterSpacing: 0.5,
     fontFamily: 'Roboto',
   },
   heroDesc: {
@@ -401,14 +401,18 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(16, 20, 24),
   },
   whoTitle: {
-    fontSize: scaleFont(20, 20, 20),
-    fontWeight: '800',
     color: 'rgb(29, 78, 216)',
-    flex: 1,
-    lineHeight: scaleFont(0, 0, 0),
-    letterSpacing: -0.8,
-    fontFamily: 'Roboto',
+    fontSize: scaleFont(20, 20, 20),
+    fontWeight: '600',
     textAlign: 'center',
+    lineHeight: scaleFont(28, 32, 36),
+    letterSpacing: -1.2,
+    fontFamily: 'Roboto',
+    // textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
+    marginTop: scaleSize(-30, -30, -30),
+    marginBottom: scaleSize(4, 4, 4),
   },
   whoTitle1: {
     fontSize: scaleFont(20, 20, 20),
