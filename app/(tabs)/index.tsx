@@ -34,15 +34,15 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
       <View style={styles.topBar}>
-        <View style={{ flex: 1 }} />
         <TouchableOpacity
           onPress={signOut}
-          
           style={styles.logoutButton}
           accessibilityLabel="Logout"
         >
-          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-        </TouchableOpacity>
+ <View style={{ transform: [{ scaleX: -1 }] }}>
+    <LogOut size={24} color="#2563EB" strokeWidth={2} />
+  </View>        </TouchableOpacity>
+        <View style={{ flex: 1 }} />
       </View>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header Section */}
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingHorizontal: 2,
+    paddingTop: 2,
     marginBottom: 0,
   },
   logoutButton: {
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 8,
-    marginTop: 4,
+    marginTop: 2,
   },
   scrollView: {
     flex: 1,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,   // a bit more spacing from the title
   },
    heroTitle: {
-    color: 'rgb(29, 78, 216)',
+    color: 'rgb(70 106 209)',
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
   section: {
-    padding: 24,
+    padding: 14,
     
   },
   sectionTitle: {
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   sectionSubtitle1: {
     fontSize: 16,
     color: '#6B7280',
-    marginBottom: 24,
+    marginBottom: 12,
     lineHeight: 22,
     display: 'flex',
     alignItems: 'center',

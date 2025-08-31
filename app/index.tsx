@@ -183,7 +183,7 @@ export default function LandingPage() {
           <View style={styles.threeCardRow}>
             <View style={styles.statCard}>
               <Text style={styles.statIcon}>🏢</Text>
-              <Text style={styles.statValue}>25</Text>
+              <Text style={styles.statValue1}>25</Text>
               <Text style={styles.statLabel}>Organizations</Text>
             </View>
             <View style={styles.statCard}>
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: 'rgb(29, 78, 216)',
+    color: 'rgb(70 106 209)',
     fontSize: scaleFont(20, 20, 20),
     fontWeight: '600',
     textAlign: 'center',
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(16, 20, 24),
   },
   whoTitle: {
-    color: 'rgb(29, 78, 216)',
+    color: 'rgb(70 106 209)',
     fontSize: scaleFont(20, 20, 20),
     fontWeight: '600',
     textAlign: 'center',
@@ -590,6 +590,12 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: scaleFont(14, 16, 18),
+    fontWeight: 'bold',
+    color: '#1d4ed8',
+    fontFamily: 'Roboto',
+  },
+  statValue1: {
+    fontSize: scaleFont(15, 17,19),
     fontWeight: 'bold',
     color: '#1d4ed8',
     fontFamily: 'Roboto',
