@@ -125,7 +125,7 @@ export default function HomeScreen() {
 
             <TouchableOpacity 
               style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/resources')}
+              onPress={() => router.push('/(tabs)/employer-benefits')}
             >
               <FileText size={32} color="#D97706" strokeWidth={2} />
               <Text style={styles.toolTitle}>Benefits from Your Employing Organization</Text>
