@@ -545,8 +545,8 @@ export default function CalculatorScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Calculator size={32} color="#2563EB" strokeWidth={2} />
-        <Text style={styles.title}>Benefits Calculator</Text>
-        <Text style={styles.subtitle}>Calculate your estimated pension benefits with comprehensive options</Text>
+        <Text style={styles.title}>Benefits from UNJSPF</Text>
+        <Text style={styles.subtitle}>Your benefits calculator</Text>
       </View>
 
       <View style={styles.form}>
@@ -641,9 +641,9 @@ export default function CalculatorScreen() {
 
         {/* Calculated Interest Display */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Calculated Interest (3.25%)</Text>
+          <Text style={styles.label}>Calculated Interest </Text>
           <Text style={styles.displayValue}>{formatCurrency(calculatedInterest)}</Text>
-          <Text style={styles.helpText}>Interest calculated on your contributions over your service period.</Text>
+          <Text style={styles.helpText}>Your contributions earn compound interest at 3.25% for every completed year of contributory service.</Text>
         </View>
 
         {/* FAR Input Method Toggle */}
@@ -683,8 +683,8 @@ export default function CalculatorScreen() {
         {/* PR Values Grid - Only show if not using direct FAR input */}
         {!useFarInput && (
           <View style={{ marginVertical: 16 }}>
-            <Text style={styles.label}>Enter your highest pensionable remuneration figures for the last 36 months before retiring month.</Text>
-            <Text style={styles.helpText}>You may find these figures in your monthly payslips.</Text>
+            <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
+            <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text>
             {rows.map((row, rowIdx) => (
               <ScrollView
                 key={rowIdx}
@@ -739,7 +739,7 @@ export default function CalculatorScreen() {
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Length of Your Contributory Service</Text>
           <Text style={styles.displayValue}>{serviceLength}</Text>
-          <Text style={styles.helpText}>Calculated from your entry and separation dates. Maximum recognized service is 38.75 years.</Text>
+          <Text style={styles.helpText}>Calculated from your entry to separation dates. Maximum recognized service is 38.75 years.</Text>
         </View>
 
         {/* Age at Retirement Display */}
@@ -1057,17 +1057,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   title: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#111827',
-    marginTop: 12,
+    fontSize: 18,
+    fontWeight: '800',
+    color: 'rgb(70 106 209)',
     marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
+    fontSize: 13,
+    color: 'black',
     textAlign: 'center',
-    lineHeight: 24,
+    fontWeight: '600',
+    // lineHeight: 22,
   },
   form: {
     padding: 24,

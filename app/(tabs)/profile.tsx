@@ -375,9 +375,9 @@ export default function ProfileScreen() {
           <View style={styles.headerIconContainer}>
             <User size={32} color="#2563EB" strokeWidth={2} />
           </View>
-          <Text style={styles.headerTitle}>Retirement Age Calculator</Text>
-          {/* <Text style={styles.headerSubtitle}>
-          Explore when you can retire under UNJSPF rules.<br></br>Calculate Normal, Early, Deferred Retirement Ages          </Text> */}
+          <Text style={styles.headerTitle}>Benefits from UNJSPF</Text>
+          <Text style={styles.headerSubtitle}>
+          Your profile setup      </Text>
         </View>
 
         {/* Form */}
@@ -620,50 +620,9 @@ export default function ProfileScreen() {
               </View>
             )}
 
-            {/* MAS */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Mandatory Age of Separation</Text>
-              <TextInput
-                style={[styles.input, styles.retirementInput]}
-                value={calculateMAS(formData.dateOfBirth)}
-                editable={false}
-                placeholder="Will be calculated automatically"
-                placeholderTextColor="#9CA3AF"
-              />
-              <Text style={styles.retirementHelpText}>
-                In most Member Organisations, MAS is 65 years. If different, contact your UNJSPF for advice.
-              </Text>
-            </View>
+           
 
-            {/* NRA */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Normal Retirement Age</Text>
-              <TextInput
-                style={[styles.input, styles.retirementInput]}
-                value={calculateNRA(formData.dateOfBirth, formData.dateOfEntry)}
-                editable={false}
-                placeholder="Will be calculated automatically"
-                placeholderTextColor="#9CA3AF"
-              />
-              <Text style={styles.retirementHelpText}>
-                {/* Based on your Date of Birth and Entry into Pension Fund. */}
-              </Text>
-            </View>
-
-            {/* ERA */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.retirementLabel}>Your Date of Early Retirement Age</Text>
-              <TextInput
-                style={[styles.input, styles.retirementInput]}
-                value={calculateERA(formData.dateOfBirth, formData.dateOfEntry)}
-                editable={false}
-                placeholder="Will be calculated automatically"
-                placeholderTextColor="#9CA3AF"
-              />
-              <Text style={styles.retirementHelpText}>
-                {/* Based on your Date of Birth and Entry into Pension Fund. */}
-              </Text>
-            </View>
+           
           </View>
  {/* Save Button */}
  <View style={styles.saveSection}>
@@ -773,17 +732,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '800',
-    color: '#111827',
+    color: 'rgb(70 106 209)',
     marginBottom: 8,
     textAlign: 'center',
   },
   headerSubtitle: {
-    fontSize: 15,
-    color: '#6B7280',
+    fontSize: 13,
+    color: 'black',
     textAlign: 'center',
-    lineHeight: 22,
+    fontWeight: '600',
+    // lineHeight: 22,
   },
   form: {
     padding: 20,
@@ -949,6 +909,7 @@ const styles = StyleSheet.create({
     color: '#1E40AF',
     marginTop: 4,
     marginLeft: 4,
+    fontStyle: 'italic',
   },
   saveSection: {
     marginTop: 10,

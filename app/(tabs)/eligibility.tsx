@@ -534,7 +534,7 @@ export default function EligibilityScreen() {
         <View style={styles.header}>
           <Text style={styles.title}>Your Benefits Estimator</Text>
           <Text style={styles.subtitle}>
-            Interactively explore your potential retirement benefits.
+          Your best availabale options and scenarios.
           </Text>
         </View>
 
@@ -608,7 +608,7 @@ export default function EligibilityScreen() {
                   value={currentAge}
                   onValueChange={setCurrentAge}
                   min={18}
-                  max={70}
+                  max={65}
                   step={1}
                   color="#059669"
                   label="Your Current Age"
@@ -620,12 +620,12 @@ export default function EligibilityScreen() {
                 
                 
                 <View style={{ position: 'relative', height: 28, width: '100%', marginTop:'-60px' }}>
-                  {[18, 25, 35, 45, ERA, NRA, 70].map((mark) => (
+                  {[18, 25, 35, 45, ERA, NRA, 65].map((mark) => (
                     <View
                       key={mark}
                       style={{
                         position: 'absolute',
-                        left: `${((mark - 18) / (70 - 18)) * 100}%`,
+                        left: `${((mark - 18) / (65 - 18)) * 100}%`,
                         transform: [{ translateX: -12 }],
                         alignItems: 'center',
                         width: 24,
@@ -771,18 +771,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#111827',
-    marginTop: 12,
+    fontSize: 18,
+    fontWeight: '800',
+    color: 'rgb(70 106 209)',
     marginBottom: 8,
-    textAlign:'center'
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
+    fontSize: 13,
+    color: 'black',
     textAlign: 'center',
-    lineHeight: 24,
+    fontWeight: '600',
+    // lineHeight: 22,
   },
   inputModeContainer: {
     flexDirection: 'row',
