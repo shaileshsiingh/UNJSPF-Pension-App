@@ -349,7 +349,7 @@ export default function ProfileScreen() {
 
     // Navigate to eligibility tab and pass profile data as params (all dates in DD-MM-YYYY)
     router.push({
-      pathname: '/(tabs)/eligibility',
+      pathname: '/(tabs)/calculator',
       params: {
         firstName: effectiveFirstName,
         lastName: effectiveLastName,
@@ -531,7 +531,7 @@ export default function ProfileScreen() {
           <View style={styles.retirementSection}>
             <View style={styles.retirementHeader}>
               <View style={styles.sectionHeader}>
-                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
+                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary<br></br>(Calculated)</Text>
               </View>
               <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
                 {/* <TouchableOpacity
@@ -624,22 +624,22 @@ export default function ProfileScreen() {
           </View>
 
           {/* Save Button */}
-          <View style={styles.saveSection}>
+          {/* <View style={styles.saveSection}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Save size={20} color="#FFFFFF" strokeWidth={2} />
               <Text style={styles.saveButtonText}>Save and move to benefits calculator</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
             <TouchableOpacity 
               style={styles.calculatorButton}
-              onPress={() => router.push('/(tabs)/calculator')}
+              onPress={handleSave}
             >
               <View style={styles.calculatorButtonContent}>
                 <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>Benefits Calculator</Text>
+                  <Text style={styles.calculatorButtonText}>Save and move to Benefits Calculator</Text>
                   <Text style={styles.calculatorButtonSubtext}>
                     Get detailed pension calculations.
                   </Text>
@@ -791,19 +791,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   retirementSectionTitle: {
-    fontSize: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 12 : 14,
     fontWeight: '700',
     color: '#1E40AF',
-    marginBottom: 4,
+    // marginBottom: 2,
     textAlign: 'center',
     lineHeight: 22,
-    marginLeft: 2
+    // marginLeft: 2
   },
   retirementInfoCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
+    // marginBottom: 20,
     borderWidth: 1,
     borderColor: '#BFDBFE',
   },
@@ -1018,13 +1018,13 @@ const styles = StyleSheet.create({
   calculatorButtonTextContainer: {
   },
   calculatorButtonText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
     color: '#FFFFFF',
     textAlign: 'center',
   },
   calculatorButtonSubtext: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#FFFFFF',
     textAlign: 'center',
   },
