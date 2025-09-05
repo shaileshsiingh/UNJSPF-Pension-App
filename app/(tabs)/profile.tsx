@@ -399,7 +399,7 @@ export default function ProfileScreen() {
             </View> */}
             
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.shortLabel]}>First Name</Text>  
+              <Text style={[styles.inlineLabel, styles.shortLabel]}>First Name:</Text>  
               <TextInput
                 style={[styles.inlineInput, styles.shortLabelInput]}
                 value={formData.firstName||auth.currentUser?.displayName?.split(' ')[0]}
@@ -410,7 +410,7 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.shortLabel]}>Last Name</Text>
+              <Text style={[styles.inlineLabel, styles.shortLabel]}>Last Name:</Text>
               <TextInput
                 style={[styles.inlineInput, styles.shortLabelInput]}
                 value={formData.lastName||auth.currentUser?.displayName?.split(' ')[1]}
@@ -421,7 +421,7 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Birth</Text>
+              <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Birth:</Text>
               <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
                   style={[styles.inlineInput, styles.mediumLabelInput]}
@@ -468,7 +468,7 @@ export default function ProfileScreen() {
 
             {/* Date of Entry into Pension Fund Participation */}
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry into Fund</Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry into Fund:</Text>
               <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
                   style={[styles.inlineInput, styles.longLabelInput]}
@@ -496,7 +496,7 @@ export default function ProfileScreen() {
 
             {/* Date of Separation */}
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Preferred Separation date</Text>
+              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Preferred Separation date:</Text>
               <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
                   style={[styles.inlineInput, styles.veryLongLabelInput]}
@@ -846,13 +846,13 @@ const styles = StyleSheet.create({
     width: width < 300 ? 60 : 70, // First Name, Last Name
   },
   mediumLabel: {
-    width: width < 300 ? 71 : 71, // Date of Birth
+    width: width < 300 ? 56 : 73, // Date of Birth
   },
   longLabel: {
-    width: width < 300 ? 90 : 129, // Date of Entry into Fund
+    width: width < 300 ? 90 : 131, // Date of Entry into Fund
   },
   veryLongLabel: {
-    width: width < 300 ? 100 : 140, // Preferred Separation date
+    width: width < 300 ? 100 : 143, // Preferred Separation date
   },
   input: {
     backgroundColor: '#FFFFFF',
@@ -869,7 +869,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 12,
     padding: width < 300 ? 10 : width < 350 ? 12 : 16,
-    fontSize: width < 300 ? 12 : width < 350 ? 12 : 12,
+    fontSize: width < 300 ? 12 : width < 350 ? 12 : 11,
     color: '#111827',
     flex: 1,
     minWidth: 0,
