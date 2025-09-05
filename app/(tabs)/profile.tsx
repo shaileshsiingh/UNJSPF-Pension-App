@@ -542,14 +542,14 @@ export default function ProfileScreen() {
               <View style={styles.sectionHeader}>
                 <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary<br></br>(Calculated)</Text>
               </View>
-              <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+              {/* <Animated.View style={{ transform: [{ scale: scaleAnim }] }}> */}
                 {/* <TouchableOpacity
                   onPress={() => setShowRetirementInfo(!showRetirementInfo)}
                   style={styles.animatedInfoButton}
                 >
                   <Info size={18} color="#FF6B35" strokeWidth={2.5} />
                 </TouchableOpacity> */}
-              </Animated.View>
+              {/* </Animated.View> */}
             </View>
 
             
@@ -791,18 +791,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
   },
-  animatedInfoButton: {
-    padding: 2,
-    borderRadius: 20,
-    backgroundColor: 'rgba(81, 57, 218, 0.1)',
-    borderWidth: 2,
-    borderColor: 'rgba(25, 113, 228, 0.3)',
-    shadowColor: 'rgba(25, 113, 228, 0.3)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 3,
-  },
+ 
   retirementHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -857,7 +846,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   inlineLabel: {
-    fontSize: width < 300 ? 11 : width < 350 ? 12 : 14,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
     flexShrink: 0,
@@ -891,7 +880,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 12,
     padding: width < 300 ? 10 : width < 350 ? 12 : 16,
-    fontSize: width < 300 ? 12 : width < 350 ? 12 : 16,
+    fontSize: width < 300 ? 12 : width < 350 ? 12 : 12,
     color: '#111827',
     flex: 1,
     minWidth: 0,
@@ -932,7 +921,7 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   helpText: {
-    fontSize: width < 300 ? 10 : width < 350 ? 11 : 13,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#6B7280',
     marginTop: 2,
     // marginLeft: 4,
