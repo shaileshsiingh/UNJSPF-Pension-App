@@ -538,19 +538,9 @@ export default function ProfileScreen() {
 
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
-            <View style={styles.retirementHeader}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary<br></br>(Calculated)</Text>
-              </View>
-              {/* <Animated.View style={{ transform: [{ scale: scaleAnim }] }}> */}
-                {/* <TouchableOpacity
-                  onPress={() => setShowRetirementInfo(!showRetirementInfo)}
-                  style={styles.animatedInfoButton}
-                >
-                  <Info size={18} color="#FF6B35" strokeWidth={2.5} />
-                </TouchableOpacity> */}
-              {/* </Animated.View> */}
-            </View>
+                         <View style={styles.retirementHeader}>
+               <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary<br></br>(Calculated)</Text>
+             </View>
 
             
               <View style={styles.retirementInfoCard}>
@@ -793,9 +783,8 @@ const styles = StyleSheet.create({
   },
  
   retirementHeader: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginBottom: 12,
     paddingHorizontal: 4,
   },
