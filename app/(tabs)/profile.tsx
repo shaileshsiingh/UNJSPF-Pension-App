@@ -445,7 +445,7 @@ export default function ProfileScreen() {
             
             {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Select your employing organization from the list of 25</Text>
+              <Text style={styles.label}>Employing Organization (select from the list of 25)</Text>
               <TouchableOpacity
                 style={styles.dropdownInput}
                 onPress={() => setShowOrgModal(true)}
@@ -515,7 +515,7 @@ export default function ProfileScreen() {
 
             {/* Length of Contributory Service (auto-calc) */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Length of Your Contributory Service(Calculated)</Text>
+              <Text style={styles.label}>Length of Your Contributory Service (Calculated)</Text>
               <TextInput
                 style={[styles.input, styles.readOnlyInput]}
                 value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
