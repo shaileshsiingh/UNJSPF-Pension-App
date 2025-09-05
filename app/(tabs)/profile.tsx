@@ -384,15 +384,15 @@ export default function ProfileScreen() {
         <View style={styles.form}>
           {/* Personal Information */}
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
+            {/* <View style={styles.sectionHeader}>
               <User size={20} color="#2563EB" strokeWidth={2} />
               <Text style={styles.sectionTitle}>Your Information</Text>
-            </View>
+            </View> */}
             
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>First Name</Text>  
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.shortLabel]}>First Name</Text>  
               <TextInput
-                style={styles.input}
+                style={[styles.inlineInput, styles.shortLabelInput]}
                 value={formData.firstName||auth.currentUser?.displayName?.split(' ')[0]}
                 onChangeText={(value) => handleInputChange('firstName', value)}
                 placeholder="Enter your first name"
@@ -400,10 +400,10 @@ export default function ProfileScreen() {
               />
             </View>
 
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Last Name</Text>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.shortLabel]}>Last Name</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.inlineInput, styles.shortLabelInput]}
                 value={formData.lastName||auth.currentUser?.displayName?.split(' ')[1]}
                 onChangeText={(value) => handleInputChange('lastName', value)}
                 placeholder="Enter your last name"
@@ -411,11 +411,11 @@ export default function ProfileScreen() {
               />
             </View>
 
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Your Date of Birth</Text>
-              <View style={{ position: 'relative' }}>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Birth</Text>
+              <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.inlineInput, styles.mediumLabelInput]}
                   value={formData.dateOfBirth}
                   onChangeText={(value) => handleInputChange('dateOfBirth', formatDateInput(value))}
                   placeholder="DD-MM-YYYY"
@@ -433,16 +433,15 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 ) : null}
               </View>
-              {/* <Text style={styles.helpText}>Enter your date of birth in DD-MM-YYYY format</Text> */}
             </View>
           </View>
 
           {/* Employment Information */}
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
+            {/* <View style={styles.sectionHeader}>
               <Building size={20} color="#2563EB" strokeWidth={2} />
               <Text style={styles.sectionTitle}>Your Employment History</Text>
-            </View>
+            </View> */}
             
             {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
@@ -459,11 +458,11 @@ export default function ProfileScreen() {
             </View>
 
             {/* Date of Entry into Pension Fund Participation */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Your Date of Entry into Fund</Text>
-              <View style={{ position: 'relative' }}>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry into Fund</Text>
+              <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.inlineInput, styles.longLabelInput]}
                   value={formData.dateOfEntry}
                   onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
                   placeholder="DD-MM-YYYY"
@@ -481,15 +480,17 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 ) : null}
               </View>
-              {/* <Text style={styles.helpText}>Enter your date of entry in DD-MM-YYYY format</Text> */}
+            </View>
+            <View style={styles.helpTextContainer}>
+              <Text style={styles.helpText}>This is the date you began your UN service</Text>
             </View>
 
             {/* Date of Separation */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Your Preferred Date of Separation</Text>
-              <View style={{ position: 'relative' }}>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Preferred Separation date</Text>
+              <View style={{ position: 'relative', flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.inlineInput, styles.veryLongLabelInput]}
                   value={formData.dateOfSeparation}
                   onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
                   placeholder="DD-MM-YYYY"
@@ -507,7 +508,9 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                 ) : null}
               </View>
-              <Text style={styles.helpText}>This is your mandatory separation date. You may still choose when to separate, enter your preferred date if different.</Text>
+            </View>
+            <View style={styles.helpTextContainer}>
+              <Text style={styles.helpText}>This is your mandatory separation date. You may still choose when to separate—enter your preferred date if different.</Text>
             </View>
 
             {/* Length of Contributory Service (auto-calc) */}
@@ -526,23 +529,22 @@ export default function ProfileScreen() {
 
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
-          <View style={styles.retirementHeader}>
-  <View style={styles.sectionHeader}>
-    <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
-  </View>
-  <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-    <TouchableOpacity
-      onPress={() => setShowRetirementInfo(!showRetirementInfo)}
-      style={styles.animatedInfoButton}
-    >
-      <Info size={18} color="#FF6B35" strokeWidth={2.5} />
-    </TouchableOpacity>
-  </Animated.View>
-</View>
+            <View style={styles.retirementHeader}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.retirementSectionTitle}>Retirement eligibility dates (Calculated)</Text>
+              </View>
+              <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+                {/* <TouchableOpacity
+                  onPress={() => setShowRetirementInfo(!showRetirementInfo)}
+                  style={styles.animatedInfoButton}
+                >
+                  <Info size={18} color="#FF6B35" strokeWidth={2.5} />
+                </TouchableOpacity> */}
+              </Animated.View>
+            </View>
 
-            {showRetirementInfo && (
+            
               <View style={styles.retirementInfoCard}>
-                {/* <Text style={styles.retirementInfoTitle}>Retirement Categories (Based on Entry Date):</Text> */}
                 <View style={styles.retirementInfoItem}>
                   <Text style={styles.retirementInfoLabel}>Mandatory Age of Separation (MAS): </Text>
                   <Text style={styles.retirementInfoValue}>
@@ -618,33 +620,24 @@ export default function ProfileScreen() {
                 Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on when you joined the UNJSPF; Unless stated otherwise, your retirement date is your last contract day or the last day of your birth month (the day before if born on the 1st). If unsure, check your pension statement or contact UNJSPF.
                 </Text>
               </View>
-            )}
-
-           
-
-           
+            
           </View>
- {/* Save Button */}
- <View style={styles.saveSection}>
+
+          {/* Save Button */}
+          <View style={styles.saveSection}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Save size={20} color="#FFFFFF" strokeWidth={2} />
-              <Text style={styles.saveButtonText}>Save</Text>
+              <Text style={styles.saveButtonText}>Save and move to benefits calculator</Text>
             </TouchableOpacity>
           </View>
+
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
-          {/* <Calculator size={20} color="#2563EB" strokeWidth={2} /> */}
-
-            {/* <View style={styles.sectionHeader}> */}
-              {/* <Text style={styles.sectionTitle}>Advanced Pension Calculator</Text> */}
-            {/* </View> */}
-            
             <TouchableOpacity 
               style={styles.calculatorButton}
               onPress={() => router.push('/(tabs)/calculator')}
             >
               <View style={styles.calculatorButtonContent}>
-                {/* <DollarSign size={24} color="#FFFFFF" strokeWidth={2} /> */}
                 <View style={styles.calculatorButtonTextContainer}>
                   <Text style={styles.calculatorButtonText}>Benefits Calculator</Text>
                   <Text style={styles.calculatorButtonSubtext}>
@@ -655,8 +648,6 @@ export default function ProfileScreen() {
               <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
             </TouchableOpacity>
           </View>
-
-         
         </View>
       </ScrollView>
 
@@ -713,9 +704,9 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#FFFFFF',
-    paddingTop: 20,
-    paddingBottom: 24,
-    paddingHorizontal: 24,
+    paddingTop: width < 300 ? 12 : width < 350 ? 16 : 20,
+    paddingBottom: width < 300 ? 16 : width < 350 ? 20 : 24,
+    paddingHorizontal: width < 300 ? 12 : width < 350 ? 16 : 24,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     elevation: 2,
@@ -732,26 +723,25 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
     fontWeight: '800',
     color: 'rgb(70 106 209)',
     marginBottom: 8,
     textAlign: 'center',
   },
   headerSubtitle: {
-    fontSize: 13,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 13,
     color: 'black',
     textAlign: 'center',
     fontWeight: '600',
-    // lineHeight: 22,
   },
   form: {
-    padding: 20,
+    padding: width < 300 ? 12 : width < 350 ? 16 : 20,
   },
   section: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
-    padding: 20,
+    padding: width < 300 ? 12 : width < 350 ? 16 : 20,
     marginBottom: 6,
     elevation: 2,
     shadowColor: '#000',
@@ -765,7 +755,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
     fontWeight: '700',
     color: '#111827',
     marginLeft: 8,
@@ -773,7 +763,7 @@ const styles = StyleSheet.create({
   retirementSection: {
     backgroundColor: '#EBF4FF',
     borderRadius: 16,
-    padding: 20,
+    padding: width < 300 ? 12 : width < 350 ? 16 : 20,
     marginBottom: 6,
     elevation: 2,
     shadowColor: '#2563EB',
@@ -781,12 +771,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
   },
-  // retirementHeader: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   // justifyContent: 'space-between',
-  //   // marginBottom: 16,
-  // },
   animatedInfoButton: {
     padding: 2,
     borderRadius: 20,
@@ -807,18 +791,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   retirementSectionTitle: {
-    fontSize: 16,
+    fontSize: width < 300 ? 12 : 12,
     fontWeight: '700',
     color: '#1E40AF',
     marginBottom: 4,
     textAlign: 'center',
     lineHeight: 22,
-    marginLeft:2
-  },
-  infoButton: {
-    padding: 8,
-    backgroundColor: '#DBEAFE',
-    borderRadius: 20,
+    marginLeft: 2
   },
   retirementInfoCard: {
     backgroundColor: '#FFFFFF',
@@ -828,70 +807,104 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#BFDBFE',
   },
-  retirementInfoTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1E40AF',
-    marginBottom: 12,
-  },
   retirementInfoItem: {
     marginBottom: 8,
   },
   retirementInfoLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#1E40AF',
   },
   retirementInfoValue: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#374151',
     marginTop: 2,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: 6,
+  },
+  inlineInputGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+    gap: width < 300 ? 6 : width < 350 ? 8 : 12,
+    flexWrap: 'nowrap',
   },
   label: {
-    fontSize: 16,
+    fontSize: width < 300 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 8,
   },
-  retirementLabel: {
-    fontSize: 15,
+  inlineLabel: {
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 14,
     fontWeight: '600',
-    color: '#1E40AF',
-    marginBottom: 8,
+    color: '#374151',
+    flexShrink: 0,
+    textAlign: 'left',
+  },
+  // Label width classes for different label lengths
+  shortLabel: {
+    width: width < 300 ? 60 : 70, // First Name, Last Name
+  },
+  mediumLabel: {
+    width: width < 300 ? 71 : 71, // Date of Birth
+  },
+  longLabel: {
+    width: width < 300 ? 90 : 129, // Date of Entry into Fund
+  },
+  veryLongLabel: {
+    width: width < 300 ? 100 : 140, // Preferred Separation date
   },
   input: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
+    padding: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 12 : 12,
     color: '#111827',
+  },
+  inlineInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 12,
+    padding: width < 300 ? 10 : width < 350 ? 12 : 16,
+    fontSize: width < 300 ? 12 : width < 350 ? 12 : 16,
+    color: '#111827',
+    flex: 1,
+    minWidth: 0,
   },
   readOnlyInput: {
     backgroundColor: '#F3F4F6',
     color: '#6B7280',
   },
-  retirementInput: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#BFDBFE',
-    color: '#374151',
+  // Input flex values to match label sizes
+  shortLabelInput: {
+    flex: 1,
+  },
+  mediumLabelInput: {
+    flex: 1,
+  },
+  longLabelInput: {
+    flex: 1,
+  },
+  veryLongLabelInput: {
+    flex: 1,
   },
   dropdownInput: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 12,
-    padding: 16,
+    padding: width < 300 ? 12 : 11,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   dropdownText: {
-    fontSize: 16,
+    fontSize: width < 300 ? 12 : 12,
     color: '#111827',
     flex: 1,
   },
@@ -899,13 +912,18 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   helpText: {
-    fontSize: 13,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 13,
     color: '#6B7280',
-    marginTop: 4,
+    marginTop: 2,
+    // marginLeft: 4,
+    marginBottom: 12,
+  },
+  helpTextContainer: {
+    marginBottom: 16,
     marginLeft: 4,
   },
   retirementHelpText: {
-    fontSize: 13,
+    fontSize: width < 300 ? 11 : 11,
     color: '#1E40AF',
     marginTop: 4,
     marginLeft: 4,
@@ -986,7 +1004,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2563EB',
     borderRadius: 16,
     padding: 12,
-    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     elevation: 3,
@@ -996,11 +1013,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   calculatorButtonContent: {
-    // flexDirection: 'row',
     alignItems: 'center',
   },
   calculatorButtonTextContainer: {
-    // marginLeft: 12,
   },
   calculatorButtonText: {
     fontSize: 16,
