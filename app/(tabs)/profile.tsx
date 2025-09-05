@@ -26,7 +26,8 @@ import {
   Info,
   Calculator,
   DollarSign,
-  ArrowRight
+  ArrowRight,
+  ArrowLeft
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
@@ -372,12 +373,20 @@ export default function ProfileScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.headerIconContainer}>
-            <User size={32} color="#2563EB" strokeWidth={2} />
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+            <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
+          </TouchableOpacity>
+          <View style={styles.headerContent}>
+            <View style={styles.headerIconContainer}>
+              <User size={32} color="#2563EB" strokeWidth={2} />
+            </View>
+            <Text style={styles.headerTitle}>Benefits from UNJSPF</Text>
+            <Text style={styles.headerSubtitle}>
+            Your profile setup      </Text>
           </View>
-          <Text style={styles.headerTitle}>Benefits from UNJSPF</Text>
-          <Text style={styles.headerSubtitle}>
-          Your profile setup      </Text>
         </View>
 
         {/* Form */}
@@ -714,7 +723,18 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
+  },
+  headerContent: {
     alignItems: 'center',
+    width: '100%',
   },
   headerIconContainer: {
     backgroundColor: '#EBF4FF',
