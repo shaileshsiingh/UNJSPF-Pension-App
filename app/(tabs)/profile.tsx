@@ -974,7 +974,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E5E7EB',
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '700',
     color: '#111827',
   },
@@ -993,7 +993,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F3F4F6',
   },
   orgOptionText: {
-    fontSize: 15,
+    fontSize: 12,
     color: '#111827',
     flex: 1,
     paddingRight: 12,
