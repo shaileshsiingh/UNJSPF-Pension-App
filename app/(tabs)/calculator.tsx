@@ -605,7 +605,7 @@ export default function CalculatorScreen() {
           </View>
         </View>
         <View style={styles.inlineInputGroup}>
-          <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry:</Text>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Entry:</Text>
           <View style={{ position: 'relative', flex: 1 }}>
             <TextInput
               style={[styles.inlineInput, styles.dateInput]}
