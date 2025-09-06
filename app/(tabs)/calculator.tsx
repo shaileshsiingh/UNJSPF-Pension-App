@@ -9,7 +9,7 @@ import {
   Switch,
   Alert,
 } from 'react-native';
-import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft } from 'lucide-react-native';
+import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 // import DatePicker from '../../components/DatePicker';
 
@@ -708,50 +708,60 @@ export default function CalculatorScreen() {
             <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
             <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text>
             {rows.map((row, rowIdx) => (
-              <ScrollView
-                key={rowIdx}
-                horizontal
-                showsHorizontalScrollIndicator={true}
-                style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0, paddingHorizontal: 8 }}
-                contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
-                keyboardShouldPersistTaps="handled"
-                scrollEnabled={true}
-              >
-                {row.map((label, colIdx) => {
-                  const absIndex = rowIdx * 12 + colIdx;
-                  return (
-                    <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
-                      <Text style={{ fontSize: 12, color: '#6B7280' }}>{label}</Text>
-                      <TextInput
-                        style={{
-                          borderWidth: 1,
-                          borderColor: '#D1D5DB',
-                          borderRadius: 8,
-                          width: 70,
-                          height: 36,
-                          textAlign: 'center',
-                          marginTop: 2,
-                          backgroundColor: '#FFF',
-                          color: '#111827',
-                        }}
-                        value={prValues[absIndex]}
-                        onChangeText={text => {
-                          const newValues = [...prValues];
-                          if (/^\d*\.?\d*$/.test(text)) {
-                            for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
-                              newValues[i] = text;
-                            }
-                            setPrValues(newValues);
-                          }
-                        }}
-                        placeholder="0"
-                        keyboardType="decimal-pad"
-                        maxLength={8}
-                      />
-                    </View>
-                  );
-                })}
-              </ScrollView>
+              <View key={rowIdx} style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0 }}>
+                <View style={styles.scrollContainer}>
+                  <View style={styles.scrollArrowLeft}>
+                    <ChevronLeft size={20} color="#6B7280" />
+                  </View>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={true}
+                    style={{ flex: 1, paddingHorizontal: 8 }}
+                    contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
+                    keyboardShouldPersistTaps="handled"
+                    scrollEnabled={true}
+                  >
+                    {row.map((label, colIdx) => {
+                      const absIndex = rowIdx * 12 + colIdx;
+                      return (
+                        <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                          <Text style={{ fontSize: width < 300 ? 10 : 11, color: '#6B7280' }}>{label}</Text>
+                          <TextInput
+                            style={{
+                              borderWidth: 1,
+                              borderColor: '#D1D5DB',
+                              borderRadius: 8,
+                              width: width < 300 ? 60 : 70,
+                              height: width < 300 ? 32 : 36,
+                              textAlign: 'center',
+                              marginTop: 2,
+                              backgroundColor: '#FFF',
+                              color: '#111827',
+                              fontSize: width < 300 ? 10 : 11,
+                            }}
+                            value={prValues[absIndex]}
+                            onChangeText={text => {
+                              const newValues = [...prValues];
+                              if (/^\d*\.?\d*$/.test(text)) {
+                                for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
+                                  newValues[i] = text;
+                                }
+                                setPrValues(newValues);
+                              }
+                            }}
+                            placeholder="0"
+                            keyboardType="decimal-pad"
+                            maxLength={8}
+                          />
+                        </View>
+                      );
+                    })}
+                  </ScrollView>
+                  <View style={styles.scrollArrowRight}>
+                    <ChevronRight size={20} color="#6B7280" />
+                  </View>
+                </View>
+              </View>
             ))}
             <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
           </View>
@@ -1146,7 +1156,7 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
   },
   label: {
-    fontSize: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 8,
@@ -1176,7 +1186,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 12,
     padding: width < 300 ? 12 : 12,
-    fontSize: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     backgroundColor: '#FFFFFF',
     color: '#111827',
   },
@@ -1186,7 +1196,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 12,
     padding: width < 300 ? 10 : width < 350 ? 12 : 16,
-    fontSize: width < 300 ? 12 : width < 350 ? 12 : 11,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     color: '#111827',
     flex: 1,
     minWidth: 0,
@@ -1206,10 +1216,10 @@ const styles = StyleSheet.create({
     color: '#6B7280',
   },
   displayValue: {
-    padding: 16,
+    padding: width < 300 ? 12 : 16,
     backgroundColor: '#F3F4F6',
     borderRadius: 12,
-    fontSize: 16,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     color: '#374151',
     fontWeight: '600',
     marginTop: 12,
@@ -1240,24 +1250,24 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   switchLabel: {
-    fontSize: 16,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 4,
   },
   switchDescription: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#6B7280',
   },
   resultsTitle: {
-    fontSize: 16,
+    fontSize: width < 300 ? 13 : width < 350 ? 14 : 16,
     fontWeight: '700',
     color: 'blue',
     marginBottom: 6,
     textAlign: 'center',
   },
   resultsTitle1: {
-    fontSize: 12,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 12,
     fontWeight: '500',
     color: 'blue',
     marginBottom: 6,
@@ -1275,14 +1285,14 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   benefitTitle: {
-    fontSize: 14,
+    fontSize: width < 300 ? 12 : width < 350 ? 13 : 14,
     fontWeight: '700',
     color: 'red',
     marginBottom: 16,
     textAlign: 'center',
   },
   benefitTitle1: {
-    fontSize: 13,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 13,
     fontWeight: '600',
     color: 'black',
     marginBottom: 16,
@@ -1303,19 +1313,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   resultLabel: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 12,
     color: '#6B7280',
     fontWeight: '500',
     flex: 1,
   },
   resultValue: {
-    fontSize: 16,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '700',
     color: '#111827',
   },
   highlightValue: {
     color: '#1D4ED8',
-    fontSize: 18,
+    fontSize: width < 300 ? 12 : width < 350 ? 13 : 14,
   },
   scenarioSummary: {
     backgroundColor: '#F0F9FF',
@@ -1326,7 +1336,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   scenarioText: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#0C4A6E',
     fontStyle: 'italic',
   },
@@ -1365,32 +1375,33 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   infoTitle: {
-    fontSize: 20,
+    fontSize: width < 300 ? 13 : width < 350 ? 14 : 16,
     fontWeight: '700',
     color: '#111827',
     marginBottom: 16,
+    textAlign: 'center',
   },
   infoCard: {
     backgroundColor: '#F0F9FF',
     padding: 16,
     borderRadius: 12,
-    marginBottom: 12,
+    // marginBottom: 12,
     borderColor: '#BAE6FD',
     borderWidth: 1,
   },
   infoCardTitle: {
-    fontSize: 16,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#0C4A6E',
     marginBottom: 8,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#0F172A',
-    lineHeight: 20,
+    lineHeight: 16,
   },
   disclaimerBox: {
-    margin: 24,
+    margin: 10,
     backgroundColor: '#FEF3C7',
     padding: 16,
     borderRadius: 12,
@@ -1398,10 +1409,33 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   disclaimerText: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#92400E',
     flex: 1,
     marginLeft: 12,
-    lineHeight: 20,
+    lineHeight: 16,
+  },
+  scrollContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F9FAFB',
+    borderRadius: 8,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  scrollArrowLeft: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 6,
+    marginLeft: 4,
+  },
+  scrollArrowRight: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 6,
+    marginRight: 4,
   },
 });
