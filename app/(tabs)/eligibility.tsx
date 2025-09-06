@@ -580,7 +580,7 @@ export default function EligibilityScreen() {
                 
                 
                 <View style={{ position: 'relative', height: 20, width: '100%', marginTop:'-60px'}}>
-                  {[1, 5, 10, 20,25, 30, 38.75].map((mark) => (
+                  {[1, 5, 10, 20, 25, 30, 38.75].map((mark) => (
                     <View
                       key={mark}
                       style={{
@@ -620,7 +620,7 @@ export default function EligibilityScreen() {
                 
                 
                 <View style={{ position: 'relative', height: 28, width: '100%', marginTop:'-60px' }}>
-                  {[18, 25, 35, 45, ERA, NRA, 65].map((mark) => (
+                  {[18, 25, 35, 45, 55, 60, 65].map((mark) => (
                     <View
                       key={mark}
                       style={{
@@ -631,27 +631,15 @@ export default function EligibilityScreen() {
                         width: 24,
                       }}
                     >
-                      <View style={[
-                        styles.tickLine,
-                        mark === ERA ? styles.eraTick :
-                        mark === NRA ? styles.nraTick :
-                        styles.regularTick
-                      ]} />
-                      <Text style={[
-                        styles.tickLabel,
-                        mark === ERA ? styles.eraLabel :
-                        mark === NRA ? styles.nraLabel :
-                        styles.regularLabel
-                      ]}>
-                        {mark === ERA ? `ERA (${ERA})` :
-                         mark === NRA ? `NRA (${NRA})` :
-                         mark}
-                      </Text>
+                      <View style={styles.tickLine} />
+                      <Text style={styles.tickLabel}>{mark}</Text>
                     </View>
                   ))}
                 </View>
                 <Text style={[styles.sliderValue, { marginTop: 30, marginBottom: 10 }]}>
-                  {currentAge} years
+                  {currentAge === ERA ? `${currentAge} years (ERA)` :
+                   currentAge === NRA ? `${currentAge} years (NRA)` :
+                   `${currentAge} years`}
                 </Text>
                 {/* ERA/NRA Info */}
                 <View style={styles.eraNraInfo}>
@@ -1121,29 +1109,10 @@ const styles = StyleSheet.create({
   regularTick: {
     backgroundColor: '#D1D5DB',
   },
-  eraTick: {
-    backgroundColor: '#DC2626',
-    height: 12,
-  },
-  nraTick: {
-    backgroundColor: '#2563EB',
-    height: 12,
-  },
   tickLabel: {
     fontSize: 11,
     color: '#6B7280',
     textAlign: 'center',
-  },
-  regularLabel: {
-    color: '#6B7280',
-  },
-  eraLabel: {
-    color: '#DC2626',
-    fontWeight: '600',
-  },
-  nraLabel: {
-    color: '#2563EB',
-    fontWeight: '600',
   },
   eraNraInfo: {
     backgroundColor: '#F3F4F6',
