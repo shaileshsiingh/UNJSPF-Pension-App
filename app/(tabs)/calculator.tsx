@@ -832,7 +832,7 @@ export default function CalculatorScreen() {
 
  {/* FAR (calculated) Display */}
  <View style={styles.inlineInputGroup}>
-           <Text style={[styles.inlineLabel, styles.longLabel]}>FAR (calculated):</Text>
+           <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated):</Text>
            <Text style={[styles.inlineInput, styles.readOnlyInput]}>
              {isNaN(far) || far === 0 ? '$0' : formatCurrency(far)}
            </Text>
