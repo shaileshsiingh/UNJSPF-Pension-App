@@ -580,7 +580,7 @@ export default function EligibilityScreen() {
                 
                 
                 <View style={{ position: 'relative', height: 20, width: '100%', marginTop:'-60px'}}>
-                  {[1, 5, 10, 20, 25, 30, 38.75].map((mark) => (
+                  {[1, 5, 10, 15, 20, 25, 30, 38.75].map((mark) => (
                     <View
                       key={mark}
                       style={{
