@@ -247,10 +247,10 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>Withdrawal Settlement With CS</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>CS &lt; 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>No Bonus</Text>
-          {'\n'}<Text style={styles.bold}>CS ≥ 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>Bonus</Text>
-          {'\n'}<Text style={styles.bold}>5-15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +10% per year after year 5 (max 100%)
-          {'\n'}<Text style={styles.bold}>≥ 15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +100%
+          <Text style={styles.bold}>&lt; 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold1}>No Bonus</Text>
+          {'\n'}<Text style={styles.bold}>≥ 5 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) + <Text style={styles.bold}>Bonus</Text>
+          {'\n'}<Text style={styles.bold}>5-15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +10% Bonus per year after year 5 (max 100%)
+          {'\n'}<Text style={styles.bold}>≥ 15 yrs</Text> = Own Contributions + 3.25% Compound Interest (per year) +100% Bonus
         </Text>
       </View>
 
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
   title4: {
     fontSize: scaleFont(18),
     fontWeight: '700',
-    color: '#111827',
+    color: 'blue',
     fontFamily: 'Roboto',
     paddingVertical: scaleSize(8),
     paddingHorizontal: scaleSize(8),
@@ -536,8 +536,13 @@ const styles = StyleSheet.create({
     fontStyle:'italic'
   },
   bold: {
-    fontWeight: '600',
+    fontWeight: '500',
     color: '#374151',
+    marginTop:10,
+  },
+  bold1: {
+    fontWeight: '500',
+    color: 'red',
     marginTop:10,
   },
   italic: {

@@ -100,8 +100,7 @@ export default function LandingPage() {
             </View>
             <Text style={styles.heroTitle}>MyUNPension</Text>
             <Text style={styles.heroSubtitle}>All your pension benefits in one place.</Text>
-            <Text style={styles.heroDesc}>
-            Everything you need for retirement planning is here. {'\n'} This App brings together your UN Pension Fund and employing organization benefits            </Text>
+           
             
              {/* Who is MyUNPension for? Section */}
         <View style={styles.whoSection}>
@@ -111,7 +110,7 @@ export default function LandingPage() {
               <Text style={styles.whoTitle}> MyUNPension </Text>for?</Text>
             </View>
             <Text style={styles.whoDesc}>
-            Whether you are new to the UN, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
+            Whether you are new to the UN system, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
             </Text>
             </View>
           
@@ -124,6 +123,8 @@ export default function LandingPage() {
 
         <View style={styles.appGlanceSection}>
           <Text style={styles.sectionTitleCenter}>App at a Glance</Text>
+          <Text style={styles.heroDesc}>
+          This App brings together your UN Pension Fund and employing organization benefits            </Text>
           <View style={styles.glanceCardsContainer}>
             {[
               {
@@ -133,7 +134,7 @@ export default function LandingPage() {
               },
               {
                 icon: "✈️",
-                title: "Benefits from Your Employing Organization",
+                title: "Benefits from Employing Organization",
                 desc: "Your HR entitlements"
               },
               {
@@ -161,7 +162,7 @@ export default function LandingPage() {
 
           <Text style={styles.overviewMainTitle}>United Nations Joint Staff Pension Fund</Text>
           <Text style={styles.overviewSubtitle}>Key facts at a glance</Text>
-          <Text style={styles.overviewNote}>Figures based on latest actuarial valuation (2025)</Text>
+          <Text style={styles.overviewNote}>Figures based on latest actuarial valuation</Text>
 
           {/* Financials */}
           <Text style={styles.categoryTitle}>Financials</Text>
@@ -188,12 +189,12 @@ export default function LandingPage() {
             </View>
             <View style={styles.statCard}>
               <Text style={styles.statIcon}>👥</Text>
-              <Text style={styles.statValue}>150K</Text>
+              <Text style={styles.statValue1}>150K</Text>
               <Text style={styles.statLabel}>Active Staff</Text>
             </View>
             <View style={styles.statCard}>
               <Text style={styles.statIcon}>💼</Text>
-              <Text style={styles.statValue}>89K</Text>
+              <Text style={styles.statValue1}>89K</Text>
               <Text style={styles.statLabel}>Retirees</Text>
             </View>
           </View>
@@ -224,9 +225,9 @@ export default function LandingPage() {
 
           {/* CTA Section */}
           <Text style={styles.ctaTitle}>Ready to see your retirement future?</Text>
-          <Text style={styles.ctaSubtitle}>
-            Take control of your retirement planning today. Make informed decisions with clear, accurate data.
-          </Text>
+          {/* <Text style={styles.ctaSubtitle}>
+            Make informed decisions with clear, accurate data.
+          </Text> */}
           <TouchableOpacity 
             style={styles.ctaButton}
             onPress={() => router.push('/calculator')}
@@ -249,7 +250,7 @@ export default function LandingPage() {
           
           <View style={styles.footerLinksSmall}>
             <TouchableOpacity onPress={() => handleLinkPress('#terms')}>
-              <Text style={styles.footerLinkSmall}>Terms of Service</Text>
+              <Text style={styles.footerLink}>Terms of Service</Text>
             </TouchableOpacity>
           </View>
 
@@ -259,7 +260,7 @@ export default function LandingPage() {
               <View style={styles.disclaimerContent}>
                 <Text style={styles.disclaimerTitle}>Disclaimer</Text>
                 <Text style={styles.disclaimerText}>
-                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the United Nations Joint Staff Pension Fund or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
+                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the UNJSPF or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
                 </Text>
               </View>
             </View>
@@ -326,7 +327,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: 'rgb(70 106 209)',
-    fontSize: scaleFont(20, 20, 20),
+    fontSize: scaleFont(18, 18, 18),
     fontWeight: '600',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -398,11 +399,12 @@ const styles = StyleSheet.create({
   whoHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: scaleSize(16, 20, 24),
+    // marginBottom: scaleSize(16, 20, 24),
+    marginTop: scaleSize(-10, -10, -10),
   },
   whoTitle: {
     color: 'rgb(70 106 209)',
-    fontSize: scaleFont(20, 20, 20),
+    fontSize: scaleFont(18, 18, 18),
     fontWeight: '600',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -597,7 +599,7 @@ const styles = StyleSheet.create({
   statValue1: {
     fontSize: scaleFont(15, 17,19),
     fontWeight: 'bold',
-    color: '#1d4ed8',
+    color: 'rgb(22, 163, 74)',
     fontFamily: 'Roboto',
   },
   statLabel: {
@@ -698,8 +700,8 @@ const styles = StyleSheet.create({
   },
   footerLink: {
     fontSize: scaleFont(12, 13, 14),
-    color: '#2563eb',
-    fontWeight: '500',
+    color: 'black',
+    fontWeight: '700',
     fontFamily: 'Roboto',
   },
   footerLinkSmall: {
@@ -729,14 +731,14 @@ const styles = StyleSheet.create({
   disclaimerTitle: {
     fontSize: scaleFont(12, 13, 14),
     fontWeight: '600',
-    color: '#b91c1c',
+    color: 'rgb(115 22 22)',
     marginBottom: scaleSize(4, 5, 6),
     textAlign: 'center',
     fontFamily: 'Roboto',
   },
   disclaimerText: {
     fontSize: scaleFont(10, 11, 12),
-    color: '#b91c1c',
+    color: 'rgb(115 22 22)',
     lineHeight: scaleFont(14, 15, 16),
     fontFamily: 'Roboto',
     textAlign: 'justify',

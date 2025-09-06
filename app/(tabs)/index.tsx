@@ -106,7 +106,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Calculator size={32} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Benefits from UNJSPF</Text>
+              <Text style={styles.toolTitle}>UNJSPF Benefits</Text>
               <Text style={styles.toolDescription}>
                 See your age of eligibility and benefits.
               </Text>
