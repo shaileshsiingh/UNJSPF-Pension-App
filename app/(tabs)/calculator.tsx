@@ -682,7 +682,7 @@ export default function CalculatorScreen() {
         </View>
 
         {/* FAR Input Method Toggle */}
-        <View style={styles.switchContainer}>
+        {/* <View style={styles.switchContainer}>
           <View style={styles.switchLabelContainer}>
             <Text style={styles.switchLabel}>Use Direct FAR Input</Text>
             <Text style={styles.switchDescription}>Toggle between direct FAR input or PR values calculation</Text>
@@ -693,10 +693,10 @@ export default function CalculatorScreen() {
             trackColor={{ false: '#D1D5DB', true: '#3B82F6' }}
             thumbColor={useFarInput ? '#FFFFFF' : '#F3F4F6'}
           />
-        </View>
+        </View> */}
 
         {/* Direct FAR Input */}
-        {useFarInput && (
+        {/* {useFarInput && (
           <>
             <View style={styles.inlineInputGroup}>
               <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Final Average Remuneration (USD):</Text>
@@ -718,7 +718,7 @@ export default function CalculatorScreen() {
               <Text style={styles.helpText}>Enter your Final Average Remuneration directly.</Text>
             </View>
           </>
-        )}
+        )} */}
 
         {/* PR Values Grid - Only show if not using direct FAR input */}
         {!useFarInput && (
@@ -731,12 +731,12 @@ export default function CalculatorScreen() {
               const isLastVisible = scrollPositions[rowIdx] >= (row.length * 78 - 300); // Approximate calculation
               
               const scrollLeft = () => {
-                scrollViewRef.current?.scrollTo({ x: Math.max(0, scrollPositions[rowIdx] - 200), animated: true });
+                scrollViewRef?.current?.scrollTo({ x: Math.max(0, scrollPositions[rowIdx] - 200), animated: true });
               };
               
               const scrollRight = () => {
                 const maxScroll = row.length * 78 - 300;
-                scrollViewRef.current?.scrollTo({ x: Math.min(maxScroll, scrollPositions[rowIdx] + 200), animated: true });
+                scrollViewRef?.current?.scrollTo({ x: Math.min(maxScroll, scrollPositions[rowIdx] + 200), animated: true });
               };
               
               return (
@@ -829,6 +829,18 @@ export default function CalculatorScreen() {
         <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Calculated from your birth date and separation date.</Text>
         </View>
+
+ {/* FAR (calculated) Display */}
+ <View style={styles.inlineInputGroup}>
+           <Text style={[styles.inlineLabel, styles.longLabel]}>FAR (calculated):</Text>
+           <Text style={[styles.inlineInput, styles.readOnlyInput]}>
+             {isNaN(far) || far === 0 ? '$0' : formatCurrency(far)}
+           </Text>
+         </View>
+         <View style={styles.helpTextContainer}>
+           <Text style={styles.helpText}>Average of your 36 months pensionable remuneration values.</Text>
+         </View>
+
 
         {/* Rate of Accumulation Display */}
         <View style={styles.inlineInputGroup}>
@@ -1205,7 +1217,7 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
-    marginBottom: 8,
+    // marginBottom: 8,
   },
   inlineLabel: {
     fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
@@ -1274,6 +1286,7 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#6B7280',
     marginTop: 2,
+    marginBottom: 4,
     fontStyle: 'italic',
   },
   helpTextContainer: {
