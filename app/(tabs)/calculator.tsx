@@ -9,7 +9,7 @@ import {
   Switch,
   Alert,
 } from 'react-native';
-import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders } from 'lucide-react-native';
+import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 // import DatePicker from '../../components/DatePicker';
 
@@ -34,6 +34,10 @@ function formatDateInput(text: string): string {
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { router } from 'expo-router';
+import { Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 interface PensionCalculation {
   annualPension: number;
@@ -544,18 +548,28 @@ export default function CalculatorScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Calculator size={32} color="#2563EB" strokeWidth={2} />
-        <Text style={styles.title}>Benefits from UNJSPF</Text>
-        <Text style={styles.subtitle}>Your benefits calculator</Text>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => router.push('/(tabs)')}
+        >
+          <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
+        </TouchableOpacity>
+        <View style={styles.headerContent}>
+          <View style={styles.headerIconContainer}>
+            <Calculator size={32} color="#2563EB" strokeWidth={2} />
+          </View>
+          <Text style={styles.title}>Benefits from UNJSPF</Text>
+          <Text style={styles.subtitle}>Your benefits calculator</Text>
+        </View>
       </View>
 
       <View style={styles.form}>
-        {/* Date inputs - replaced DatePicker with TextInput */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Date of Birth</Text>
-          <View style={{ position: 'relative' }}>
+        {/* Date inputs - inline layout */}
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Birth:</Text>
+          <View style={{ position: 'relative', flex: 1 }}>
             <TextInput
-              style={styles.input}
+              style={[styles.inlineInput, styles.dateInput]}
               value={dateOfBirth}
               onChangeText={value => setDateOfBirth(formatDateInput(value))}
               placeholder="DD-MM-YYYY"
@@ -574,11 +588,11 @@ export default function CalculatorScreen() {
             ) : null}
           </View>
         </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Date of Entry/Re-entry into UNJSPF</Text>
-          <View style={{ position: 'relative' }}>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry:</Text>
+          <View style={{ position: 'relative', flex: 1 }}>
             <TextInput
-              style={styles.input}
+              style={[styles.inlineInput, styles.dateInput]}
               value={entryDate}
               onChangeText={value => setEntryDate(formatDateInput(value))}
               placeholder="DD-MM-YYYY"
@@ -597,11 +611,11 @@ export default function CalculatorScreen() {
             ) : null}
           </View>
         </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Date of Separation</Text>
-          <View style={{ position: 'relative' }}>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Separation:</Text>
+          <View style={{ position: 'relative', flex: 1 }}>
             <TextInput
-              style={styles.input}
+              style={[styles.inlineInput, styles.dateInput]}
               value={separationDate}
               onChangeText={value => setSeparationDate(formatDateInput(value))}
               placeholder="DD-MM-YYYY"
@@ -622,27 +636,31 @@ export default function CalculatorScreen() {
         </View>
 
         {/* Own Contributions Input */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Your Own Contributions (USD)</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD):</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.inlineInput, styles.amountInput]}
             value={ownContributions.toString()}
             onChangeText={text => {
               const num = parseFloat(text);
               if (!isNaN(num) && num >= 0) setOwnContributions(num);
               else if (text === '' || text === '.') setOwnContributions(0);
             }}
-            placeholder="Enter your total contributions"
+            placeholder="Enter total contributions"
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Get this from your Annual Pension Statement.</Text>
         </View>
 
         {/* Calculated Interest Display */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Calculated Interest </Text>
-          <Text style={styles.displayValue}>{formatCurrency(calculatedInterest)}</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>Calculated Interest:</Text>
+          <Text style={[styles.inlineInput, styles.readOnlyInput]}>{formatCurrency(calculatedInterest)}</Text>
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Your contributions earn compound interest at 3.25% for every completed year of contributory service.</Text>
         </View>
 
@@ -662,22 +680,26 @@ export default function CalculatorScreen() {
 
         {/* Direct FAR Input */}
         {useFarInput && (
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Final Average Remuneration (USD)</Text>
-            <TextInput
-              style={styles.input}
-              value={finalAverageRemuneration.toString()}
-              onChangeText={text => {
-                const num = parseFloat(text);
-                if (!isNaN(num) && num >= 0) setFinalAverageRemuneration(num);
-                else if (text === '' || text === '.') setFinalAverageRemuneration(0);
-              }}
-              placeholder="Enter your Final Average Remuneration"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="decimal-pad"
-            />
-            <Text style={styles.helpText}>Enter your Final Average Remuneration directly.</Text>
-          </View>
+          <>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Final Average Remuneration (USD):</Text>
+              <TextInput
+                style={[styles.inlineInput, styles.amountInput]}
+                value={finalAverageRemuneration.toString()}
+                onChangeText={text => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0) setFinalAverageRemuneration(num);
+                  else if (text === '' || text === '.') setFinalAverageRemuneration(0);
+                }}
+                placeholder="Enter FAR"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="decimal-pad"
+              />
+            </View>
+            <View style={styles.helpTextContainer}>
+              <Text style={styles.helpText}>Enter your Final Average Remuneration directly.</Text>
+            </View>
+          </>
         )}
 
         {/* PR Values Grid - Only show if not using direct FAR input */}
@@ -737,30 +759,36 @@ export default function CalculatorScreen() {
 
         {/* Service Length Display */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Length of Your Contributory Service</Text>
+          <Text style={[styles.label]}>Length of Your Contributory Service:</Text>
           <Text style={styles.displayValue}>{serviceLength}</Text>
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Calculated from your entry to separation dates. Maximum recognized service is 38.75 years.</Text>
         </View>
 
         {/* Age at Retirement Display */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Age at Separation</Text>
-          <Text style={styles.displayValue}>{Math.floor(ageAtRetirement)} years</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Age at Separation:</Text>
+          <Text style={[styles.inlineInput, styles.readOnlyInput]}>{Math.floor(ageAtRetirement)} years</Text>
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Calculated from your birth date and separation date.</Text>
         </View>
 
         {/* Rate of Accumulation Display */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Rate of Accumulation (%)</Text>
-          <Text style={styles.displayValue}>{roa.toFixed(2)}%</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>Rate of Accumulation (%):</Text>
+          <Text style={[styles.inlineInput, styles.readOnlyInput]}>{roa.toFixed(2)}%</Text>
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Calculated based on your years of service and entry date.</Text>
         </View>
 
         {/* Actuarial Factor Input */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Actuarial Factor (for Lump Sum)</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>Actuarial Factor:</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.inlineInput, styles.numberInput]}
             value={actuarialFactor.toString()}
             onChangeText={text => {
               const num = parseFloat(text);
@@ -771,6 +799,8 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Enter the actuarial factor for lump sum calculations.</Text>
         </View>
 
@@ -789,29 +819,33 @@ export default function CalculatorScreen() {
         </View>
 
         {electLumpSum && (
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Lump Sum Percentage (up to 33.33%)</Text>
-            <TextInput
-              style={styles.input}
-              value={lumpSumPercentage.toString()}
-              onChangeText={text => {
-                const num = parseFloat(text);
-                if (!isNaN(num) && num >= 0 && num <= 33.33) setLumpSumPercentage(num);
-                else if (text === '' || text === '.') setLumpSumPercentage(0);
-              }}
-              placeholder="33.33"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="decimal-pad"
-            />
-            <Text style={styles.helpText}>You may commute up to 1/3 (33.33%) of your annual pension as a lump sum.</Text>
-          </View>
+          <>
+            <View style={styles.inlineInputGroup}>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Lump Sum Percentage:</Text>
+              <TextInput
+                style={[styles.inlineInput, styles.numberInput]}
+                value={lumpSumPercentage.toString()}
+                onChangeText={text => {
+                  const num = parseFloat(text);
+                  if (!isNaN(num) && num >= 0 && num <= 33.33) setLumpSumPercentage(num);
+                  else if (text === '' || text === '.') setLumpSumPercentage(0);
+                }}
+                placeholder="33.33"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="decimal-pad"
+              />
+            </View>
+            <View style={styles.helpTextContainer}>
+              <Text style={styles.helpText}>You may commute up to 1/3 (33.33%) of your annual pension as a lump sum.</Text>
+            </View>
+          </>
         )}
 
         {/* ASHI Contribution */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>ASHI Contribution (USD, if applicable)</Text>
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.longLabel]}>ASHI Contribution (USD):</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.inlineInput, styles.amountInput]}
             value={ashiContribution.toString()}
             onChangeText={text => {
               const num = parseFloat(text);
@@ -822,17 +856,20 @@ export default function CalculatorScreen() {
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"
           />
+        </View>
+        <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Enter your monthly ASHI deduction, if applicable.</Text>
         </View>
 
         {/* Results Section */}
         <View style={{ marginTop: 24 }}>
-          <Text style={styles.resultsTitle}>Your Estimated Benefits</Text>
-
+          <Text style={styles.resultsTitle}>Snapshot of your estimated benefits</Text>
+          <Text style={styles.resultsTitle1}>You have option to choose between A or B</Text>
+          
           {/* Withdrawal Settlement */}
           {withdrawalSettlement && (
             <View style={styles.benefitSection}>
-              <Text style={styles.benefitTitle}>Withdrawal Settlement</Text>
+              <Text style={styles.benefitTitle}>A. Withdrawal Settlement (one-time payment)</Text>
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>Your Own Contributions</Text>
                 <Text style={styles.resultValue}>{formatCurrency(withdrawalSettlement.ownContributions)}</Text>
@@ -871,7 +908,9 @@ export default function CalculatorScreen() {
           {/* Periodic Benefits */}
           {calculation && yearsOfService >= 5 && (
             <View style={styles.benefitSection}>
-              <Text style={styles.benefitTitle}>{calculation.eligibilityType}</Text>
+                            <Text style={styles.benefitTitle}>B. Periodical Benefit (Lifetime pension)</Text>
+
+              <Text style={styles.benefitTitle1}>{calculation.eligibilityType}</Text>
 
               {/* A) Annual Pension Amount (for normal retirement) */}
               <View style={styles.resultCard}>
@@ -1006,7 +1045,7 @@ export default function CalculatorScreen() {
                   at separation. The reduction is permanent but the benefit still includes cost of living 
                   adjustments and survivor benefits.
                 </Text>
-                <Text style={styles.infoCardTitle} style={{ marginTop: 12 }}>Reduction Factors:</Text>
+                <Text style={[styles.infoCardTitle, { marginTop: 12 }]}>Reduction Factors:</Text>
                 <Text style={styles.infoText}>
                   • If Early Retirement Age is 55:{'\n'}
                   - Less than 25 years: 6% per year{'\n'}
@@ -1051,45 +1090,120 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#FFFFFF',
-    padding: 24,
+    paddingTop: width < 300 ? 12 : width < 350 ? 16 : 20,
+    paddingBottom: width < 300 ? 16 : width < 350 ? 20 : 24,
+    paddingHorizontal: width < 300 ? 12 : width < 350 ? 16 : 24,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
+  },
+  headerContent: {
     alignItems: 'center',
-    borderBottomColor: '#E5E7EB',
-    borderBottomWidth: 1,
+    width: '100%',
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
   },
   title: {
-    fontSize: 18,
+    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
     fontWeight: '800',
     color: 'rgb(70 106 209)',
     marginBottom: 8,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 13,
     color: 'black',
     textAlign: 'center',
     fontWeight: '600',
-    // lineHeight: 22,
   },
   form: {
-    padding: 24,
+    padding: width < 300 ? 12 : width < 350 ? 16 : 20,
   },
   inputGroup: {
-    marginBottom: 24,
+    marginBottom: 6,
+  },
+  inlineInputGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+    gap: width < 300 ? 6 : width < 350 ? 8 : 12,
+    flexWrap: 'nowrap',
   },
   label: {
-    fontSize: 16,
+    fontSize: width < 300 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 8,
+  },
+  inlineLabel: {
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
+    fontWeight: '600',
+    color: '#374151',
+    flexShrink: 0,
+    textAlign: 'left',
+  },
+  // Label width classes for different label lengths
+  shortLabel: {
+    width: width < 300 ? 60 : 70, // Short labels
+  },
+  mediumLabel: {
+    width: width < 300 ? 56 : 106, // Date of Birth, Age at Separation
+  },
+  longLabel: {
+    width: width < 300 ? 90 : 131, // Date of Entry, Own Contributions, etc.
+  },
+  veryLongLabel: {
+    width: width < 300 ? 100 : 143, // Very long labels
   },
   input: {
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
+    padding: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 12 : 12,
     backgroundColor: '#FFFFFF',
     color: '#111827',
+  },
+  inlineInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 12,
+    padding: width < 300 ? 10 : width < 350 ? 12 : 16,
+    fontSize: width < 300 ? 12 : width < 350 ? 12 : 11,
+    color: '#111827',
+    flex: 1,
+    minWidth: 0,
+  },
+  // Input flex values to match label sizes
+  dateInput: {
+    flex: 1,
+  },
+  amountInput: {
+    flex: 1,
+  },
+  numberInput: {
+    flex: 1,
+  },
+  readOnlyInput: {
+    backgroundColor: '#F3F4F6',
+    color: '#6B7280',
   },
   displayValue: {
     padding: 16,
@@ -1101,10 +1215,14 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   helpText: {
-    fontSize: 14,
+    fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#6B7280',
-    marginTop: 4,
+    marginTop: 2,
     fontStyle: 'italic',
+  },
+  helpTextContainer: {
+    marginBottom: 12,
+    marginLeft: 4,
   },
   switchContainer: {
     flexDirection: 'row',
@@ -1132,10 +1250,17 @@ const styles = StyleSheet.create({
     color: '#6B7280',
   },
   resultsTitle: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
-    marginBottom: 16,
+    color: 'blue',
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  resultsTitle1: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: 'blue',
+    marginBottom: 6,
     textAlign: 'center',
   },
   benefitSection: {
@@ -1150,9 +1275,16 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   benefitTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
-    color: '#1F2937',
+    color: 'red',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  benefitTitle1: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: 'black',
     marginBottom: 16,
     textAlign: 'center',
   },
