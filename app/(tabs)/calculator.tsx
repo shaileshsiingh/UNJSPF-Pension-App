@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -30,6 +30,21 @@ function formatDateInput(text: string): string {
     parts.push(digits);
   }
   return parts.join('-');
+}
+
+// Format numbers with commas
+function formatNumberWithCommas(text: string): string {
+  // Remove all non-digits
+  const digits = text.replace(/\D/g, '');
+  if (digits === '') return '';
+  
+  // Add commas every 3 digits from the right
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// Remove commas from formatted number
+function removeCommas(text: string): string {
+  return text.replace(/,/g, '');
 }
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -349,6 +364,7 @@ export default function CalculatorScreen() {
   const [withdrawalSettlement, setWithdrawalSettlement] = useState<any>(null);
   const [calculatedInterest, setCalculatedInterest] = useState(0); // NEW: Display calculated interest
   const [useFarInput, setUseFarInput] = useState(false); // NEW: Toggle between FAR input and PR values
+  const [scrollPositions, setScrollPositions] = useState([0, 0, 0]); // Track scroll positions for each row
 
   // Helper functions
   function getSeparationDateObj() {
@@ -640,15 +656,16 @@ export default function CalculatorScreen() {
           <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD):</Text>
           <TextInput
             style={[styles.inlineInput, styles.amountInput]}
-            value={ownContributions.toString()}
+            value={formatNumberWithCommas(ownContributions.toString())}
             onChangeText={text => {
-              const num = parseFloat(text);
+              const cleanText = removeCommas(text);
+              const num = parseFloat(cleanText);
               if (!isNaN(num) && num >= 0) setOwnContributions(num);
-              else if (text === '' || text === '.') setOwnContributions(0);
+              else if (cleanText === '' || cleanText === '.') setOwnContributions(0);
             }}
             placeholder="Enter total contributions"
             placeholderTextColor="#9CA3AF"
-            keyboardType="decimal-pad"
+            keyboardType="numeric"
           />
         </View>
         <View style={styles.helpTextContainer}>
@@ -685,15 +702,16 @@ export default function CalculatorScreen() {
               <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Final Average Remuneration (USD):</Text>
               <TextInput
                 style={[styles.inlineInput, styles.amountInput]}
-                value={finalAverageRemuneration.toString()}
+                value={formatNumberWithCommas(finalAverageRemuneration.toString())}
                 onChangeText={text => {
-                  const num = parseFloat(text);
+                  const cleanText = removeCommas(text);
+                  const num = parseFloat(cleanText);
                   if (!isNaN(num) && num >= 0) setFinalAverageRemuneration(num);
-                  else if (text === '' || text === '.') setFinalAverageRemuneration(0);
+                  else if (cleanText === '' || cleanText === '.') setFinalAverageRemuneration(0);
                 }}
                 placeholder="Enter FAR"
                 placeholderTextColor="#9CA3AF"
-                keyboardType="decimal-pad"
+                keyboardType="numeric"
               />
             </View>
             <View style={styles.helpTextContainer}>
@@ -707,62 +725,89 @@ export default function CalculatorScreen() {
           <View style={{ marginVertical: 16 }}>
             <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
             <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text>
-            {rows.map((row, rowIdx) => (
-              <View key={rowIdx} style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0 }}>
-                <View style={styles.scrollContainer}>
-                  <View style={styles.scrollArrowLeft}>
-                    <ChevronLeft size={20} color="#6B7280" />
-                  </View>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={true}
-                    style={{ flex: 1, paddingHorizontal: 8 }}
-                    contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
-                    keyboardShouldPersistTaps="handled"
-                    scrollEnabled={true}
-                  >
-                    {row.map((label, colIdx) => {
-                      const absIndex = rowIdx * 12 + colIdx;
-                      return (
-                        <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
-                          <Text style={{ fontSize: width < 300 ? 10 : 11, color: '#6B7280' }}>{label}</Text>
-                          <TextInput
-                            style={{
-                              borderWidth: 1,
-                              borderColor: '#D1D5DB',
-                              borderRadius: 8,
-                              width: width < 300 ? 60 : 70,
-                              height: width < 300 ? 32 : 36,
-                              textAlign: 'center',
-                              marginTop: 2,
-                              backgroundColor: '#FFF',
-                              color: '#111827',
-                              fontSize: width < 300 ? 10 : 11,
-                            }}
-                            value={prValues[absIndex]}
-                            onChangeText={text => {
-                              const newValues = [...prValues];
-                              if (/^\d*\.?\d*$/.test(text)) {
-                                for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
-                                  newValues[i] = text;
+            {rows.map((row, rowIdx) => {
+              const scrollViewRef = React.useRef<ScrollView>(null);
+              const isFirstVisible = scrollPositions[rowIdx] <= 0;
+              const isLastVisible = scrollPositions[rowIdx] >= (row.length * 78 - 300); // Approximate calculation
+              
+              const scrollLeft = () => {
+                scrollViewRef.current?.scrollTo({ x: Math.max(0, scrollPositions[rowIdx] - 200), animated: true });
+              };
+              
+              const scrollRight = () => {
+                const maxScroll = row.length * 78 - 300;
+                scrollViewRef.current?.scrollTo({ x: Math.min(maxScroll, scrollPositions[rowIdx] + 200), animated: true });
+              };
+              
+              return (
+                <View key={rowIdx} style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0 }}>
+                  <View style={styles.scrollContainer}>
+                    {!isFirstVisible && (
+                      <TouchableOpacity style={styles.scrollArrowLeft} onPress={scrollLeft}>
+                        <ChevronLeft size={20} color="#6B7280" />
+                      </TouchableOpacity>
+                    )}
+                    <ScrollView
+                      ref={scrollViewRef}
+                      horizontal
+                      showsHorizontalScrollIndicator={true}
+                      style={{ flex: 1, paddingHorizontal: 8 }}
+                      contentContainerStyle={{ flexDirection: 'row', paddingLeft: 4, paddingRight: 4 }}
+                      keyboardShouldPersistTaps="handled"
+                      scrollEnabled={true}
+                      onScroll={(event) => {
+                        const newPositions = [...scrollPositions];
+                        newPositions[rowIdx] = event.nativeEvent.contentOffset.x;
+                        setScrollPositions(newPositions);
+                      }}
+                      scrollEventThrottle={16}
+                    >
+                      {row.map((label, colIdx) => {
+                        const absIndex = rowIdx * 12 + colIdx;
+                        return (
+                          <View key={label + absIndex} style={{ alignItems: 'center', marginRight: 8 }}>
+                            <Text style={{ fontSize: width < 300 ? 10 : 11, color: '#6B7280' }}>{label}</Text>
+                            <TextInput
+                              style={{
+                                borderWidth: 1,
+                                borderColor: '#D1D5DB',
+                                borderRadius: 8,
+                                width: width < 300 ? 60 : 70,
+                                height: width < 300 ? 32 : 36,
+                                textAlign: 'center',
+                                marginTop: 2,
+                                backgroundColor: '#FFF',
+                                color: '#111827',
+                                fontSize: width < 300 ? 10 : 11,
+                              }}
+                              value={formatNumberWithCommas(prValues[absIndex] || '')}
+                              onChangeText={text => {
+                                const cleanText = removeCommas(text);
+                                const newValues = [...prValues];
+                                if (/^\d*\.?\d*$/.test(cleanText)) {
+                                  for (let i = absIndex; i < Math.min(absIndex + 12, 36); i++) {
+                                    newValues[i] = cleanText;
+                                  }
+                                  setPrValues(newValues);
                                 }
-                                setPrValues(newValues);
-                              }
-                            }}
-                            placeholder="0"
-                            keyboardType="decimal-pad"
-                            maxLength={8}
-                          />
-                        </View>
-                      );
-                    })}
-                  </ScrollView>
-                  <View style={styles.scrollArrowRight}>
-                    <ChevronRight size={20} color="#6B7280" />
+                              }}
+                              placeholder="0"
+                              keyboardType="numeric"
+                              maxLength={10}
+                            />
+                          </View>
+                        );
+                      })}
+                    </ScrollView>
+                    {!isLastVisible && (
+                      <TouchableOpacity style={styles.scrollArrowRight} onPress={scrollRight}>
+                        <ChevronRight size={20} color="#6B7280" />
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
             <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
           </View>
         )}
@@ -856,15 +901,16 @@ export default function CalculatorScreen() {
           <Text style={[styles.inlineLabel, styles.longLabel]}>ASHI Contribution (USD):</Text>
           <TextInput
             style={[styles.inlineInput, styles.amountInput]}
-            value={ashiContribution.toString()}
+            value={formatNumberWithCommas(ashiContribution.toString())}
             onChangeText={text => {
-              const num = parseFloat(text);
+              const cleanText = removeCommas(text);
+              const num = parseFloat(cleanText);
               if (!isNaN(num) && num >= 0) setAshiContribution(num);
-              else if (text === '' || text === '.') setAshiContribution(0);
+              else if (cleanText === '' || cleanText === '.') setAshiContribution(0);
             }}
             placeholder="0"
             placeholderTextColor="#9CA3AF"
-            keyboardType="decimal-pad"
+            keyboardType="numeric"
           />
         </View>
         <View style={styles.helpTextContainer}>
@@ -1430,6 +1476,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
     borderRadius: 6,
     marginLeft: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollArrowRight: {
     paddingHorizontal: 8,
@@ -1437,5 +1485,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
     borderRadius: 6,
     marginRight: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
