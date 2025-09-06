@@ -653,7 +653,7 @@ export default function CalculatorScreen() {
 
         {/* Own Contributions Input */}
         <View style={styles.inlineInputGroup}>
-          <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD):</Text>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Own Contributions (USD):</Text>
           <TextInput
             style={[styles.inlineInput, styles.amountInput]}
             value={formatNumberWithCommas(ownContributions.toString())}
@@ -853,7 +853,7 @@ export default function CalculatorScreen() {
 
         {/* Actuarial Factor Input */}
         <View style={styles.inlineInputGroup}>
-          <Text style={[styles.inlineLabel, styles.longLabel]}>Actuarial Factor:</Text>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor:</Text>
           <TextInput
             style={[styles.inlineInput, styles.numberInput]}
             value={actuarialFactor.toString()}
@@ -910,7 +910,7 @@ export default function CalculatorScreen() {
 
         {/* ASHI Contribution */}
         <View style={styles.inlineInputGroup}>
-          <Text style={[styles.inlineLabel, styles.longLabel]}>ASHI Contribution (USD):</Text>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>ASHI Contribution (USD):</Text>
           <TextInput
             style={[styles.inlineInput, styles.amountInput]}
             value={formatNumberWithCommas(ashiContribution.toString())}
