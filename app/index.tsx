@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: scaleSize(-27, -27, -27),
+    marginTop: scaleSize(-41, -41, -41),
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {

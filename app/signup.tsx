@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   },
   heroIconContainer: {
     width: isSmallScreen ? 120 : 140,
-    height: isSmallScreen ? 120 : 140,
+    height: isSmallScreen ? 130 : 150,
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: -16,
-    marginTop: -22,
+    marginTop: -30,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
@@ -413,6 +413,7 @@ const styles = StyleSheet.create({
   // Signup Card - keeping existing styling but updating to match login structure
   card: {
     width: isSmallScreen ? width - 40 : 340,
+    height: isSmallScreen ? 440 : 460,
     backgroundColor: 'rgba(255, 255, 255, 0.95)', // Semi-transparent white
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
