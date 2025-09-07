@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: 'rgb(74 107 203)',
+    color: '#0072CE',
     fontSize: scaleFont(19, 19, 19),
     fontWeight: '700',
     textAlign: 'center',
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     marginTop: scaleSize(-10, -10, -10),
   },
   whoTitle: {
-    color: 'rgb(74 107 203)',
+    color: '#0072CE',
     fontSize: scaleFont(17, 17, 17),
     fontWeight: '700',
     textAlign: 'center',

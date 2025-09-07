@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,   // a bit more spacing from the title
   },
    heroTitle: {
-    color: 'rgb(70 106 209)',
+    color: '#0072CE',
     fontSize: 15,
     fontWeight: '600',
     textAlign: 'center',
