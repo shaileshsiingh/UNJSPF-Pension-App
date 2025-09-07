@@ -66,36 +66,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await firebaseSignOut(auth);
   };
 
-  // Google sign-in implementation with mobile-friendly approach
+  // Google sign-in implementation with enhanced popup configuration
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.addScope('email');
     provider.addScope('profile');
     
+    // Configure provider for better popup behavior
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
+    
     try {
-      if (Platform.OS === 'web') {
-        // For web, try popup first, fallback to redirect if popup fails
-        try {
-          const result = await signInWithPopup(auth, provider);
-          return result;
-        } catch (popupError: any) {
-          // If popup fails (blocked, etc.), use redirect
-          if (popupError.code === 'auth/popup-blocked' || 
-              popupError.code === 'auth/popup-closed-by-user') {
-            await signInWithRedirect(auth, provider);
-            // The result will be handled by the redirect result listener
-            return null;
-          }
-          throw popupError;
-        }
-      } else {
-        // For mobile (React Native), use redirect which works better
-        await signInWithRedirect(auth, provider);
-        // The result will be handled by the redirect result listener
-        return null;
-      }
-    } catch (error) {
+      // Use popup for in-app experience with better configuration
+      const result = await signInWithPopup(auth, provider);
+      return result;
+    } catch (error: any) {
       console.error('Google sign-in error:', error);
+      
+      // Handle specific popup errors with fallback to redirect
+      if (error.code === 'auth/popup-blocked') {
+        console.log('Popup blocked, trying redirect...');
+        try {
+          await signInWithRedirect(auth, provider);
+          return null; // Redirect will handle the result
+        } catch (redirectError) {
+          throw new Error('Authentication failed. Please try again.');
+        }
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        throw new Error('Sign-in was cancelled');
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        throw new Error('Another sign-in popup is already open');
+      }
+      
       throw error;
     }
   };

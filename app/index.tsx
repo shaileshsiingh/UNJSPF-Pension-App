@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
+import { getRobotoFont, typography } from '../utils/fonts';
 
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 const { width, height } = Dimensions.get('window');
@@ -326,13 +327,13 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: 'rgb(70 106 209)',
-    fontSize: scaleFont(18, 18, 18),
-    fontWeight: '600',
+    color: '#1e3a8a',
+    fontSize: scaleFont(20, 24, 28),
+    fontWeight: '700',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -1.2,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
@@ -340,23 +341,23 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {
-    color: 'black',
-    fontSize: scaleFont(14, 14, 14),
-    fontWeight: '500',
+    color: '#0072CE',
+    fontSize: scaleFont(12, 14, 16),
+    fontWeight: '600',
     textAlign: 'center',
     marginBottom: scaleSize(3, 3, 3),
     letterSpacing: 0.5,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
   },
   heroDesc: {
     color: 'rgba(62, 88, 112, 0.9)',
-    fontSize: scaleFont(13, 15, 16),
-    textAlign: 'center',
+    fontSize: scaleFont(14, 15, 16),
     lineHeight: scaleFont(20, 21, 22),
+    textAlign: 'center',
     marginBottom: scaleSize(8, 10, 12),
     paddingHorizontal: scaleSize(10, 15, 20),
     maxWidth: isTablet ? 600 : 520,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
     fontWeight: '400',
   },
 
@@ -403,13 +404,13 @@ const styles = StyleSheet.create({
     marginTop: scaleSize(-10, -10, -10),
   },
   whoTitle: {
-    color: 'rgb(70 106 209)',
-    fontSize: scaleFont(17, 17, 17),
-    fontWeight: '600',
+    color: '#1e3a8a',
+    fontSize: scaleFont(20, 24, 28),
+    fontWeight: '700',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
     letterSpacing: -1.2,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
@@ -423,20 +424,21 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: scaleFont(0, 0, 0),
     letterSpacing: -0.8,
-    fontFamily:  'Roboto',
+    fontFamily: getRobotoFont('medium'),
     textAlign: 'center',
   },
   whoDesc: {
     color: '#6b7280',
     fontSize: scaleFont(14, 15, 16),
     lineHeight: scaleFont(20, 21, 22),
-    fontFamily:  'Roboto',
+    fontFamily: getRobotoFont('regular'),
     fontWeight: '400',
     textAlign: 'justify',
   },
   boldText: {
     fontWeight: '600',
     color: '#0072CE',
+    fontFamily: getRobotoFont('medium'),
   },
 
   // App at a Glance Section - Fully Responsive
@@ -451,7 +453,7 @@ const styles = StyleSheet.create({
     color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: scaleSize(8, 10, 12),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   glanceCardsContainer: {
     flexDirection: 'row',
@@ -481,20 +483,20 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(2, 3, 4),
   },
   glanceTitle: {
-    fontSize: scaleFont(11, 12, 14),
-    fontWeight: '600',
-    color: '#1d4ed8',
+    fontSize: scaleFont(16, 18, 20),
+    fontWeight: '700',
+    color: '#1e3a8a',
     textAlign: 'center',
-    lineHeight: scaleFont(13, 14, 16),
+    lineHeight: scaleFont(20, 21, 22),
     marginBottom: scaleSize(2, 3, 4),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   glanceDesc: {
     fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: scaleFont(12, 13, 14),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
   },
 
   // Visual Gap
@@ -513,28 +515,28 @@ const styles = StyleSheet.create({
   },
   overviewMainTitle: {
     fontSize: scaleFont(16, 18, 22),
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: '#1e3a8a',
     textAlign: 'center',
     // marginBottom: scaleSize(8, 6, 8),
     // marginTop: scaleSize(10, 12, 14),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   overviewSubtitle: {
     fontSize: scaleFont(12, 14, 16),
     color: 'black',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
     fontWeight: '600',
 
   },
-  overviewNote: {
-    fontSize: scaleFont(10, 11, 12),
+  overviewSubtitle2: {
+    fontSize: scaleFont(12, 14, 16),
     color: 'black',
     textAlign: 'center',
     marginTop: scaleSize(2, 3, 4),
     marginBottom: scaleSize(8, 10, 12),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
     fontWeight: '600',
   },
 
@@ -546,13 +548,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
     marginTop: scaleSize(6, 8, 10),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
   },
   membershipTitle: {
     color: '#16a34a',
+    fontSize: scaleFont(16, 18, 20),
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: scaleSize(4, 5, 6),
+    marginTop: scaleSize(6, 8, 10),
+    fontFamily: getRobotoFont('bold'),
   },
   aboutTitle: {
     color: '#7c3aed',
+    fontSize: scaleFont(16, 18, 20),
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: scaleSize(4, 5, 6),
+    marginTop: scaleSize(6, 8, 10),
+    fontFamily: getRobotoFont('bold'),
   },
 
   // Card Containers - Responsive
@@ -594,25 +608,25 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(14, 16, 18),
     fontWeight: 'bold',
     color: '#1d4ed8',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   statValue1: {
     fontSize: scaleFont(15, 17,19),
     fontWeight: 'bold',
     color: 'rgb(22, 163, 74)',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   statValue2: {
     fontSize: scaleFont(17, 17,17),
     fontWeight: 800,
     color: 'rgb(22, 163, 74)',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   statLabel: {
     fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
     fontWeight: '600',
   },
 
@@ -647,19 +661,19 @@ const styles = StyleSheet.create({
     color: '#374151',
     lineHeight: scaleFont(16, 17, 18),
     flex: 1,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
     textAlign:'justify'
   },
 
   // CTA Section - Responsive
   ctaTitle: {
-    fontSize: scaleFont(16, 17, 18),
-    fontWeight: '600',
-    color: 'black',
+    fontSize: scaleFont(16, 18, 20),
+    fontWeight: '700',
+    color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
     marginTop: scaleSize(12, 14, 16),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   ctaSubtitle: {
     fontSize: scaleFont(12, 13, 14),
@@ -667,7 +681,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: scaleSize(12, 14, 16),
     paddingHorizontal: scaleSize(16, 20, 24),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
   },
   ctaButton: {
     backgroundColor: '#2563eb',
@@ -687,7 +701,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: scaleFont(16, 17, 18),
     fontWeight: '600',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('medium'),
     textAlign: 'center',
   },
 
@@ -708,12 +722,12 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(12, 13, 14),
     color: 'black',
     fontWeight: '700',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   footerLinkSmall: {
     fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
   },
 
   // Disclaimer Section - Responsive
@@ -736,17 +750,17 @@ const styles = StyleSheet.create({
   },
   disclaimerTitle: {
     fontSize: scaleFont(12, 13, 14),
-    fontWeight: '600',
+    fontWeight: '700',
     color: 'rgb(115 22 22)',
     marginBottom: scaleSize(4, 5, 6),
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
   },
   disclaimerText: {
     fontSize: scaleFont(10, 11, 12),
     color: 'rgb(115 22 22)',
     lineHeight: scaleFont(14, 15, 16),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
     textAlign: 'justify',
   },
 
@@ -757,6 +771,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: scaleSize(8, 10, 12),
     marginBottom: scaleSize(6, 8, 10),
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('regular'),
   },
 });

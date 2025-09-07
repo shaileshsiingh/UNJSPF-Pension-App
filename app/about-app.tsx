@@ -15,7 +15,7 @@ import {
   Smartphone, 
   BookOpen
 } from 'lucide-react-native';
-import { getRobotoLikeFont } from '../utils/fonts';
+import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
 import { router } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
@@ -447,13 +447,13 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(16),
     fontWeight: '700',
     color: '#111827',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   title4: {
     fontSize: scaleFont(18),
     fontWeight: '700',
     color: 'blue',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
     paddingVertical: scaleSize(8),
     paddingHorizontal: scaleSize(8),
     textAlign: 'center',
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#6B7280',
     marginLeft: scaleSize(6),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   activeTabText: {
     color: '#FFFFFF',
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#111827',
     marginBottom: scaleSize(4),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
     textAlign: 'center',
   },
   uniformTitle: {
@@ -512,14 +512,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#111827',
     marginBottom: scaleSize(6),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   uniformTitle1: {
     fontSize: scaleFont(14),
     fontWeight: '600',
     color: 'red',
     marginBottom: scaleSize(6),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   uniformSectionTitle: {
     fontSize: scaleFont(14),
@@ -527,13 +527,13 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: scaleSize(8),
     marginBottom: scaleSize(4),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   uniformSubtitle: {
     fontSize: scaleFont(12),
     color: '#6B7280',
     marginBottom: scaleSize(6),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
     fontStyle:'italic'
   },
   bold: {
@@ -554,14 +554,14 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(12),
     color: '#6B7280',
     lineHeight: scaleFont(16),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
     // fontStyle:'italic'
   },
   uniformContent1: {
     fontSize: scaleFont(12),
     color: 'red',
     lineHeight: scaleFont(16),
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
     // fontStyle:'italic'
   },
   
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#2563EB',
     textAlign: 'center',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   roaRow: {
     flexDirection: 'row',
@@ -600,6 +600,6 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(10),
     color: '#6B7280',
     textAlign: 'center',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
   },
 });

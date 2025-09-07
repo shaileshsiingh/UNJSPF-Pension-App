@@ -136,22 +136,14 @@ export default function LoginScreen() {
     setGoogleLoading(true);
     try {
       const result = await signInWithGoogle();
-      // For redirect-based auth, result might be null
-      if (result !== null) {
+      if (result) {
         showToast('Google sign-in successful!');
         router.replace('/');
-      } else {
-        // Redirect initiated, user will be redirected back after authentication
-        showToast('Redirecting to Google...');
       }
     } catch (e: any) {
       console.error('Google sign-in error:', e);
       let errorMessage = 'Google sign-in failed. Please try again.';
-      if (e.code === 'auth/popup-closed-by-user') {
-        errorMessage = 'Sign-in was cancelled';
-      } else if (e.code === 'auth/popup-blocked') {
-        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-      } else if (e.message) {
+      if (e.message) {
         errorMessage = e.message;
       }
       showToast(errorMessage);
