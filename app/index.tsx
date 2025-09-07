@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingVertical: scaleSize(8, 8, 8),
     paddingHorizontal: getHorizontalPadding(),
-    minHeight: height * (isSmallScreen ? 0.40 : isTablet ? 0.30 : 0.35),
+    minHeight: height * (isSmallScreen ? 0.30 : isTablet ? 0.30 : 0.30),
     justifyContent: 'center',
     overflow: 'hidden',
   },
