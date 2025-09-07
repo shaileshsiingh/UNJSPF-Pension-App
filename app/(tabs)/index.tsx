@@ -20,7 +20,10 @@ import {
   Users,
   TrendingUp,
   LogOut,
-  MapPin
+  MapPin,
+  CheckSquare,
+  Briefcase,
+  Book
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useAuth } from '../../components/AuthContext';
@@ -101,72 +104,77 @@ export default function HomeScreen() {
           </Text>
           
           <View style={styles.toolsGrid}>
+            {/* 1. Prepare to Retire (old: Planner) */}
+            <TouchableOpacity 
+              style={styles.toolCard}
+              onPress={() => router.push('/(tabs)/prepare' as any)}
+            >
+              <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Prepare to Retire</Text>
+              <Text style={styles.toolDescription}>
+                Actions • Checklist • Timelines • Submissions
+              </Text>
+            </TouchableOpacity>
+
+            {/* 2. UNJSF Benefits (kept route used previously) */}
             <TouchableOpacity 
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/profile')}
             >
-              <Calculator size={32} color="#2563EB" strokeWidth={2} />
-              <Text style={styles.toolTitle}>UNJSPF Benefits</Text>
+              <Shield size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>UNJSF Benefits</Text>
               <Text style={styles.toolDescription}>
-                See your age of eligibility and benefits.
+                Eligibility • Amounts • Next steps
               </Text>
             </TouchableOpacity>
 
+            {/* 3. My Pension (old: Pension) */}
             <TouchableOpacity 
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/eligibility')}
             >
-              <TrendingUp size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension</Text>
+              <TrendingUp size={32} color="#0EA5E9" strokeWidth={2} />
+              <Text style={styles.toolTitle}>My Pension</Text>
               <Text style={styles.toolDescription}>
-                Estimate, adjust, and view your pension.
+                Scenarios • Options
               </Text>
             </TouchableOpacity>
 
+            {/* 4. HR Benefits (old: Benefits from your employing organization) */}
             <TouchableOpacity 
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/employer-benefits')}
             >
-              <FileText size={32} color="#D97706" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Benefits from Your Employing Organization</Text>
+              <Briefcase size={32} color="#D97706" strokeWidth={2} />
+              <Text style={styles.toolTitle}>HR Benefits</Text>
               <Text style={styles.toolDescription}>
-                See your entitlements and steps to receive them.
+                Relocation • Repatriation • Leave • Home travel
               </Text>
             </TouchableOpacity>
 
+            {/* 5. Post-UN Life Planner (old: Relocation) */}
             <TouchableOpacity 
               style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/planner')}
-            >
-              <Users size={32} color="#7C3AED" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Planner</Text>
-              <Text style={styles.toolDescription}>
-                Explore financial planning tips.
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/info')}
+              onPress={() => router.push('/(tabs)/post-un-life' as any)}
             >
               <MapPin size={32} color="#DC2626" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Relocation</Text>
+              <Text style={styles.toolTitle}>Post-UN Life Planner</Text>
               <Text style={styles.toolDescription}>
-                Get guidance for your move.
+                Design your next chapter
               </Text>
             </TouchableOpacity>
 
+            {/* 6. Resources (old: Community) */}
             <TouchableOpacity 
               style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/info')}
+              onPress={() => router.push('/(tabs)/resources')}
             >
-              <Building size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Community</Text>
+              <Book size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Resources</Text>
               <Text style={styles.toolDescription}>
-                Connect with retirees and support.
+                Useful links
               </Text>
             </TouchableOpacity>
-           
           </View>
         </View>
 
@@ -243,16 +251,16 @@ const styles = StyleSheet.create({
   },
    heroTitle: {
     color: 'rgb(70 106 209)',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '600',
     textAlign: 'center',
-    lineHeight: 28,
+    // lineHeight: 28,
     letterSpacing: -1.2,
     fontFamily: 'Roboto',
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: -24,
+    marginTop: -18,
     marginBottom: 4,
       
     }, 

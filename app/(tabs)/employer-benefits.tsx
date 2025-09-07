@@ -50,9 +50,9 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.note}>
             To calculate your separation benefits from your employing organization, you may access the widely used UNDP tool titled
             <Text> </Text>
-            <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/people/leaveonline/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text>.
+            <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text>.
           </Text>
-          <Text style={styles.urlText}>https://info.undp.org/people/leaveonline/SiteAssets/Separation.aspx</Text>
+          <Text style={styles.urlText}>https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx </Text>
         </View>
 
         <View style={styles.card}>          

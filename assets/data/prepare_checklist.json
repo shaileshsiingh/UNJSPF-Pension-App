@@ -1,0 +1,12 @@
+[
+  { "step": "Step 1: 90–30 Days Before Separation", "category": "UNJSPF Actions", "task": "Confirm/update personal & family info with HR (name, DOB, marital status, dependants).", "status": "Pending" },
+  { "step": "Step 1: 90–30 Days Before Separation", "category": "UNJSPF Actions", "task": "Register in MSS & create/update UNJSPF account (https://www.unjspf.org/resources/about-member-self-service/).", "status": "Pending" },
+  { "step": "Step 1: 90–30 Days Before Separation", "category": "UNJSPF Actions", "task": "Submit documents electronically & update beneficiaries as needed.", "status": "Pending" },
+  { "step": "Step 2: 30 Days Before Separation", "category": "HR/Org Actions", "task": "Ensure PF4/SEP and SEPPA are issued by HR.", "status": "Pending" },
+  { "step": "Step 3: At Separation", "category": "Banking", "task": "Confirm final payroll account or submit P.250 for alternate.", "status": "Pending" },
+  { "step": "Step 4: After Separation", "category": "UNJSPF Actions", "task": "Track benefit status in MSS and check email for requests.", "status": "Pending" },
+  { "step": "Step 5: Banking & Accounts", "category": "Accounts", "task": "Close or update official accounts and subscriptions.", "status": "Pending" },
+  { "step": "Step 6: Supply & Clearance", "category": "Clearance", "task": "Return organization property (ID, equipment) and clear outstanding items.", "status": "Pending" },
+  { "step": "Step 7: As a Retiree", "category": "Aftercare", "task": "Keep personal contact details current with UNJSPF.", "status": "Pending" }
+]
+

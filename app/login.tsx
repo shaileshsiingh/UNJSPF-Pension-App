@@ -303,11 +303,11 @@ const styles = StyleSheet.create({
     marginBottom: -20,
   },
   appName: {
-    fontSize: isSmallScreen ? 18 : 20,
+    fontSize: isSmallScreen ? 15 : 15,
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -26,
+    marginTop: -22,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
