@@ -722,7 +722,9 @@ export default function CalculatorScreen() {
 
         {/* PR Values Grid - Only show if not using direct FAR input */}
         {!useFarInput && (
-          <View style={{ marginVertical: 16 }}>
+          <View style={{ marginVertical: 14 }}>
+                    <Text style={styles.boldLabel}>Final Average Remuneration (FAR) Calculator</Text>
+                    
             <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
             <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text>
             {rows.map((row, rowIdx) => {
@@ -1154,10 +1156,10 @@ export default function CalculatorScreen() {
             >
               <View style={styles.calculatorButtonContent}>
                 <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>Save and move to Benefits Calculator</Text>
-                  <Text style={styles.calculatorButtonSubtext}>
+                  <Text style={styles.calculatorButtonText}>See your best avaialble options</Text>
+                  {/* <Text style={styles.calculatorButtonSubtext}>
                     Get detailed pension calculations.
-                  </Text>
+                  </Text> */}
                 </View>
               </View>
               <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
@@ -1234,6 +1236,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#374151',
     // marginBottom: 8,
+  },
+  boldLabel: {
+    fontSize: width < 300 ? 12 : width < 350 ? 13 : 13,
+    fontWeight: '700',
+    color: '#374151',
+    textAlign: 'center',
+    marginBottom: 8,
   },
   inlineLabel: {
     fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
@@ -1520,7 +1529,7 @@ const styles = StyleSheet.create({
   calculatorButton: {
     backgroundColor: '#2563EB',
     borderRadius: 16,
-    padding: 12,
+    padding: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
     elevation: 3,
@@ -1546,6 +1555,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   section: {
-    marginBottom: 16,
+    margin: 16,
   },
 });
