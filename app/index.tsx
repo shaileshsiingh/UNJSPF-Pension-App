@@ -129,12 +129,12 @@ export default function LandingPage() {
             {[
               {
                 icon: "📊",
-                title: "Bnefits from UNJSPF",
+                title: "UNJSPF Bnefits",
                 desc: "Your pension, explained and simplified"
               },
               {
                 icon: "✈️",
-                title: "Benefits from Employing Organization",
+                title: "Employing Organization Benefits",
                 desc: "Your HR entitlements"
               },
               {
@@ -184,7 +184,7 @@ export default function LandingPage() {
           <View style={styles.threeCardRow}>
             <View style={styles.statCard}>
               <Text style={styles.statIcon}>🏢</Text>
-              <Text style={styles.statValue1}>25</Text>
+              <Text style={styles.statValue2}>25</Text>
               <Text style={styles.statLabel}>Organizations</Text>
             </View>
             <View style={styles.statCard}>
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   // Enhanced Hero Section - Fully Responsive
   heroSection: {
     position: 'relative',
-    paddingVertical: scaleSize(16, 20, 26),
+    paddingVertical: scaleSize(8, 8, 8),
     paddingHorizontal: getHorizontalPadding(),
     minHeight: height * (isSmallScreen ? 0.45 : isTablet ? 0.35 : 0.4),
     justifyContent: 'center',
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: scaleSize(-30, -30, -30),
+    marginTop: scaleSize(-27, -27, -27),
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
   },
   whoTitle: {
     color: 'rgb(70 106 209)',
-    fontSize: scaleFont(18, 18, 18),
+    fontSize: scaleFont(17, 17, 17),
     fontWeight: '600',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(4, 4, 4),
   },
   whoTitle1: {
-    fontSize: scaleFont(20, 20, 20),
+    fontSize: scaleFont(19, 19, 19),
     fontWeight: '500',
     color: 'black',
     flex: 1,
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   sectionTitleCenter: {
-    fontSize: scaleFont(20, 20, 20),
+    fontSize: scaleFont(19, 19, 19),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
@@ -516,8 +516,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
-    marginBottom: scaleSize(8, 6, 8),
-    marginTop: scaleSize(10, 12, 14),
+    // marginBottom: scaleSize(8, 6, 8),
+    // marginTop: scaleSize(10, 12, 14),
     fontFamily: 'Roboto',
   },
   overviewSubtitle: {
@@ -602,6 +602,12 @@ const styles = StyleSheet.create({
     color: 'rgb(22, 163, 74)',
     fontFamily: 'Roboto',
   },
+  statValue2: {
+    fontSize: scaleFont(17, 17,17),
+    fontWeight: 800,
+    color: 'rgb(22, 163, 74)',
+    fontFamily: 'Roboto',
+  },
   statLabel: {
     fontSize: scaleFont(10, 11, 12),
     color: '#6b7280',
@@ -649,7 +655,7 @@ const styles = StyleSheet.create({
   ctaTitle: {
     fontSize: scaleFont(16, 17, 18),
     fontWeight: '600',
-    color: '#1e40af',
+    color: 'black',
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
     marginTop: scaleSize(12, 14, 16),
