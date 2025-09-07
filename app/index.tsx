@@ -88,7 +88,7 @@ export default function LandingPage() {
         bounces={true}
       >
         {/* Enhanced Hero Section */} 
-        <Animated.View style={[styles.heroSection, { opacity: fadeAnim }]}>
+        <Animated.View style={[styles.heroSection]}>
           <View style={styles.heroBackground} />
           <View style={styles.heroContent}>
             <View style={styles.heroIconContainer}>
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingVertical: scaleSize(8, 8, 8),
     paddingHorizontal: getHorizontalPadding(),
-    minHeight: height * (isSmallScreen ? 0.45 : isTablet ? 0.35 : 0.4),
+    minHeight: height * (isSmallScreen ? 0.40 : isTablet ? 0.30 : 0.35),
     justifyContent: 'center',
     overflow: 'hidden',
   },
