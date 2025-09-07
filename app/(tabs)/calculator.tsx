@@ -9,7 +9,7 @@ import {
   Switch,
   Alert,
 } from 'react-native';
-import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react-native';
+import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 // import DatePicker from '../../components/DatePicker';
 
@@ -1147,6 +1147,22 @@ export default function CalculatorScreen() {
           15 business days after complete documentation is received.
         </Text>
       </View>
+      <View style={styles.section}>
+            <TouchableOpacity 
+              style={styles.calculatorButton}
+              onPress={() => router.push('/(tabs)/eligibility')}
+            >
+              <View style={styles.calculatorButtonContent}>
+                <View style={styles.calculatorButtonTextContainer}>
+                  <Text style={styles.calculatorButtonText}>Save and move to Benefits Calculator</Text>
+                  <Text style={styles.calculatorButtonSubtext}>
+                    Get detailed pension calculations.
+                  </Text>
+                </View>
+              </View>
+              <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+            </TouchableOpacity>
+          </View>
     </ScrollView>
   );
 }
@@ -1500,5 +1516,36 @@ const styles = StyleSheet.create({
     marginRight: 4,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  calculatorButton: {
+    backgroundColor: '#2563EB',
+    borderRadius: 16,
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+  },
+  calculatorButtonContent: {
+    alignItems: 'center',
+  },
+  calculatorButtonTextContainer: {
+  },
+  calculatorButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  calculatorButtonSubtext: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  section: {
+    marginBottom: 16,
   },
 });

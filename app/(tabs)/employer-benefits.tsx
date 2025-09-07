@@ -17,7 +17,7 @@ export default function EmployerBenefitsScreen() {
       <View style={styles.header}>        
         <FileText size={32} color="#2563EB" strokeWidth={2} />
         <Text style={styles.title}>Benefits from Employing Organization</Text>
-        <Text style={styles.subtitle}>Your separation benefits at a glance</Text>
+        <Text style={styles.subtitle}>Your HR Benefits At A Glance</Text>
       </View>
 
       <View style={styles.section}>        
@@ -30,22 +30,43 @@ export default function EmployerBenefitsScreen() {
 
         <View style={styles.bulletGroup}>
           <Text style={styles.bullet}>■ Separation Notification (P4/SEP) – Sent by HR to UNJSPF.</Text>
-          <Text style={styles.bullet}>■ Separation Personnel Action Form (SEPA) – Sent by HR to UNJSPF (not required for UN Agencies staff).</Text>
+          <Text style={styles.bullet}>■ Separation Personnel Action Form (SEPPA) – Sent by HR to UNJSPF (not required for UN Agencies staff).</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>This is a summary of the HR entitlements due from your employing organization, including the steps you must complete for release of payment:</Text>
-          <View style={styles.orderedList}>
-            <Text style={styles.item}><Text style={styles.bold}>1.Relocation grant</Text>: Submit boarding passes as proof of return, and return your UNLP.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>2.Travel entitlements</Text>: Submit your expense report for reimbursement of terminal expenses.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>3.Repatriation grant</Text> – Send an affidavit confirming your repatriation to home country.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>4.Final payments</Text>: encashment of accrued annual leave (upto 60 days) and other accounts payable - will be released after payroll completes audit of your service record (can be expected: 6–8 weeks after separation).</Text>
-            {/* <Text style={styles.item}><Text style={styles.bold}>Clear accounts</Text> and return all organization property (equipment, ID, credit cards) and other accounts.</Text> */}
-          </View>
+          <Text style={styles.cardTitle}>This is a summary of the HR entitlements due from your employing organization, including the steps you must complete for release of payment</Text>
 
-          <Text style={styles.italicInfo}>
-            Accrued leave on separation is limited to 30 days (temporary or on duty) before separation.
-          </Text>
+          <Text style={styles.sectionHeading}>📦 Relocation Grant</Text>
+          <br />    
+          <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Lump-sum to cover relocation costs for you and eligible family members.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Weeks of net base salary (varies by family status, duty station, service length).</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Typically 2–4 weeks of salary; higher at hardship duty stations.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Not payable if {'<'}1 year of service, dismissed for misconduct, or immediately reappointed.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Submit boarding passes as proof of return and return your UNLP.</Text>
+
+          <Text style={styles.sectionHeading}>🏠 Repatriation Grant</Text>
+          <br />   
+          <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Cash benefit recognizing service outside your home country.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Weeks of net base salary, based on qualifying years of service abroad + family status.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Up to 28 weeks of salary.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Not payable if only served in home country, dismissed for misconduct, or not returning home.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Send an affidavit confirming your repatriation to your home country.</Text>
+
+          <Text style={styles.sectionHeading}>✈️ Final Travel Entitlements</Text>
+          <br />  
+          <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Travel costs for you and dependants to repatriation destination at separation.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Economy airfare + DSA, most direct and economical route.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Varies by distance, dependants, and route.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Not payable if resigned within 1 year of appointment, dismissed, or no relocation.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Submit your expense report for reimbursement of terminal expenses.</Text>
+
+          <Text style={styles.sectionHeading}>📅 Final Payments (Leave Encashment)</Text>
+          <br />   
+          <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Cash for unused annual leave days and final account settlements.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Unused days × daily rate of final net salary.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Up to a maximum of 60 days of accrued leave (18 days for temporary; 60 for fixed/continuing).</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Days beyond the cap are forfeited.</Text>
+          <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Payments released after payroll audit of service record (normally 6–8 weeks after separation).</Text>
 
           <Text style={styles.note}>
             To calculate your separation benefits from your employing organization, you may access the widely used UNDP tool titled
@@ -59,7 +80,7 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.cardTitle}>Documents to submit 30 days before separation</Text>
           <View style={styles.orderedList}>            
             <Text style={styles.item}><Text style={styles.bold}>1.Separation Payments Form</Text> (P.250) – For alternative bank account final pay.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>2.Separation Briefing Note</Text> – Review, sign, and return (scan/format).</Text>
+            <Text style={styles.item}><Text style={styles.bold}>2.Separation Briefing Note</Text> – Review, sign, and return (scan/email).</Text>
             <Text style={styles.item}><Text style={styles.bold}>3.Exit Interview Form</Text> (P.218) & Annex – Complete and return.</Text>
             <Text style={styles.item}><Text style={styles.bold}>4.E-Performance Appraisal</Text>     – Submit most recent appraisal.</Text>
             <Text style={styles.item}><Text style={styles.bold}>5.Clearances</Text> – clearances coordinated by HR partner.</Text>
@@ -69,8 +90,8 @@ export default function EmployerBenefitsScreen() {
         </View>
 
         <View style={styles.card}>          
-          <Text style={styles.permanentTitle}>Permanent document to keep for record– you may obtain upon request:</Text>
-          <Text style={styles.permanentItem}>Form P.50 Certification of service from your HR – detailing a statement of duties and length of service, annual salary, and also an assessment of work quality and conduct.</Text>
+          <Text style={styles.permanentTitle}>Permamanent document to keep  for record- you may obtain upon request:</Text>
+          <Text style={styles.permanentItem}>Form P.50 Certification of service from your HR - detailing a statement of duties and length of service, annual salary, and also an assessment of work quality and conduct.</Text>
         </View>
       </View>
     </ScrollView>
@@ -151,6 +172,13 @@ const styles = StyleSheet.create({
     color: '#1E40AF',
     marginBottom: 12,
   },
+  sectionHeading: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#111827',
+    marginTop: 12,
+    marginBottom: 6,
+  },
   orderedList: {},
   item: {
     fontSize: 14,
@@ -173,7 +201,7 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 13,
-    color: '#000000',
+    color: 'red',
     backgroundColor: '#F0F9FF',
     padding: 12,
     borderRadius: 8,
@@ -189,7 +217,7 @@ const styles = StyleSheet.create({
   },
   urlText: {
     fontSize: 12,
-    color: '#6B7280',
+    color: 'red',
     marginTop: 4,
     fontStyle: 'italic',
   },
