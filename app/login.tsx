@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#0072CE', // Blue color to match landing page
     marginBottom: 8,
-    marginTop: -22,
+    marginTop: -23,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
