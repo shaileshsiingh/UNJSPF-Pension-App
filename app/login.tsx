@@ -18,7 +18,7 @@ import {
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getRobotoLikeFont } from '../utils/fonts';
+import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
 // import MyImage from '../assets/images/logo.png';
 
 
@@ -303,28 +303,27 @@ const styles = StyleSheet.create({
     marginBottom: -20,
   },
   appName: {
-    fontSize: isSmallScreen ? 15 : 15,
-    fontWeight: '900',
-    color: '#0072CE', // Blue color to match landing page
-    marginBottom: 8,
+    fontSize: isSmallScreen ? 17 : 17,
+    fontWeight: '700',
+    color: '#0072CE',
     marginTop: -30,
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   appTagline: {
     fontSize: isSmallScreen ? 14 : 16,
-    color: '#6b7280', // Gray color for subtitle
+    color: '#6b7280',
     textAlign: 'center',
     fontWeight: '500',
     letterSpacing: 0.2,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
 
   // Login Card - Restored simpler styling
   card: {
     width: isSmallScreen ? width - 40:300,
-    height:  440, 
+    height:  470, 
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -340,14 +339,13 @@ const styles = StyleSheet.create({
     marginTop: -28,
   },
   title: {
-    fontSize: isSmallScreen ? 18 : 28,
-    fontWeight: '800',
+    fontSize: isSmallScreen ? 24 : 28,
+    fontWeight: '700',
     marginBottom: 8,
-    marginTop: -12,
     color: 'rgb(29, 78, 216)',
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,
@@ -355,7 +353,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
     fontWeight: '600',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   
   // Input Styles
@@ -364,15 +362,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    width: '100%',
-    borderWidth: 2,
-    borderColor: 'rgba(229, 231, 235, 0.8)',
-    borderRadius: 16,
-    padding: isSmallScreen ? 14 : 16,
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 4,
     fontSize: isSmallScreen ? 15 : 16,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     color: '#1f2937',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
     fontWeight: '400',
   },
   inputError: {
@@ -380,12 +379,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(254, 242, 242, 0.95)',
   },
   errorText: {
-    color: '#EF4444',
-    fontSize: 12,
+    color: '#ef4444',
+    fontSize: 13,
     marginTop: 6,
     marginLeft: 6,
     fontWeight: '600',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   
   // Button Styles
@@ -411,7 +410,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: isSmallScreen ? 16 : 18,
     letterSpacing: 0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   
   // Link Styles
@@ -419,11 +418,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   linkText: {
-    color: '#0EA5E9', // Match the blue theme
+    color: '#2563eb',
     fontWeight: '600',
     fontSize: isSmallScreen ? 14 : 15,
     textAlign: 'center',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
 
   // Social Login Styles
@@ -443,7 +442,7 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   socialButtons: {
     width: '100%',
@@ -467,7 +466,7 @@ const styles = StyleSheet.create({
     color: '#374151',
     fontWeight: '600',
     fontSize: isSmallScreen ? 14 : 15,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
 
   // Bottom spacing

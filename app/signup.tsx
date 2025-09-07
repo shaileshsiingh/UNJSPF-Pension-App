@@ -18,7 +18,7 @@ import {
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getRobotoLikeFont } from '../utils/fonts';
+import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
 
 const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
@@ -394,28 +394,27 @@ const styles = StyleSheet.create({
     marginBottom: -20,
   },
   appName: {
-    fontSize: isSmallScreen ? 15 : 15,
-    fontWeight: '900',
-    color: '#0072CE', // Blue color to match landing page
-    marginBottom: -16,
+    fontSize: isSmallScreen ? 17 : 17,
+    fontWeight: '700',
+    color: '#0072CE',
     marginTop: -30,
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   appTagline: {
     fontSize: isSmallScreen ? 14 : 16,
-    color: '#6b7280', // Gray color for subtitle
+    color: '#6b7280',
     textAlign: 'center',
     fontWeight: '500',
     letterSpacing: 0.2,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
 
   // Signup Card - keeping existing styling but updating to match login structure
   card: {
     width: isSmallScreen ? width - 40 : 340,
-    height: isSmallScreen ? 440 : 460,
+    height: isSmallScreen ? 440 : 500,
     backgroundColor: 'rgba(255, 255, 255, 0.95)', // Semi-transparent white
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -431,20 +430,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: isSmallScreen ? 24 : 28,
-    fontWeight: '800',
+    fontWeight: '700',
     marginBottom: 8,
     color: '#F59E42', // Orange color for signup
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,
-    color: '#6B7280',
+    color: '#6b7280',
     marginBottom: 24,
     textAlign: 'center',
     fontWeight: '500',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   
   // Input Styles
@@ -453,15 +452,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    width: '100%',
+    height: 50,
     borderWidth: 1,
-    borderColor: 'rgba(229, 231, 235, 0.8)',
+    borderColor: '#d1d5db',
     borderRadius: 12,
-    padding: isSmallScreen ? 14 : 16,
+    paddingHorizontal: 16,
+    marginBottom: 4,
     fontSize: isSmallScreen ? 15 : 16,
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     color: '#1f2937',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('regular'),
     fontWeight: '400',
   },
   inputError: {
@@ -469,12 +469,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(254, 242, 242, 0.9)',
   },
   errorText: {
-    color: '#EF4444',
-    fontSize: 12,
+    color: '#ef4444',
+    fontSize: 13,
     marginTop: 4,
     marginLeft: 4,
     fontWeight: '500',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   
   // Button Styles
@@ -496,11 +496,11 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontWeight: '800',
     fontSize: isSmallScreen ? 16 : 18,
     letterSpacing: 0.5,
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('bold'),
   },
   
   // Link Styles
@@ -508,11 +508,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   linkText: {
-    color: '#F59E42', // Orange color for signup
+    color: 'gray',
     fontWeight: '600',
     fontSize: isSmallScreen ? 14 : 15,
     textAlign: 'center',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   // Social Login Styles
   divider: {
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: getRobotoLikeFont(),
+    fontFamily: getRobotoFont('medium'),
   },
   socialSection: {
     width: '100%',
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
      color: '#374151',
      fontWeight: '600',
      fontSize: isSmallScreen ? 14 : 15,
-     fontFamily: getRobotoLikeFont(),
+     fontFamily: getRobotoFont('medium'),
    },
   // Bottom spacing
   bottomSpacing: {

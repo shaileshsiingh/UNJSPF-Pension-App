@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {
-    color: '#0072CE',
+    color: 'black',
     fontSize: scaleFont(12, 14, 16),
     fontWeight: '600',
     textAlign: 'center',
