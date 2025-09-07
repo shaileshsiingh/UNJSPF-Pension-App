@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'expo-router';
-import { Home, Calculator, TrendingUp, FileSliders, FileText, Info } from 'lucide-react-native';
+import { Home, CheckSquare, Shield, TrendingUp, Plane, Workflow, Link } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -55,11 +55,20 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="prepare"
+        options={{
+          title: 'Checklist',
+          tabBarIcon: ({ size, color }) => (
+            <CheckSquare size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
-          title: 'Calculator',
+          title: 'Benefits',
           tabBarIcon: ({ size, color }) => (
-            <Calculator size={size} color={color} strokeWidth={2} />
+            <Shield size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
@@ -73,38 +82,36 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="planner"
+        name="employer-benefits"
         options={{
-          title: 'Planner',
+          title: 'HR',
           tabBarIcon: ({ size, color }) => (
-            <FileSliders size={size} color={color} strokeWidth={2} />
+            <Plane size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="post-un-life"
+        options={{
+          title: 'Future',
+          tabBarIcon: ({ size, color }) => (
+            <Workflow size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
       <Tabs.Screen
         name="resources"
         options={{
-          title: 'Entitlement',
+          title: 'Resources',
           tabBarIcon: ({ size, color }) => (
-            <FileText size={size} color={color} strokeWidth={2} />
+            <Link size={size} color={color} strokeWidth={2} />
           ),
         }}
       />
-      <Tabs.Screen
-        name="info"
-        options={{
-          title: 'Info',
-          tabBarIcon: ({ size, color }) => (
-            <Info size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="calculator"
-        options={{
-          href: null, // Hide from tab bar
-        }}
-      />
+      {/* Hide extra routes from the tab bar but keep them navigable */}
+      <Tabs.Screen name="planner" options={{ href: null }} />
+      <Tabs.Screen name="info" options={{ href: null }} />
+      <Tabs.Screen name="calculator" options={{ href: null }} />
     </Tabs>
   );
 }
