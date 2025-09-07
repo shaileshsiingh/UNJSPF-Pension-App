@@ -327,8 +327,8 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   heroTitle: {
-    color: '#1e3a8a',
-    fontSize: scaleFont(20, 24, 28),
+    color: 'rgb(74 107 203)',
+    fontSize: scaleFont(19, 19, 19),
     fontWeight: '700',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -404,8 +404,8 @@ const styles = StyleSheet.create({
     marginTop: scaleSize(-10, -10, -10),
   },
   whoTitle: {
-    color: '#1e3a8a',
-    fontSize: scaleFont(20, 24, 28),
+    color: 'rgb(74 107 203)',
+    fontSize: scaleFont(17, 17, 17),
     fontWeight: '700',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(4, 4, 4),
   },
   whoTitle1: {
-    fontSize: scaleFont(19, 19, 19),
+    fontSize: scaleFont(17, 17, 17),
     fontWeight: '500',
     color: 'black',
     flex: 1,
@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
   ctaTitle: {
     fontSize: scaleFont(16, 18, 20),
     fontWeight: '700',
-    color: '#1e3a8a',
+    color: 'black',
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
     marginTop: scaleSize(12, 14, 16),
