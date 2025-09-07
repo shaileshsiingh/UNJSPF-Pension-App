@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   // Login Card - Restored simpler styling
   card: {
     width: isSmallScreen ? width - 40:300,
-    height:  420, 
+    height:  440, 
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
