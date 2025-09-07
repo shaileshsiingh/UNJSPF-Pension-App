@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithCredential } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
 import { Platform } from 'react-native';
 
 interface AuthContextProps {
@@ -22,18 +20,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Configure Google OAuth inside the component
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your actual Google Client ID
-    scopes: ['openid', 'profile', 'email'],
-  });
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
       setUser(firebaseUser);
       setLoading(false);
     });
     return unsubscribe;
+  }, []);
+
+  // Check for redirect result on app load
+  useEffect(() => {
+    const checkRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          // User successfully signed in via redirect
+          console.log('Google sign-in successful via redirect');
+        }
+      } catch (error) {
+        console.error('Redirect result error:', error);
+      }
+    };
+    
+    if (Platform.OS === 'web') {
+      checkRedirectResult();
+    }
   }, []);
 
   const signIn = async (email: string, password: string) => {
@@ -55,37 +66,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await firebaseSignOut(auth);
   };
 
-  // Google sign-in implementation
+  // Google sign-in implementation with mobile-friendly approach
   const signInWithGoogle = async () => {
-    if (Platform.OS === 'web') {
-      // Use popup for web
-      const provider = new GoogleAuthProvider();
-      provider.addScope('email');
-      provider.addScope('profile');
-      
-      try {
-        const result = await signInWithPopup(auth, provider);
-        return result;
-      } catch (error) {
-        console.error('Google sign-in error:', error);
-        throw error;
-      }
-    } else {
-      // Use native authentication for mobile
-      try {
-        const result = await promptAsync();
-        if (result.type === 'success') {
-          const { id_token } = result.params;
-          const credential = GoogleAuthProvider.credential(id_token);
-          const firebaseResult = await signInWithCredential(auth, credential);
-          return firebaseResult;
-        } else {
-          throw new Error('Google sign-in was cancelled or failed');
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    
+    try {
+      if (Platform.OS === 'web') {
+        // For web, try popup first, fallback to redirect if popup fails
+        try {
+          const result = await signInWithPopup(auth, provider);
+          return result;
+        } catch (popupError: any) {
+          // If popup fails (blocked, etc.), use redirect
+          if (popupError.code === 'auth/popup-blocked' || 
+              popupError.code === 'auth/popup-closed-by-user') {
+            await signInWithRedirect(auth, provider);
+            // The result will be handled by the redirect result listener
+            return null;
+          }
+          throw popupError;
         }
-      } catch (error) {
-        console.error('Google sign-in error:', error);
-        throw error;
+      } else {
+        // For mobile (React Native), use redirect which works better
+        await signInWithRedirect(auth, provider);
+        // The result will be handled by the redirect result listener
+        return null;
       }
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      throw error;
     }
   };
   

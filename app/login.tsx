@@ -33,7 +33,7 @@ export default function LoginScreen() {
   const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [showGoogleSheet, setShowGoogleSheet] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
   // Email validation function
@@ -133,8 +133,31 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    // Always show bottom sheet for Google sign-in
-    setShowGoogleSheet(true);
+    setGoogleLoading(true);
+    try {
+      const result = await signInWithGoogle();
+      // For redirect-based auth, result might be null
+      if (result !== null) {
+        showToast('Google sign-in successful!');
+        router.replace('/');
+      } else {
+        // Redirect initiated, user will be redirected back after authentication
+        showToast('Redirecting to Google...');
+      }
+    } catch (e: any) {
+      console.error('Google sign-in error:', e);
+      let errorMessage = 'Google sign-in failed. Please try again.';
+      if (e.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-in was cancelled';
+      } else if (e.code === 'auth/popup-blocked') {
+        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+      showToast(errorMessage);
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   return (
@@ -224,11 +247,13 @@ export default function LoginScreen() {
 
               <View style={styles.socialButtons}>
                 <Pressable 
-                  style={[styles.socialButton, loading ? styles.buttonDisabled : null]} 
+                  style={[styles.socialButton, googleLoading ? styles.buttonDisabled : null]} 
                   onPress={handleGoogleSignIn}
-                  disabled={loading}
+                  disabled={googleLoading}
                 >
-                  <Text style={styles.socialButtonText}>Continue with Google</Text>
+                  <Text style={styles.socialButtonText}>
+                    {googleLoading ? 'Signing in...' : 'Continue with Google'}
+                  </Text>
                 </Pressable>
                 
                 {/* {Platform.OS === 'ios' && (
@@ -245,47 +270,6 @@ export default function LoginScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
-      
-      {/* Google bottom sheet for mobile */}
-      {showGoogleSheet && (
-        <View style={styles.googleSheetOverlay}>
-          <View style={styles.googleSheetContainer}>
-            <Text style={styles.googleSheetTitle}>Sign in with Google</Text>
-            <Text style={styles.googleSheetDescription}>Choose your Google account to sign in</Text>
-            <Pressable
-              style={[styles.button, loading ? styles.buttonDisabled : null]}
-              onPress={async () => {
-                setLoading(true);
-                try {
-                  await signInWithGoogle();
-                  showToast('Google sign-in successful!');
-                  setShowGoogleSheet(false);
-                  router.replace('/');
-                } catch (e: any) {
-                  console.error('Google sign-in error:', e);
-                  let errorMessage = 'Google sign-in failed. Please try again.';
-                  if (e.code === 'auth/popup-closed-by-user') {
-                    errorMessage = 'Sign-in was cancelled';
-                  } else if (e.code === 'auth/popup-blocked') {
-                    errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-                  } else if (e.message) {
-                    errorMessage = e.message;
-                  }
-                  showToast(errorMessage);
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              disabled={loading}
-            >
-              <Text style={styles.buttonText}>{loading ? 'Opening...' : 'Continue with Google'}</Text>
-            </Pressable>
-            <Pressable onPress={() => setShowGoogleSheet(false)} style={styles.googleSheetCancel}>
-              <Text style={styles.googleSheetCancelText}>Cancel</Text>
-            </Pressable>
-          </View>
-        </View>
-      )}
     </View>
   );
 }
@@ -497,46 +481,5 @@ const styles = StyleSheet.create({
   // Bottom spacing
   bottomSpacing: {
     height: isSmallScreen ? 20 : 40,
-  },
-  
-  // Google bottom sheet styles
-  googleSheetOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  googleSheetContainer: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-  },
-  googleSheetTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 8,
-    fontFamily: getRobotoLikeFont(),
-  },
-  googleSheetDescription: {
-    fontSize: 13,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 16,
-    fontFamily: getRobotoLikeFont(),
-  },
-  googleSheetCancel: {
-    marginTop: 8,
-    padding: 12,
-    alignItems: 'center',
-  },
-  googleSheetCancelText: {
-    color: '#6B7280',
-    fontWeight: '600',
-    fontFamily: getRobotoLikeFont(),
   },
 });

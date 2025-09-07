@@ -36,7 +36,7 @@ export default function SignupScreen() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [showGoogleSheet, setShowGoogleSheet] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   // Name validation function
   const validateName = (name: string) => {
@@ -191,12 +191,35 @@ export default function SignupScreen() {
       setLoading(false);
     }
   };
+
   const handleGoogleSignIn = async () => {
-    // Always show bottom sheet for Google sign-in
-    setShowGoogleSheet(true);
+    setGoogleLoading(true);
+    try {
+      const result = await signInWithGoogle();
+      // For redirect-based auth, result might be null
+      if (result !== null) {
+        showToast('Google sign-in successful!');
+        router.replace('/');
+      } else {
+        // Redirect initiated, user will be redirected back after authentication
+        showToast('Redirecting to Google...');
+      }
+    } catch (e: any) {
+      console.error('Google sign-in error:', e);
+      let errorMessage = 'Google sign-in failed. Please try again.';
+      if (e.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-in was cancelled';
+      } else if (e.code === 'auth/popup-blocked') {
+        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+      showToast(errorMessage);
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
-  
   return (
     <View style={styles.container}>
       {/* Clean gradient background - same as login */}
@@ -217,14 +240,14 @@ export default function SignupScreen() {
             <View style={styles.logoSection}>
               <View style={styles.heroIconContainer}>
                 <TouchableOpacity onPress={() => router.push('/')}>
-                               <Image 
-                                 source={{ 
-                                   uri: LOGO_URL
-                                 }}
-                                 style={styles.heroLogo}
-                                 resizeMode="contain"
-                               />
-                               </TouchableOpacity>
+                  <Image 
+                    source={{ 
+                      uri: LOGO_URL
+                    }}
+                    style={styles.heroLogo}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
               </View>
               <Text style={styles.appName}>MyUNPension</Text>
               {/* <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text> */}
@@ -308,73 +331,28 @@ export default function SignupScreen() {
               </Pressable> */}
 
               {/* Social Login Options */}
-              <View style={styles.divider}>
-                <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>or</Text>
-                <View style={styles.dividerLine} />
-              </View>
-
-              <View style={styles.socialButtons}>
-                <Pressable 
-                  style={[styles.socialButton, loading ? styles.buttonDisabled : null]} 
-                  onPress={handleGoogleSignIn}
-                  disabled={loading}
-                >
-                  <Text style={styles.socialButtonText}>Continue with Google</Text>
-                </Pressable>
+              <View style={styles.socialSection}>
+                <View style={styles.divider}>
+                  <View style={styles.dividerLine} />
+                  <Text style={styles.dividerText}>or continue with</Text>
+                  <View style={styles.dividerLine} />
+                </View>
                 
-                {/* {Platform.OS === 'ios' && (
-                  <Pressable style={styles.socialButton} onPress={() => signInWithApple()}>
-                    <Text style={styles.socialButtonText}>Continue with Apple</Text>
-                  </Pressable>
-                )} */}
+                <Pressable
+                  style={[styles.socialButton, { backgroundColor: '#4285F4' }, googleLoading ? styles.buttonDisabled : null]}
+                  onPress={handleGoogleSignIn}
+                  disabled={googleLoading}
+                >
+                  <Text style={[styles.socialButtonText, { color: '#fff' }]}>
+                    {googleLoading ? 'Signing in...' : '🔍 Continue with Google'}
+                  </Text>
+                </Pressable>
               </View>
             {/* Bottom Spacing */}
             <View style={styles.bottomSpacing} />
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
-      
-      {/* Google bottom sheet for mobile */}
-      {showGoogleSheet && (
-        <View style={styles.googleSheetOverlay}>
-          <View style={styles.googleSheetContainer}>
-            <Text style={styles.googleSheetTitle}>Sign in with Google</Text>
-            <Text style={styles.googleSheetDescription}>Choose your Google account to sign in</Text>
-            <Pressable
-              style={[styles.button, loading ? styles.buttonDisabled : null]}
-              onPress={async () => {
-                setLoading(true);
-                try {
-                  await signInWithGoogle();
-                  showToast('Google sign-in successful!');
-                  setShowGoogleSheet(false);
-                  router.replace('/');
-                } catch (e: any) {
-                  console.error('Google sign-in error:', e);
-                  let errorMessage = 'Google sign-in failed. Please try again.';
-                  if (e.code === 'auth/popup-closed-by-user') {
-                    errorMessage = 'Sign-in was cancelled';
-                  } else if (e.code === 'auth/popup-blocked') {
-                    errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-                  } else if (e.message) {
-                    errorMessage = e.message;
-                  }
-                  showToast(errorMessage);
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              disabled={loading}
-            >
-              <Text style={styles.buttonText}>{loading ? 'Opening...' : 'Continue with Google'}</Text>
-            </Pressable>
-            <Pressable onPress={() => setShowGoogleSheet(false)} style={styles.googleSheetCancel}>
-              <Text style={styles.googleSheetCancelText}>Cancel</Text>
-            </Pressable>
-          </View>
-        </View>
-      )}
     </View>
   );
 }
@@ -555,7 +533,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: getRobotoLikeFont(),
   },
-  socialButtons: {
+  socialSection: {
     width: '100%',
     gap: 12,
   },
@@ -582,46 +560,5 @@ const styles = StyleSheet.create({
   // Bottom spacing
   bottomSpacing: {
     height: isSmallScreen ? 20 : 40,
-  },
-  
-  // Google bottom sheet styles
-  googleSheetOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  googleSheetContainer: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-  },
-  googleSheetTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 8,
-    fontFamily: getRobotoLikeFont(),
-  },
-  googleSheetDescription: {
-    fontSize: 13,
-    color: '#6B7280',
-    textAlign: 'center',
-    marginBottom: 16,
-    fontFamily: getRobotoLikeFont(),
-  },
-  googleSheetCancel: {
-    marginTop: 8,
-    padding: 12,
-    alignItems: 'center',
-  },
-  googleSheetCancelText: {
-    color: '#6B7280',
-    fontWeight: '600',
-    fontFamily: getRobotoLikeFont(),
   },
 });
