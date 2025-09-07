@@ -231,14 +231,20 @@ export default function App() {
   const { done, total, pct } = computeProgress();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Text style={styles.title}>
+    <View style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
+      <View style={{ backgroundColor: '#FFFFFF', paddingTop: 20, paddingBottom: 24, paddingHorizontal: 24, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8 }}>
+        <View style={{ alignItems: 'center', width: '100%' }}>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: 'rgb(70 106 209)', marginBottom: 8, textAlign: 'center' }}>ACTS-Consolidated Retirement Preparation Checklist</Text>
+          <Text style={{ fontSize: 13, color: 'black', textAlign: 'center', fontWeight: '600' }}>(Actions, Checklist, Timelines, Submissions)</Text>
+        </View>
+      </View>
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        {/* <Text style={styles.title}>
           Consolidated Retirement Preparation Checklist
         </Text>
         <Text style={styles.subtitle}>
           (Actions, Checklist, Timelines, Submissions)
-        </Text>
+        </Text> */}
 
         <TouchableOpacity
           style={styles.banner}
@@ -323,7 +329,7 @@ export default function App() {
           );
         })}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
