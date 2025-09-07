@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithCredential } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { Platform } from 'react-native';
 
 interface AuthContextProps {
   user: User | null;
@@ -18,6 +21,12 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Configure Google OAuth inside the component
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your actual Google Client ID
+    scopes: ['openid', 'profile', 'email'],
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
@@ -48,16 +57,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Google sign-in implementation
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    provider.addScope('email');
-    provider.addScope('profile');
-    
-    try {
-      const result = await signInWithPopup(auth, provider);
-      return result;
-    } catch (error) {
-      console.error('Google sign-in error:', error);
-      throw error;
+    if (Platform.OS === 'web') {
+      // Use popup for web
+      const provider = new GoogleAuthProvider();
+      provider.addScope('email');
+      provider.addScope('profile');
+      
+      try {
+        const result = await signInWithPopup(auth, provider);
+        return result;
+      } catch (error) {
+        console.error('Google sign-in error:', error);
+        throw error;
+      }
+    } else {
+      // Use native authentication for mobile
+      try {
+        const result = await promptAsync();
+        if (result.type === 'success') {
+          const { id_token } = result.params;
+          const credential = GoogleAuthProvider.credential(id_token);
+          const firebaseResult = await signInWithCredential(auth, credential);
+          return firebaseResult;
+        } else {
+          throw new Error('Google sign-in was cancelled or failed');
+        }
+      } catch (error) {
+        console.error('Google sign-in error:', error);
+        throw error;
+      }
     }
   };
   

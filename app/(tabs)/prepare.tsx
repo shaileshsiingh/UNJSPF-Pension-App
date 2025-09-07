@@ -223,6 +223,9 @@ export default function App() {
   };
 
   const computeProgress = () => {
+    if (!data || !Array.isArray(data)) {
+      return { done: 0, total: 0, pct: 0 };
+    }
     const total = data.length;
     const done = data.filter((t) => t.status === "Done").length;
     return { done, total, pct: total ? Math.round((done / total) * 100) : 0 };
@@ -292,8 +295,8 @@ export default function App() {
         </Text>
 
         {/* Checklist */}
-        {STEPS.map((step) => {
-          const tasks = data.filter((t) => t.step === step);
+        {STEPS && STEPS.length > 0 && STEPS.map((step) => {
+          const tasks = data && Array.isArray(data) ? data.filter((t) => t.step === step) : [];
           if (!tasks.length) return null;
           const isCollapsed = !!collapsed[step];
           return (

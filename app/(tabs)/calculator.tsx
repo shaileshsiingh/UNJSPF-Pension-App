@@ -369,7 +369,10 @@ export default function CalculatorScreen() {
   // Helper functions
   function getSeparationDateObj() {
     if (!separationDate) return new Date();
-    const [day, month, year] = separationDate.split('-').map(Number);
+    const parts = separationDate.split('-');
+    if (parts.length !== 3) return new Date();
+    const [day, month, year] = parts.map(Number);
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return new Date();
     return new Date(year, month - 1, day);
   }
 
@@ -385,7 +388,9 @@ export default function CalculatorScreen() {
   }
 
   const monthLabels = getMonthLabels(getSeparationDateObj()).slice(0, 36);
-  const rows = [monthLabels.slice(0, 12), monthLabels.slice(12, 24), monthLabels.slice(24, 36)];
+  const rows = monthLabels && monthLabels.length > 0 
+    ? [monthLabels.slice(0, 12), monthLabels.slice(12, 24), monthLabels.slice(24, 36)]
+    : [[], [], []];
 
   // Calculate FAR - either from input or PR values
   const far = useFarInput 
@@ -1164,7 +1169,7 @@ export default function CalculatorScreen() {
               </View>
               <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
             </TouchableOpacity>
-          </View>
+      </View>
     </ScrollView>
   );
 }

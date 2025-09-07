@@ -18,6 +18,7 @@ import {
 import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getRobotoLikeFont } from '../utils/fonts';
 // import MyImage from '../assets/images/logo.png';
 
 
@@ -32,10 +33,11 @@ export default function LoginScreen() {
   const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showGoogleSheet, setShowGoogleSheet] = useState(false);
   const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
   // Email validation function
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email) {
       return 'Email is required';
@@ -47,7 +49,7 @@ export default function LoginScreen() {
   };
 
   // Password validation function
-  const validatePassword = (password) => {
+  const validatePassword = (password: string) => {
     if (!password) {
       return 'Password is required';
     }
@@ -58,7 +60,7 @@ export default function LoginScreen() {
   };
 
   // Cross-platform toast function
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     if (Platform.OS === 'android') {
       ToastAndroid.show(message, ToastAndroid.LONG);
     } else {
@@ -67,7 +69,7 @@ export default function LoginScreen() {
   };
 
   // Handle email input change
-  const handleEmailChange = (text) => {
+  const handleEmailChange = (text: string) => {
     setEmail(text);
     if (emailError) {
       setEmailError('');
@@ -75,7 +77,7 @@ export default function LoginScreen() {
   };
 
   // Handle password input change
-  const handlePasswordChange = (text) => {
+  const handlePasswordChange = (text: string) => {
     setPassword(text);
     if (passwordError) {
       setPasswordError('');
@@ -104,7 +106,7 @@ export default function LoginScreen() {
       await signIn(email, password);
       showToast('Login successful!');
       router.replace('/');
-    } catch (e) {
+    } catch (e: any) {
       console.error('Login error:', e);
       
       // Handle specific error types
@@ -131,26 +133,29 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      await signInWithGoogle();
-      showToast('Google sign-in successful!');
-      router.replace('/');
-    } catch (e) {
-      console.error('Google sign-in error:', e);
-      let errorMessage = 'Google sign-in failed. Please try again.';
-      
-      if (e.code === 'auth/popup-closed-by-user') {
-        errorMessage = 'Sign-in was cancelled';
-      } else if (e.code === 'auth/popup-blocked') {
-        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-      } else if (e.message) {
-        errorMessage = e.message;
+    // On web, call directly. On native, show a bottom sheet to start the flow.
+    if (Platform.OS === 'web') {
+      setLoading(true);
+      try {
+        await signInWithGoogle();
+        showToast('Google sign-in successful!');
+        router.replace('/');
+      } catch (e: any) {
+        console.error('Google sign-in error:', e);
+        let errorMessage = 'Google sign-in failed. Please try again.';
+        if (e.code === 'auth/popup-closed-by-user') {
+          errorMessage = 'Sign-in was cancelled';
+        } else if (e.code === 'auth/popup-blocked') {
+          errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+        } else if (e.message) {
+          errorMessage = e.message;
+        }
+        showToast(errorMessage);
+      } finally {
+        setLoading(false);
       }
-      
-      showToast(errorMessage);
-    } finally {
-      setLoading(false);
+    } else {
+      setShowGoogleSheet(true);
     }
   };
 
@@ -262,6 +267,47 @@ export default function LoginScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
+      
+      {/* Google bottom sheet for mobile */}
+      {Platform.OS !== 'web' && showGoogleSheet && (
+        <View style={styles.googleSheetOverlay}>
+          <View style={styles.googleSheetContainer}>
+            <Text style={styles.googleSheetTitle}>Sign in with Google</Text>
+            <Text style={styles.googleSheetDescription}>We will open a secure Google screen to complete sign-in.</Text>
+            <Pressable
+              style={[styles.button, loading ? styles.buttonDisabled : null]}
+              onPress={async () => {
+                setLoading(true);
+                try {
+                  await signInWithGoogle();
+                  showToast('Google sign-in successful!');
+                  setShowGoogleSheet(false);
+                  router.replace('/');
+                } catch (e: any) {
+                  console.error('Google sign-in error:', e);
+                  let errorMessage = 'Google sign-in failed. Please try again.';
+                  if (e.code === 'auth/popup-closed-by-user') {
+                    errorMessage = 'Sign-in was cancelled';
+                  } else if (e.code === 'auth/popup-blocked') {
+                    errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
+                  } else if (e.message) {
+                    errorMessage = e.message;
+                  }
+                  showToast(errorMessage);
+                } finally {
+                  setLoading(false);
+                }
+              }}
+              disabled={loading}
+            >
+              <Text style={styles.buttonText}>{loading ? 'Opening...' : 'Continue'}</Text>
+            </Pressable>
+            <Pressable onPress={() => setShowGoogleSheet(false)} style={styles.googleSheetCancel}>
+              <Text style={styles.googleSheetCancelText}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -310,7 +356,7 @@ const styles = StyleSheet.create({
     marginTop: -30,
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   appTagline: {
     fontSize: isSmallScreen ? 14 : 16,
@@ -318,7 +364,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     letterSpacing: 0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 
   // Login Card - Restored simpler styling
@@ -347,7 +393,7 @@ const styles = StyleSheet.create({
     color: 'rgb(29, 78, 216)',
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,
@@ -355,7 +401,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   
   // Input Styles
@@ -372,7 +418,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 15 : 16,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     color: '#1f2937',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   inputError: {
@@ -385,7 +431,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginLeft: 6,
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   
   // Button Styles
@@ -411,7 +457,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: isSmallScreen ? 16 : 18,
     letterSpacing: 0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   
   // Link Styles
@@ -423,7 +469,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: isSmallScreen ? 14 : 15,
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 
   // Social Login Styles
@@ -443,7 +489,7 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   socialButtons: {
     width: '100%',
@@ -467,11 +513,52 @@ const styles = StyleSheet.create({
     color: '#374151',
     fontWeight: '600',
     fontSize: isSmallScreen ? 14 : 15,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 
   // Bottom spacing
   bottomSpacing: {
     height: isSmallScreen ? 20 : 40,
+  },
+  
+  // Google bottom sheet styles
+  googleSheetOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    justifyContent: 'flex-end',
+  },
+  googleSheetContainer: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  googleSheetTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 8,
+    fontFamily: getRobotoLikeFont(),
+  },
+  googleSheetDescription: {
+    fontSize: 13,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 16,
+    fontFamily: getRobotoLikeFont(),
+  },
+  googleSheetCancel: {
+    marginTop: 8,
+    padding: 12,
+    alignItems: 'center',
+  },
+  googleSheetCancelText: {
+    color: '#6B7280',
+    fontWeight: '600',
+    fontFamily: getRobotoLikeFont(),
   },
 });

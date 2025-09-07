@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 // import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
+import { getRobotoLikeFont } from '../utils/fonts';
 
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 const { width, height } = Dimensions.get('window');
@@ -402,7 +403,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     lineHeight: isSmallScreen ? 40 : isTablet ? 56 : 44,
     letterSpacing: -1.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   heroDesc: {
     color: '#rgba(62, 88, 112, 0.9)',
@@ -443,7 +444,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     paddingHorizontal: 10,
     maxWidth: 520,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   primaryBtn: {
@@ -468,7 +469,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 16 : 18,
     marginRight: 8,
     letterSpacing: -0.3,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   primaryBtnIcon: {
     color: '#0EA5E9',
@@ -493,7 +494,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 12 : 14,
     fontWeight: '600',
     letterSpacing: 0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 
   // Enhanced Who Section
@@ -540,7 +541,7 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: 32,
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   whoSubtitle: {
     fontSize: isSmallScreen ? 16 : 18,
@@ -548,13 +549,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 16,
     lineHeight: 26,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   whoDesc: {
     color: '#6b7280',
     fontSize: isSmallScreen ? 15 : 16,
     lineHeight: isSmallScreen ? 22 : 26,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
 
@@ -580,7 +581,7 @@ const styles = StyleSheet.create({
     // marginBottom: 12,
     lineHeight: isSmallScreen ? 36 : 42,
     letterSpacing: -1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   sectionSubtitle: {
     fontSize: isSmallScreen ? 14 : 16,
@@ -588,7 +589,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 28,
     letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '500',
   },
 
@@ -632,14 +633,14 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: 30,
     letterSpacing: -0.6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   featureDesc: {
     color: '#374151',
     fontSize: isSmallScreen ? 15 : 16,
     lineHeight: isSmallScreen ? 22 : 26,
     marginBottom: 24,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   featureList: {
@@ -671,14 +672,14 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 14 : 15,
     lineHeight: isSmallScreen ? 20 : 24,
     flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   boldText: {
     fontWeight: '900',
     color: '#0072CE',
     letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   featureSubHeader: {
     flexDirection: 'row',
@@ -696,7 +697,7 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: 28,
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   
   featureItemCompact: {
@@ -757,7 +758,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     lineHeight: isSmallScreen ? 28 : 32,
     letterSpacing: -0.8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   aboutSubtitleCompact: {
     fontSize: isSmallScreen ? 14 : 16,
@@ -765,7 +766,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
     letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '500',
   },
   statsContainerCompact: {
@@ -801,7 +802,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     letterSpacing: -0.5,
     textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   statLabelCompact: {
     fontSize: isSmallScreen ? 8 : isMediumScreen ? 9 : 10,
@@ -811,7 +812,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     textTransform: 'uppercase',
     lineHeight: isSmallScreen ? 10 : 12,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   aboutCardCompact: {
     backgroundColor: '#ffffff',
@@ -847,14 +848,14 @@ const styles = StyleSheet.create({
     color: '#0EA5E9',
     fontSize: 10,
     fontWeight: '800',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   aboutTextCompact: {
     color: '#374151',
     fontSize: isSmallScreen ? 12 : 14,
     lineHeight: isSmallScreen ? 18 : 20,
     flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   sourceTextCompact: {
@@ -867,7 +868,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     fontStyle: 'italic',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   aboutSubtitle: {
     color: '#0072CE',
@@ -875,7 +876,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 28,
     letterSpacing: -0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '500',
   },
    statsContainer: {
@@ -911,7 +912,7 @@ const styles = StyleSheet.create({
      marginBottom: 4,
      letterSpacing: -0.5,
      textAlign: 'center',
-     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+     fontFamily: getRobotoLikeFont(),
    },
    statLabel: {
      fontSize: isSmallScreen ? 9 : isMediumScreen ? 10 : 11,
@@ -921,7 +922,7 @@ const styles = StyleSheet.create({
      letterSpacing: 0.3,
      textTransform: 'uppercase',
      lineHeight: isSmallScreen ? 12 : 14,
-     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+     fontFamily: getRobotoLikeFont(),
    },
   aboutCard: {
     backgroundColor: '#ffffff',
@@ -950,7 +951,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 14 : 15,
     lineHeight: isSmallScreen ? 20 : 24,
     flex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   sourceText: {
@@ -963,7 +964,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     fontStyle: 'italic',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 
   // Enhanced Step Cards - Removed numbering, made icons prominent
@@ -1010,7 +1011,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 30,
     letterSpacing: -0.6,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   stepDesc: {
     color: '#374151',
@@ -1018,7 +1019,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: isSmallScreen ? 22 : 26,
     maxWidth: 300,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
 
@@ -1051,7 +1052,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.2)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   ctaDesc: {
     color: 'black',
@@ -1061,7 +1062,7 @@ const styles = StyleSheet.create({
     marginBottom: 48,
     maxWidth: 420,
     zIndex: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   ctaBtn: {
@@ -1086,7 +1087,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 16 : 18,
     marginRight: 8,
     letterSpacing: -0.3,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   ctaBtnIcon: {
     fontSize: 18,
@@ -1114,7 +1115,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     letterSpacing: -0.5,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   footerText: {
     color: 'cyan',
@@ -1123,7 +1124,7 @@ const styles = StyleSheet.create({
     lineHeight: isSmallScreen ? 20 : 24,
     marginBottom: 36,
     maxWidth: 520,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
     fontWeight: '400',
   },
   footerLinks: {
@@ -1142,7 +1143,7 @@ const styles = StyleSheet.create({
     color: 'cyan',
     fontSize: isSmallScreen ? 13 : 14,
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
   footerCopyright: {
     color: 'cyan',
@@ -1150,6 +1151,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '600',
     letterSpacing: 0.2,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontFamily: getRobotoLikeFont(),
   },
 });
