@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
   },
   whoCard1: {
     maxWidth: isTablet ? 700 : 600,
-    width: '131%',
+    width: '125%',
     backgroundColor: '#ffffff',
     borderRadius: scaleSize(20, 24, 28),
     padding: scaleSize(20, 20, 20),
