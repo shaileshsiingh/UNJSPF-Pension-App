@@ -133,30 +133,8 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    // On web, call directly. On native, show a bottom sheet to start the flow.
-    if (Platform.OS === 'web') {
-      setLoading(true);
-      try {
-        await signInWithGoogle();
-        showToast('Google sign-in successful!');
-        router.replace('/');
-      } catch (e: any) {
-        console.error('Google sign-in error:', e);
-        let errorMessage = 'Google sign-in failed. Please try again.';
-        if (e.code === 'auth/popup-closed-by-user') {
-          errorMessage = 'Sign-in was cancelled';
-        } else if (e.code === 'auth/popup-blocked') {
-          errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-        } else if (e.message) {
-          errorMessage = e.message;
-        }
-        showToast(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      setShowGoogleSheet(true);
-    }
+    // Always show bottom sheet for Google sign-in
+    setShowGoogleSheet(true);
   };
 
   return (
@@ -269,11 +247,11 @@ export default function LoginScreen() {
       </LinearGradient>
       
       {/* Google bottom sheet for mobile */}
-      {Platform.OS !== 'web' && showGoogleSheet && (
+      {showGoogleSheet && (
         <View style={styles.googleSheetOverlay}>
           <View style={styles.googleSheetContainer}>
             <Text style={styles.googleSheetTitle}>Sign in with Google</Text>
-            <Text style={styles.googleSheetDescription}>We will open a secure Google screen to complete sign-in.</Text>
+            <Text style={styles.googleSheetDescription}>Choose your Google account to sign in</Text>
             <Pressable
               style={[styles.button, loading ? styles.buttonDisabled : null]}
               onPress={async () => {
@@ -300,7 +278,7 @@ export default function LoginScreen() {
               }}
               disabled={loading}
             >
-              <Text style={styles.buttonText}>{loading ? 'Opening...' : 'Continue'}</Text>
+              <Text style={styles.buttonText}>{loading ? 'Opening...' : 'Continue with Google'}</Text>
             </Pressable>
             <Pressable onPress={() => setShowGoogleSheet(false)} style={styles.googleSheetCancel}>
               <Text style={styles.googleSheetCancelText}>Cancel</Text>
