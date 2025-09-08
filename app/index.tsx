@@ -135,12 +135,12 @@ export default function LandingPage() {
               },
               {
                 icon: "✈️",
-                title: "Employing Organization Benefits",
+                title: "Employer Benefits",
                 desc: "Your HR entitlements"
               },
               {
                 icon: "👥",
-                title: "Post-Retirement Resources",
+                title: "Post-Retirement",
                 desc: "Guidance to plan, settle, and stay connected"
               }
             ].map((item, idx) => (
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: scaleSize(-30, -41, -41),
+    marginTop: scaleSize(-27, -37, -37),
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {
@@ -617,7 +617,7 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('bold'),
   },
   statValue2: {
-    fontSize: scaleFont(17, 17,17),
+    fontSize: scaleFont(18, 18,18),
     fontWeight: 800,
     color: 'rgb(22, 163, 74)',
     fontFamily: getRobotoFont('bold'),
@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: 'black',
     textAlign: 'center',
-    marginBottom: scaleSize(4, 5, 6),
+    marginBottom: scaleSize(18, 18, 18),
     marginTop: scaleSize(12, 14, 16),
     fontFamily: getRobotoFont('bold'),
   },
