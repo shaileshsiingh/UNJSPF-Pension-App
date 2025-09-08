@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: '#0072CE',
-    fontSize: scaleFont(19, 19, 19),
+    fontSize: scaleFont(17, 17, 17),
     fontWeight: '700',
     textAlign: 'center',
     lineHeight: scaleFont(28, 32, 36),
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: scaleSize(-41, -41, -41),
+    marginTop: scaleSize(-30, -41, -41),
     marginBottom: scaleSize(4, 4, 4),
   },
   heroSubtitle: {

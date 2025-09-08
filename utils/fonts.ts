@@ -92,3 +92,4 @@ export const typography = {
     lineHeight: { small: 20, medium: 22, tablet: 24 },
   },
 };
+
