@@ -17,15 +17,19 @@ export default function ResourcesScreen() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>General information</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/about-member-self-service/')}>
-            <Text style={styles.link}>1. Member Self-Service (MSS)</Text>
+            <Text style={styles.link}>UN News</Text>
+            <Text style={styles.url}>https://news.un.org/en/</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/about-member-self-service/')}>
+            <Text style={styles.link}>Member Self-Service (MSS)</Text>
             <Text style={styles.url}>https://www.unjspf.org/resources/about-member-self-service/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/pension-townhall-sessions/')}>
-            <Text style={styles.link}>2. Pension Townhall Sessions</Text>
+            <Text style={styles.link}>Pension Townhall Sessions</Text>
             <Text style={styles.url}>https://www.unjspf.org/pension-townhall-sessions/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/all-videos/')}>
-            <Text style={styles.link}>3. Pension Videos</Text>
+            <Text style={styles.link}>Pension Videos</Text>
             <Text style={styles.url}>https://www.unjspf.org/resources/all-videos/</Text>
               </TouchableOpacity>
             </View>
@@ -33,15 +37,15 @@ export default function ResourcesScreen() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Separation specific information</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/')}>
-            <Text style={styles.link}>4. Separating and Retiring</Text>
+            <Text style={styles.link}>Separating and Retiring</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/benefit-options/')}>
-            <Text style={styles.link}>5. UNJSPF Benefit Options</Text>
+            <Text style={styles.link}>UNJSPF Benefit Options</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/benefit-options/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/overview-of-the-separation-process/')}>
-            <Text style={styles.link}>6. Overview of the Separation Process</Text>
+            <Text style={styles.link}>Overview of the Separation Process</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/overview-of-the-separation-process/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/separation/')}>
@@ -49,27 +53,27 @@ export default function ResourcesScreen() {
             <Text style={styles.url}>https://www.unjspf.org/for-clients/separation/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/retirement-age-2/')}>
-            <Text style={styles.link}>7. Retirement Ages</Text>
+            <Text style={styles.link}>Retirement Ages</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/retirement-age-2/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/how-to-submit-documents-to-the-unjspf/')}>
-            <Text style={styles.link}>8. Submitting Documents to the UNJSPF</Text>
+            <Text style={styles.link}>Submitting Documents to the UNJSPF</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/how-to-submit-documents-to-the-unjspf/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/survivors-benefit/')}>
-            <Text style={styles.link}>9. UNJSPF Survivors Benefits</Text>
+            <Text style={styles.link}>UNJSPF Survivors Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/survivors-benefit/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/taxation-of-benefits/')}>
-            <Text style={styles.link}>10. Taxation of UNJSPF Benefits</Text>
+            <Text style={styles.link}>Taxation of UNJSPF Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/taxation-of-benefits/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/after-service-health-insurance/')}>
-            <Text style={styles.link}>11. ASHI (After Service Health Insurance)</Text>
+            <Text style={styles.link}>ASHI (After Service Health Insurance)</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/after-service-health-insurance/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.fafics.org')}>
-            <Text style={styles.link}>12. Retiree Associations / FAFICS</Text>
+            <Text style={styles.link}>Retiree Associations / FAFICS</Text>
             <Text style={styles.url}>https://www.fafics.org</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://fafics.org/member-associations/list/')}>

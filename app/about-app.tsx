@@ -156,19 +156,20 @@ export default function CombinedAboutScreen() {
   const renderConceptsContent = () => (
     <View>
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformMainTitle}>Key Pension Concepts</Text>
+        {/* <Text style={styles.uniformMainTitle}>Key Pension Concepts</Text> */}
         
         {/* A. Retirement Ages */}
         <Text style={styles.uniformSectionTitle}>Retirement Ages</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
+        <Text style={styles.bold}>Retirement date:</Text> Last workday of contract, or month-end at mandatory age (if born on the 1st, previous month's end).
+          {'\n'} {'\n'}<Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
           {'\n'} {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
-          {'\n'}• Joined before 1990 = NRA 60
-          {'\n'}• Joined 1990-2013 = NRA 62
-          {'\n'}• Joined 2014 or later = NRA 65
+          {'\n'}<Text style={styles.italic}>• Joined before 1990 = NRA 60</Text>
+          {'\n'}<Text style={styles.italic}>• Joined 1990-2013 = NRA 62</Text>
+          {'\n'}<Text style={styles.italic}>• Joined 2014 or later = NRA 65</Text>
           {'\n'} {'\n'}<Text style={styles.bold}>Early Retirement Age (ERA):</Text> The minimum age for early retirement with a reduction in pension.
-          {'\n'}• Joined before 2014 = ERA 55
-          {'\n'}• Joined 2014 or later = ERA 58
+          {'\n'}<Text style={styles.italic}>• Joined before 2014 = ERA 55</Text>
+          {'\n'}<Text style={styles.italic}>• Joined 2014 or later = ERA 58</Text>
         </Text>
       </View>
 
@@ -226,6 +227,9 @@ export default function CombinedAboutScreen() {
           {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
             </Text>
           {'\n'} {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement.
+          {'\n'} {'\n'}<Text style={styles.bold}>COLA:</Text> Pensions are reviewed each year on 1 April, based on the previous year's average CPI.
+          {'\n'}An adjustment is applied only if inflation since the last change exceeds 2%;
+          {'\n'} otherwise, it is deferred until the cumulative rise reaches at least 2%.
         </Text>
       </View>
 
@@ -259,11 +263,11 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>Periodic Retirement Benefits</Text>
         <Text style={styles.uniformContent}>
-          <Text style={styles.bold}>Annual Pension = FAR × ROA × Years of CS</Text>
+          <Text style={styles.bold}>Annual Pension = FAR × ROA</Text>
           {'\n'}<Text style={styles.bold}>Monthly Pension = Annual Pension / 12 + COLA - ASHI Premium</Text>
-          {'\n'}{'\n'}<Text style={styles.bold}>FAR</Text> = Final Average Remuneration (avg. of top 36 months)
-          {'\n'}<Text style={styles.bold}>ROA</Text> = Rate of Accumulation
-          {'\n'}<Text style={styles.bold}>CS</Text> = Contributory Service
+          {'\n'}{'\n'}<Text style={styles.italic}>FAR = Final Average Remuneration (avg. of top 36 months)</Text>
+          {'\n'}<Text style={styles.italic}>ROA = Rate of Accumulation</Text>
+          {'\n'}<Text style={styles.italic}>CS = Contributory Service</Text>
         </Text>
       </View>
 
@@ -298,7 +302,7 @@ export default function CombinedAboutScreen() {
   const renderScenariosContent = () => (
     <View>
       <View style={styles.uniformSection}>
-        <Text style={styles.uniformMainTitle}>Separation Scenarios & Options</Text>
+        <Text style={styles.uniformMainTitle}>Scenarios & Options</Text>
       </View>
 
       {/* Scenario 1: Less than 5 years of Contributory Service */}
@@ -452,7 +456,7 @@ const styles = StyleSheet.create({
   title4: {
     fontSize: scaleFont(18),
     fontWeight: '700',
-    color: 'blue',
+    color: '#0072CE',
     fontFamily: getRobotoFont('bold'),
     paddingVertical: scaleSize(8),
     paddingHorizontal: scaleSize(8),

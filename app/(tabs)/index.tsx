@@ -27,6 +27,7 @@ import {
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useAuth } from '../../components/AuthContext';
+import { getRobotoFont } from '@/utils/fonts';
 
 // App logo (re-use same asset as landing page)
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
@@ -112,7 +113,7 @@ export default function HomeScreen() {
               <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
               <Text style={styles.toolTitle}>Prepare to Retire</Text>
               <Text style={styles.toolDescription}>
-                Actions • Checklist • Timelines • Submissions
+                Actions • Checklist  <br></br>Timelines • Submissions
               </Text>
             </TouchableOpacity>
 
@@ -124,7 +125,7 @@ export default function HomeScreen() {
               <Shield size={32} color="#059669" strokeWidth={2} />
               <Text style={styles.toolTitle}>UNJSF Benefits</Text>
               <Text style={styles.toolDescription}>
-                Eligibility • Amounts • Next steps
+                Eligibility • Amounts • <br></br>Next steps
               </Text>
             </TouchableOpacity>
 
@@ -148,7 +149,7 @@ export default function HomeScreen() {
               <Briefcase size={32} color="#D97706" strokeWidth={2} />
               <Text style={styles.toolTitle}>HR Benefits</Text>
               <Text style={styles.toolDescription}>
-                Relocation • Repatriation • Leave • Home travel
+                Relocation • Repatriation  <br></br>Leave • Home travel
               </Text>
             </TouchableOpacity>
 
@@ -158,7 +159,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/post-un-life' as any)}
             >
               <MapPin size={32} color="#DC2626" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Post-UN Life Planner</Text>
+              <Text style={styles.toolTitle}>Post-UN <br></br>Life Planner</Text>
               <Text style={styles.toolDescription}>
                 Design your next chapter
               </Text>
@@ -249,21 +250,20 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 6,   // a bit more spacing from the title
   },
-   heroTitle: {
+  heroTitle: {
     color: '#0072CE',
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '700',
     textAlign: 'center',
-    // lineHeight: 28,
+    lineHeight: 32,
     letterSpacing: -1.2,
-    fontFamily: 'Roboto',
+    fontFamily: getRobotoFont('bold'),
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
-    marginTop: -18,
+    marginTop: -20,
     marginBottom: 4,
-      
-    }, 
+  }, 
   welcomeTitle: {
     fontSize: 20,
     fontWeight: '800',

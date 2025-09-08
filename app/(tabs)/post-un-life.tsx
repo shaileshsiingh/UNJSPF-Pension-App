@@ -17,7 +17,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import * as Clipboard from 'expo-clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 type BudgetSplits = Record<string, number>;
 
@@ -122,6 +122,7 @@ export default function PostUNLifePlanner() {
   ];
 
   const secondCareerLinks = [
+    { name: 'UN-Ready Professionals', url: 'https://www.dundex.net/' },
     { name: 'UN Careers', url: 'https://careers.un.org/' },
     { name: 'UN Get Involved', url: 'https://www.un.org/en/get-involved' },
     { name: 'ReliefWeb Jobs', url: 'https://reliefweb.int/jobs' },
@@ -388,7 +389,7 @@ export default function PostUNLifePlanner() {
           </View>
         </View>
 
-        <View style={styles.card}>
+        {/* <View style={styles.card}>
           <Text style={styles.cardTitle}>Save & Share Your Plan</Text>
           <Text style={styles.noteSmall}>Saved locally with AsyncStorage. Share or copy JSON.</Text>
           <View style={styles.actions}>
@@ -396,7 +397,7 @@ export default function PostUNLifePlanner() {
             <ButtonGhost label="Share JSON" onPress={sharePlan} />
             <ButtonGhost label="Copy JSON" onPress={copyPlanToClipboard} />
           </View>
-        </View>
+        </View> */}
 
         <Text style={styles.footer}>Disclaimer: Links are provided for convenience; always verify requirements and eligibility with the official authority in your country of nationality/residence. Tax and immigration rules change; consult licensed professionals before acting.</Text>
       </ScrollView>
