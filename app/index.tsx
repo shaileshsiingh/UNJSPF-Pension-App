@@ -73,10 +73,6 @@ export default function LandingPage() {
     }).start();
   }, [user, loading]);
 
-  const handleLinkPress = (url) => {
-    Linking.openURL(url);
-  };
-
   if (loading) return null;
   
   return (
@@ -238,30 +234,30 @@ export default function LandingPage() {
 
           {/* Footer Links */}
           <View style={styles.footerLinks}>
-            <TouchableOpacity onPress={() => handleLinkPress('#about')}>
+            <TouchableOpacity onPress={() => router.push('/about-us')}>
               <Text style={styles.footerLink}>About Us</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleLinkPress('#contact')}>
+            <TouchableOpacity onPress={() => router.push('/contact')}>
               <Text style={styles.footerLink}>Contact</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleLinkPress('#privacy')}>
+            <TouchableOpacity onPress={() => router.push('/privacy-policy')}>
               <Text style={styles.footerLink}>Privacy Policy</Text>
             </TouchableOpacity>
           </View>
           
           <View style={styles.footerLinksSmall}>
-            <TouchableOpacity onPress={() => handleLinkPress('#terms')}>
+            <TouchableOpacity onPress={() => router.push('/terms-of-service')}>
               <Text style={styles.footerLink}>Terms of Service</Text>
             </TouchableOpacity>
           </View>
-
+          
           {/* Disclaimer Section */}
           <View style={styles.disclaimerContainer}>
             <View style={styles.disclaimerHeader}>
               <View style={styles.disclaimerContent}>
                 <Text style={styles.disclaimerTitle}>Disclaimer</Text>
                 <Text style={styles.disclaimerText}>
-                  This app is the first of its kind, offering independent guidance on all UN retirement benefits. It was developed by a former UN staff member. It is not an official product of the UNJSPF or the United Nations. Nothing herein should be interpreted as legal, financial, or official pension advice. For security, do not share personal information. Official and personalized pension estimates are available only through the UNJSPF Member Self-Service portal. By using this app, you accept that all information is for general guidance only, based on the latest actuarial valuation, without warranties of accuracy, completeness, or endorsement.
+                This app was independently developed by a former UN staff member and is not an official tool of the UNJSPF or the United Nations. Pension estimates should always be verified through the UNJSPF Member Self-Service portal. The app may include links to HR benefit calculators (such as those provided by UNDP for employing organizations) and post-retirement resources like relocation, travel, or creative engagement via AI tools. These are supportive references only, not official determinations. Do not share personal or confidential information in this app.
                 </Text>
               </View>
             </View>
@@ -711,6 +707,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: scaleSize(16, 20, 24),
     marginTop: scaleSize(8, 10, 12),
+    marginBottom: scaleSize(12, 14, 16),
     flexWrap: 'wrap',
   },
   footerLinksSmall: {
