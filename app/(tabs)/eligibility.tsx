@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams } from 'expo-router';
 import CustomSlider from '../../components/CustomSlider';
+import { TrendingUp } from 'lucide-react-native';
 
 export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
@@ -532,6 +533,9 @@ export default function EligibilityScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
+          <View style={styles.headerIconContainer}>
+            <TrendingUp size={32} color="#2563EB" strokeWidth={2} />
+          </View>
           <Text style={styles.title}>Benefits Estimator</Text>
           <Text style={styles.subtitle}>
           Your best availabale options and scenarios.
@@ -757,6 +761,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#E5E7EB',
     borderBottomWidth: 1,
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
   },
   title: {
     fontSize: 18,

@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CheckSquare } from 'lucide-react-native';
 
 type Status = 'pending' | 'in progress' | 'done';
 
@@ -193,6 +194,9 @@ export default function PrepareScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.headerIconContainer}>
+          <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
+        </View>
         <Text style={styles.title}>Prepare to Retire</Text>
         <Text style={styles.subtitle}>Actions Checklist, Timelines, Submissions</Text>
       </View>
@@ -328,19 +332,25 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#F3F4F6',
+    alignItems: 'center',
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
   },
   title: {
-    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
-    fontWeight: '800',
+    fontSize: 20,
+    fontWeight: '700',
     color: 'rgb(70 106 209)',
     marginBottom: 8,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: width < 300 ? 11 : width < 350 ? 12 : 13,
-    color: 'black',
+    fontSize: 14,
+    color: '#6B7280',
     textAlign: 'center',
-    fontWeight: '600',
   },
   scrollView: {
     flex: 1,

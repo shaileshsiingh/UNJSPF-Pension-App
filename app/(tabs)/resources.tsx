@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
-import { BookOpen } from 'lucide-react-native';
+import { BookOpen, Link } from 'lucide-react-native';
 
 export default function ResourcesScreen() {
   const openUrl = (url: string) => Linking.openURL(url).catch(() => {});
@@ -8,7 +8,9 @@ export default function ResourcesScreen() {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <BookOpen size={32} color="#2563EB" strokeWidth={2} />
+        <View style={styles.headerIconContainer}>
+          <Link size={32} color="#2563EB" strokeWidth={2} />
+        </View>
         <Text style={styles.title}>Useful Resources</Text>
         <Text style={styles.subtitle}>Important links for information and separation guidance</Text>
       </View>
@@ -31,9 +33,9 @@ export default function ResourcesScreen() {
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/all-videos/')}>
             <Text style={styles.link}>Pension Videos</Text>
             <Text style={styles.url}>https://www.unjspf.org/resources/all-videos/</Text>
-              </TouchableOpacity>
-            </View>
-            
+          </TouchableOpacity>
+        </View>
+        
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Separation specific information</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/')}>
@@ -49,7 +51,7 @@ export default function ResourcesScreen() {
             <Text style={styles.url}>https://www.unjspf.org/for-clients/overview-of-the-separation-process/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/separation/')}>
-            <Text style={styles.link}>   — Separation</Text>
+            <Text style={styles.link}>    — Separation</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/separation/</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/retirement-age-2/')}>
@@ -77,7 +79,7 @@ export default function ResourcesScreen() {
             <Text style={styles.url}>https://www.fafics.org</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://fafics.org/member-associations/list/')}>
-            <Text style={styles.link}>   — Member Associations</Text>
+            <Text style={styles.link}>    — Member Associations</Text>
             <Text style={styles.url}>https://fafics.org/member-associations/list/</Text>
           </TouchableOpacity>
         </View>
@@ -97,6 +99,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#E5E7EB',
     borderBottomWidth: 1,
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
   },
   title: {
     fontSize: 18,

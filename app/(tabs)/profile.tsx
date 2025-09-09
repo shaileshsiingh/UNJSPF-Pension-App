@@ -16,7 +16,7 @@ import {
   Animated,
 } from 'react-native';
 import { 
-  User, 
+  Shield, 
   Building, 
   Calendar,
   ChevronDown,
@@ -381,7 +381,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
           <View style={styles.headerContent}>
             <View style={styles.headerIconContainer}>
-              <User size={32} color="#2563EB" strokeWidth={2} />
+              <Shield size={32} color="#2563EB" strokeWidth={2} />
             </View>
             <Text style={styles.headerTitle}>Benefits from UNJSPF</Text>
             <Text style={styles.headerSubtitle}>

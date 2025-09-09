@@ -7,15 +7,17 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import { FileText, Info } from 'lucide-react-native';
+import { Plane, Info } from 'lucide-react-native';
 
 export default function EmployerBenefitsScreen() {
   const openUrl = (url: string) => Linking.openURL(url).catch(() => {});
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>        
-        <FileText size={32} color="#2563EB" strokeWidth={2} />
+      <View style={styles.header}>
+        <View style={styles.headerIconContainer}>
+          <Plane size={32} color="#2563EB" strokeWidth={2} />
+        </View>
         <Text style={styles.title}>Benefits from Employing Organization</Text>
         <Text style={styles.subtitle}>Your HR Benefits At A Glance</Text>
       </View>
@@ -109,6 +111,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#E5E7EB',
     borderBottomWidth: 1,
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
   },
   title: {
     fontSize: 18,

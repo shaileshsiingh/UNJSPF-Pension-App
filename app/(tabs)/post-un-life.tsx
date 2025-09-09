@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
+import { Workflow } from 'lucide-react-native';
 
 type BudgetSplits = Record<string, number>;
 
@@ -266,7 +267,10 @@ export default function PostUNLifePlanner() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
-        <View style={styles.header}>        
+        <View style={styles.header}>
+          <View style={styles.headerIconContainer}>
+            <Workflow size={32} color="#2563EB" strokeWidth={2} />
+          </View>
           <Text style={styles.headerTitle}>Post-UN Life Planner</Text>
           <Text style={styles.headerSub}>Plan relocation, lifestyle, and second career with helpful tools</Text>
         </View>
@@ -435,6 +439,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRadius: 12,
   },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
   headerTitle: {
     fontSize: 18,
     fontWeight: '800',
@@ -513,5 +523,3 @@ const styles = StyleSheet.create({
   countryText: { fontSize: 16 },
   separator: { height: 1, backgroundColor: '#E5E7EB' },
 });
-
-
