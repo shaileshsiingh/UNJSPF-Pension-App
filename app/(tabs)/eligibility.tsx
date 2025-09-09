@@ -201,6 +201,8 @@ export default function EligibilityScreen() {
 
   const params2 = useLocalSearchParams();
   const [orgContact, setOrgContact] = useState<string>('your HR office');
+  const [debugOrg, setDebugOrg] = useState<string>(''); // State for debugging
+
   React.useEffect(() => {
     let org = (params2.organization as string) || '';
     AsyncStorage.getItem('profileData').then(data => {
@@ -208,6 +210,13 @@ export default function EligibilityScreen() {
         try {
           const parsed = JSON.parse(data);
           org = parsed.organization || org;
+          setDebugOrg(org); // Set debug state
+
+          // --- DEBUGGING LOGS ---
+          console.log("Organization from storage:", `'${org}'`);
+          console.log("Lookup result:", orgEmailMap[org]);
+          // --- END DEBUGGING LOGS ---
+
           setOrgContact(orgEmailMap[org] || 'your HR office');
           // Set yearsOfService and currentAge from profile
           if (parsed.serviceLength) {
@@ -254,9 +263,11 @@ export default function EligibilityScreen() {
           }
         } catch {
           setOrgContact('your HR office');
+          setDebugOrg('Error parsing data');
         }
       } else {
         setOrgContact('your HR office');
+        setDebugOrg('No profile data found');
       }
     });
   }, [params.organization]);
@@ -541,6 +552,14 @@ export default function EligibilityScreen() {
           Your best availabale options and scenarios.
           </Text>
         </View>
+
+        {/* --- TEMPORARY DEBUG VIEW --- */}
+        <View style={{ padding: 10, backgroundColor: '#ffc', margin: 10, borderColor: '#f00', borderWidth: 1 }}>
+          <Text style={{ color: '#000', fontWeight: 'bold' }}>DEBUG INFO:</Text>
+          <Text style={{ color: '#000' }}>Stored Org Name: '{debugOrg}'</Text>
+          <Text style={{ color: '#000' }}>Resulting Contact: '{orgContact}'</Text>
+        </View>
+        {/* --- END TEMPORARY DEBUG VIEW --- */}
 
         {/* Input Mode Toggle */}
         <View style={styles.inputModeContainer}>
