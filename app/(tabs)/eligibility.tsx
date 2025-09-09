@@ -532,7 +532,7 @@ export default function EligibilityScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Your Benefits Estimator</Text>
+          <Text style={styles.title}>Benefits Estimator</Text>
           <Text style={styles.subtitle}>
           Your best availabale options and scenarios.
           </Text>
@@ -599,7 +599,7 @@ export default function EligibilityScreen() {
                 <Text style={[styles.sliderValue, { marginTop: 30, marginBottom: 10 }]}>
                   {formatYearsMonthsDaysObj(convertDecimalYearsToYMD(yearsOfService))}
                 </Text>
-                <Text style={styles.sliderNote}>Maximum total accrual: 70% of FAR (after 38.75 years of service)</Text>
+                <Text style={styles.sliderNote}>Maximum accrual: 70% of FAR (after 38.75 years of service)</Text>
               </View>
               
               {/* Current Age Slider */}
@@ -644,7 +644,7 @@ export default function EligibilityScreen() {
                 {/* ERA/NRA Info */}
                 <View style={styles.eraNraInfo}>
                   <Text style={styles.eraNraInfoText}>
-                    ERA: {ERA} years (Early Retirement Age) • NRA: {NRA} years (Normal Retirement Age)
+                    ERA: {ERA} years  • NRA: {NRA} years
                   </Text>
                 </View>
               </View>
