@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Switch,
   Alert,
+  Linking,
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
@@ -933,7 +934,16 @@ export default function CalculatorScreen() {
           />
         </View>
         <View style={styles.helpTextContainer}>
-          <Text style={styles.helpText}>Select your ASHI contribution to be deducted from your monthly pension.</Text>
+          <Text style={styles.helpText}>
+            Select your ASHI contribution to be deducted from your monthly pension: 
+            <Text 
+              style={styles.link}
+              onPress={() => Linking.openURL('https://www.un.org/insurance/sites/www.un.org.insurance/files/ashi_rates_2025-2026.pdf')}
+            >
+              <Text style={{display:'none'}}>l</Text> ASHI rates
+            </Text>
+            
+          </Text>
         </View>
 
         {/* Results Section */}
@@ -1301,7 +1311,11 @@ const styles = StyleSheet.create({
   },
   readOnlyInput: {
     backgroundColor: '#F3F4F6',
-    color: '#6B7280',
+    color: '#4B5563',
+  },
+  link: {
+    color: '#2563EB',
+    textDecorationLine: 'underline',
   },
   displayValue: {
     padding: width < 300 ? 12 : 16,
