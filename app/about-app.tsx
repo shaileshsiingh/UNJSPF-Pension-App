@@ -101,7 +101,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>One App, All Devices</Text>
         <Text style={styles.uniformContent}>
-         <Text style={styles.uniformSubtitle}>Available on Android, iOS, and web.</Text>{'\n'}
+         <Text style={styles.uniformSubtitle}>Available on Android, and iOS.</Text>{'\n'}
           A single account gives you seamless access to all features across mobile and desktop platforms.{'\n'}
           Optimized for security, speed, and accessibility.
         </Text>
