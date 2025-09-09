@@ -933,13 +933,13 @@ export default function CalculatorScreen() {
           />
         </View>
         <View style={styles.helpTextContainer}>
-          <Text style={styles.helpText}>Enter your monthly ASHI deduction, if applicable.</Text>
+          <Text style={styles.helpText}>Select your ASHI contribution to be deducted from your monthly pension.</Text>
         </View>
 
         {/* Results Section */}
         <View style={{ marginTop: 24 }}>
           <Text style={styles.resultsTitle}>Snapshot of your estimated benefits</Text>
-          <Text style={styles.resultsTitle1}>You have option to choose between A or B</Text>
+          <Text style={styles.resultsTitle1}>You have an option to choose between A or B</Text>
           
           {/* Withdrawal Settlement */}
           {withdrawalSettlement && (

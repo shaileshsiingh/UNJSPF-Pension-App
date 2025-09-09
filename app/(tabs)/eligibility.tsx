@@ -79,7 +79,7 @@ export default function EligibilityScreen() {
   const scenarios = [
     {
       key: 'withdrawal',
-      title: 'Withdrawal Settlement Only (UN-JSPF)',
+      title: 'Withdrawal Settlement Only',
       description: [
         'With less than 5 years of contributory service, you are only eligible for withdrawal settlement. No vested pension rights.'
       ],
@@ -117,7 +117,7 @@ export default function EligibilityScreen() {
     },
     {
       key: 'normal',
-      title: 'Normal Retirement Benefit (UN-JSPF)',
+      title: 'Normal Retirement Benefit',
       description: [
         'A monthly pension for life, payable at or after your Normal Retirement Age (NRA).',
         'No reduction for early payment.',
@@ -480,7 +480,7 @@ export default function EligibilityScreen() {
                 <View style={styles.stepNumber}>
                   <Text style={styles.stepNumberText}>2</Text>
                 </View>
-                <Text style={styles.stepText}>Submit Separation Personnel Action Form (SEPFPA)</Text>
+                <Text style={styles.stepText}>Submit Separation Personnel Action Form (SEPPA)</Text>
               </View>
             </View>
           </View>
