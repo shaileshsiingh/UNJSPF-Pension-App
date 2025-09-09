@@ -32,12 +32,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkRedirectResult = async () => {
     try {
+      console.log('Checking for redirect result...');
       const result = await getRedirectResult(auth);
       if (result) {
-        console.log('Google sign-in successful via redirect');
+        console.log('Google sign-in successful via redirect:', result.user.email);
+        // The auth state will be updated automatically via onAuthStateChanged
+      } else {
+        console.log('No redirect result found');
       }
     } catch (error) {
       console.error('Redirect result error:', error);
+      // Handle specific redirect errors
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.log('User cancelled the redirect flow');
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        console.log('Redirect request was cancelled');
+      } else {
+        console.error('Unexpected redirect error:', error);
+      }
     } finally {
       setGoogleLoading(false);
     }
@@ -68,17 +80,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await firebaseSignOut(auth);
   };
 
-  const isMobileWeb = () => {
-    if (Platform.OS !== 'web') return false;
+  const isMobileDevice = () => {
+    if (Platform.OS !== 'web') return true; // React Native is always mobile
     
-    // Check for mobile user agent strings
-    const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
-    const isMobileAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    if (typeof window === 'undefined') return false;
     
-    // Also check screen width as fallback
-    const isSmallScreen = Dimensions.get('window').width < 768;
+    // More comprehensive mobile detection
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const mobileKeywords = [
+      'android', 'webos', 'iphone', 'ipad', 'ipod', 
+      'blackberry', 'iemobile', 'opera mini', 'mobile',
+      'phone', 'touch'
+    ];
     
-    return isMobileAgent || isSmallScreen;
+    const isMobileAgent = mobileKeywords.some(keyword => userAgent.includes(keyword));
+    
+    // Check for touch capability
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Check screen dimensions
+    const isSmallScreen = window.innerWidth <= 768 || window.screen.width <= 768;
+    
+    // Check for mobile-specific features
+    const hasMobileFeatures = 'orientation' in window || 'DeviceMotionEvent' in window;
+    
+    return isMobileAgent || (isTouchDevice && (isSmallScreen || hasMobileFeatures));
   };
 
   const signInWithGoogle = async () => {
@@ -88,20 +114,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     provider.addScope('email');
     provider.addScope('profile');
     
-    // Force account selection - this shows the account picker like in your screenshot
+    // Force account selection - this shows the account picker
     provider.setCustomParameters({ 
       prompt: 'select_account',
-      // Add these parameters to ensure account picker appears
-      hd: '', // Allow any hosted domain
+      hd: '',
       include_granted_scopes: 'true'
     });
 
     setGoogleLoading(true);
 
-    // For React Native apps, always use redirect
-    if (Platform.OS !== 'web') {
+    // For React Native apps or mobile browsers, ALWAYS use redirect
+    if (Platform.OS !== 'web' || isMobileDevice()) {
+      console.log('Mobile detected - using redirect flow');
       try {
         await signInWithRedirect(auth, provider);
+        // Note: signInWithRedirect doesn't return a result immediately
+        // The result will be handled by checkRedirectResult in useEffect
         return null;
       } catch (error) {
         console.error('Google sign-in redirect error:', error);
@@ -110,9 +138,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
 
-    // For web - try popup first, fallback to redirect
+    // For desktop web only - try popup
     try {
-      console.log('Attempting Google sign-in with popup...');
+      console.log('Desktop detected - attempting popup...');
       const result = await signInWithPopup(auth, provider);
       setGoogleLoading(false);
       console.log('Google sign-in successful with popup');
@@ -120,18 +148,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error: any) {
       console.error('Google sign-in popup error:', error);
 
-      // Handle popup blocked or other popup issues
+      // If popup fails, fallback to redirect
       if (
         error.code === 'auth/popup-blocked' || 
         error.code === 'auth/cancelled-popup-request' ||
-        error.code === 'auth/popup-closed-by-user' ||
-        isMobileWeb()
+        error.code === 'auth/popup-closed-by-user'
       ) {
-        console.log('Popup failed or mobile detected, using redirect...');
+        console.log('Popup blocked, falling back to redirect...');
         try {
-          // Use redirect for mobile or when popup fails
           await signInWithRedirect(auth, provider);
-          return null; // redirect doesn't return immediately
+          return null;
         } catch (redirectError) {
           setGoogleLoading(false);
           console.error('Google sign-in redirect fallback error:', redirectError);
@@ -141,9 +167,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setGoogleLoading(false);
       
-      // Handle other specific errors
       if (error.code === 'auth/popup-closed-by-user') {
-        throw new Error('Sign-in was cancelled');
+        return null; // Don't throw error for user cancellation
       }
       
       throw error;
