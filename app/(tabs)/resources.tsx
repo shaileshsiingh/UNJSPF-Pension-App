@@ -16,7 +16,7 @@ export default function ResourcesScreen() {
       <View style={styles.section}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>General information</Text>
-          <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/about-member-self-service/')}>
+          <TouchableOpacity onPress={() => openUrl('https://news.un.org/en/')}>
             <Text style={styles.link}>UN News</Text>
             <Text style={styles.url}>https://news.un.org/en/</Text>
           </TouchableOpacity>
