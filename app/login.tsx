@@ -1,5 +1,5 @@
 // LoginScreen.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
 
 export default function LoginScreen() {
-  const { signIn, signInWithGoogle, googleLoading } = useAuth();
+  const { signIn, signInWithGoogle, googleLoading, user } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -130,32 +130,70 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
+    console.log('🎯 handleGoogleSignIn called');
+    
     try {
+      // Check if we're on mobile to provide appropriate feedback
+      const isMobile = Platform.OS !== 'web' || 
+        (typeof window !== 'undefined' && (
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent.toLowerCase()) ||
+          ('ontouchstart' in window && (window.innerWidth <= 768 || 'orientation' in window))
+        ));
+
+      console.log(`📱 Mobile detected: ${isMobile}`);
+
+      if (isMobile) {
+        // On mobile, let user know they'll be redirected
+        showToast('Redirecting to Google...');
+      }
+
       const result = await signInWithGoogle();
       
       // If signInWithGoogle returns a result, it means the popup was successful (desktop)
       if (result) {
+        console.log('✅ Popup sign-in successful');
         showToast('Google sign-in successful!');
         router.replace('/');
+      } else {
+        console.log('ℹ️ Redirect flow initiated or cancelled');
+        // For redirect flow, don't show success message here
+        // It will be handled when the user returns to the app
+        // The auth state change will trigger navigation
       }
-      // If result is null, it means redirect was used (mobile/fallback)
-      // The user will be redirected and auth state will be handled by the redirect result check
       
     } catch (e: any) {
-      console.error('Google sign-in error:', e);
-      let errorMessage = 'Google sign-in failed. Please try again.';
+      console.error('❌ Google sign-in error:', e);
       
-      if (e.message === 'Sign-in was cancelled') {
-        return; // Don't show error for cancelled sign-in
+      // Don't show error for user cancellation
+      if (e.message && (
+        e.message.includes('cancelled') || 
+        e.message.includes('closed') ||
+        !e.message.trim()
+      )) {
+        console.log('ℹ️ User cancelled sign-in, not showing error');
+        return;
       }
+      
+      let errorMessage = 'Google sign-in failed. Please try again.';
       
       if (e.message) {
         errorMessage = e.message;
       }
       
+      console.log(`🚨 Showing error: ${errorMessage}`);
       showToast(errorMessage);
     }
   };
+
+  // Add useEffect to handle successful auth after redirect
+  useEffect(() => {
+    if (user && !loading && googleLoading) {
+      // User successfully signed in via redirect
+      console.log('✅ User signed in after redirect, navigating to home');
+      showToast('Google sign-in successful!');
+      router.replace('/');
+    }
+  }, [user, loading, googleLoading, router]);
 
   return (
     <View style={styles.container}>
