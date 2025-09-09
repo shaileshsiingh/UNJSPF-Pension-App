@@ -26,14 +26,13 @@ const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
 
 export default function LoginScreen() {
-  const { signIn, signInWithGoogle, signInWithApple } = useAuth();
+  const { signIn, signInWithGoogle, googleLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
   // Email validation function
@@ -133,12 +132,16 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
     try {
       const result = await signInWithGoogle();
+      // If signInWithGoogle returns a result, it means the popup was successful (desktop)
       if (result) {
         showToast('Google sign-in successful!');
         router.replace('/');
+      } else {
+        // On mobile, a redirect has been initiated. The googleLoading state will keep the UI disabled.
+        // You can show a message to the user indicating a redirect is in progress.
+        showToast('Redirecting to Google...');
       }
     } catch (e: any) {
       console.error('Google sign-in error:', e);
@@ -147,8 +150,6 @@ export default function LoginScreen() {
         errorMessage = e.message;
       }
       showToast(errorMessage);
-    } finally {
-      setGoogleLoading(false);
     }
   };
 
@@ -244,7 +245,7 @@ export default function LoginScreen() {
                   disabled={googleLoading}
                 >
                   <Text style={styles.socialButtonText}>
-                    {googleLoading ? 'Signing in...' : 'Continue with Google'}
+                    {googleLoading ? 'Redirecting to Google...' : 'Continue with Google'}
                   </Text>
                 </Pressable>
                 

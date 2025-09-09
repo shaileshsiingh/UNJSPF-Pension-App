@@ -25,7 +25,7 @@ const isSmallScreen = width < 380;
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
 export default function SignupScreen() {
-  const { signUp, signInWithGoogle } = useAuth();
+  const { signUp, signInWithGoogle, googleLoading } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +36,6 @@ export default function SignupScreen() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
 
   // Name validation function
   const validateName = (name: string) => {
@@ -193,30 +192,21 @@ export default function SignupScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
     try {
       const result = await signInWithGoogle();
-      // For redirect-based auth, result might be null
-      if (result !== null) {
+      if (result) {
         showToast('Google sign-in successful!');
         router.replace('/');
       } else {
-        // Redirect initiated, user will be redirected back after authentication
         showToast('Redirecting to Google...');
       }
     } catch (e: any) {
       console.error('Google sign-in error:', e);
       let errorMessage = 'Google sign-in failed. Please try again.';
-      if (e.code === 'auth/popup-closed-by-user') {
-        errorMessage = 'Sign-in was cancelled';
-      } else if (e.code === 'auth/popup-blocked') {
-        errorMessage = 'Pop-up was blocked. Please allow pop-ups and try again.';
-      } else if (e.message) {
+      if (e.message) {
         errorMessage = e.message;
       }
       showToast(errorMessage);
-    } finally {
-      setGoogleLoading(false);
     }
   };
 
@@ -344,7 +334,7 @@ export default function SignupScreen() {
                   disabled={googleLoading}
                 >
                   <Text style={[styles.socialButtonText, { color: '#fff' }]}>
-                    {googleLoading ? 'Signing in...' : '🔍 Continue with Google'}
+                    {googleLoading ? 'Redirecting to Google...' : '🔍 Continue with Google'}
                   </Text>
                 </Pressable>
               </View>

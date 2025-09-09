@@ -526,6 +526,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
 
   },
+  overviewNote:{
+textAlign:'center',
+fontFamily:getRobotoFont('regular'),
+fontSize:11
+  },
   overviewSubtitle2: {
     fontSize: scaleFont(12, 14, 16),
     color: 'black',
