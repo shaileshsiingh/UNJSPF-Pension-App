@@ -70,18 +70,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const isMobileWeb = () => {
     if (Platform.OS !== 'web') return false;
-    return Dimensions.get('window').width < 768;
+    
+    // Check for mobile user agent strings
+    const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
+    const isMobileAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    
+    // Also check screen width as fallback
+    const isSmallScreen = Dimensions.get('window').width < 768;
+    
+    return isMobileAgent || isSmallScreen;
   };
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    
+    // Configure provider for better account selection
     provider.addScope('email');
     provider.addScope('profile');
-    provider.setCustomParameters({ prompt: 'select_account' });
+    
+    // Force account selection - this shows the account picker like in your screenshot
+    provider.setCustomParameters({ 
+      prompt: 'select_account',
+      // Add these parameters to ensure account picker appears
+      hd: '', // Allow any hosted domain
+      include_granted_scopes: 'true'
+    });
 
     setGoogleLoading(true);
 
-    if (isMobileWeb()) {
+    // For React Native apps, always use redirect
+    if (Platform.OS !== 'web') {
       try {
         await signInWithRedirect(auth, provider);
         return null;
@@ -90,32 +108,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setGoogleLoading(false);
         throw new Error('Authentication failed. Please try again.');
       }
-    } else {
-      try {
-        const result = await signInWithPopup(auth, provider);
-        setGoogleLoading(false);
-        return result;
-      } catch (error: any) {
-        console.error('Google sign-in popup error:', error);
+    }
 
-        if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-          console.log('Popup blocked, falling back to redirect...');
-          try {
-            await signInWithRedirect(auth, provider);
-            return null;
-          } catch (redirectError) {
-            setGoogleLoading(false);
-            console.error('Google sign-in redirect fallback error:', redirectError);
-            throw new Error('Authentication failed. Please try again.');
-          }
-        } else if (error.code === 'auth/popup-closed-by-user') {
+    // For web - try popup first, fallback to redirect
+    try {
+      console.log('Attempting Google sign-in with popup...');
+      const result = await signInWithPopup(auth, provider);
+      setGoogleLoading(false);
+      console.log('Google sign-in successful with popup');
+      return result;
+    } catch (error: any) {
+      console.error('Google sign-in popup error:', error);
+
+      // Handle popup blocked or other popup issues
+      if (
+        error.code === 'auth/popup-blocked' || 
+        error.code === 'auth/cancelled-popup-request' ||
+        error.code === 'auth/popup-closed-by-user' ||
+        isMobileWeb()
+      ) {
+        console.log('Popup failed or mobile detected, using redirect...');
+        try {
+          // Use redirect for mobile or when popup fails
+          await signInWithRedirect(auth, provider);
+          return null; // redirect doesn't return immediately
+        } catch (redirectError) {
           setGoogleLoading(false);
-          throw new Error('Sign-in was cancelled');
+          console.error('Google sign-in redirect fallback error:', redirectError);
+          throw new Error('Authentication failed. Please try again.');
         }
-
-        setGoogleLoading(false);
-        throw error;
       }
+
+      setGoogleLoading(false);
+      
+      // Handle other specific errors
+      if (error.code === 'auth/popup-closed-by-user') {
+        throw new Error('Sign-in was cancelled');
+      }
+      
+      throw error;
     }
   };
 

@@ -19,8 +19,6 @@ import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
-// import MyImage from '../assets/images/logo.png';
-
 
 const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
@@ -134,21 +132,27 @@ export default function LoginScreen() {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithGoogle();
+      
       // If signInWithGoogle returns a result, it means the popup was successful (desktop)
       if (result) {
         showToast('Google sign-in successful!');
         router.replace('/');
-      } else {
-        // On mobile, a redirect has been initiated. The googleLoading state will keep the UI disabled.
-        // You can show a message to the user indicating a redirect is in progress.
-        showToast('Redirecting to Google...');
       }
+      // If result is null, it means redirect was used (mobile/fallback)
+      // The user will be redirected and auth state will be handled by the redirect result check
+      
     } catch (e: any) {
       console.error('Google sign-in error:', e);
       let errorMessage = 'Google sign-in failed. Please try again.';
+      
+      if (e.message === 'Sign-in was cancelled') {
+        return; // Don't show error for cancelled sign-in
+      }
+      
       if (e.message) {
         errorMessage = e.message;
       }
+      
       showToast(errorMessage);
     }
   };
@@ -182,12 +186,10 @@ export default function LoginScreen() {
                 </TouchableOpacity>
               </View>
               <Text style={styles.appName}>MyUNPension</Text>
-              {/* <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text> */}
             </View>
 
             {/* Login Card */}
             <View style={styles.card}>
-              {/* <Text style={styles.title}>Welcome Back</Text> */}
               <Text style={styles.subtitle}>Sign in to continue</Text>
               
               <View style={styles.inputContainer}>
@@ -240,22 +242,20 @@ export default function LoginScreen() {
 
               <View style={styles.socialButtons}>
                 <Pressable 
-                  style={[styles.socialButton, googleLoading ? styles.buttonDisabled : null]} 
+                  style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]} 
                   onPress={handleGoogleSignIn}
                   disabled={googleLoading}
                 >
-                  <Text style={styles.socialButtonText}>
-                    {googleLoading ? 'Redirecting to Google...' : 'Continue with Google'}
-                  </Text>
+                  <View style={styles.googleButtonContent}>
+                    <View style={styles.googleIcon}>
+                      <Text style={styles.googleIconText}>G</Text>
+                    </View>
+                    <Text style={styles.googleButtonText}>
+                      {googleLoading ? 'Signing in...' : 'Continue with Google'}
+                    </Text>
+                  </View>
                 </Pressable>
-                
-                {/* {Platform.OS === 'ios' && (
-                  <Pressable style={styles.socialButton} onPress={() => signInWithApple()}>
-                    <Text style={styles.socialButtonText}>Continue with Apple</Text>
-                  </Pressable>
-                )} */}
               </View>
-
             </View>
 
             {/* Bottom Spacing */}
@@ -296,7 +296,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginBottom: 32,
   },
   heroLogo: {
     width: 80,
@@ -312,19 +311,11 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     fontFamily: getRobotoFont('bold'),
   },
-  appTagline: {
-    fontSize: isSmallScreen ? 14 : 16,
-    color: '#6b7280',
-    textAlign: 'center',
-    fontWeight: '500',
-    letterSpacing: 0.2,
-    fontFamily: getRobotoFont('medium'),
-  },
 
   // Login Card - Restored simpler styling
   card: {
-    width: isSmallScreen ? width - 40:300,
-    height:  470, 
+    width: isSmallScreen ? width - 40 : 300,
+    height: 470, 
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -338,15 +329,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(14, 165, 233, 0.1)',
     alignSelf: 'center',
     marginTop: -28,
-  },
-  title: {
-    fontSize: isSmallScreen ? 24 : 28,
-    fontWeight: '700',
-    marginBottom: 8,
-    color: 'rgb(29, 78, 216)',
-    textAlign: 'center',
-    letterSpacing: -0.5,
-    fontFamily: getRobotoFont('bold'),
   },
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,
@@ -449,13 +431,15 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 12,
   },
-  socialButton: {
+  
+  // Enhanced Google Button Styles
+  googleButton: {
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderWidth: 2,
-    borderColor: 'rgba(229, 231, 235, 0.8)',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#dadce0',
     paddingVertical: isSmallScreen ? 12 : 14,
-    borderRadius: 16,
+    borderRadius: 8,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -463,9 +447,29 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  socialButtonText: {
-    color: '#374151',
+  googleButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  googleIcon: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#4285f4',
+    marginRight: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  googleIconText: {
+    color: '#ffffff',
     fontWeight: '600',
+    fontSize: 14,
+    fontFamily: getRobotoFont('medium'),
+  },
+  googleButtonText: {
+    color: '#3c4043',
+    fontWeight: '500',
     fontSize: isSmallScreen ? 14 : 15,
     fontFamily: getRobotoFont('medium'),
   },
