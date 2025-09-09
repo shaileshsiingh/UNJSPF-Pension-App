@@ -1,410 +1,487 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import {
-  SafeAreaView,
-  ScrollView,
   View,
   Text,
   TouchableOpacity,
+  ScrollView,
   StyleSheet,
-  Pressable,
+  Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Full consolidated checklist data
-type ChecklistItem = { step: string; category: string; task: string; status: 'Pending' | 'In Progress' | 'Done' };
+type Status = 'pending' | 'in progress' | 'done';
 
-const INITIAL_DATA: ChecklistItem[] = [
-  // STEP 1
-  {
-    step: "Step 1: 90–30 Days Before Separation",
-    category: "UNJSPF Actions",
-    task: "Confirm/update personal & family info with HR.",
-    status: "Pending",
-  },
-  {
-    step: "Step 1: 90–30 Days Before Separation",
-    category: "UNJSPF Actions",
-    task: "Submit Separation Notification (PF4/SEP) through HR.",
-    status: "Pending",
-  },
-  {
-    step: "Step 1: 90–30 Days Before Separation",
-    category: "Employing Organization",
-    task: "Submit Separation Payments Form (F.250).",
-    status: "Pending",
-  },
-  {
-    step: "Step 1: 90–30 Days Before Separation",
-    category: "Employing Organization",
-    task: "Check accrued leave balances & travel entitlement.",
-    status: "Pending",
-  },
+interface ChecklistItem {
+  id: string;
+  text: string;
+  status: Status;
+  sectionId: string;
+}
 
-  // STEP 2
-  {
-    step: "Step 2: 30 Days Before Separation",
-    category: "Tasks",
-    task: "Complete exit medical examination (if required).",
-    status: "Pending",
-  },
-  {
-    step: "Step 2: 30 Days Before Separation",
-    category: "Tasks",
-    task: "Settle outstanding advances (education grant, DSA, travel).",
-    status: "Pending",
-  },
-  {
-    step: "Step 2: 30 Days Before Separation",
-    category: "Tasks",
-    task: "Inform HR of dependents’ status changes.",
-    status: "Pending",
-  },
+interface Section {
+  id: string;
+  label: string;
+  items: ChecklistItem[];
+  colorDot: string;
+}
+const { width } = Dimensions.get('window');
 
-  // STEP 3
-  {
-    step: "Step 3: At Separation",
-    category: "Tasks",
-    task: "HR issues Separation Personnel Action (SEPPA).",
-    status: "Pending",
-  },
-  {
-    step: "Step 3: At Separation",
-    category: "Tasks",
-    task: "Return UN ID card and official documents.",
-    status: "Pending",
-  },
-  {
-    step: "Step 3: At Separation",
-    category: "Tasks",
-    task: "Return UNLP (Laissez-Passer).",
-    status: "Pending",
-  },
+const StatusPill = ({ status }: { status: Status }) => {
+  const bgColor = {
+    'pending': '#E5E7EB',
+    'in progress': '#FBBF24',
+    'done': '#10B981',
+  }[status];
 
-  // STEP 4
-  {
-    step: "Step 4: After Separation",
-    category: "Tasks",
-    task: "HR sends Separation PF4/SEP + SEPPA to UNJSPF.",
-    status: "Pending",
-  },
-  {
-    step: "Step 4: After Separation",
-    category: "Tasks",
-    task: "Submit Payment Instructions (PF23) to UNJSPF.",
-    status: "Pending",
-  },
-  {
-    step: "Step 4: After Separation",
-    category: "Tasks",
-    task: "Submit proof of life (if requested).",
-    status: "Pending",
-  },
-  {
-    step: "Step 4: After Separation",
-    category: "Tasks",
-    task: "Return UNLP (passport) if not yet done.",
-    status: "Pending",
-  },
+  const textColor = {
+    'pending': '#374151',
+    'in progress': '#92400E',
+    'done': '#065F46',
+  }[status];
 
-  // STEP 5
-  {
-    step: "Step 5: Banking & Accounts",
-    category: "Tasks",
-    task: "Clear outstanding UNFCU loan, obtain clearance letter, inform HR partner (if applicable).",
-    status: "Pending",
-  },
-  {
-    step: "Step 5: Banking & Accounts",
-    category: "Tasks",
-    task: "Close your local bank account (if repatriating) and inform Finance.",
-    status: "Pending",
-  },
-  {
-    step: "Step 5: Banking & Accounts",
-    category: "Tasks",
-    task: "Update personal bank account details for final payments.",
-    status: "Pending",
-  },
+  return (
+    <View style={[styles.statusPill, { backgroundColor: `${bgColor}40` }]}>
+      <Text style={[styles.statusText, { color: textColor }]}>
+        {status.charAt(0).toUpperCase() + status.slice(1)}
+      </Text>
+    </View>
+  );
+};
 
-  // STEP 6
-  {
-    step: "Step 6: Supply & Clearance",
-    category: "Tasks",
-    task: "Return office equipment (laptop, phone, etc.).",
-    status: "Pending",
-  },
-  {
-    step: "Step 6: Supply & Clearance",
-    category: "Tasks",
-    task: "Complete property clearance certificate.",
-    status: "Pending",
-  },
-
-  // STEP 7
-  {
-    step: "Step 7: As a Retiree",
-    category: "Tasks",
-    task: "Maintain valid proof of life to UNJSPF.",
-    status: "Pending",
-  },
-  {
-    step: "Step 7: As a Retiree",
-    category: "Tasks",
-    task: "Register with UN retiree associations if desired.",
-    status: "Pending",
-  },
-];
-
-const STEPS = [
-  "Step 1: 90–30 Days Before Separation",
-  "Step 2: 30 Days Before Separation",
-  "Step 3: At Separation",
-  "Step 4: After Separation",
-  "Step 5: Banking & Accounts",
-  "Step 6: Supply & Clearance",
-  "Step 7: As a Retiree",
-];
-
-export default function App() {
-  const [data, setData] = useState<ChecklistItem[]>(INITIAL_DATA);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+export default function PrepareScreen() {
   const [showIntro, setShowIntro] = useState(true);
+  const [sections, setSections] = useState<Section[]>([]);
+  const [counts, setCounts] = useState({ 
+    done: 0, 
+    inprog: 0, 
+    pending: 0, 
+    total: 0 
+  });
 
+  // Initialize data
   useEffect(() => {
-    load();
+    const initialSections: Section[] = [
+      {
+        id: 'documents',
+        label: 'Documents to Collect',
+        colorDot: '#3B82F6',
+        items: [
+          { id: 'd1', text: 'Passport & ID documents', status: 'pending', sectionId: 'documents' },
+          { id: 'd2', text: 'Birth certificates (yours & dependents)', status: 'pending', sectionId: 'documents' },
+          { id: 'd3', text: 'Marriage/divorce certificates', status: 'pending', sectionId: 'documents' },
+        ],
+      },
+      // ... other sections
+    ];
+
+    const loadData = async () => {
+      try {
+        const savedData = await AsyncStorage.getItem('retirementChecklist');
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          setSections(parsedData.sections || initialSections);
+          setShowIntro(parsedData.showIntro ?? true);
+        } else {
+          setSections(initialSections);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+        setSections(initialSections);
+      }
+    };
+
+    loadData();
   }, []);
 
-  useEffect(() => {
-    save();
-  }, [data, showIntro, collapsed]);
-
-  const save = async () => {
-    try {
-      await AsyncStorage.setItem(
-        "actsChecklist",
-        JSON.stringify({ data, showIntro, collapsed })
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const load = async () => {
-    try {
-      const raw = await AsyncStorage.getItem("actsChecklist");
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        setData(parsed.data || INITIAL_DATA);
-        setShowIntro(parsed.showIntro ?? true);
-        setCollapsed(parsed.collapsed || {});
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const toggleStatus = (task: string) => {
-    setData((prev) =>
-      prev.map((t) =>
-        t.task === task
-          ? {
-              ...t,
-              status:
-                t.status === "Pending"
-                  ? "In Progress"
-                  : t.status === "In Progress"
-                  ? "Done"
-                  : "Pending",
-            }
-          : t
-      )
+  const cycleStatus = (item: ChecklistItem) => {
+    setSections(prevSections => 
+      prevSections.map(section => ({
+        ...section,
+        items: section.items.map(i => 
+          i.id === item.id 
+            ? { 
+                ...i, 
+                status: i.status === 'pending' 
+                  ? 'in progress' 
+                  : i.status === 'in progress' 
+                    ? 'done' 
+                    : 'pending' 
+              } 
+            : i
+        )
+      }))
     );
   };
 
-  const computeProgress = () => {
-    if (!data || !Array.isArray(data)) {
-      return { done: 0, total: 0, pct: 0 };
-    }
-    const total = data.length;
-    const done = data.filter((t) => t.status === "Done").length;
-    return { done, total, pct: total ? Math.round((done / total) * 100) : 0 };
+  const setAll = (status: Status) => {
+    setSections(prevSections => 
+      prevSections.map(section => ({
+        ...section,
+        items: section.items.map(item => ({
+          ...item,
+          status
+        }))
+      }))
+    );
   };
 
-  const { done, total, pct } = computeProgress();
+  // Update the useEffect for counts to include save functionality
+  useEffect(() => {
+    if (sections.length === 0) return;
+    
+    let done = 0;
+    let inprog = 0;
+    let pending = 0;
+    let total = 0;
+
+    sections.forEach(section => {
+      section.items.forEach(item => {
+        if (item.status === 'done') done++;
+        else if (item.status === 'in progress') inprog++;
+        else pending++;
+        total++;
+      });
+    });
+
+    setCounts({ done, inprog, pending, total });
+
+    // Save data
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem('retirementChecklist', 
+          JSON.stringify({ sections, showIntro })
+        );
+      } catch (error) {
+        console.error('Error saving data:', error);
+      }
+    };
+
+    saveData();
+  }, [sections, showIntro]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
-      <View style={{ backgroundColor: '#FFFFFF', paddingTop: 20, paddingBottom: 24, paddingHorizontal: 24, borderBottomLeftRadius: 16, borderBottomRightRadius: 16, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8 }}>
-        <View style={{ alignItems: 'center', width: '100%' }}>
-          <Text style={{ fontSize: 18, fontWeight: '800', color: 'rgb(70 106 209)', marginBottom: 8, textAlign: 'center' }}>ACTS-Consolidated Retirement Preparation Checklist</Text>
-          <Text style={{ fontSize: 13, color: 'black', textAlign: 'center', fontWeight: '600' }}>(Actions, Checklist, Timelines, Submissions)</Text>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Prepare to Retire</Text>
+        <Text style={styles.subtitle}>Checklist and timeline for retirement preparation</Text>
       </View>
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
-        {/* <Text style={styles.title}>
-          Consolidated Retirement Preparation Checklist
-        </Text>
-        <Text style={styles.subtitle}>
-          (Actions, Checklist, Timelines, Submissions)
-        </Text> */}
 
-        <TouchableOpacity
-          style={styles.banner}
-          onPress={() => setShowIntro(!showIntro)}
-        >
-          <Text style={styles.bannerText}>
-            {showIntro ? "Hide Intro ▲" : "Show Intro ▼"}
-          </Text>
-        </TouchableOpacity>
-
-        {showIntro && (
-          <View style={styles.introBox}>
-            <Text style={styles.introNote}>
-              ⚠️ Your retirement prep begins when HR issues PF4/SEP & SEPPA.
-              After separation, access to official portals/emails ends
-              immediately — save essential messages now.
+      <ScrollView style={styles.scrollView}>
+        {showIntro ? (
+          <View style={styles.introContainer}>
+            <Text style={styles.introText}>
+              Start your retirement planning as early as possible to ensure a smooth transition. 
+              Delaying this step may result in <Text style={styles.bold}>permanent loss of critical records</Text>.
             </Text>
-            <Text style={styles.sectionHead}>
-              Types of payments you will receive on separation
-            </Text>
-            <Text style={styles.sectionSub}>A. From UNJSPF</Text>
-            <Text>• Withdrawal benefit — One-time payment</Text>
-            <Text>• Lump sum amount — Optional</Text>
-            <Text>• Monthly pension for life (COLA adjusted)</Text>
-
-            <Text style={[styles.sectionSub, { marginTop: 8 }]}>
-              B. From your employing organization
-            </Text>
-            <Text>• Relocation grant — Lump-sum for you & family</Text>
-            <Text>• Repatriation grant — Recognizes service abroad</Text>
-            <Text>
-              • Final Payments (Leave encashment) — Paid up to 18 days
-              (temporary) or 60 days (fixed/continuing)
-            </Text>
-            <Text>• Final Travel Entitlements — Travel costs reimbursed</Text>
+            <TouchableOpacity
+              onPress={() => setShowIntro(false)}
+              style={styles.hideButton}
+            >
+              <Text style={styles.hideButtonText}>Hide intro</Text>
+            </TouchableOpacity>
           </View>
+        ) : (
+          <TouchableOpacity
+            onPress={() => setShowIntro(true)}
+            style={styles.showButton}
+          >
+            <Text style={styles.showButtonText}>Show intro</Text>
+          </TouchableOpacity>
         )}
 
-        {/* Progress bar */}
-        <View style={styles.progressOuter}>
-          <View style={[styles.progressInner, { width: `${pct}%` }]} />
-        </View>
-        <Text style={styles.progressText}>
-          {done}/{total} done ({pct}%)
-        </Text>
-
-        {/* Checklist */}
-        {STEPS && STEPS.length > 0 && STEPS.map((step) => {
-          const tasks = data && Array.isArray(data) ? data.filter((t) => t.step === step) : [];
-          if (!tasks.length) return null;
-          const isCollapsed = !!collapsed[step];
-          return (
-            <View key={step} style={styles.stepBox}>
-              <Pressable
-                onPress={() =>
-                  setCollapsed((prev) => ({ ...prev, [step]: !isCollapsed }))
-                }
-              >
-                <Text style={styles.stepTitle}>
-                  {step} {isCollapsed ? "▼" : "▲"}
-                </Text>
-              </Pressable>
-              {!isCollapsed &&
-                tasks.map((t, i) => (
-                  <TouchableOpacity
-                    key={i}
-                    style={styles.taskRow}
-                    onPress={() => toggleStatus(t.task)}
-                  >
-                    <Text
-                      style={[
-                        styles.taskText,
-                        t.status === "Done" && styles.taskDone,
-                      ]}
-                    >
-                      {t.task}
-                    </Text>
-                    <Text style={styles.statusBadge}>{t.status}</Text>
-                  </TouchableOpacity>
-                ))}
+        {/* Progress Toolbar */}
+        <View style={styles.progressContainer}>
+          <View style={styles.legendContainer}>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#9CA3AF' }]} />
+              <Text style={styles.legendText}>Pending</Text>
             </View>
-          );
-        })}
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#F59E0B' }]} />
+              <Text style={styles.legendText}>In Progress</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#10B981' }]} />
+              <Text style={styles.legendText}>Done</Text>
+            </View>
+          </View>
+          
+          <View style={styles.progressBar}>
+            <View 
+              style={[
+                styles.progressFill, 
+                { width: `${(counts.done / Math.max(1, counts.total)) * 100}%` }
+              ]} 
+            />
+          </View>
+          
+          <View style={styles.progressTextContainer}>
+            <Text style={styles.progressText}>{counts.done} done</Text>
+            <Text style={styles.progressText}>{counts.inprog} in progress</Text>
+            <Text style={styles.progressText}>{counts.pending} pending</Text>
+          </View>
+          
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity 
+              onPress={() => setAll('pending')}
+              style={styles.actionButton}
+            >
+              <Text style={styles.actionButtonText}>Reset</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => setAll('in progress')}
+              style={styles.actionButton}
+            >
+              <Text style={styles.actionButtonText}>Mark All In Progress</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => setAll('done')}
+              style={styles.actionButton}
+            >
+              <Text style={styles.actionButtonText}>Mark All Done</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Sections */}
+        <View style={styles.sectionsContainer}>
+          {sections.map(section => (
+            <View key={section.id} style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <View style={[styles.sectionDot, { backgroundColor: section.colorDot }]} />
+                <Text style={styles.sectionTitle}>{section.label}</Text>
+              </View>
+              <View style={styles.itemsContainer}>
+                {section.items.map(item => (
+                  <View key={item.id} style={styles.item}>
+                    <TouchableOpacity
+                      style={[
+                        styles.checkbox,
+                        item.status === 'done' && styles.checkboxChecked
+                      ]}
+                      onPress={() => cycleStatus(item)}
+                      accessibilityLabel={`Set status for ${item.text}`}
+                    >
+                      {item.status === 'done' && (
+                        <Text style={styles.checkmark}>✓</Text>
+                      )}
+                    </TouchableOpacity>
+                    <View style={styles.itemContent}>
+                      <Text style={styles.itemText}>{item.text}</Text>
+                      <StatusPill status={item.status} />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.tipContainer}>
+          <Text style={styles.tipText}>
+            Tip: Tap a box to cycle status. Use the toolbar to bulk-update.
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F9FAFB", padding: 16 },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
   title: {
-    fontSize: 18,
-    fontWeight: "800",
-    color: "rgb(70 106 209)",
-    textAlign: "center",
+    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
+    fontWeight: '800',
+    color: 'rgb(70 106 209)',
+    marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 13,
-    color: "black",
-    textAlign: "center",
-    marginBottom: 10,
-    fontWeight: "600",
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 13,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: '600',
   },
-  banner: {
-    backgroundColor: "#e0f2f1",
-    padding: 8,
-    borderRadius: 8,
-    marginVertical: 6,
+  scrollView: {
+    flex: 1,
   },
-  bannerText: { textAlign: "center", color: "#0f172a", fontWeight: "600" },
-  introBox: {
-    backgroundColor: "#fff",
-    padding: 12,
-    borderRadius: 12,
+  introContainer: {
+    padding: 20,
+    backgroundColor: '#FFFBEB',
+    borderBottomWidth: 1,
+    borderBottomColor: '#FEF3C7',
+  },
+  introText: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#92400E',
     marginBottom: 12,
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
   },
-  introNote: { color: "#b91c1c", fontWeight: "600", marginBottom: 10 },
-  sectionHead: { fontWeight: "700", marginBottom: 6 },
-  sectionSub: { fontWeight: "600", marginTop: 4 },
-  progressOuter: {
-    height: 14,
-    backgroundColor: "#e2e8f0",
-    borderRadius: 999,
-    marginVertical: 10,
+  bold: {
+    fontWeight: '600',
   },
-  progressInner: {
-    height: "100%",
-    backgroundColor: "#14b8a6",
-    borderRadius: 999,
+  hideButton: {
+    alignSelf: 'flex-start',
   },
-  progressText: { fontSize: 12, textAlign: "center", color: "#64748b" },
-  stepBox: {
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 12,
-    marginVertical: 8,
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
+  hideButtonText: {
+    color: '#3B82F6',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
-  stepTitle: { fontSize: 16, fontWeight: "700", marginBottom: 6 },
-  taskRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 4,
+  showButton: {
+    margin: 16,
+    padding: 8,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 20,
+    alignSelf: 'flex-start',
   },
-  taskText: { flex: 1, marginRight: 6 },
-  taskDone: { textDecorationLine: "line-through", color: "#64748b" },
-  statusBadge: {
+  showButtonText: {
     fontSize: 12,
+    color: '#4B5563',
+  },
+  progressContainer: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  legendDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  legendText: {
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#10B981',
+  },
+  progressTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressText: {
+    fontSize: 11,
+    color: '#6B7280',
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 12,
+  },
+  actionButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 16,
+  },
+  actionButtonText: {
+    fontSize: 12,
+    color: '#4B5563',
+  },
+  sectionsContainer: {
+    paddingBottom: 20,
+  },
+  section: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    gap: 8,
+  },
+  sectionDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#111827',
+  },
+  itemsContainer: {
+    gap: 12,
+  },
+  item: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+  },
+  checkboxChecked: {
+    backgroundColor: '#10B981',
+    borderColor: '#10B981',
+  },
+  checkmark: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  itemContent: {
+    flex: 1,
+  },
+  itemText: {
+    fontSize: 15,
+    lineHeight: 20,
+    color: '#1F2937',
+    marginBottom: 4,
+  },
+  statusPill: {
+    alignSelf: 'flex-start',
+    borderRadius: 12,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: 999,
-    backgroundColor: "#f1f5f9",
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
+  },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  tipContainer: {
+    padding: 16,
+    backgroundColor: '#F9FAFB',
+    alignItems: 'center',
+  },
+  tipText: {
+    fontSize: 11,
+    color: '#6B7280',
   },
 });
