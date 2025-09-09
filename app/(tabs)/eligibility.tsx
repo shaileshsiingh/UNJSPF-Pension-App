@@ -554,11 +554,11 @@ export default function EligibilityScreen() {
         </View>
 
         {/* --- TEMPORARY DEBUG VIEW --- */}
-        <View style={{ padding: 10, backgroundColor: '#ffc', margin: 10, borderColor: '#f00', borderWidth: 1 }}>
+        {/* <View style={{ padding: 10, backgroundColor: '#ffc', margin: 10, borderColor: '#f00', borderWidth: 1 }}>
           <Text style={{ color: '#000', fontWeight: 'bold' }}>DEBUG INFO:</Text>
           <Text style={{ color: '#000' }}>Stored Org Name: '{debugOrg}'</Text>
           <Text style={{ color: '#000' }}>Resulting Contact: '{orgContact}'</Text>
-        </View>
+        </View> */}
         {/* --- END TEMPORARY DEBUG VIEW --- */}
 
         {/* Input Mode Toggle */}
