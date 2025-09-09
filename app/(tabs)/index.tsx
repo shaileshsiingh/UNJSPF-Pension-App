@@ -23,12 +23,14 @@ import {
   MapPin,
   CheckSquare,
   Briefcase,
-  Book
+  Book,
+  Workflow,
+  Link,
+  Plane
 } from 'lucide-react-native';
-import { router } from 'expo-router';
 import { useAuth } from '../../components/AuthContext';
 import { getRobotoFont } from '@/utils/fonts';
-
+import { router } from 'expo-router';
 // App logo (re-use same asset as landing page)
 const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
 
@@ -123,7 +125,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Shield size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>UNJSF Benefits</Text>
+              <Text style={styles.toolTitle}>UNJSPF Benefits</Text>
               <Text style={styles.toolDescription}>
                 Eligibility • Amounts • <br></br>Next steps
               </Text>
@@ -146,8 +148,8 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/employer-benefits')}
             >
-              <Briefcase size={32} color="#D97706" strokeWidth={2} />
-              <Text style={styles.toolTitle}>HR Benefits</Text>
+            <Plane size={32} color="#059669" strokeWidth={2} />
+            <Text style={styles.toolTitle}>HR Benefits</Text>
               <Text style={styles.toolDescription}>
                 Relocation • Repatriation  <br></br>Leave • Home travel
               </Text>
@@ -158,8 +160,8 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/post-un-life' as any)}
             >
-              <MapPin size={32} color="#DC2626" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Post-UN <br></br>Life Planner</Text>
+            <Workflow size={32} color="#059669" strokeWidth={2} />
+            <Text style={styles.toolTitle}>Post-UN <br></br>Life Planner</Text>
               <Text style={styles.toolDescription}>
                 Design your next chapter
               </Text>
@@ -170,8 +172,9 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/resources')}
             >
-              <Book size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Resources</Text>
+
+            <Link size={32} color="#059669" strokeWidth={2} />
+                       <Text style={styles.toolTitle}>Resources</Text>
               <Text style={styles.toolDescription}>
                 Useful links
               </Text>

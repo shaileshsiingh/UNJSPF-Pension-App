@@ -93,7 +93,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="post-un-life"
         options={{
-          title: 'Future',
+          title: 'Planner',
           tabBarIcon: ({ size, color }) => (
             <Workflow size={size} color={color} strokeWidth={2} />
           ),
