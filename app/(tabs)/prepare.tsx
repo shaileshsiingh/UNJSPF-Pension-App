@@ -24,7 +24,6 @@ interface Section {
   items: ChecklistItem[];
   colorDot: string;
 }
-const { width } = Dimensions.get('window');
 
 const StatusPill = ({ status }: { status: Status }) => {
   const bgColor = {
@@ -38,7 +37,6 @@ const StatusPill = ({ status }: { status: Status }) => {
     'in progress': '#92400E',
     'done': '#065F46',
   }[status];
-
   return (
     <View style={[styles.statusPill, { backgroundColor: `${bgColor}40` }]}>
       <Text style={[styles.statusText, { color: textColor }]}>
@@ -57,21 +55,53 @@ export default function PrepareScreen() {
     pending: 0, 
     total: 0 
   });
+  const { width } = Dimensions.get('window');
 
   // Initialize data
   useEffect(() => {
     const initialSections: Section[] = [
       {
-        id: 'documents',
-        label: 'Documents to Collect',
-        colorDot: '#3B82F6',
+        id: 'critical',
+        label: 'Critical – Must Do for Pension & Separation',
+        colorDot: '#EF4444',
         items: [
-          { id: 'd1', text: 'Passport & ID documents', status: 'pending', sectionId: 'documents' },
-          { id: 'd2', text: 'Birth certificates (yours & dependents)', status: 'pending', sectionId: 'documents' },
-          { id: 'd3', text: 'Marriage/divorce certificates', status: 'pending', sectionId: 'documents' },
+          { id: 'c1', text: 'Complete your e-performance (incl. supervised staff, if applicable).', status: 'pending', sectionId: 'critical' },
+          { id: 'c2', text: 'Certify all attendance and leave records in Umoja.', status: 'pending', sectionId: 'critical' },
+          { id: 'c3', text: 'Confirm and use accrued annual leave (max 60 days/18 temps).', status: 'pending', sectionId: 'critical' },
+          { id: 'c4', text: 'Attend your Exit Interview and submit all required forms.', status: 'pending', sectionId: 'critical' },
+          { id: 'c5', text: 'Register in the UNJSPF portal to track pension payments.', status: 'pending', sectionId: 'critical' },
+          { id: 'c6', text: 'Submit Separation Payments form (F.250).', status: 'pending', sectionId: 'critical' },
+          { id: 'c7', text: 'Submit UNJSPF Separation Instructions (PENS.E/6 or PENS.E/7).', status: 'pending', sectionId: 'critical' },
+          { id: 'c8', text: 'Return UNLPs to UNHQ.', status: 'pending', sectionId: 'critical' },
+          { id: 'c9', text: 'Finalize repatriation travel in Umoja ESS.', status: 'pending', sectionId: 'critical' },
+          { id: 'c10', text: 'Submit notarized proof for Repatriation Grant.', status: 'pending', sectionId: 'critical' },
+          { id: 'c11', text: 'Obtain Retiree UN Grounds Pass (SSS.160).', status: 'pending', sectionId: 'critical' },
         ],
       },
-      // ... other sections
+      {
+        id: 'important',
+        label: 'Important – Avoid Delays & Complications',
+        colorDot: '#F59E0B',
+        items: [
+          { id: 'i1', text: 'Cancel G-5 visas for household employees.', status: 'pending', sectionId: 'important' },
+          { id: 'i2', text: 'Review US residency/G-4 visa options if based in the US.', status: 'pending', sectionId: 'important' },
+          { id: 'i3', text: 'Update/join medical & life insurance (within 31 days of separation).', status: 'pending', sectionId: 'important' },
+          { id: 'i4', text: 'Clear all education grant & dependency allowance claims.', status: 'pending', sectionId: 'important' },
+          { id: 'i5', text: 'Provide proof of payment for rental subsidies, if applicable.', status: 'pending', sectionId: 'important' },
+          { id: 'i6', text: 'Settle staff obligations (Emergency Fund, OICT devices, Garage, Locksmith, etc.).', status: 'pending', sectionId: 'important' },
+          { id: 'i7', text: 'Submit Annex to Exit Interview (ST/SGB/2006/15) (if in procurement).', status: 'pending', sectionId: 'important' },
+          { id: 'i8', text: 'Clear any UNFCU loans to avoid delays in separation payments.', status: 'pending', sectionId: 'important' },
+        ],
+      },
+      {
+        id: 'optional',
+        label: 'Optional / Conditional',
+        colorDot: '#6B7280',
+        items: [
+          { id: 'o1', text: 'US income tax: If a US taxpayer, notify the UN Tax Unit.', status: 'pending', sectionId: 'optional' },
+          { id: 'o2', text: 'Guidance on US Permanent Residency (P.323): Only if applying for G-4 visa residency conversion.', status: 'pending', sectionId: 'optional' },
+        ],
+      },
     ];
 
     const loadData = async () => {
@@ -144,11 +174,12 @@ export default function PrepareScreen() {
     });
 
     setCounts({ done, inprog, pending, total });
+    const { width } = Dimensions.get('window');
 
     // Save data
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem('retirementChecklist', 
+        await AsyncStorage.setItem('retirementChecklistV2', 
           JSON.stringify({ sections, showIntro })
         );
       } catch (error) {
@@ -163,14 +194,14 @@ export default function PrepareScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Prepare to Retire</Text>
-        <Text style={styles.subtitle}>Checklist and timeline for retirement preparation</Text>
+        <Text style={styles.subtitle}>Actions Checklist, Timelines, Submissions</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>
         {showIntro ? (
           <View style={styles.introContainer}>
             <Text style={styles.introText}>
-              Start your retirement planning as early as possible to ensure a smooth transition. 
+              Your retirement process officially begins the moment HR issues your Separation Notification (PF4/SEP) and Separation Personnel Action (SEPPA). Once you separate, all access to official portals and emails is cut off instantly—with no way to retrieve them later. Save every essential email, document, and message to your personal email ID immediately. 
               Delaying this step may result in <Text style={styles.bold}>permanent loss of critical records</Text>.
             </Text>
             <TouchableOpacity
@@ -286,6 +317,7 @@ export default function PrepareScreen() {
     </View>
   );
 }
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
