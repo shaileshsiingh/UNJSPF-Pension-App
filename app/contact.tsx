@@ -26,7 +26,7 @@ const getHorizontalPadding = () => {
 
 export default function ContactScreen() {
   const handleEmailPress = () => {
-    Linking.openURL('mailto:info.myunpension@hardandcode.io');
+    Linking.openURL('mailto:info.myunpension@harpandcode.io');
   };
 
   return (
