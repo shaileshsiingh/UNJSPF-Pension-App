@@ -10,7 +10,7 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react-native';
+import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight, LogOut } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
 // import DatePicker from '../../components/DatePicker';
 
@@ -574,7 +574,9 @@ export default function CalculatorScreen() {
           style={styles.backButton}
           onPress={() => router.push('/(tabs)')}
         >
-          <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
+           <View style={{ transform: [{ scaleX: -1 }] }}>
+          <LogOut size={24} color="#2563EB" strokeWidth={2} />
+        </View>
         </TouchableOpacity>
         <View style={styles.headerContent}>
           <View style={styles.headerIconContainer}>

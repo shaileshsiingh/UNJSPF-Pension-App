@@ -27,7 +27,8 @@ import {
   Calculator,
   DollarSign,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  LogOut
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
@@ -377,8 +378,9 @@ export default function ProfileScreen() {
             style={styles.backButton}
             onPress={() => router.push('/(tabs)')}
           >
-            <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
-          </TouchableOpacity>
+ <View style={{ transform: [{ scaleX: -1 }] }}>
+          <LogOut size={24} color="#2563EB" strokeWidth={2} />
+        </View>          </TouchableOpacity>
           <View style={styles.headerContent}>
             <View style={styles.headerIconContainer}>
               <Shield size={32} color="#2563EB" strokeWidth={2} />
