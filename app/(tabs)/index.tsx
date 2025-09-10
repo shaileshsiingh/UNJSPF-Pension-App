@@ -318,9 +318,10 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   primaryButton: {
+    width: '100%',
     backgroundColor: '#2563EB',
     borderRadius: 16,
-    padding: 20,
+    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -350,6 +351,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#E0E7FF',
     lineHeight: 18,
+    textAlign: 'center',
+
   },
   infoCard: {
     backgroundColor: '#FFFFFF',

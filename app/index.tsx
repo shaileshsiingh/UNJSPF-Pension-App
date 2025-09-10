@@ -265,7 +265,7 @@ export default function LandingPage() {
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
-            2025 MyUNPension. All Rights Reserved.
+            @2025 MyUNPension. All Rights Reserved.
           </Text>
         </View>
         
