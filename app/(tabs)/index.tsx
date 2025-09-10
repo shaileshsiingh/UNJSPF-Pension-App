@@ -114,7 +114,7 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/prepare' as any)}
             >
-              <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
+              <CheckSquare size={32} color="#059669" strokeWidth={2} />
               <Text style={styles.toolTitle}>Prepare to Retire</Text>
               <Text style={styles.toolDescription}>
                 Actions • Checklist  <br></br>Timelines • Submissions
@@ -138,7 +138,7 @@ export default function HomeScreen() {
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/eligibility')}
             >
-              <TrendingUp size={32} color="#0EA5E9" strokeWidth={2} />
+              <TrendingUp size={32} color="#059669" strokeWidth={2} />
               <Text style={styles.toolTitle}>My Pension</Text>
               <Text style={styles.toolDescription}>
                 Scenarios • Options
