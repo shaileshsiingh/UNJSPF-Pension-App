@@ -141,6 +141,8 @@ export default function PostUNLifePlanner() {
     { name: 'Google NotebookLM', url: 'https://notebooklm.google/' },
     { name: 'Readwise Reader', url: 'https://read.readwise.io/' },
     { name: 'Elicit (AI Research Assistant)', url: 'https://elicit.com/' },
+    { name: 'Google AI Studio', url: 'https://aistudio.google.com/' },
+
   ];
 
   const storyLinks = [
@@ -272,7 +274,7 @@ export default function PostUNLifePlanner() {
             <Workflow size={32} color="#2563EB" strokeWidth={2} />
           </View>
           <Text style={styles.headerTitle}>Post-UN Life Planner</Text>
-          <Text style={styles.headerSub}>Plan relocation, lifestyle, and second career with helpful tools</Text>
+          <Text style={styles.headerSub}>Helpful tools to map your life, work, and choices beyond UN service.</Text>
         </View>
 
         <View style={styles.card}>

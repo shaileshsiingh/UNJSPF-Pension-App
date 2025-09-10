@@ -158,7 +158,7 @@ export default function LandingPage() {
           {/* Title */}
 
           <Text style={styles.overviewMainTitle}>United Nations Joint Staff Pension Fund</Text>
-          <Text style={styles.overviewSubtitle}>Key facts at a glance</Text>
+          <Text style={styles.overviewSubtitle}>Key facts</Text>
           <Text style={styles.overviewNote}>Figures based on latest actuarial valuation</Text>
 
           {/* Financials */}
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: scaleSize(3, 3, 3),
     letterSpacing: 0.5,
-    fontFamily: getRobotoFont('medium'),
+    fontFamily: getRobotoFont('regular'),
   },
   heroDesc: {
     color: 'rgba(62, 88, 112, 0.9)',
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
     fontSize: scaleFont(12, 14, 16),
     color: 'black',
     textAlign: 'center',
-    fontFamily: getRobotoFont('medium'),
+    fontFamily: getRobotoFont('regular'),
     fontWeight: '600',
 
   },
@@ -561,12 +561,19 @@ fontSize:11
     fontFamily: getRobotoFont('bold'),
   },
   aboutTitle: {
-    color: '#7c3aed',
-    fontSize: scaleFont(16, 18, 20),
+    // color: '#7c3aed',
+    // fontSize: scaleFont(16, 18, 20),
+    // fontWeight: '700',
+    // textAlign: 'center',
+    // marginBottom: scaleSize(4, 5, 6),
+    // marginTop: scaleSize(6, 8, 10),
+    // fontFamily: getRobotoFont('bold'),
+    fontSize: scaleFont(16, 18, 22),
     fontWeight: '700',
+    color: '#1e3a8a',
     textAlign: 'center',
-    marginBottom: scaleSize(4, 5, 6),
-    marginTop: scaleSize(6, 8, 10),
+    // marginBottom: scaleSize(8, 6, 8),
+    // marginTop: scaleSize(10, 12, 14),
     fontFamily: getRobotoFont('bold'),
   },
 
@@ -670,7 +677,7 @@ fontSize:11
   ctaTitle: {
     fontSize: scaleFont(16, 18, 20),
     fontWeight: '700',
-    color: 'black',
+    color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: scaleSize(18, 18, 18),
     marginTop: scaleSize(12, 14, 16),
