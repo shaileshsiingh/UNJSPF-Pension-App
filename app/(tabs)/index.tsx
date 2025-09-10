@@ -264,9 +264,9 @@ const styles = StyleSheet.create({
     letterSpacing: -1.2,
     fontFamily: getRobotoFont('bold'),
     // textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 8,
-    marginTop: -20,
+    // textShadowOffset: { width: 0, height: 2 },
+    // textShadowRadius: 8,
+    marginTop: -22,
     marginBottom: 4,
   }, 
   welcomeTitle: {
@@ -303,6 +303,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
   },
   sectionSubtitle1: {
     fontSize: 16,
