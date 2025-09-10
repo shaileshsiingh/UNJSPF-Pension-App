@@ -227,7 +227,7 @@ export default function LandingPage() {
           </Text> */}
           <TouchableOpacity 
             style={styles.ctaButton}
-            onPress={() => router.push('/calculator')}
+            onPress={() => router.push('/(tabs)')}
           >
             <Text style={styles.ctaButtonText}>Get Started for Free</Text>
           </TouchableOpacity>
