@@ -876,7 +876,7 @@ export default function CalculatorScreen() {
           />
         </View>
         <View style={styles.helpTextContainer}>
-          <Text style={styles.helpText}>Enter the actuarial factor for lump sum calculations.</Text>
+          <Text style={styles.helpText}>Default actuarial factor in use. Change it manually if another applies.</Text>
         </View>
 
         {/* Lump Sum Election */}

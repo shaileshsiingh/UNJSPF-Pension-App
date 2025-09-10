@@ -81,13 +81,13 @@ export default function EmployerBenefitsScreen() {
         <View style={styles.card}>          
           <Text style={styles.cardTitle}>Documents to submit 30 days before separation</Text>
           <View style={styles.orderedList}>            
-            <Text style={styles.item}><Text style={styles.bold}>1.Separation Payments Form</Text> (P.250) – For alternative bank account final pay.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>2.Separation Briefing Note</Text> – Review, sign, and return (scan/email).</Text>
-            <Text style={styles.item}><Text style={styles.bold}>3.Exit Interview Form</Text> (P.218) & Annex – Complete and return.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>4.E-Performance Appraisal</Text>     – Submit most recent appraisal.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>5.Clearances</Text> – clearances coordinated by HR partner.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>6.UNLP</Text> – Return UNLP to Passport Section at HQ.</Text>
-            <Text style={styles.item}><Text style={styles.bold}>7.Submit all leave requests</Text> (annual, sick, etc.) in Umoja ESS and confirm with HR by email.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>1. Separation Payments Form</Text> (P.250) – For alternative bank account final pay.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>2. Separation Briefing Note</Text> – Review, sign, and return (scan/email).</Text>
+            <Text style={styles.item}><Text style={styles.bold}>3. Exit Interview Form</Text> (P.218) & Annex – Complete and return.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>4. E-Performance Appraisal</Text>     – Submit most recent appraisal.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>5. Clearances</Text> – clearances coordinated by HR partner.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>6. UNLP</Text> – Return UNLP to Passport Section at HQ.</Text>
+            <Text style={styles.item}><Text style={styles.bold}>7. Submit all leave requests</Text> (annual, sick, etc.) in Umoja ESS and confirm with HR by email.</Text>
           </View>
         </View>
 
