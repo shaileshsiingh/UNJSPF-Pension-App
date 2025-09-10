@@ -197,16 +197,12 @@ export default function SignupScreen() {
       if (result) {
         showToast('Google sign-in successful!');
         router.replace('/');
-      } else {
-        showToast('Redirecting to Google...');
       }
     } catch (e: any) {
       console.error('Google sign-in error:', e);
-      let errorMessage = 'Google sign-in failed. Please try again.';
-      if (e.message) {
-        errorMessage = e.message;
+      if (!(e.message && (e.message.includes('cancelled') || e.message.includes('closed')))) {
+        showToast(e.message || 'Google sign-in failed. Please try again.');
       }
-      showToast(errorMessage);
     }
   };
 
