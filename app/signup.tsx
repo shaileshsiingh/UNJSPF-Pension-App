@@ -320,7 +320,7 @@ export default function SignupScreen() {
               <View style={styles.socialSection}>
                 <View style={styles.divider}>
                   <View style={styles.dividerLine} />
-                  <Text style={styles.dividerText}>or continue with</Text>
+                  <Text style={styles.dividerText}>or</Text>
                   <View style={styles.dividerLine} />
                 </View>
                 

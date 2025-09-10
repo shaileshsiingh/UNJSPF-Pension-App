@@ -352,7 +352,7 @@ export default function CalculatorScreen() {
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [ownContributions, setOwnContributions] = useState(0);
   const [finalAverageRemuneration, setFinalAverageRemuneration] = useState(0); // NEW: FAR input
-  const [actuarialFactor, setActuarialFactor] = useState(12.694); // NEW: Manual actuarial factor
+  const [actuarialFactor, setActuarialFactor] = useState('12.694'); // NEW: Manual actuarial factor
   const [prValues, setPrValues] = useState(Array(36).fill(''));
   const [yearsOfService, setYearsOfService] = useState(20);
   const [ageAtRetirement, setAgeAtRetirement] = useState(62);
@@ -439,7 +439,7 @@ export default function CalculatorScreen() {
   const annualPension = far * (roa / 100);
   
   // Use manual actuarial factor instead of age-based lookup
-  const maxLumpSum = (annualPension * (lumpSumPercentage / 100)) * actuarialFactor;
+  const maxLumpSum = (annualPension * (lumpSumPercentage / 100)) * parseFloat(actuarialFactor);
 
   // Main calculations - UPDATED TO MATCH HTML LOGIC
   useEffect(() => {
@@ -481,7 +481,7 @@ export default function CalculatorScreen() {
         // Only allow lump sum for non-deferred benefits
         if (electLumpSum && benefitInfo.type !== 'Deferred Retirement Benefit (Article 30)') {
           // Use initial annual pension (before reduction) for lump sum calculation
-          totalLumpSumAmount = initialAnnualPension * (lumpSumPercentage / 100) * actuarialFactor;
+          totalLumpSumAmount = initialAnnualPension * (lumpSumPercentage / 100) * parseFloat(actuarialFactor);
           monthlyCommutedValue = monthlyPensionBeforeCommutation * (lumpSumPercentage / 100);
           reducedMonthlyPension = monthlyPensionBeforeCommutation - monthlyCommutedValue;
         }
@@ -864,12 +864,8 @@ export default function CalculatorScreen() {
           <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor:</Text>
           <TextInput
             style={[styles.inlineInput, styles.numberInput]}
-            value={actuarialFactor.toString()}
-            onChangeText={text => {
-              const num = parseFloat(text);
-              if (!isNaN(num) && num >= 0) setActuarialFactor(num);
-              else if (text === '' || text === '.') setActuarialFactor(0);
-            }}
+            value={actuarialFactor}
+            onChangeText={setActuarialFactor}
             placeholder="e.g., 12.694"
             placeholderTextColor="#9CA3AF"
             keyboardType="decimal-pad"

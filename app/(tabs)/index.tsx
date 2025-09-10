@@ -76,24 +76,26 @@ export default function HomeScreen() {
             Begin your pension journey with these essential steps
           </Text> */} 
           
-          <TouchableOpacity 
-            style={styles.primaryButton}
-            onPress={() => {
-              // Scroll to Quick Tools section or stay on current screen
-              router.push('/about-app');
-            }}
-          >
-            <View style={styles.buttonContent}>
-              {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
-              <View style={styles.buttonTextContainer}>
-                <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
-                <Text style={styles.primaryButtonSubtext}>
-                Learn the concepts, methodology & formulas behind your retirement benefit calculations.
-                </Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+              style={[styles.primaryButton, { width: '80%', height: 85 }]}
+              onPress={() => {
+                // Scroll to Quick Tools section or stay on current screen
+                router.push('/about-app');
+              }}
+            >
+              <View style={styles.buttonContent}>
+                {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
+                <View style={styles.buttonTextContainer}>
+                  <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
+                  <Text style={styles.primaryButtonSubtext}>
+                  Learn the concepts, methodology & formulas behind your retirement benefit calculations.
+                  </Text>
+                </View>
               </View>
-            </View>
-            <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
-          </TouchableOpacity>
+              <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+            </TouchableOpacity>
+          </View>
         </View>
 
       
@@ -331,6 +333,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
   },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   buttonContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -341,14 +348,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   primaryButtonText: {
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 4,
     textAlign: 'center',
   },
   primaryButtonSubtext: {
-    fontSize: 14,
+    fontSize: 11,
     color: '#E0E7FF',
     lineHeight: 18,
     textAlign: 'center',
