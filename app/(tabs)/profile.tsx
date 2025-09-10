@@ -541,7 +541,7 @@ export default function ProfileScreen() {
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
                          <View style={styles.retirementHeader}>
-               <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary<br></br>(Calculated)</Text>
+               <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary {'\n'} (Calculated)</Text>
              </View>
 
             

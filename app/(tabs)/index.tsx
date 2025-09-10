@@ -117,7 +117,7 @@ export default function HomeScreen() {
               <CheckSquare size={32} color="#059669" strokeWidth={2} />
               <Text style={styles.toolTitle}>Prepare to Retire</Text>
               <Text style={styles.toolDescription}>
-                Actions • Checklist  <br></br>Timelines • Submissions
+                Actions • Checklist  {'\n'} Timelines • Submissions
               </Text>
             </TouchableOpacity>
 
@@ -129,7 +129,7 @@ export default function HomeScreen() {
               <Shield size={32} color="#059669" strokeWidth={2} />
               <Text style={styles.toolTitle}>UNJSPF Benefits</Text>
               <Text style={styles.toolDescription}>
-                Eligibility • Amounts • <br></br>Next steps
+                Eligibility • Amounts • {'\n'} Next steps
               </Text>
             </TouchableOpacity>
 
@@ -153,7 +153,7 @@ export default function HomeScreen() {
             <Plane size={32} color="#059669" strokeWidth={2} />
             <Text style={styles.toolTitle}>HR Benefits</Text>
               <Text style={styles.toolDescription}>
-                Relocation • Repatriation  <br></br>Leave • Home travel
+                Relocation • Repatriation {'\n'} Leave • Home travel
               </Text>
             </TouchableOpacity>
 
@@ -163,7 +163,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/post-un-life' as any)}
             >
             <Workflow size={32} color="#059669" strokeWidth={2} />
-            <Text style={styles.toolTitle}>Post-UN <br></br>Life Planner</Text>
+            <Text style={styles.toolTitle}>Post-UN {'\n'} Life Planner</Text>
               <Text style={styles.toolDescription}>
                 Design your next chapter
               </Text>

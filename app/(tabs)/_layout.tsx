@@ -9,8 +9,11 @@ export default function TabsLayout() {
   const router = useRouter();
 
   useEffect(() => {
+    // Only redirect if we're sure there's no user and not loading
+    // This allows the landing page to handle its own routing logic
     if (!loading && !user) {
-      router.replace('/login');
+      // Don't automatically redirect to login - let landing page handle this
+      router.replace('/');
     }
   }, [user, loading]);
 
