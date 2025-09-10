@@ -697,7 +697,7 @@ export default function EligibilityScreen() {
                 <Text style={styles.inputSubtitle}>From Date of Entry to Date of Separation</Text>
                 <TextInput
                   style={styles.input}
-                  value={yearsOfService.toString()}
+                  value={formatYearsMonthsDaysObj(convertDecimalYearsToYMD(yearsOfService))}
                   onChangeText={text => {
                     const num = parseFloat(text);
                     if (!isNaN(num) && num >= 0) setYearsOfService(num);
@@ -707,6 +707,9 @@ export default function EligibilityScreen() {
                   placeholderTextColor="#9CA3AF"
                   keyboardType="decimal-pad"
                 />
+                {/* <Text style={[styles.sliderValue, { marginTop: 8, fontSize: 14, color: '#6B7280' }]}>
+                  {formatYearsMonthsDaysObj(convertDecimalYearsToYMD(yearsOfService))}
+                </Text> */}
               </View>
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Your Current Age</Text>
