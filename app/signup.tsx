@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
   // Logo Section - same as login
   logoSection: {
     alignItems: 'center',
-    marginBottom: isSmallScreen ? 30 : 40,
+    marginBottom: isSmallScreen ? 10 : 10,
   },
   heroIconContainer: {
     width: isSmallScreen ? 120 : 140,

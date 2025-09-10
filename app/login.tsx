@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   // Logo Section
   logoSection: {
     alignItems: 'center',
-    marginBottom: isSmallScreen ? 30 : 40,
+    marginBottom: isSmallScreen ? 40 : 40,
   },
   heroIconContainer: {
     width: isSmallScreen ? 120 : 140,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 17 : 17,
     fontWeight: '700',
     color: '#0072CE',
-    marginTop: -30,
+    marginTop: -25,
     textAlign: 'center',
     letterSpacing: -0.5,
     fontFamily: getRobotoFont('bold'),
