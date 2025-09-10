@@ -5,8 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import { Calculator, TrendingUp, FileText, Info } from 'lucide-react-native';
+import { Calculator, TrendingUp, FileText, Info, LogOut } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 export default function PlannerScreen() {
@@ -14,6 +15,13 @@ export default function PlannerScreen() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity 
+                            style={styles.backButton}
+                            onPress={() => router.push('/(tabs)')}
+                          >
+                 <View style={{ transform: [{ scaleX: -1 }] }}>
+                          <LogOut size={24} color="#2563EB" strokeWidth={2} />
+                        </View>          </TouchableOpacity>
         <Calculator size={48} color="#2563EB" strokeWidth={2} />
         <Text style={styles.title}>Pension Planner</Text>
         <Text style={styles.subtitle}>
@@ -118,6 +126,7 @@ export default function PlannerScreen() {
   );
 }
 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -129,6 +138,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomColor: '#E5E7EB',
     borderBottomWidth: 1,
+  },
+  backButton: {
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
   },
   title: {
     fontSize: 28,

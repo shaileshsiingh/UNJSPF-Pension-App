@@ -15,10 +15,12 @@ import {
   FlatList,
   Switch,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
-import { Workflow } from 'lucide-react-native';
+import { LogOut, Workflow } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 type BudgetSplits = Record<string, number>;
 
@@ -270,6 +272,13 @@ export default function PostUNLifePlanner() {
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
         <View style={styles.header}>
+          <TouchableOpacity 
+                                      style={styles.backButton}
+                                      onPress={() => router.push('/(tabs)')}
+                                    >
+                           <View style={{ transform: [{ scaleX: -1 }] }}>
+                                    <LogOut size={24} color="#2563EB" strokeWidth={2} />
+                                  </View>          </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <Workflow size={32} color="#2563EB" strokeWidth={2} />
           </View>
@@ -431,7 +440,7 @@ function LinkList({ links, onOpen }: { links: { name: string; url: string }[]; o
     </View>
   );
 }
-
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#FFFFFF',
@@ -440,6 +449,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E5E7EB',
     borderBottomWidth: 1,
     borderRadius: 12,
+  },
+  backButton: {
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
   },
   headerIconContainer: {
     backgroundColor: '#EBF4FF',

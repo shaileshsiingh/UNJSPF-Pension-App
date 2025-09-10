@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
-import { BookOpen, Link } from 'lucide-react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Dimensions } from 'react-native';
+import { BookOpen, Link, LogOut } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 export default function ResourcesScreen() {
   const openUrl = (url: string) => Linking.openURL(url).catch(() => {});
@@ -8,6 +9,13 @@ export default function ResourcesScreen() {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
+           <TouchableOpacity 
+                    style={styles.backButton}
+                    onPress={() => router.push('/(tabs)')}
+                  >
+         <View style={{ transform: [{ scaleX: -1 }] }}>
+                  <LogOut size={24} color="#2563EB" strokeWidth={2} />
+                </View>          </TouchableOpacity>
         <View style={styles.headerIconContainer}>
           <Link size={32} color="#2563EB" strokeWidth={2} />
         </View>
@@ -88,10 +96,19 @@ export default function ResourcesScreen() {
   );
 }
 
+const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9FAFB',
+  },
+  backButton: {
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
   },
   header: {
     backgroundColor: '#FFFFFF',
