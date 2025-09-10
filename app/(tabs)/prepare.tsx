@@ -193,6 +193,11 @@ export default function PrepareScreen() {
 
   return (
     <View style={styles.container}>
+       <View style={styles.tipContainer}>
+          <Text style={styles.tipText}>
+            Tip: Tap a box to cycle status. Use the toolbar to bulk-update.
+          </Text>
+        </View>
       <View style={styles.header}>
         <View style={styles.headerIconContainer}>
           <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
@@ -312,11 +317,7 @@ export default function PrepareScreen() {
           ))}
         </View>
 
-        <View style={styles.tipContainer}>
-          <Text style={styles.tipText}>
-            Tip: Tap a box to cycle status. Use the toolbar to bulk-update.
-          </Text>
-        </View>
+       
       </ScrollView>
     </View>
   );
@@ -525,5 +526,7 @@ const styles = StyleSheet.create({
   tipText: {
     fontSize: 11,
     color: '#6B7280',
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 });
