@@ -54,7 +54,7 @@ export default function HomeScreen() {
         {/* Header Section */}
         <View style={styles.header}>
           <View style={styles.headerContent}>
-            <TouchableOpacity onPress={() => router.push('/myunpension')}>
+            <TouchableOpacity onPress={() => router.push('/')}>
               <Image
                 source={{ uri: LOGO_URL }}
                 style={styles.headerLogo}
