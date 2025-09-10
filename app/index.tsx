@@ -227,7 +227,7 @@ export default function LandingPage() {
           </Text> */}
           <TouchableOpacity 
             style={styles.ctaButton}
-            onPress={() => router.push('/(tabs)')}
+            onPress={() => router.push('/login')}
           >
             <Text style={styles.ctaButtonText}>Get Started for Free</Text>
           </TouchableOpacity>
