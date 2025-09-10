@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('bold'),
   },
   glanceDesc: {
-    fontSize: scaleFont(10, 11, 12),
+    fontSize: scaleFont(10, 10, 10),
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: scaleFont(12, 13, 14),
