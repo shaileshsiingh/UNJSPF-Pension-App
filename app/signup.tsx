@@ -325,13 +325,18 @@ export default function SignupScreen() {
                 </View>
                 
                 <Pressable
-                  style={[styles.socialButton, { backgroundColor: '#4285F4' }, googleLoading ? styles.buttonDisabled : null]}
+                  style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]}
                   onPress={handleGoogleSignIn}
                   disabled={googleLoading}
                 >
-                  <Text style={[styles.socialButtonText, { color: '#fff' }]}>
-                    {googleLoading ? 'Redirecting to Google...' : '🔍 Continue with Google'}
-                  </Text>
+                  <View style={styles.googleButtonContent}>
+                    <View style={styles.googleIcon}>
+                      <Text style={styles.googleIconText}>G</Text>
+                    </View>
+                    <Text style={styles.googleButtonText}>
+                      {googleLoading ? 'Signing in...' : 'Continue with Google'}
+                    </Text>
+                  </View>
                 </Pressable>
               </View>
             {/* Bottom Spacing */}
@@ -415,7 +420,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    fontSize: isSmallScreen ? 24 : 28,
+    fontSize: isSmallScreen ? 18 : 20,
     fontWeight: '700',
     marginBottom: 8,
     color: '#F59E42', // Orange color for signup
@@ -442,9 +447,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#d1d5db',
     borderRadius: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
     marginBottom: 4,
-    fontSize: isSmallScreen ? 15 : 16,
+    fontSize: isSmallScreen ? 13 : 13,
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     color: '#1f2937',
     fontFamily: getRobotoFont('regular'),
@@ -467,7 +472,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     backgroundColor: '#F59E42', // Orange color for signup
-    paddingVertical: isSmallScreen ? 14 : 16,
+    paddingVertical: isSmallScreen ? 13 : 13,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 8,
@@ -484,7 +489,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#ffffff',
     fontWeight: '800',
-    fontSize: isSmallScreen ? 16 : 18,
+    fontSize: isSmallScreen ? 14 : 14,
     letterSpacing: 0.5,
     fontFamily: getRobotoFont('bold'),
   },
@@ -496,7 +501,7 @@ const styles = StyleSheet.create({
   linkText: {
     color: 'gray',
     fontWeight: '600',
-    fontSize: isSmallScreen ? 14 : 15,
+    fontSize: isSmallScreen ? 12 : 12,
     textAlign: 'center',
     fontFamily: getRobotoFont('medium'),
   },
@@ -523,26 +528,46 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 12,
   },
-  socialButton: {
-     width: '100%',
-     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-     borderWidth: 2,
-     borderColor: 'rgba(229, 231, 235, 0.8)',
-     paddingVertical: isSmallScreen ? 12 : 14,
-     borderRadius: 16,
-     alignItems: 'center',
-     shadowColor: '#000',
-     shadowOffset: { width: 0, height: 2 },
-     shadowOpacity: 0.1,
-     shadowRadius: 4,
-     elevation: 2,
-   },
-   socialButtonText: {
-     color: '#374151',
-     fontWeight: '600',
-     fontSize: isSmallScreen ? 14 : 15,
-     fontFamily: getRobotoFont('medium'),
-   },
+  googleButton: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    paddingVertical: isSmallScreen ? 4 : 4,
+    borderRadius: 16,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  googleButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  googleIcon: {
+    width: 20,
+    height: 20,
+    borderRadius: 12,
+    backgroundColor: '#4285F4',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  googleIconText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  googleButtonText: {
+    color: '#374151',
+    fontWeight: '600',
+    fontSize: isSmallScreen ? 13 : 13,
+    fontFamily: getRobotoFont('medium'),
+  },
   // Bottom spacing
   bottomSpacing: {
     height: isSmallScreen ? 20 : 40,
