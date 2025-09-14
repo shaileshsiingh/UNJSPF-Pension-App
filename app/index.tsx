@@ -761,9 +761,9 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('regular'),
   },
   ctaButton: {
-    paddingHorizontal: scaleSize(60, 70, 80),
+    paddingHorizontal: scaleSize(75, 75, 75),
     paddingVertical: scaleSize(16, 18, 20),
-    borderRadius: scaleSize(25, 27, 30),
+    borderRadius: scaleSize(20, 22, 25),
     alignSelf: 'center',
     minWidth: scaleSize(200, 220, 240),
     // shadowColor: '#2563eb',
