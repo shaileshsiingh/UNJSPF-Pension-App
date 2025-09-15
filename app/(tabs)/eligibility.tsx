@@ -555,7 +555,7 @@ export default function EligibilityScreen() {
           <View style={styles.headerIconContainer}>
             <TrendingUp size={32} color="#2563EB" strokeWidth={2} />
           </View>
-          <Text style={styles.title}>Benefits Estimator</Text>
+          <Text style={styles.title}>Pension Snapshot</Text>
           <Text style={styles.subtitle}>
           Your best availabale options and scenarios.
           </Text>
