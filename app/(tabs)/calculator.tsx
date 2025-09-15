@@ -1511,8 +1511,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: width < 320 ? 12 : width < 380 ? 16 : 20,
-    paddingHorizontal: width < 320 ? 4 : width < 380 ? 6 : 8,
-    gap: width < 320 ? 6 : width < 380 ? 8 : 12,
+    // paddingHorizontal: width < 320 ? 4 : width < 380 ? 6 : 8,
+    // gap: width < 320 ? 6 : width < 380 ? 8 : 12,
   },
   
   optionButtonWrapper: {
@@ -1522,7 +1522,7 @@ const styles = StyleSheet.create({
   },
   
   optionButton: {
-    width: '100%',
+    width: width <= 320 ? '95%' : width < 380 ? '100%' : '100%',
     paddingVertical: width < 320 ? 10 : width < 380 ? 12 : 16,
     paddingHorizontal: width < 320 ? 6 : width < 380 ? 8 : 12,
     borderRadius: width < 320 ? 8 : width < 380 ? 10 : 12,
@@ -1549,7 +1549,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#6B7280',
     backgroundColor: '#F8FAFC',
-    paddingHorizontal: width < 320 ? 6 : width < 380 ? 8 : 10,
+    // paddingHorizontal: width < 320 ? 6 : width < 380 ? 8 : 10,
     paddingVertical: width < 320 ? 3 : width < 380 ? 4 : 5,
     borderRadius: width < 320 ? 6 : width < 380 ? 8 : 10,
     textAlign: 'center',
