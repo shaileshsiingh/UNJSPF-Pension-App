@@ -983,7 +983,7 @@ export default function CalculatorScreen() {
           
           {/* NEW: Option Selection Interface */}
           <View style={styles.optionSelectionContainer}>
-            <Text style={styles.resultsTitle1}>Select your preferred option to explore:</Text>
+            <Text style={styles.resultsTitle1}>Select your preferred option to retire:</Text>
             
             <View style={styles.optionButtonsContainer}>
   <Animated.View

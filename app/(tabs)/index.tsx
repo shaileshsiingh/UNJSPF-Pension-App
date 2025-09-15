@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   sectionTitle1: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: 'rgb(5, 150, 105)',
     marginBottom: 8,
     display: 'flex',
     alignItems: 'center',
