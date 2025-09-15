@@ -148,13 +148,13 @@ export default function LandingPage() {
                 {
                   icon: "✈️",
                   title: "Employer Benefits",
-                  desc: "HR Entitlements • Calculator • Actions •Timelines",
+                  desc: "HR Entitlements • Calculator • Actions • Timelines",
                   gradient: ['#dcfce7', '#d1fae5', '#a7f3d0']
                 },
                 {
                   icon: "👥",
                   title: "Post-Retirement",
-                  desc: "Best country to Retire • Pursue your passion with AI •Easy Travel • And many more.",
+                  desc: "Best country to Retire •Pursue your passion with AI • Easy Travel • And many more.",
                   gradient: ['#fef3c7', '#fde68a', '#fcd34d']
                 }
               ].map((item, idx) => (
