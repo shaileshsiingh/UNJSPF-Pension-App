@@ -916,7 +916,7 @@ export default function CalculatorScreen() {
         <View style={styles.switchContainer}>
           <View style={styles.switchLabelContainer}>
             <Text style={styles.switchLabel}>Elect Lump Sum Option</Text>
-            <Text style={styles.switchDescription}>For Periodic Benefits (not available for Deferred Retirement)</Text>
+            <Text style={styles.switchDescription}>Available only if you opt for life-time monthly pension ( not vailable for deferred retirments)</Text>
           </View>
           <Switch
             value={electLumpSum}
