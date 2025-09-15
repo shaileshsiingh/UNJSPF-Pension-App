@@ -373,6 +373,8 @@ export default function ProfileScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
+              <View style={{ padding: 16, gap: 16 }}>
+        
         <View style={styles.header}>
           <TouchableOpacity 
             style={styles.backButton}
@@ -385,12 +387,12 @@ export default function ProfileScreen() {
             <View style={styles.headerIconContainer}>
               <Shield size={32} color="#2563EB" strokeWidth={2} />
             </View>
-            <Text style={styles.headerTitle}>Benefits from UNJSPF</Text>
+            <Text style={styles.headerTitle}>Pension Calculator</Text>
             <Text style={styles.headerSubtitle}>
             Your profile setup      </Text>
           </View>
         </View>
-
+</View>
         {/* Form */}
         <View style={styles.form}>
           {/* Personal Information */}
@@ -640,7 +642,7 @@ export default function ProfileScreen() {
             >
               <View style={styles.calculatorButtonContent}>
                 <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>Save and move to Benefits Calculator</Text>
+                  <Text style={styles.calculatorButtonText}>Save and move to Pension Calculator</Text>
                   <Text style={styles.calculatorButtonSubtext}>
                     Get detailed pension calculations.
                   </Text>
@@ -917,6 +919,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     // marginLeft: 4,
     marginBottom: 12,
+    fontStyle:'italic'
   },
   helpTextContainer: {
     marginBottom: 16,

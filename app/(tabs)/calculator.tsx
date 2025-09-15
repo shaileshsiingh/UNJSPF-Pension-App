@@ -569,6 +569,8 @@ export default function CalculatorScreen() {
 
   return (
     <ScrollView style={styles.container}>
+            <View style={{ padding: 16, gap: 16 }}>
+      
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -582,11 +584,11 @@ export default function CalculatorScreen() {
           <View style={styles.headerIconContainer}>
             <Calculator size={32} color="#2563EB" strokeWidth={2} />
           </View>
-          <Text style={styles.title}>Benefits from UNJSPF</Text>
+          <Text style={styles.title}>Pension Calculator</Text>
           <Text style={styles.subtitle}>Your benefits calculator</Text>
         </View>
       </View>
-
+    </View>
       <View style={styles.form}>
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
@@ -734,7 +736,7 @@ export default function CalculatorScreen() {
                     <Text style={styles.boldLabel}>Final Average Remuneration (FAR) Calculator</Text>
                     
             <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
-            <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text>
+            {/* <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text> */}
             {rows.map((row, rowIdx) => {
               const scrollViewRef = React.useRef<ScrollView>(null);
               const isFirstVisible = scrollPositions[rowIdx] <= 0;
@@ -818,7 +820,7 @@ export default function CalculatorScreen() {
                 </View>
               );
             })}
-            <Text style={styles.helpText}>All 36 months must be filled for calculation. Enter any cell to auto-fill the next 12 months with that value.</Text>
+            <Text style={styles.helpText}>Enter your PR (shown on your monthly payslip) for all 36 months to calculate your FAR.{'\n'}The calculator will auto-fill the next 12 months, but you can adjust any field if needed.{'\n'}Your FAR is the key factor in determining your lifetime pension.</Text>
           </View>
         )}
 
@@ -933,8 +935,7 @@ export default function CalculatorScreen() {
         </View>
         <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>
-            Select your ASHI contribution to be deducted from your monthly pension: 
-            <Text 
+          If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).{'\n'} Click here to see your monthly premium contribution. Enrollment is optional.<Text 
               style={styles.link}
               onPress={() => Linking.openURL('https://www.un.org/insurance/sites/www.un.org.insurance/files/ashi_rates_2025-2026.pdf')}
             >
@@ -1359,6 +1360,7 @@ const styles = StyleSheet.create({
   switchDescription: {
     fontSize: width < 300 ? 10 : width < 350 ? 11 : 11,
     color: '#6B7280',
+    fontStyle:'italic'
   },
   resultsTitle: {
     fontSize: width < 300 ? 13 : width < 350 ? 14 : 16,
