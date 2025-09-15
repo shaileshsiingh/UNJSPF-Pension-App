@@ -1069,7 +1069,7 @@ export default function CalculatorScreen() {
           {withdrawalSettlement && (selectedOption === 'A' || selectedOption === 'both' || selectedOption === null) && (
             <Animated.View style={[
               styles.benefitSection,
-              (selectedOption === 'B') && styles.blurredSection,
+              // (selectedOption === 'B') && styles.blurredSection,
             ]}>
               <Text style={styles.benefitTitle}>A. Withdrawal Settlement (one-time payment)</Text>
               <View style={styles.resultCard}>
@@ -1100,7 +1100,7 @@ export default function CalculatorScreen() {
                     ? 'Less than 5 years of service. Only contributions plus interest are returned.'
                     : yearsOfService <= 15
                     ? `Between 5 and 15 years of service. Bonus applied based on years over 5.`
-                    : 'More than 15 years of service. Maximum 100% bonus applied.' 
+                    : `For more than 15 years of your contributory serivce, 100% bonus is applied. ${'\n'} This is a one-time payment that "settles" all obligations of the Fund to you,${'\n'} You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.` 
                   }
                 </Text>
               </View>
@@ -1111,7 +1111,7 @@ export default function CalculatorScreen() {
           {calculation && yearsOfService >= 5 && (selectedOption === 'B' || selectedOption === 'both' || selectedOption === null) && (
             <Animated.View style={[
               styles.benefitSection,
-              (selectedOption === 'A') && styles.blurredSection,
+              // (selectedOption === 'A') && styles.blurredSection,
             ]}>
               <Text style={styles.benefitTitle}>B. Periodical Benefit (Lifetime pension)</Text>
 
