@@ -13,7 +13,8 @@ import {
   Info, 
   Calculator, 
   Smartphone, 
-  BookOpen
+  BookOpen,
+  LogOut
 } from 'lucide-react-native';
 import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
 import { router } from 'expo-router';
@@ -409,19 +410,23 @@ export default function CombinedAboutScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => router.back()}
-        >
-          <ArrowLeft size={scaleSize(24)} color="#2563EB" strokeWidth={2} />
-        </TouchableOpacity>
-        {/* <Text style={styles.title}>Quick Tools</Text> */}
-      </View>
-<View >
-<Text style={styles.title4}>Benefits Estimator Guide</Text>
-
-</View>
+    <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+ <View style={{ transform: [{ scaleX: -1 }] }}>
+          <LogOut size={24} color="#2563EB" strokeWidth={2} />
+        </View>          </TouchableOpacity>
+          <View style={styles.headerContent}>
+            {/* <View style={styles.headerIconContainer}>
+              <Shield size={32} color="#2563EB" strokeWidth={2} />
+            </View> */}
+            <Text style={styles.headerTitle}>Pension Guide</Text>
+            <Text style={styles.headerSubtitle}>
+            Concepts, Formulas, and Options      </Text>
+          </View>
+        </View>
       {renderTabButtons()}
 
       <View style={styles.content}>
@@ -438,14 +443,24 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#FFFFFF',
-    padding: getHorizontalPadding(),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomColor: '#E5E7EB',
-    borderBottomWidth: 1,
+    paddingTop: width < 300 ? 12 : width < 350 ? 16 : 20,
+    paddingBottom: width < 300 ? 16 : width < 350 ? 20 : 24,
+    paddingHorizontal: width < 300 ? 12 : width < 350 ? 16 : 24,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    position: 'relative',
   },
   backButton: {
-    marginRight: scaleSize(16),
+    position: 'absolute',
+    left: width < 300 ? 12 : width < 350 ? 16 : 24,
+    top: width < 300 ? 20 : width < 350 ? 24 : 28,
+    padding: 8,
+    zIndex: 1,
   },
   title: {
     fontSize: scaleFont(16),
@@ -460,6 +475,29 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('bold'),
     paddingVertical: scaleSize(8),
     paddingHorizontal: scaleSize(8),
+    textAlign: 'center',
+  },
+  headerSubtitle: {
+    fontSize: width < 300 ? 11 : width < 350 ? 12 : 13,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  headerContent: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  headerIconContainer: {
+    backgroundColor: '#EBF4FF',
+    padding: 12,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: width < 300 ? 14 : width < 350 ? 16 : 18,
+    fontWeight: '800',
+    color: 'rgb(70 106 209)',
+    marginBottom: 8,
     textAlign: 'center',
   },
   tabContainer: {
@@ -479,6 +517,7 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     backgroundColor: '#2563EB',
+    borderRadius:25
   },
   tabText: {
     fontSize: scaleFont(10),

@@ -26,7 +26,9 @@ import {
   Book,
   Workflow,
   Link,
-  Plane
+  Plane,
+  Info,
+  BookOpen
 } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
 import { getRobotoFont } from '@/utils/fonts';
@@ -68,24 +70,23 @@ export default function HomeScreen() {
             Begin your pension journey with these essential steps           </Text>
           </View>
         </View>
-
         {/* Quick Actions Section */}
-         <View style={styles.section}>
+         {/* <View style={styles.section}> */}
           {/* <Text style={styles.sectionTitle}>Get Started</Text>
           <Text style={styles.sectionSubtitle}>
             Begin your pension journey with these essential steps
           </Text> */} 
           
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
             <TouchableOpacity 
               style={[styles.primaryButton, { width: '80%', height: 85 }]}
               onPress={() => {
-                // Scroll to Quick Tools section or stay on current screen
+                Scroll to Quick Tools section or stay on current screen
                 router.push('/about-app');
               }}
             >
               <View style={styles.buttonContent}>
-                {/* <User size={24} color="#FFFFFF" strokeWidth={2} /> */}
+                <User size={24} color="#FFFFFF" strokeWidth={2} />
                 <View style={styles.buttonTextContainer}>
                   <Text style={styles.primaryButtonText}>Benefit Estimator Guide</Text>
                   <Text style={styles.primaryButtonSubtext}>
@@ -95,8 +96,8 @@ export default function HomeScreen() {
               </View>
               <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
             </TouchableOpacity>
-          </View>
-        </View>
+          </View> */}
+        {/* </View> */}
 
       
 
@@ -109,6 +110,16 @@ export default function HomeScreen() {
           </Text>
           
           <View style={styles.toolsGrid}>
+          <TouchableOpacity 
+              style={styles.toolCard}
+              onPress={() => router.push('/about-app' as any)}
+            >
+              <BookOpen size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Pension Guide</Text>
+              <Text style={styles.toolDescription}>
+                Concepts • Formulas  {'\n'} Options • About
+              </Text>
+            </TouchableOpacity>
             {/* 1. Prepare to Retire (old: Planner) */}
             <TouchableOpacity 
               style={styles.toolCard}
@@ -127,7 +138,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/profile')}
             >
               <Shield size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>UNJSPF Benefits</Text>
+              <Text style={styles.toolTitle}>Pension Calculator</Text>
               <Text style={styles.toolDescription}>
                 Eligibility • Amounts • {'\n'} Next steps
               </Text>
@@ -139,7 +150,7 @@ export default function HomeScreen() {
               onPress={() => router.push('/(tabs)/eligibility')}
             >
               <TrendingUp size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>My Pension</Text>
+              <Text style={styles.toolTitle}>Pension Snapshot</Text>
               <Text style={styles.toolDescription}>
                 Scenarios • Options
               </Text>
@@ -283,6 +294,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 16,
     maxWidth: 300,
+    marginLeft:35
   },
   section: {
     padding: 14,
