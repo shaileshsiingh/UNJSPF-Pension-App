@@ -9,10 +9,10 @@ import {
   Switch,
   Alert,
   Linking,
+  Animated,
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight, LogOut } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
-// import DatePicker from '../../components/DatePicker';
 
 // In the Date fields, auto-insert '-' as user types
 function formatDateInput(text: string): string {
@@ -366,6 +366,50 @@ export default function CalculatorScreen() {
   const [calculatedInterest, setCalculatedInterest] = useState(0); // NEW: Display calculated interest
   const [useFarInput, setUseFarInput] = useState(false); // NEW: Toggle between FAR input and PR values
   const [scrollPositions, setScrollPositions] = useState([0, 0, 0]); // Track scroll positions for each row
+  
+  // NEW: Option selection state and animations
+  const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'both' | null>(null);
+  const blinkAnimA = useRef(new Animated.Value(1)).current;
+  const blinkAnimB = useRef(new Animated.Value(1)).current;
+  const scaleAnimA = useRef(new Animated.Value(1)).current;
+  const scaleAnimB = useRef(new Animated.Value(1)).current;
+
+  // Animation effects
+  useEffect(() => {
+    // Blinking animation for unselected options
+    const createBlinkAnimation = (animValue: Animated.Value) => {
+      return Animated.loop(
+        Animated.sequence([
+          Animated.timing(animValue, {
+            toValue: 0.3,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(animValue, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+    };
+
+    if (selectedOption === null) {
+      // Both options blink when none selected
+      const blinkA = createBlinkAnimation(blinkAnimA);
+      const blinkB = createBlinkAnimation(blinkAnimB);
+      blinkA.start();
+      blinkB.start();
+      return () => {
+        blinkA.stop();
+        blinkB.stop();
+      };
+    } else {
+      // Stop blinking and reset opacity
+      blinkAnimA.setValue(1);
+      blinkAnimB.setValue(1);
+    }
+  }, [selectedOption]);
 
   // Helper functions
   function getSeparationDateObj() {
@@ -567,28 +611,58 @@ export default function CalculatorScreen() {
     }).format(amount);
   };
 
+  // NEW: Handle option selection with animation
+  const handleOptionSelect = (option: 'A' | 'B') => {
+    const scaleAnim = option === 'A' ? scaleAnimA : scaleAnimB;
+    
+    // Scale animation
+    Animated.sequence([
+      Animated.timing(scaleAnim, {
+        toValue: 1.1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    if (selectedOption === option) {
+      // If same option clicked, show both
+      setSelectedOption('both');
+    } else if (selectedOption === 'both') {
+      // If both selected, select only this option
+      setSelectedOption(option);
+    } else {
+      // If different option or none selected, select this option
+      setSelectedOption(option);
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
-            <View style={{ padding: 16, gap: 16 }}>
-      
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => router.push('/(tabs)')}
-        >
-           <View style={{ transform: [{ scaleX: -1 }] }}>
-          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-        </View>
-        </TouchableOpacity>
-        <View style={styles.headerContent}>
-          <View style={styles.headerIconContainer}>
-            <Calculator size={32} color="#2563EB" strokeWidth={2} />
+      <View style={{ padding: 16, gap: 16 }}>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+            <View style={{ transform: [{ scaleX: -1 }] }}>
+              <LogOut size={24} color="#2563EB" strokeWidth={2} />
+            </View>
+          </TouchableOpacity>
+          <View style={styles.headerContent}>
+            <View style={styles.headerIconContainer}>
+              <Calculator size={32} color="#2563EB" strokeWidth={2} />
+            </View>
+            <Text style={styles.title}>Pension Calculator</Text>
+            <Text style={styles.subtitle}>Your benefits calculator</Text>
           </View>
-          <Text style={styles.title}>Pension Calculator</Text>
-          <Text style={styles.subtitle}>Your benefits calculator</Text>
         </View>
       </View>
-    </View>
+      
       <View style={styles.form}>
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
@@ -691,52 +765,12 @@ export default function CalculatorScreen() {
           <Text style={styles.helpText}>Your contributions earn compound interest at 3.25% for every completed year of contributory service.</Text>
         </View>
 
-        {/* FAR Input Method Toggle */}
-        {/* <View style={styles.switchContainer}>
-          <View style={styles.switchLabelContainer}>
-            <Text style={styles.switchLabel}>Use Direct FAR Input</Text>
-            <Text style={styles.switchDescription}>Toggle between direct FAR input or PR values calculation</Text>
-          </View>
-          <Switch
-            value={useFarInput}
-            onValueChange={setUseFarInput}
-            trackColor={{ false: '#D1D5DB', true: '#3B82F6' }}
-            thumbColor={useFarInput ? '#FFFFFF' : '#F3F4F6'}
-          />
-        </View> */}
-
-        {/* Direct FAR Input */}
-        {/* {useFarInput && (
-          <>
-            <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Final Average Remuneration (USD):</Text>
-              <TextInput
-                style={[styles.inlineInput, styles.amountInput]}
-                value={formatNumberWithCommas(finalAverageRemuneration.toString())}
-                onChangeText={text => {
-                  const cleanText = removeCommas(text);
-                  const num = parseFloat(cleanText);
-                  if (!isNaN(num) && num >= 0) setFinalAverageRemuneration(num);
-                  else if (cleanText === '' || cleanText === '.') setFinalAverageRemuneration(0);
-                }}
-                placeholder="Enter FAR"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.helpTextContainer}>
-              <Text style={styles.helpText}>Enter your Final Average Remuneration directly.</Text>
-            </View>
-          </>
-        )} */}
-
         {/* PR Values Grid - Only show if not using direct FAR input */}
         {!useFarInput && (
           <View style={{ marginVertical: 14 }}>
-                    <Text style={styles.boldLabel}>Final Average Remuneration (FAR) Calculator</Text>
-                    
+            <Text style={styles.boldLabel}>Final Average Remuneration (FAR) Calculator</Text>
+            
             <Text style={styles.label}>Enter your highest pensionable remuneration over 36 months within 5 years before retirng month.</Text>
-            {/* <Text style={styles.helpText}>You may find these figures on your payslips (usually 6 figures).</Text> */}
             {rows.map((row, rowIdx) => {
               const scrollViewRef = React.useRef<ScrollView>(null);
               const isFirstVisible = scrollPositions[rowIdx] <= 0;
@@ -842,17 +876,16 @@ export default function CalculatorScreen() {
           <Text style={styles.helpText}>Calculated from your birth date and separation date.</Text>
         </View>
 
- {/* FAR (calculated) Display */}
- <View style={styles.inlineInputGroup}>
-           <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated):</Text>
-           <Text style={[styles.inlineInput, styles.readOnlyInput]}>
-             {isNaN(far) || far === 0 ? '$0' : formatCurrency(far)}
-           </Text>
-         </View>
-         <View style={styles.helpTextContainer}>
-           <Text style={styles.helpText}>Average of your 36 months pensionable remuneration values.</Text>
-         </View>
-
+        {/* FAR (calculated) Display */}
+        <View style={styles.inlineInputGroup}>
+          <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated):</Text>
+          <Text style={[styles.inlineInput, styles.readOnlyInput]}>
+            {isNaN(far) || far === 0 ? '$0' : formatCurrency(far)}
+          </Text>
+        </View>
+        <View style={styles.helpTextContainer}>
+          <Text style={styles.helpText}>Average of your 36 months pensionable remuneration values.</Text>
+        </View>
 
         {/* Rate of Accumulation Display */}
         <View style={styles.inlineInputGroup}>
@@ -935,24 +968,109 @@ export default function CalculatorScreen() {
         </View>
         <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>
-          If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).{'\n'} Click here to see your monthly premium contribution. Enrollment is optional.<Text 
+            If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).{'\n'} Click here to see your monthly premium contribution. Enrollment is optional.<Text 
               style={styles.link}
               onPress={() => Linking.openURL('https://www.un.org/insurance/sites/www.un.org.insurance/files/ashi_rates_2025-2026.pdf')}
             >
               <Text style={{display:'none'}}>l</Text> ASHI rates
             </Text>
-            
           </Text>
         </View>
 
-        {/* Results Section */}
+        {/* NEW: Results Section with Interactive Selection */}
         <View style={{ marginTop: 24 }}>
           <Text style={styles.resultsTitle}>Snapshot of your estimated benefits</Text>
-          <Text style={styles.resultsTitle1}>You have an option to choose between A or B</Text>
           
-          {/* Withdrawal Settlement */}
-          {withdrawalSettlement && (
-            <View style={styles.benefitSection}>
+          {/* NEW: Option Selection Interface */}
+          <View style={styles.optionSelectionContainer}>
+            <Text style={styles.resultsTitle1}>Select your preferred option to explore:</Text>
+            
+            <View style={styles.optionButtonsContainer}>
+  <Animated.View
+    style={[
+      styles.optionButtonWrapper,
+      {
+        opacity: selectedOption === null ? blinkAnimA : 1,
+        transform: [{ scale: scaleAnimA }],
+      }
+    ]}
+  >
+    <TouchableOpacity
+      style={[
+        styles.optionButton,
+        styles.optionA,
+        (selectedOption === 'A' || selectedOption === 'both') && styles.optionSelected,
+      ]}
+      onPress={() => handleOptionSelect('A')}
+    >
+      <Text style={[
+        styles.optionButtonText,
+        (selectedOption === 'A' || selectedOption === 'both') && styles.optionButtonTextSelected,
+      ]}>
+        Option A
+      </Text>
+      <Text style={[
+        styles.optionButtonSubtext,
+        (selectedOption === 'A' || selectedOption === 'both') && styles.optionButtonSubtextSelected,
+      ]}>
+        Click here to retire now
+      </Text>
+    </TouchableOpacity>
+  </Animated.View>
+
+  <View style={styles.separatorContainer}>
+    <Text style={styles.optionSeparator}>OR</Text>
+  </View>
+
+  <Animated.View
+    style={[
+      styles.optionButtonWrapper,
+      {
+        opacity: selectedOption === null ? blinkAnimB : 1,
+        transform: [{ scale: scaleAnimB }],
+      }
+    ]}
+  >
+    <TouchableOpacity
+      style={[
+        styles.optionButton,
+        styles.optionB,
+        (selectedOption === 'B' || selectedOption === 'both') && styles.optionSelected,
+      ]}
+      onPress={() => handleOptionSelect('B')}
+    >
+      <Text style={[
+        styles.optionButtonText,
+        (selectedOption === 'B' || selectedOption === 'both') && styles.optionButtonTextSelected,
+      ]}>
+        Option B
+      </Text>
+      <Text style={[
+        styles.optionButtonSubtext,
+        (selectedOption === 'B' || selectedOption === 'both') && styles.optionButtonSubtextSelected,
+      ]}>
+        Click here to retire later
+      </Text>
+    </TouchableOpacity>
+  </Animated.View>
+</View>
+
+            {selectedOption && (
+              <TouchableOpacity
+                style={styles.resetButton}
+                onPress={() => setSelectedOption(null)}
+              >
+                <Text style={styles.resetButtonText}>Compare Both Options</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          
+          {/* Withdrawal Settlement - Option A */}
+          {withdrawalSettlement && (selectedOption === 'A' || selectedOption === 'both' || selectedOption === null) && (
+            <Animated.View style={[
+              styles.benefitSection,
+              (selectedOption === 'B') && styles.blurredSection,
+            ]}>
               <Text style={styles.benefitTitle}>A. Withdrawal Settlement (one-time payment)</Text>
               <View style={styles.resultCard}>
                 <Text style={styles.resultLabel}>Your Own Contributions</Text>
@@ -982,17 +1100,20 @@ export default function CalculatorScreen() {
                     ? 'Less than 5 years of service. Only contributions plus interest are returned.'
                     : yearsOfService <= 15
                     ? `Between 5 and 15 years of service. Bonus applied based on years over 5.`
-                    : 'More than 15 years of service. Maximum 100% bonus applied.'
+                    : 'More than 15 years of service. Maximum 100% bonus applied.' 
                   }
                 </Text>
               </View>
-            </View>
+            </Animated.View>
           )}
 
-          {/* Periodic Benefits */}
-          {calculation && yearsOfService >= 5 && (
-            <View style={styles.benefitSection}>
-                            <Text style={styles.benefitTitle}>B. Periodical Benefit (Lifetime pension)</Text>
+          {/* Periodic Benefits - Option B */}
+          {calculation && yearsOfService >= 5 && (selectedOption === 'B' || selectedOption === 'both' || selectedOption === null) && (
+            <Animated.View style={[
+              styles.benefitSection,
+              (selectedOption === 'A') && styles.blurredSection,
+            ]}>
+              <Text style={styles.benefitTitle}>B. Periodical Benefit (Lifetime pension)</Text>
 
               <Text style={styles.benefitTitle1}>{calculation.eligibilityType}</Text>
 
@@ -1075,13 +1196,16 @@ export default function CalculatorScreen() {
                     'You are eligible for a Deferred Retirement Benefit as you have 5+ years of service but are below your Early Retirement Age.'}
                 </Text>
               </View>
-            </View>
+            </Animated.View>
           )}
         </View>
       </View>
 
-      {/* Information Sections */}
-      <View style={styles.infoSection}>
+      {/* Information Sections - Blur when Option A is selected */}
+      <Animated.View style={[
+        styles.infoSection,
+        selectedOption === 'A' && styles.blurredSection,
+      ]}>
         <Text style={styles.infoTitle}>Important Information</Text>
         
         {/* Deferment Option - Show conditionally */}
@@ -1152,7 +1276,7 @@ export default function CalculatorScreen() {
             )}
           </View>
         )}
-      </View>
+      </Animated.View>
 
       <View style={styles.disclaimerBox}>
         <Info size={20} color="#D97706" strokeWidth={2} />
@@ -1164,20 +1288,17 @@ export default function CalculatorScreen() {
         </Text>
       </View>
       <View style={styles.section}>
-            <TouchableOpacity 
-              style={styles.calculatorButton}
-              onPress={() => router.push('/(tabs)/eligibility')}
-            >
-              <View style={styles.calculatorButtonContent}>
-                <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>See your best avaialble options</Text>
-                  {/* <Text style={styles.calculatorButtonSubtext}>
-                    Get detailed pension calculations.
-                  </Text> */}
-                </View>
-              </View>
-              <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
-            </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.calculatorButton}
+          onPress={() => router.push('/(tabs)/eligibility')}
+        >
+          <View style={styles.calculatorButtonContent}>
+            <View style={styles.calculatorButtonTextContainer}>
+              <Text style={styles.calculatorButtonText}>See your best available options</Text>
+            </View>
+          </View>
+          <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -1249,7 +1370,6 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
     fontWeight: '600',
     color: '#374151',
-    // marginBottom: 8,
   },
   boldLabel: {
     fontSize: width < 300 ? 12 : width < 350 ? 13 : 13,
@@ -1373,9 +1493,107 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 10 : width < 350 ? 11 : 12,
     fontWeight: '500',
     color: 'blue',
-    marginBottom: 6,
+    marginBottom: 16,
     textAlign: 'center',
   },
+  
+  // NEW: Option Selection Styles
+  optionSelectionContainer: {
+    backgroundColor: '#F8FAFC',
+    padding: width < 300 ? 12 : width < 350 ? 16 : 20,
+    borderRadius: 16,
+    marginBottom: 16,
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+  },
+  optionButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: width < 320 ? 12 : width < 380 ? 16 : 20,
+    paddingHorizontal: width < 320 ? 4 : width < 380 ? 6 : 8,
+    gap: width < 320 ? 6 : width < 380 ? 8 : 12,
+  },
+  
+  optionButtonWrapper: {
+    flex: 1,
+    maxWidth: width < 320 ? '38%' : width < 380 ? '40%' : '42%',
+    minWidth: width < 320 ? 100 : width < 380 ? 110 : 120,
+  },
+  
+  optionButton: {
+    width: '100%',
+    paddingVertical: width < 320 ? 10 : width < 380 ? 12 : 16,
+    paddingHorizontal: width < 320 ? 6 : width < 380 ? 8 : 12,
+    borderRadius: width < 320 ? 8 : width < 380 ? 10 : 12,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    minHeight: width < 320 ? 65 : width < 380 ? 75 : 85,
+  },
+  
+  separatorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: width < 320 ? 4 : width < 380 ? 6 : 8,
+    minWidth: width < 320 ? 35 : width < 380 ? 40 : 45,
+  },
+  
+  optionSeparator: {
+    fontSize: width < 320 ? 11 : width < 380 ? 12 : 14,
+    fontWeight: '700',
+    color: '#6B7280',
+    backgroundColor: '#F8FAFC',
+    paddingHorizontal: width < 320 ? 6 : width < 380 ? 8 : 10,
+    paddingVertical: width < 320 ? 3 : width < 380 ? 4 : 5,
+    borderRadius: width < 320 ? 6 : width < 380 ? 8 : 10,
+    textAlign: 'center',
+  },
+  
+  optionButtonText: {
+    fontSize: width < 320 ? 10 : width < 380 ? 11 : 13,
+    fontWeight: '700',
+    marginBottom: width < 320 ? 2 : width < 380 ? 3 : 4,
+    textAlign: 'center',
+    color: '#374151',
+  },
+  
+  optionButtonSubtext: {
+    fontSize: width < 320 ? 8 : width < 380 ? 9 : 10,
+    fontWeight: '500',
+    textAlign: 'center',
+    color: '#6B7280',
+    lineHeight: width < 320 ? 10 : width < 380 ? 12 : 14,
+  },
+  optionButtonTextSelected: {
+    color: '#1D4ED8',
+  },
+  optionButtonSubtextSelected: {
+    color: '#1E40AF',
+  },
+  resetButton: {
+    backgroundColor: '#6B7280',
+    paddingHorizontal: width < 300 ? 12 : 16,
+    paddingVertical: width < 300 ? 6 : 8,
+    borderRadius: 20,
+    alignSelf: 'center',
+  },
+  resetButtonText: {
+    color: '#FFFFFF',
+    fontSize: width < 300 ? 11 : 12,
+    fontWeight: '600',
+  },
+  
+  // NEW: Blur Effect Style
+  blurredSection: {
+    opacity: 0.3,
+  },
+  
   benefitSection: {
     backgroundColor: '#FFFFFF',
     padding: 20,
@@ -1488,7 +1706,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F9FF',
     padding: 16,
     borderRadius: 12,
-    // marginBottom: 12,
     borderColor: '#BAE6FD',
     borderWidth: 1,
   },
