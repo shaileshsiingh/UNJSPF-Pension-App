@@ -313,7 +313,7 @@ export default function CombinedAboutScreen() {
           <Text style={styles.italic}>You have 2 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
-          {'\n'}This is a final decision—no more pension from the Fund after this.{'\n'} No child benefit
+          {'\n'}This is a final decision—no more pension from the Fund after this. No child benefit
           is paid under this option.
           
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferment or Benefit for 36 Months (Article 32)</Text>
