@@ -383,7 +383,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformContent}>
           <Text style={styles.italic}>Your only option:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Normal Retirement Benefit (Article 28)</Text>
-          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment).{'\n'} The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments all along with.
+          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment).{'\n'}The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments all along with.
         </Text>
       </View>
     </View>
