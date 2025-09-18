@@ -366,7 +366,7 @@ export default function CombinedAboutScreen() {
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus interest. You give up all
-         rights to any future rights to pension benefits.{'\n'} This is a final decision—no more
+         rights to any future rights to pension benefits.{'\n'}This is a final decision—no more
          pension from the Fund after this.
           
           {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
