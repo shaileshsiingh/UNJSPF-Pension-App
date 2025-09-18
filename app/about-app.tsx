@@ -314,12 +314,12 @@ export default function CombinedAboutScreen() {
           {'\n'}<Text style={styles.bold}>Option 1: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
           {'\n'}This is a final decision—no more pension from the Fund after this.{'\n'} No child benefit
-          {'\n'}is paid under this option.
+          is paid under this option.
           
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferment or Benefit for 36 Months (Article 32)</Text>
           {'\n'}You can delay taking your withdrawal settlement for up to 36 months. If you go
-          {'\n'}back to work with the same pension plan within those 36 months, your
-          {'\n'}membership is treated as continuous (as long as you haven't taken the money).
+         back to work with the same pension plan within those 36 months, your
+          membership is treated as continuous (as long as you haven't taken the money).
           {'\n'}If you don't go back to work, you must submit your payment instructions before the
           36 months end. If you do nothing by the end of 36 months, the Fund will
           automatically give you a Withdrawal Settlement.
