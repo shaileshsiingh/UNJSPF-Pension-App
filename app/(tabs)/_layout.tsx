@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'expo-router';
-import { Home, CheckSquare, Shield, TrendingUp, Plane, Workflow, Link } from 'lucide-react-native';
+import { Home, CheckSquare, Shield, TrendingUp, Plane, Workflow, Link, BookOpen } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -57,6 +57,15 @@ export default function TabsLayout() {
           ),
         }}
       />
+       {/* <Tabs.Screen
+        name="about-app"
+        options={{
+          title: 'Guide',
+          tabBarIcon: ({ size, color }) => (
+            <BookOpen size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      /> */}
       <Tabs.Screen
         name="prepare"
         options={{
@@ -69,7 +78,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Benefits',
+          title: 'Calculator',
           tabBarIcon: ({ size, color }) => (
             <Shield size={size} color={color} strokeWidth={2} />
           ),

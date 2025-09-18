@@ -389,7 +389,7 @@ export default function ProfileScreen() {
             </View>
             <Text style={styles.headerTitle}>Pension Calculator</Text>
             <Text style={styles.headerSubtitle}>
-            Your profile setup      </Text>
+            Retirement eligibility dates      </Text>
           </View>
         </View>
 </View>
