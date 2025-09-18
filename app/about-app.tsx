@@ -343,7 +343,7 @@ export default function CombinedAboutScreen() {
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Deferment of Choice of Benefit for 36 Months (Article 32)</Text>
           {'\n'}Delay your decision (between Option 1 and 2) for up to 36 months from when you
-          leave your job. If you go back to work with the same pension plan within those 36
+          leave your job.{'\n'} If you go back to work with the same pension plan within those 36
           months, your membership is treated as continuous. If you do nothing by the end of
           36 months, the Fund will automatically give you a Deferred Retirement Benefit.
         </Text>
@@ -356,7 +356,7 @@ export default function CombinedAboutScreen() {
           <Text style={styles.italic}>You have 4 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Early Retirement Benefit (Article 29)</Text>
           {'\n'}Start receiving monthly payments before reaching normal retirement age. These
-         payments may be reduced since you retire early. You can choose to commute
+         payments may be reduced since you retire early. {'\n'}You can choose to commute
          (convert) up to one-third of the pension into a lump sum (one-time payment). The
          rest will be paid as monthly pension for life.
           
@@ -366,13 +366,13 @@ export default function CombinedAboutScreen() {
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus interest. You give up all
-         rights to any future rights to pension benefits. This is a final decision—no more
+         rights to any future rights to pension benefits.{'\n'} This is a final decision—no more
          pension from the Fund after this.
           
           {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
           {'\n'}You have up to 36 months to choose between the above 3 options. If you go
           back to work with the same pension plan within those 36 months, your service
-          as continuous. If you do nothing by the end of 36 months, the Fund will
+          as continuous.{'\n'} If you do nothing by the end of 36 months, the Fund will
           automatically give you a Deferred Retirement Benefit (Option 2).
         </Text>
       </View>
@@ -383,7 +383,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformContent}>
           <Text style={styles.italic}>Your only option:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Normal Retirement Benefit (Article 28)</Text>
-          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment). The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments all along with.
+          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment).{'\n'} The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments all along with.
         </Text>
       </View>
     </View>
