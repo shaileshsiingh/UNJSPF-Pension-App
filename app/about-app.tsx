@@ -343,7 +343,7 @@ export default function CombinedAboutScreen() {
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Deferment of Choice of Benefit for 36 Months (Article 32)</Text>
           {'\n'}Delay your decision (between Option 1 and 2) for up to 36 months from when you
-          leave your job.{'\n'} If you go back to work with the same pension plan within those 36
+          leave your job.{'\n'}If you go back to work with the same pension plan within those 36
           months, your membership is treated as continuous. If you do nothing by the end of
           36 months, the Fund will automatically give you a Deferred Retirement Benefit.
         </Text>
