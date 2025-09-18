@@ -1102,7 +1102,7 @@ export default function CalculatorScreen() {
                     ? 'Less than 5 years of service. No Pension Rights. No Bonus. Only contributions plus interest are returned.'
                     : yearsOfService <= 15
                     ? `Between 5 and 15 years of service. Bonus applied based on years over 5.`
-                    : `For more than 15 years of your contributory serivce, 100% bonus is applied. ${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you,${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.` 
+                    : `For more than 15 years of your contributory service, 100% bonus is applied.${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you.${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.` 
                   }
                 </Text>
               </View>
