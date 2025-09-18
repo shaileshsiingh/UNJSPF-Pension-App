@@ -372,7 +372,7 @@ export default function CombinedAboutScreen() {
           {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
           {'\n'}You have up to 36 months to choose between the above 3 options. If you go
           back to work with the same pension plan within those 36 months, your service
-          as continuous.{'\n'} If you do nothing by the end of 36 months, the Fund will
+          as continuous.{'\n'}If you do nothing by the end of 36 months, the Fund will
           automatically give you a Deferred Retirement Benefit (Option 2).
         </Text>
       </View>
