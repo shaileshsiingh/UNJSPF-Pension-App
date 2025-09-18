@@ -313,16 +313,16 @@ export default function CombinedAboutScreen() {
           <Text style={styles.italic}>You have 2 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
-          {'\n'}This is a final decision—no more pension from the Fund after this. No child benefit
+          {'\n'}This is a final decision—no more pension from the Fund after this.{'\n'} No child benefit
           {'\n'}is paid under this option.
           
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferment or Benefit for 36 Months (Article 32)</Text>
           {'\n'}You can delay taking your withdrawal settlement for up to 36 months. If you go
           {'\n'}back to work with the same pension plan within those 36 months, your
-          {'\n'}membership is treated as continuous (as long as you haven't taken the money). If
-          {'\n'}you don't go back to work, you must submit your payment instructions before the
-          {'\n'}36 months end. If you do nothing by the end of 36 months, the Fund will
-          {'\n'}automatically give you a Withdrawal Settlement.
+          {'\n'}membership is treated as continuous (as long as you haven't taken the money).
+          {'\n'}If you don't go back to work, you must submit your payment instructions before the
+          36 months end. If you do nothing by the end of 36 months, the Fund will
+          automatically give you a Withdrawal Settlement.
         </Text>
       </View>
 
@@ -332,20 +332,20 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformContent}>
           <Text style={styles.italic}>You have 3 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Deferred Retirement Benefit (Article 30)</Text>
-          {'\n'}Receive your benefit at normal retirement age (or earlier with a reduction). This
-          {'\n'}gives you a monthly pension when you're older. No child benefit is paid under this
-          {'\n'}option.
+          {'\n'}Receive your benefit at normal retirement age (or earlier with a reduction).{'\n'}This
+          gives you a monthly pension when you're older. No child benefit is paid under this
+          option.
           
           {'\n\n'}<Text style={styles.bold}>Option 2: Withdrawal Settlement (Article 31)</Text>
-          {'\n'}One-time payment equal to your own contributions plus interest. You give up all
-          {'\n'}rights to future pension benefits. This is a final decision—no more pension from
-          {'\n'}the Fund after this.
+          {'\n'}One-time payment equal to your own contributions plus interest. 
+          {'\n'}You give up all rights to future pension benefits. This is a final decision—no more pension from
+          the Fund after this.
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Deferment of Choice of Benefit for 36 Months (Article 32)</Text>
           {'\n'}Delay your decision (between Option 1 and 2) for up to 36 months from when you
-          {'\n'}leave your job. If you go back to work with the same pension plan within those 36
-          {'\n'}months, your membership is treated as continuous. If you do nothing by the end of
-          {'\n'}36 months, the Fund will automatically give you a Deferred Retirement Benefit.
+          leave your job. If you go back to work with the same pension plan within those 36
+          months, your membership is treated as continuous. If you do nothing by the end of
+          36 months, the Fund will automatically give you a Deferred Retirement Benefit.
         </Text>
       </View>
 
@@ -356,24 +356,24 @@ export default function CombinedAboutScreen() {
           <Text style={styles.italic}>You have 4 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Early Retirement Benefit (Article 29)</Text>
           {'\n'}Start receiving monthly payments before reaching normal retirement age. These
-          {'\n'}payments may be reduced since you retire early. You can choose to commute
-          {'\n'}(convert) up to one-third of the pension into a lump sum (one-time payment). The
-          {'\n'}rest will be paid as monthly pension for life.
+         payments may be reduced since you retire early. You can choose to commute
+         (convert) up to one-third of the pension into a lump sum (one-time payment). The
+         rest will be paid as monthly pension for life.
           
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferred Retirement Benefit (Article 30)</Text>
           {'\n'}Delay your pension until you reach normal retirement age (or take it earlier with
-          {'\n'}reductions). No child benefit is included with this option.
+         reductions). No child benefit is included with this option.
           
           {'\n\n'}<Text style={styles.bold}>Option 3: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus interest. You give up all
-          {'\n'}rights to any future rights to pension benefits. This is a final decision—no more
-          {'\n'}pension from the Fund after this.
+         rights to any future rights to pension benefits. This is a final decision—no more
+         pension from the Fund after this.
           
           {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
           {'\n'}You have up to 36 months to choose between the above 3 options. If you go
-          {'\n'}back to work with the same pension plan within those 36 months, your service
-          {'\n'}as continuous. If you do nothing by the end of 36 months, the Fund will
-          {'\n'}automatically give you a Deferred Retirement Benefit (Option 2).
+          back to work with the same pension plan within those 36 months, your service
+          as continuous. If you do nothing by the end of 36 months, the Fund will
+          automatically give you a Deferred Retirement Benefit (Option 2).
         </Text>
       </View>
 
@@ -383,11 +383,7 @@ export default function CombinedAboutScreen() {
         <Text style={styles.uniformContent}>
           <Text style={styles.italic}>Your only option:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Normal Retirement Benefit (Article 28)</Text>
-          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for
-          {'\n'}life. You can choose to commute (convert) up to one-third of this benefit into a
-          {'\n'}lump sum (one-time payment). The rest will be paid as monthly income for the rest
-          {'\n'}of your life. If you prefer, you can take the full benefit as monthly payments all
-          {'\n'}along with.
+          {'\n'}You are eligible for the Normal Retirement Benefit, paid as a monthly pension for life. You can choose to commute (convert) up to one-third of this benefit into a lump sum (one-time payment). The rest will be paid as monthly income for the rest of your life. If you prefer, you can take the full benefit as monthly payments all along with.
         </Text>
       </View>
     </View>
