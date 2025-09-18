@@ -16,6 +16,8 @@ export default function EmployerBenefitsScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            <View style={{ padding: 16, gap: 16 }}>
+
       <View style={styles.header}>
         <TouchableOpacity 
                             style={styles.backButton}
@@ -27,26 +29,26 @@ export default function EmployerBenefitsScreen() {
         <View style={styles.headerIconContainer}>
           <Plane size={32} color="#2563EB" strokeWidth={2} />
         </View>
-        <Text style={styles.title}>Benefits from Employing Organization</Text>
-        <Text style={styles.subtitle}>Your HR Benefits At A Glance</Text>
+        <Text style={styles.title}>HR Benefits</Text>
+        <Text style={styles.subtitle}>Additional payments from your employer to support your transition.</Text>
       </View>
-
+    </View>
       <View style={styles.section}>        
-        <View style={[styles.infoCard, styles.warningCard]}>          
-          <Info size={20} color="#DC2626" strokeWidth={2} />
-          <Text style={styles.warningText}>
-            Important note: The issuance of the following two key documents by your HR department marks the official start of retirement preparation
+        <View style={styles.card}>          
+          
+          <Text style={styles.cardTitle}>
+            1. Exit Documents
           </Text>
-        </View>
-
-        <View style={styles.bulletGroup}>
-          <Text style={styles.bullet}>■ Separation Notification (P4/SEP) – Sent by HR to UNJSPF.</Text>
-          <Text style={styles.bullet}>■ Separation Personnel Action Form (SEPPA) – Sent by HR to UNJSPF (not required for UN Agencies staff).</Text>
+          <Text >Your retirement preparation begins with two key exit documents that your employing organization must send to the UNJSPF:</Text>
+          <Text  style={styles.bold}>Separation Notification (P4/SEP)</Text>
+          <Text  style={styles.bold}>Separation Personnel Action Form (SEPPA)</Text><Text>(not required for UN Agencies staff)</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>This is a summary of the HR entitlements due from your employing organization, including the steps you must complete for release of payment</Text>
-
+          {/* <Text style={styles.cardTitle}>This is a summary of the HR entitlements due from your employing organization, including the steps you must complete for release of payment</Text> */}
+          <Text style={styles.cardTitle}>2. HR Entitlements</Text>
+          <Text>Summary of HR entitlements from your employing organization at separation, including the steps you must complete for payment release.</Text>
+          {'\n'}
           <Text style={styles.sectionHeading}>📦 Relocation Grant</Text>
           <br />    
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Lump-sum to cover relocation costs for you and eligible family members.</Text>
@@ -71,24 +73,28 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Not payable if resigned within 1 year of appointment, dismissed, or no relocation.</Text>
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Submit your expense report for reimbursement of terminal expenses.</Text>
 
-          <Text style={styles.sectionHeading}>📅 Final Payments (Leave Encashment)</Text>
+          <Text style={styles.sectionHeading}>📅 Leave Encashment</Text>
           <br />   
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Cash for unused annual leave days and final account settlements.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Unused days × daily rate of final net salary.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Up to a maximum of 60 days of accrued leave (18 days for temporary; 60 for fixed/continuing).</Text>
           <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Days beyond the cap are forfeited.</Text>
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Payments released after payroll audit of service record (normally 6–8 weeks after separation).</Text>
-
-          <Text style={styles.note}>
-            To calculate your separation benefits from your employing organization, you may access the widely used UNDP tool titled
-            <Text> </Text>
-            <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text>.
+          </View>
+          <View style={styles.card}>  
+          <Text style={styles.cardTitle}>3. Separation Benefits Estimate</Text>
+          <Text>
+            <Text>Access the UNDP <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text> tool—courtesy of UNDP—to calculate the benefits payable by your employing organization at the time of separation
+          .</Text>
           </Text>
           <Text style={styles.urlText}>https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx </Text>
-        </View>
+          </View>
+         
+
 
         <View style={styles.card}>          
-          <Text style={styles.cardTitle}>Documents to submit 30 days before separation</Text>
+          <Text style={styles.cardTitle}>4. Pre-Separation Documents</Text>
+          <Text>Submit these required documents at least <Text style={styles.bold}>30 days before separation</Text> to ensure timely processing:</Text>
           <View style={styles.orderedList}>            
             <Text style={styles.item}><Text style={styles.bold}>1. Separation Payments Form</Text> (P.250) – For alternative bank account final pay.</Text>
             <Text style={styles.item}><Text style={styles.bold}>2. Separation Briefing Note</Text> – Review, sign, and return (scan/email).</Text>
@@ -100,9 +106,9 @@ export default function EmployerBenefitsScreen() {
           </View>
         </View>
 
-        <View style={styles.card}>          
-          <Text style={styles.permanentTitle}>Permamanent document to keep  for record- you may obtain upon request:</Text>
-          <Text style={styles.permanentItem}>Form P.50 Certification of service from your HR - detailing a statement of duties and length of service, annual salary, and also an assessment of work quality and conduct.</Text>
+        <View style={styles.card}>  
+          <Text style={styles.cardTitle}>5. Service Certification (Form P.50)</Text>
+          <Text>A permanent record available on request from HR. It provides details of your duties, length of service, annual salary, and an assessment of work quality and conduct.</Text>
         </View>
       </View>
     </ScrollView>
