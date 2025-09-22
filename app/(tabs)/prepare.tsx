@@ -193,7 +193,8 @@ export default function PrepareScreen() {
   }, [sections, showIntro]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
+             <View style={{ padding: 16, gap: 16 }}>
        
       <View style={styles.header}>
         <TouchableOpacity 
@@ -208,6 +209,7 @@ export default function PrepareScreen() {
         </View>
         <Text style={styles.title}>Prepare to Retire</Text>
         <Text style={styles.subtitle}>Actions Checklist, Timelines, Submissions</Text>
+      </View>
       </View>
 
       <ScrollView style={styles.scrollView}>
@@ -365,8 +367,9 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: '#6B7280',
+    color: 'black',
     textAlign: 'center',
+    fontWeight: '600',
   },
   scrollView: {
     flex: 1,
