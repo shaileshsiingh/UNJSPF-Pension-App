@@ -748,6 +748,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontWeight: '600',
+    marginLeft: 15
   },
   form: {
     padding: width < 300 ? 12 : width < 350 ? 16 : 20,
@@ -799,7 +800,6 @@ const styles = StyleSheet.create({
     // marginBottom: 2,
     textAlign: 'center',
     lineHeight: 22,
-    // marginLeft: 2
   },
   retirementInfoCard: {
     backgroundColor: '#FFFFFF',
