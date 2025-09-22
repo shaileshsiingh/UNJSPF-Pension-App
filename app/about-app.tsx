@@ -587,7 +587,8 @@ const styles = StyleSheet.create({
   },
   italic: {
     fontStyle:'italic',
-    fontSize:scaleFont(10)
+    fontSize:scaleFont(10),
+    color:'brown'
   },
   uniformContent: {
     fontSize: scaleFont(12),
