@@ -138,17 +138,17 @@ export default function LandingPage() {
                 {
                   icon: "📊",
                   title: "UNJSPF Benefits",
-                  desc: "Prep Checklist  • Pension Calculator • Options "
+                  desc: `• Prep Checklist\n • Pension Calculator\n • Options`
                 },
                 {
                   icon: "✈️",
                   title: "Employer Benefits",
-                  desc: "HR Entitlements • Calculator • Actions • Timelines"
+                  desc: `• HR Entitlements\n • Calculator\n • Actions\n • Timelines`
                 },
                 {
                   icon: "👥",
                   title: "Post-Retirement",
-                  desc: "Best country to Retire •Pursue your passion with AI • Easy Travel • And many more."
+                  desc: `• Best country to Retire\n• Pursue your passion with AI\n• Easy Travel\n• And many more.`,
                 }
               ].map((item, idx) => (
                 <LinearGradient
@@ -304,10 +304,8 @@ export default function LandingPage() {
           </View>
           
           {/* Disclaimer Section */}
-          <LinearGradient
-            colors={['#450a0a', '#7f1d1d', '#991b1b']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+          <View
+           
             style={styles.disclaimerContainer}
           >
             <View style={styles.disclaimerHeader}>
@@ -318,7 +316,7 @@ export default function LandingPage() {
                 </Text>
               </View>
             </View>
-          </LinearGradient>
+          </View>
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
@@ -700,7 +698,7 @@ const styles = StyleSheet.create({
 
   // Footer Section - Black Background
   footerSection: {
-    backgroundColor: '#000000',
+    backgroundColor: 'rgb(61 51 51)',
     paddingVertical: scaleSize(20, 24, 28),
     paddingHorizontal: getHorizontalPadding(),
   },
@@ -729,6 +727,7 @@ const styles = StyleSheet.create({
   // Disclaimer Section
   disclaimerContainer: {
     borderWidth: 1,
+    backgroundColor:'rgba(83, 75, 75, 0.7)',
     borderColor: 'rgba(254, 202, 202, 0.3)',
     borderRadius: scaleSize(12, 14, 16),
     padding: scaleSize(12, 14, 16),
