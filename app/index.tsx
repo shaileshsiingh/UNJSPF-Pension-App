@@ -520,7 +520,7 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(2, 3, 4),
   },
   glanceTitle: {
-    fontSize: scaleFont(11.5, 11.5, 11.5),
+    fontSize: scaleFont(10.5, 10.5, 10.5),
     fontWeight: '700',
     color: '#1e3a8a',
     textAlign: 'center',
