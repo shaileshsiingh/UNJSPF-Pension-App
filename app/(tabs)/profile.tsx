@@ -447,10 +447,10 @@ export default function ProfileScreen() {
                 ) : null}
               </View>
             </View>
-          </View>
+          
 
           {/* Employment Information */}
-          <View style={styles.section}>
+          <View >
             {/* <View style={styles.sectionHeader}>
               <Building size={20} color="#2563EB" strokeWidth={2} />
               <Text style={styles.sectionTitle}>Your Employment History</Text>
@@ -458,7 +458,7 @@ export default function ProfileScreen() {
             
             {/* Participating Organization Dropdown */}
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Employing Organization (select from the list of 25)</Text>
+              <Text style={styles.label1}>Employing Organization (select from the list of 25)</Text>
               <TouchableOpacity
                 style={styles.dropdownInput}
                 onPress={() => setShowOrgModal(true)}
@@ -539,7 +539,7 @@ export default function ProfileScreen() {
               <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
             </View>
           </View>
-
+          </View>
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
                          <View style={styles.retirementHeader}>
@@ -824,6 +824,13 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     marginBottom: 6,
+  },
+  label1: {
+    marginTop: 12,
+    fontSize: width < 300 ? 12 : 12,
+    fontWeight: '600',
+    color: '#374151',
+    marginBottom: 8,
   },
   inlineInputGroup: {
     flexDirection: 'row',
