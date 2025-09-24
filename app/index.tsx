@@ -113,10 +113,10 @@ export default function LandingPage() {
               >
                 <View style={styles.whoHeader}>
                   <Text style={styles.whoTitle1}>Who is
-                  <Text style={styles.whoTitle}> <Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text> </Text>for?</Text>
+                  <Text style={styles.whoTitle}> <Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text> </Text>for?</Text>
                 </View>
                 <Text style={styles.whoDesc}>
-                <Text style={styles.boldText}>   <Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> is the retirement planning app designed exclusively for UN staff and retirees. Navigate your financial future with confidence through our platform that helps you understand, estimate, and track your UN retirement benefits. Whether you're starting your UN career, considering early retirement, or already retired, <Text style={styles.boldText}><Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> provides the tools you need to make informed decisions and plan your ideal retirement lifestyle—from exploring new passions to engaging with emerging technologies.
+                <Text style={styles.boldText}>   <Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> is the retirement planning app designed exclusively for UN staff and retirees. Navigate your financial future with confidence through our platform that helps you understand, estimate, and track your UN retirement benefits. Whether you're starting your UN career, considering early retirement, or already retired, <Text style={styles.boldText}><Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> provides the tools you need to make informed decisions and plan your ideal retirement lifestyle—from exploring new passions to engaging with emerging technologies.
                 </Text>
               </LinearGradient>
             </View>
