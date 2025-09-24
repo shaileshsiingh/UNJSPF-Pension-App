@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(255, 255, 255, 0.7)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
-    marginTop: scaleSize(-46, -46, -46),
+    marginTop: scaleSize(-40, -40, -40),
   },
 
   // Who Section

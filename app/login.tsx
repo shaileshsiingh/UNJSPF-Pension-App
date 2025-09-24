@@ -31,7 +31,7 @@ export default function LoginScreen() {
   const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
+  const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758717717/ChatGPT_Image_Sep_24_2025_06_11_37_PM_ndldy3.png';
 
   // Email validation function
   const validateEmail = (email: string) => {
@@ -182,7 +182,7 @@ export default function LoginScreen() {
                 />
                 </TouchableOpacity>
               </View>
-              <Text style={styles.appName}>MyUNPension</Text>
+              {/* <Text style={styles.appName}>MyUNPension</Text> */}
             </View>
 
             {/* Login Card */}
@@ -295,8 +295,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heroLogo: {
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
     marginBottom: -20,
   },
   appName: {

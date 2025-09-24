@@ -22,7 +22,7 @@ import { getRobotoFont, getRobotoLikeFont } from '../utils/fonts';
 
 const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 380;
-const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
+const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758717717/ChatGPT_Image_Sep_24_2025_06_11_37_PM_ndldy3.png';
 
 export default function SignupScreen() {
   const { signUp, signInWithGoogle, googleLoading } = useAuth();
@@ -235,7 +235,7 @@ export default function SignupScreen() {
                   />
                 </TouchableOpacity>
               </View>
-              <Text style={styles.appName}>MyUNPension</Text>
+              {/* <Text style={styles.appName}>MyUNPension</Text> */}
               {/* <Text style={styles.appTagline}>UN Retirement Benefits Calculator</Text> */}
             </View>
 
@@ -380,19 +380,19 @@ const styles = StyleSheet.create({
     // marginBottom: 32,
   },
   heroLogo: {
-    width: 80,
-    height: 80,
-    marginBottom: -20,
+    width: 120,
+    height: 120,
+    // marginBottom: -20,
   },
-  appName: {
-    fontSize: isSmallScreen ? 17 : 17,
-    fontWeight: '700',
-    color: '#0072CE',
-    marginTop: -30,
-    textAlign: 'center',
-    letterSpacing: -0.5,
-    fontFamily: getRobotoFont('bold'),
-  },
+  // appName: {
+  //   fontSize: isSmallScreen ? 17 : 17,
+  //   fontWeight: '700',
+  //   color: '#0072CE',
+  //   marginTop: -30,
+  //   textAlign: 'center',
+  //   letterSpacing: -0.5,
+  //   fontFamily: getRobotoFont('bold'),
+  // },
   appTagline: {
     fontSize: isSmallScreen ? 14 : 16,
     color: '#6b7280',
