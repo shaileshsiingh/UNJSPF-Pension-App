@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(255, 255, 255, 0.7)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
-    marginTop: scaleSize(-40, -40, -40),
+    marginTop: scaleSize(-34, -34, -34),
   },
 
   // Who Section
@@ -556,7 +556,7 @@ const styles = StyleSheet.create({
 
   // Category Titles
   categoryTitle: {
-    fontSize: scaleFont(14, 16, 18),
+    fontSize: scaleFont(14, 14, 14),
     fontWeight: '600',
     color: '#2563eb',
     textAlign: 'center',
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
   },
   membershipTitle: {
     color: '#fb923c',
-    fontSize: scaleFont(16, 16, 16),
+    fontSize: scaleFont(14, 14, 14),
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
