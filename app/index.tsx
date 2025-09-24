@@ -157,7 +157,7 @@ export default function LandingPage() {
                   end={{ x: 1, y: 1 }}
                   style={styles.glanceCard}
                 >
-                  <Text style={styles.glanceIcon}>{item.icon}</Text>
+                  {/* <Text style={styles.glanceIcon}>{item.icon}</Text> */}
                   <Text style={styles.glanceTitle}>{item.title}</Text>
                   <Text style={styles.glanceDesc}>{item.desc}</Text>
                 </LinearGradient>
