@@ -18,7 +18,7 @@ import { useRouter } from 'expo-router';
 import { getRobotoFont, typography } from '../utils/fonts';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
+const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758717717/ChatGPT_Image_Sep_24_2025_06_11_37_PM_ndldy3.png';
 const { width, height } = Dimensions.get('window');
 
 // Enhanced responsive breakpoints
@@ -101,8 +101,7 @@ export default function LandingPage() {
                 resizeMode="cover"
               />
             </View>
-            <Text style={styles.heroTitle}>MyUNPension</Text>
-            <Text style={styles.heroSubtitle}>All your pension benefits in one place.</Text>
+            <Text style={styles.heroSubtitle}>Decode your UN benefits. Own your future.</Text>
            
             {/* Who is MyUNPension for? Section */}
             <View style={styles.whoSection}>
@@ -110,14 +109,14 @@ export default function LandingPage() {
                 colors={['#f8fafc', '#f1f5f9', '#e2e8f0']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={styles.whoCard1}
+                // style={styles.whoCard1}
               >
                 <View style={styles.whoHeader}>
                   <Text style={styles.whoTitle1}>Who is
-                  <Text style={styles.whoTitle}> MyUNPension </Text>for?</Text>
+                  <Text style={styles.whoTitle}> <Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text> </Text>for?</Text>
                 </View>
                 <Text style={styles.whoDesc}>
-                Whether you are new to the UN system, planning for early retirement, preparing for separation, or already retired, <Text style={styles.boldText}>MyUNPension</Text> helps you understand, estimate, and track your separation benefits with confidence.
+                <Text style={styles.boldText}>   <Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> is the retirement planning app designed exclusively for UN staff and retirees. Navigate your financial future with confidence through our platform that helps you understand, estimate, and track your UN retirement benefits. Whether you're starting your UN career, considering early retirement, or already retired, <Text style={styles.boldText}><Text style={{color: 'rgb(62 62 101)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> provides the tools you need to make informed decisions and plan your ideal retirement lifestyle—from exploring new passions to engaging with emerging technologies.
                 </Text>
               </LinearGradient>
             </View>
@@ -126,10 +125,10 @@ export default function LandingPage() {
 
         {/* App at a Glance Section */}
         <LinearGradient
-          colors={['#f8fafc', '#f1f5f9', '#e2e8f0']}
+          colors={['#f1f5f9', '#f1f5f9', '#e2e8f0']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={styles.whoCard}
+          // style={styles.whoCard}
         >
           <View style={styles.appGlanceSection}>
             <Text style={styles.sectionTitleCenter}>App Features</Text>
@@ -138,17 +137,17 @@ export default function LandingPage() {
                 {
                   icon: "📊",
                   title: "UNJSPF Benefits",
-                  desc: `• Prep Checklist\n • Pension Calculator\n • Options`
+                  desc: `Prep Checklist\n Pension Calculator\n Options`
                 },
                 {
                   icon: "✈️",
                   title: "Employer Benefits",
-                  desc: `• HR Entitlements\n • Calculator\n • Actions\n • Timelines`
+                  desc: `Overview of HR Benefits\n Benefit Calculator\n Checklist`
                 },
                 {
                   icon: "👥",
                   title: "Post-Retirement",
-                  desc: `• Best country to Retire\n• Pursue your passion with AI\n• Easy Travel\n• And many more.`,
+                  desc: `Where to retire\n Helpful AI tools\n Travel planning\n + more`,
                 }
               ].map((item, idx) => (
                 <LinearGradient
@@ -169,13 +168,13 @@ export default function LandingPage() {
         
         {/* UNJSPF Overview Section */}
         <LinearGradient
-          colors={['#f8fafc', '#f1f5f9', '#e2e8f0']}
+          colors={['#f1f5f9', '#f1f5f9', '#e2e8f0']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={styles.whoCard}
+          // style={styles.whoCard}
         >
         <View style={styles.overviewSection}>
-          <Text style={styles.overviewMainTitle}>About {'\n'} United Nations Joint Staff Pension Fund</Text>
+          <Text style={styles.overviewMainTitle}><Text style={styles.smallText}>About</Text>{'\n'} United Nations Joint Staff Pension Fund</Text>
 
           {/* Financials */}
           <Text style={styles.categoryTitle}>Financials</Text>
@@ -276,7 +275,7 @@ export default function LandingPage() {
               style={styles.ctaButtonInner}
               onPress={() => router.push('/login')}
             >
-              <Text style={styles.ctaButtonText}>Get Started for Free</Text>
+              <Text style={styles.ctaButtonText}>Get Started here</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
@@ -371,8 +370,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heroLogo: {
-    width: scaleSize(70, 70, 70),
-    height: scaleSize(55, 55, 55),
+    width: scaleSize(140, 140, 140),
+    height: scaleSize(140, 140, 140),
     borderRadius: 0,
   },
   heroTitle: {
@@ -391,7 +390,7 @@ const styles = StyleSheet.create({
   },
   heroSubtitle: {
     color: '#1e40af',
-    fontSize: scaleFont(12, 14, 16),
+    fontSize: scaleFont(12, 12, 12),
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: scaleSize(3, 3, 3),
@@ -400,6 +399,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(255, 255, 255, 0.7)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
+    marginTop: scaleSize(-46, -46, -46),
   },
 
   // Who Section
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
   whoHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: scaleSize(-10, -10, -10),
+    marginTop: scaleSize(10, 10, 10),
   },
   whoTitle: {
     color: '#0072CE',
@@ -467,8 +467,8 @@ const styles = StyleSheet.create({
   },
   whoDesc: {
     color: '#475569',
-    fontSize: scaleFont(14, 15, 16),
-    lineHeight: scaleFont(20, 21, 22),
+    fontSize: scaleFont(12, 12, 12),
+    lineHeight: scaleFont(20, 20, 20),
     fontFamily: getRobotoFont('regular'),
     fontWeight: '400',
     textAlign: 'justify',
@@ -481,16 +481,17 @@ const styles = StyleSheet.create({
 
   // App Features Section
   appGlanceSection: {
-    paddingVertical: 0,
+    paddingVertical: 10,
     paddingHorizontal: getHorizontalPadding(),
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
   },
   sectionTitleCenter: {
-    fontSize: scaleFont(19, 19, 19),
+    fontSize: scaleFont(17, 17, 17),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
     marginBottom: scaleSize(8, 10, 12),
+    marginTop: scaleSize(12, 14, 16),
     fontFamily: getRobotoFont('bold'),
   },
   glanceCardsContainer: {
@@ -540,7 +541,7 @@ const styles = StyleSheet.create({
   overviewSection: {
     paddingVertical: 0,
     paddingHorizontal: getHorizontalPadding(),
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
   },
   overviewMainTitle: {
     fontSize: scaleFont(16, 18, 22),
@@ -548,6 +549,9 @@ const styles = StyleSheet.create({
     color: '#1e3a8a',
     textAlign: 'center',
     fontFamily: getRobotoFont('bold'),
+  },
+  smallText: {
+    fontSize: scaleFont(12, 12, 12),
   },
 
   // Category Titles
@@ -605,29 +609,28 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(2, 3, 4),
   },
   statValue: {
-    fontSize: scaleFont(14, 16, 18),
+    fontSize: scaleFont(12, 14, 16),
     fontWeight: 'bold',
     color: '#1d4ed8',
     fontFamily: getRobotoFont('bold'),
   },
   statValue1: {
-    fontSize: scaleFont(15, 17,19),
+    fontSize: scaleFont(13, 15,17),
     fontWeight: 'bold',
     color: '#fb923c',
     fontFamily: getRobotoFont('bold'),
   },
   statValue2: {
-    fontSize: scaleFont(18, 18,18),
-    fontWeight: 800,
+    fontSize: scaleFont(16, 16,16),
+    fontWeight: '800',
     color: '#fb923c',
     fontFamily: getRobotoFont('bold'),
   },
   statLabel: {
-    fontSize: scaleFont(10, 11, 12),
+    fontSize: scaleFont(9, 10, 11),
     color: '#475569',
     textAlign: 'center',
     fontFamily: getRobotoFont('medium'),
-    fontWeight: '600',
   },
 
   // About Cards
@@ -726,9 +729,9 @@ const styles = StyleSheet.create({
 
   // Disclaimer Section
   disclaimerContainer: {
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor:'rgba(83, 75, 75, 0.7)',
-    borderColor: 'rgba(254, 202, 202, 0.3)',
+    // borderColor: 'rgba(254, 202, 202, 0.3)',
     borderRadius: scaleSize(12, 14, 16),
     padding: scaleSize(12, 14, 16),
     margin:scaleSize(8, 8, 8),
@@ -767,7 +770,7 @@ const styles = StyleSheet.create({
   // Copyright
   copyright: {
     fontSize: scaleFont(10, 11, 12),
-    color: '#6b7280',
+    color: 'rgb(156, 163, 175)',
     textAlign: 'center',
     marginTop: scaleSize(8, 10, 12),
     marginBottom: scaleSize(6, 8, 10),
