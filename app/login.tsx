@@ -295,9 +295,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heroLogo: {
-    width: 120,
-    height: 120,
-    marginBottom: -20,
+    width: 140,
+    height: 140,
+    marginBottom: -30,
   },
   appName: {
     fontSize: isSmallScreen ? 17 : 17,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(14, 165, 233, 0.1)',
     alignSelf: 'center',
-    marginTop: -28,
+    marginTop: -48,
   },
   subtitle: {
     fontSize: isSmallScreen ? 15 : 16,

@@ -34,7 +34,7 @@ import { useAuth } from '../../components/AuthContext';
 import { getRobotoFont } from '@/utils/fonts';
 import { router } from 'expo-router';
 // App logo (re-use same asset as landing page)
-const LOGO_URL = 'https://res.cloudinary.com/dnvdqfz5r/image/upload/v1754235912/United_Nations_Peace_Emblem_opjti4.png';
+const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758717717/ChatGPT_Image_Sep_24_2025_06_11_37_PM_ndldy3.png';
 
 export default function HomeScreen() {
   const { signOut, user } = useAuth();  
@@ -63,7 +63,7 @@ export default function HomeScreen() {
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <Text style={styles.heroTitle}>MyUNPension</Text>
+            {/* <Text style={styles.heroTitle}>MyUNPension</Text> */}
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
             <Text style={styles.welcomeSubtitle}>
@@ -262,9 +262,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerLogo: {
-    width: 80,
-    height: 80,
-    marginBottom: 6,   // a bit more spacing from the title
+    width: 150,
+    height: 150,
+    // marginBottom: 6,   // a bit more spacing from the title
   },
   heroTitle: {
     color: '#0072CE',
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
     color: '#111827',
-    // marginTop: 16,
+    marginTop: -52,
     // marginBottom: 8,
     textAlign: 'center',
   },

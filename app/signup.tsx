@@ -380,8 +380,8 @@ const styles = StyleSheet.create({
     // marginBottom: 32,
   },
   heroLogo: {
-    width: 120,
-    height: 120,
+    width: 140,
+    height: 140,
     // marginBottom: -20,
   },
   // appName: {
@@ -418,6 +418,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
     alignSelf: 'center',
+    marginTop: -52,
   },
   title: {
     fontSize: isSmallScreen ? 18 : 20,
