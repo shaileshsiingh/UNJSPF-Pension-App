@@ -641,6 +641,12 @@ export default function CalculatorScreen() {
     }
   };
 
+  const isFormValid = 
+    dateOfBirth &&
+    entryDate &&
+    separationDate &&
+    ownContributions > 0;
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ padding: 16, gap: 16 }}>
@@ -1291,8 +1297,9 @@ export default function CalculatorScreen() {
       </View>
       <View style={styles.section}>
         <TouchableOpacity 
-          style={styles.calculatorButton}
+          style={[styles.calculatorButton, !isFormValid && styles.disabledButton]}
           onPress={() => router.push('/(tabs)/eligibility')}
+          disabled={!isFormValid}
         >
           <View style={styles.calculatorButtonContent}>
             <View style={styles.calculatorButtonTextContainer}>
@@ -1794,5 +1801,10 @@ const styles = StyleSheet.create({
   },
   section: {
     margin: 16,
+  },
+  disabledButton: {
+    backgroundColor: '#9CA3AF',
+    elevation: 0,
+    shadowOpacity: 0,
   },
 });

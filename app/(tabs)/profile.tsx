@@ -368,6 +368,14 @@ export default function ProfileScreen() {
   const formattedEntry = formatDateDMY(formData.dateOfEntry);
   const formattedSeparation = formatDateDMY(formData.dateOfSeparation);
 
+  const isFormValid = 
+    (formData.firstName || auth.currentUser?.displayName) &&
+    (formData.lastName || auth.currentUser?.displayName) &&
+    formData.organization &&
+    formData.dateOfBirth &&
+    formData.dateOfEntry &&
+    formData.dateOfSeparation;
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
@@ -637,8 +645,9 @@ export default function ProfileScreen() {
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
             <TouchableOpacity 
-              style={styles.calculatorButton}
+              style={[styles.calculatorButton, !isFormValid && styles.disabledButton]}
               onPress={handleSave}
+              disabled={!isFormValid}
             >
               <View style={styles.calculatorButtonContent}>
                 <View style={styles.calculatorButtonTextContainer}>
@@ -1021,6 +1030,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
+  },
+  disabledButton: {
+    backgroundColor: '#9CA3AF',
+    elevation: 0,
+    shadowOpacity: 0,
   },
   calculatorButtonContent: {
     alignItems: 'center',
