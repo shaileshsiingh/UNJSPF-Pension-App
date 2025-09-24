@@ -419,8 +419,8 @@ export default function CombinedAboutScreen() {
               <Shield size={32} color="#2563EB" strokeWidth={2} />
             </View> */}
             <Text style={styles.headerTitle}>Pension Guide</Text>
-            <Text style={styles.headerSubtitle}>
-            Concepts, Formulas, and Options      </Text>
+            {/* <Text style={styles.headerSubtitle}>
+            Concepts, Formulas, and Options      </Text> */}
           </View>
         </View>
       {renderTabButtons()}
@@ -570,13 +570,13 @@ const styles = StyleSheet.create({
   },
   uniformSubtitle: {
     fontSize: scaleFont(12),
-    color: '#6B7280',
+    color: 'brown',
     marginBottom: scaleSize(6),
     fontFamily: getRobotoFont('regular'),
     fontStyle:'italic'
   },
   bold: {
-    fontWeight: '500',
+    fontWeight: '600',
     color: '#374151',
     marginTop:10,
   },
