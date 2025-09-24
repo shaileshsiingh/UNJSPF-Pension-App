@@ -208,13 +208,14 @@ export default function PrepareScreen() {
           <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
         </View>
         <Text style={styles.title}>Prepare to Retire</Text>
-        <Text style={styles.subtitle}>Actions Checklist, Timelines, Submissions</Text>
+        <Text style={styles.subtitle}>Actions, Checklist, Timelines, Submissions</Text>
       </View>
       </View>
 
       <ScrollView style={styles.scrollView}>
         {showIntro ? (
           <View style={styles.introContainer}>
+            <Text style={styles.introTitle}>Important!</Text>
             <Text style={styles.introText}>
               Your retirement process officially begins the moment HR issues your Separation Notification (PF4/SEP) and Separation Personnel Action (SEPPA). Once you separate, all access to official portals and emails is cut off instantly—with no way to retrieve them later. Save every essential email, document, and message to your personal email ID immediately. 
               Delaying this step may result in <Text style={styles.bold}>permanent loss of critical records</Text>.
@@ -299,7 +300,7 @@ export default function PrepareScreen() {
             <View key={section.id} style={styles.section}>
               <View style={styles.sectionHeader}>
                 <View style={[styles.sectionDot, { backgroundColor: section.colorDot }]} />
-                <Text style={styles.sectionTitle}>{section.label}</Text>
+                <Text style={[styles.sectionTitle, { color: section.colorDot }]}>{section.label}</Text>
               </View>
               <View style={styles.itemsContainer}>
                 {section.items.map(item => (
@@ -385,6 +386,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: '#92400E',
     marginBottom: 12,
+  },
+  introTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#92400E',
+textAlign:'center'
   },
   bold: {
     fontWeight: '600',
