@@ -40,7 +40,7 @@ export default function TermsOfServiceScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Acceptance</Text>
           <Text style={styles.sectionContent}>
-            By accessing or using MyUNPension, you agree to these Terms.
+            By accessing or using OneRetire, you agree to these Terms.
           </Text>
 
           <Text style={styles.sectionTitle}>Non-affiliation & No advice</Text>

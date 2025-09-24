@@ -45,7 +45,7 @@ export default function ContactScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Questions or feedback?</Text>
           <TouchableOpacity onPress={handleEmailPress}>
-            <Text style={styles.emailLink}>Email: info.myunpension@harpandcode.io</Text>
+            <Text style={styles.emailLink}>Email: info.oneretire@harpandcode.io</Text>
           </TouchableOpacity>
           <Text style={styles.sectionContent}>
             We aim to reply within 3–5 business days.

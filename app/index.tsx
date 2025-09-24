@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
   },
   membershipTitle: {
     color: '#fb923c',
-    fontSize: scaleFont(16, 18, 20),
+    fontSize: scaleFont(16, 16, 16),
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: scaleSize(4, 5, 6),
@@ -615,13 +615,13 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('bold'),
   },
   statValue1: {
-    fontSize: scaleFont(13, 15,17),
+    fontSize: scaleFont(14, 14,14),
     fontWeight: 'bold',
     color: '#fb923c',
     fontFamily: getRobotoFont('bold'),
   },
   statValue2: {
-    fontSize: scaleFont(16, 16,16),
+    fontSize: scaleFont(15, 15,15),
     fontWeight: '800',
     color: '#fb923c',
     fontFamily: getRobotoFont('bold'),
