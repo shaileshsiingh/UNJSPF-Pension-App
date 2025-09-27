@@ -1617,16 +1617,16 @@ const styles = StyleSheet.create({
   },
   // Label width classes for different label lengths
   shortLabel: {
-    width: width < 300 ? 50 : 90,
+    width: width < 350 ? 50 : 90,
   },
   mediumLabel: {
-    width: width < 300 ? 90 : 177,
+    width: width < 350 ? 90 : 177,
   },
   longLabel: {
-    width: width < 300 ? 110 : 177,
+    width: width < 350 ? 110 : 177,
   },
   veryLongLabel: {
-    width: width < 300 ? 130 : 175,
+    width: width < 350 ? 130 : 175,
   },
   // New styles for label with help button
   labelWithHelp: {
