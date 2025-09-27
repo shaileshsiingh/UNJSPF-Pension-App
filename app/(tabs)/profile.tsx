@@ -869,10 +869,10 @@ const styles = StyleSheet.create({
     width: width < 300 ? 56 : 105, // Date of Birth
   },
   longLabel: {
-    width: width < 300 ? 90 : 190, // Date of Entry into Fund
+    width: width < 300 ? 90 : 180, // Date of Entry into Fund
   },
   veryLongLabel: {
-    width: width < 300 ? 100 : 200, // Preferred Separation date
+    width: width < 300 ? 100 : 190, // Preferred Separation date
   },
   input: {
     backgroundColor: '#FFFFFF',
