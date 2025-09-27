@@ -887,7 +887,7 @@ const scrollViewRefs = [
                 <TouchableOpacity 
                   onPress={() => showHelpModal(
                     "FAR Calculator",
-                    "You can find your PR value on your monthly payslips. Fill in all 36 boxes for a reliable estimate.\n\nEnter your highest Pensionable Remuneration (PR) for 36 consecutive months within the 5 years before your retirement date.\n\nThe calculator uses these 36 months of PR to automatically generate your Final Average Remuneration (FAR), which determines your lifetime pension.\n\nIf retirement is still years away, you may enter approximate values.\n\nFor example: if your current monthly PR is $150,000 and you plan to retire in 5-10 years, you can project an increase of about $10,000 per year of contributory service.\n\nKeep in mind that your future PR depends on expected pay raises, promotions, and other changes."
+                    "You can find your Pensionable Remuneration(PR) value on your monthly payslips. Fill in all 36 boxes for a reliable estimate.\n\nEnter your highest PR for 36 consecutive months within the 5 years before your retirement date.\n\nThe calculator uses these 36 months of PR to automatically generate your Final Average Remuneration (FAR), which determines your lifetime pension.\n\nIf retirement is still years away, you may enter approximate values.\n\nFor example: if your current monthly PR is $150,000 and you plan to retire in 5-10 years, you can project an increase of about $10,000 per year of contributory service.\n\nKeep in mind that your future PR depends on expected pay raises, promotions, and other changes."
                   )}
                   style={styles.helpButtonInline}
                 >
