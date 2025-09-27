@@ -889,7 +889,7 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 12,
     padding: width < 300 ? 10 : width < 350 ? 12 : 16,
-    fontSize: width < 300 ? 12 : width < 350 ? 12 : 11,
+    fontSize: width < 300 ? 12 : width < 350 ? 10 : 13,
     color: '#111827',
     flex: 1,
     minWidth: 0,
