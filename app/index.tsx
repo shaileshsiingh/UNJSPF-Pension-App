@@ -319,7 +319,7 @@ export default function LandingPage() {
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
-            @OneRetire. All Rights Reserved.
+            @2025OneRetire. All Rights Reserved.
           </Text>
         </View>
       </ScrollView>
@@ -722,7 +722,7 @@ const styles = StyleSheet.create({
   },
   footerLink: {
     fontSize: scaleFont(12, 13, 14),
-    color: '#9ca3af',
+    color: 'rgb(225 221 221)',
     fontWeight: '700',
     fontFamily: getRobotoFont('bold'),
   },
