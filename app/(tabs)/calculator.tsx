@@ -852,7 +852,7 @@ const scrollViewRefs = [
           {/* Direct FAR Input Option */}
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>Final Average Remuneration: </Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>FAR: </Text>
               <TouchableOpacity 
                 onPress={() => showHelpModal(
                   "Final Average Remuneration (FAR)",
@@ -1853,15 +1853,15 @@ const styles = StyleSheet.create({
     color: '#1E40AF',
   },
   resetButton: {
-    backgroundColor: '#6B7280',
-    paddingHorizontal: width < 300 ? 12 : 16,
-    paddingVertical: width < 300 ? 6 : 8,
+    backgroundColor: 'orange',
+    paddingHorizontal: width < 300 ? 12 : 18,
+    paddingVertical: width < 300 ? 6 : 10,
     borderRadius: 20,
     alignSelf: 'center',
   },
   resetButtonText: {
-    color: '#FFFFFF',
-    fontSize: width < 300 ? 13 : 14,
+    color: 'black',
+    fontSize: width < 300 ? 13 : 15,
     fontWeight: '600',
   },
   
