@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontWeight: '600',
-    marginLeft: 15
+    marginLeft: 17
   },
   form: {
     padding: width < 300 ? 12 : width < 350 ? 16 : 20,
