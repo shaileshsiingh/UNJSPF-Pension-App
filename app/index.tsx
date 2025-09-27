@@ -46,7 +46,7 @@ const scaleSize = (small, medium = small * 1.2, large = small * 1.4) => {
 const getHorizontalPadding = () => {
   if (isXSmallScreen) return 16;
   if (isSmallScreen) return 20;
-  if (isMediumScreen) return 32;
+  if (isMediumScreen) return 24;
   return 40;
 };
 
@@ -101,7 +101,7 @@ export default function LandingPage() {
                 resizeMode="cover"
               />
             </View>
-            <Text style={styles.heroSubtitle}>Decode your UN benefits. Own your future.</Text>
+            <Text style={styles.heroSubtitle}>Unified Retirement Solution</Text>
            
             {/* Who is MyUNPension for? Section */}
             <View style={styles.whoSection}>
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   },
   whoCard: {
     maxWidth: isTablet ? 700 : 600,
-    width: '111%',
+    width: '131%',
     borderRadius: scaleSize(50, 50, 50),
     padding: scaleSize(20, 20, 20),
     shadowColor: '#0ea5e9',
