@@ -1965,6 +1965,7 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 12 : width < 350 ? 13 : 13,
     color: '#0F172A',
     lineHeight: 18,
+    textAlign:'justify'
   },
   disclaimerBox: {
     margin: 10,
@@ -1980,6 +1981,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     lineHeight: 18,
+    textAlign:'justify'
   },
   scrollContainer: {
     flexDirection: 'row',
