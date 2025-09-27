@@ -831,7 +831,7 @@ const scrollViewRefs = [
         {/* Calculated Interest Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.longLabel]}>Calculated Interest: </Text>
+            <Text style={[styles.inlineLabel, styles.longLabel]}>Interest(Calculated): </Text>
             <TouchableOpacity 
               onPress={() => showHelpModal(
                 "Calculated Interest",
@@ -1596,16 +1596,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#374151',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 14,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: '700',
     color: '#374151',
-    marginBottom: 2,
+    marginBottom: 14,
     textAlign: 'center',
     width: '100%',
-    marginTop:10
+    marginTop:10,
+    
   },
   inlineLabel: {
     fontSize: 14,
