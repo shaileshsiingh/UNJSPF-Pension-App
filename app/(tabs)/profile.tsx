@@ -849,13 +849,13 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
   },
   label: {
-    fontSize: width < 300 ? 12 : 12,
+    fontSize: width < 300 ? 14 : 14,
     fontWeight: '600',
     color: '#374151',
     marginBottom: 8,
   },
   inlineLabel: {
-    fontSize: width < 300 ? 11 : width < 350 ? 12 : 12,
+    fontSize: width < 300 ? 12 : width < 350 ? 14 : 14,
     fontWeight: '600',
     color: '#374151',
     flexShrink: 0,
@@ -863,16 +863,16 @@ const styles = StyleSheet.create({
   },
   // Label width classes for different label lengths
   shortLabel: {
-    width: width < 300 ? 60 : 70, // First Name, Last Name
+    width: width < 300 ? 60 : 105, // First Name, Last Name
   },
   mediumLabel: {
-    width: width < 300 ? 56 : 73, // Date of Birth
+    width: width < 300 ? 56 : 105, // Date of Birth
   },
   longLabel: {
-    width: width < 300 ? 90 : 131, // Date of Entry into Fund
+    width: width < 300 ? 90 : 160, // Date of Entry into Fund
   },
   veryLongLabel: {
-    width: width < 300 ? 100 : 143, // Preferred Separation date
+    width: width < 300 ? 100 : 175, // Preferred Separation date
   },
   input: {
     backgroundColor: '#FFFFFF',
@@ -897,6 +897,8 @@ const styles = StyleSheet.create({
   readOnlyInput: {
     backgroundColor: '#F3F4F6',
     color: '#6B7280',
+    minWidth: 240,
+    width: 240,
   },
   // Input flex values to match label sizes
   shortLabelInput: {
@@ -947,6 +949,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginLeft: 4,
     fontStyle: 'italic',
+    textAlign:'justify'
   },
   saveSection: {
     marginTop: 10,
