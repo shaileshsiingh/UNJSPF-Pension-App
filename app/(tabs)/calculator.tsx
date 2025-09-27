@@ -1620,10 +1620,10 @@ const styles = StyleSheet.create({
     width: width < 300 ? 50 : 90,
   },
   mediumLabel: {
-    width: width < 300 ? 90 : 145,
+    width: width < 300 ? 90 : 177,
   },
   longLabel: {
-    width: width < 300 ? 110 : 160,
+    width: width < 300 ? 110 : 177,
   },
   veryLongLabel: {
     width: width < 300 ? 130 : 175,
