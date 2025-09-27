@@ -798,7 +798,7 @@ const scrollViewRefs = [
 
         {/* Own Contributions Input */}
         <View style={styles.inlineInputGroup}>
-        <Animated.View style={[styles.inlineInput, styles.amountInput, { opacity: ownContributionsBlinkAnim }]}>
+        <Animated.View style={[styles.inlineLabel, { opacity: ownContributionsBlinkAnim }]}>
 
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD): </Text>
@@ -1589,6 +1589,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#374151',
+    marginRight:10
   },
   boldLabel: {
     fontSize: 14,
@@ -1633,9 +1634,9 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   helpButtonInline: {
-    // marginLeft: 4,
+    marginLeft: -10,
     padding: 2,
-    marginRight:4
+    // marginRight:4
   },
   input: {
     borderWidth: 1,
