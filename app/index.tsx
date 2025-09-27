@@ -116,7 +116,7 @@ export default function LandingPage() {
                   <Text style={styles.whoTitle}> <Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text> </Text>for?</Text>
                 </View>
                 <Text style={styles.whoDesc}>
-                <Text style={styles.boldText}>   <Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> is the retirement planning app designed exclusively for UN staff and retirees. Navigate your financial future with confidence through our platform that helps you understand, estimate, and track your UN retirement benefits. Whether you're starting your UN career, considering early retirement, or already retired, <Text style={styles.boldText}><Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> provides the tools you need to make informed decisions and plan your ideal retirement lifestyle—from exploring new passions to engaging with emerging technologies.
+                <Text style={styles.boldText}><Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> is the retirement planning app designed exclusively for UN staff and retirees.{'\n'}Navigate your financial future with confidence through our platform that helps you understand, estimate, and track your UN retirement benefits. Whether you're starting your UN career, considering early retirement, or already retired, <Text style={styles.boldText}><Text style={{color: 'rgb(10, 46, 92)'}}>One</Text><Text style={{color: 'rgb(79 121 79)'}}>Retire</Text></Text> provides the tools you need to make informed decisions and plan your ideal retirement lifestyle—from exploring new passions to engaging with emerging technologies.
                 </Text>
               </LinearGradient>
             </View>
@@ -319,7 +319,7 @@ export default function LandingPage() {
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
-            @2025 MyUNPension. All Rights Reserved.
+            @OneRetire. All Rights Reserved.
           </Text>
         </View>
       </ScrollView>
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'transparent',
   },
   sectionTitleCenter: {
-    fontSize: scaleFont(17, 17, 17),
+    fontSize: scaleFont(14, 14, 14),
     fontWeight: 'bold',
     color: '#1e3a8a',
     textAlign: 'center',
@@ -544,7 +544,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'transparent',
   },
   overviewMainTitle: {
-    fontSize: scaleFont(16, 18, 22),
+    fontSize: scaleFont(14, 14, 14),
     fontWeight: '700',
     color: '#1e3a8a',
     textAlign: 'center',
@@ -760,7 +760,7 @@ const styles = StyleSheet.create({
   },
   disclaimerText: {
     fontSize: scaleFont(10, 11, 12),
-    color: '#e5e7eb',
+    color: '#ffffff',
     lineHeight: scaleFont(14, 15, 16),
     fontFamily: getRobotoFont('regular'),
     textAlign: 'justify',
