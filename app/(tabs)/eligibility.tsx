@@ -723,7 +723,7 @@ export default function EligibilityScreen() {
                 <Text style={styles.label}>Your Current Age</Text>
                 <TextInput
                   style={styles.input}
-                  value={currentAge.toString()}
+                  value={currentAge.toString() + ' years'}
                   onChangeText={text => {
                     const num = parseFloat(text);
                     if (!isNaN(num) && num >= 0) setCurrentAge(num);
@@ -853,10 +853,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   inputContainer: {
-    padding: 20,
+    paddingHorizontal: 16,
     backgroundColor: '#FFF',
     borderRadius: 16,
-    margin: 20,
+    margin: 16,
     elevation: 2,
   },
   inputGroup: {
