@@ -852,7 +852,7 @@ const scrollViewRefs = [
           {/* Direct FAR Input Option */}
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>FAR: </Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>FAR(USD): </Text>
               <TouchableOpacity 
                 onPress={() => showHelpModal(
                   "Final Average Remuneration (FAR)",
@@ -883,7 +883,7 @@ const scrollViewRefs = [
           <View style={{ marginTop: 16 }}>
             <View style={styles.inlineInputGroup}>
               <View style={styles.labelWithHelp}>
-                <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator: </Text>
+                <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator(USD): </Text>
                 <TouchableOpacity 
                   onPress={() => showHelpModal(
                     "FAR Calculator",
@@ -1594,14 +1594,14 @@ const styles = StyleSheet.create({
   boldLabel: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#374151',
+    color: 'rgb(70 106 209)',
     textAlign: 'center',
     marginBottom: 14,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#374151',
+    color: 'rgb(70 106 209)',
     marginBottom: 14,
     textAlign: 'center',
     width: '100%',
