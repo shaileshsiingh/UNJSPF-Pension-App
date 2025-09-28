@@ -281,9 +281,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   }, 
   welcomeTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '800',
-    color: '#111827',
+    color: 'rgb(223, 190, 3)',
     marginTop: -52,
     // marginBottom: 8,
     textAlign: 'center',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     
   },
   sectionTitle1: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
     color: 'rgb(5, 150, 105)',
     marginBottom: 8,
