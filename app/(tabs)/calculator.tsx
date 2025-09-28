@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Calculator, DollarSign, TrendingUp, Info, FileSliders as Sliders, ArrowLeft, ChevronLeft, ChevronRight, ArrowRight, LogOut, HelpCircle } from 'lucide-react-native';
 import CustomSlider from '../../components/CustomSlider';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // In the Date fields, auto-insert '-' as user types
 function formatDateInput(text: string): string {
@@ -1475,19 +1476,21 @@ const scrollViewRefs = [
       </View>
       
       <View style={styles.section}>
-        <TouchableOpacity 
-          style={[styles.calculatorButton, !isFormValid && styles.disabledButton]}
-          onPress={() => router.push('/(tabs)/eligibility')}
-          disabled={!isFormValid}
-        >
-          <View style={styles.calculatorButtonContent}>
-            <View style={styles.calculatorButtonTextContainer}>
-              <Text style={styles.calculatorButtonText}>See your best available options</Text>
-            </View>
-          </View>
-          <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
+  <LinearGradient
+    colors={['#fbbf24', '#f59e0b', '#d97706']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
+  >
+    <TouchableOpacity
+      style={styles.ctaButtonInner}
+      onPress={() => router.push('/(tabs)/eligibility')}
+      disabled={!isFormValid}
+    >
+      <Text style={styles.ctaButtonText}>See your best available options</Text>
+    </TouchableOpacity>
+  </LinearGradient>
+</View>
 
       {/* Help Modal */}
       <Modal
@@ -1782,7 +1785,31 @@ const styles = StyleSheet.create({
     maxWidth: width < 320 ? '38%' : width < 380 ? '40%' : '42%',
     minWidth: width < 320 ? 100 : width < 380 ? 110 : 120,
   },
-  
+  ctaButton: {
+    paddingHorizontal: 75,
+    paddingVertical: 18,
+    borderRadius: 22,
+    alignSelf: 'center',
+    minWidth: 220,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+    marginBottom: 14,
+  },
+  ctaButtonInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaButtonText: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '600',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
   optionButton: {
     width: width <= 320 ? '95%' : width < 380 ? '100%' : '100%',
     paddingVertical: width < 320 ? 10 : width < 380 ? 12 : 16,

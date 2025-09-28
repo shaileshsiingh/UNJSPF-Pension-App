@@ -15,6 +15,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import CustomSlider from '../../components/CustomSlider';
 import { LogOut, TrendingUp } from 'lucide-react-native';
 import { Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
@@ -775,6 +776,21 @@ export default function EligibilityScreen() {
         <View style={styles.scenarioContainer}>
           {filteredScenarios.map((scenario, idx) => renderScenarioCard(scenario, idx))}
         </View>
+ <View style={{ margin: 16 }}>
+  <LinearGradient
+    colors={['#fbbf24', '#f59e0b', '#d97706']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.ctaButton}
+  >
+    <TouchableOpacity
+      style={styles.ctaButtonInner}
+      onPress={() => router.push('/(tabs)/calculator')}
+    >
+      <Text style={styles.ctaButtonText}>Back to Calculator</Text>
+    </TouchableOpacity>
+  </LinearGradient>
+</View>
       </ScrollView>
     </GestureHandlerRootView>
   );
@@ -1172,5 +1188,30 @@ const styles = StyleSheet.create({
     color: '#374151',
     textAlign: 'center',
     lineHeight: 16,
+  },
+  ctaButton: {
+    paddingHorizontal: 75,
+    paddingVertical: 18,
+    borderRadius: 22,
+    alignSelf: 'center',
+    minWidth: 220,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+    marginBottom: 14,
+  },
+  ctaButtonInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaButtonText: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '600',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 })

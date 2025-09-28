@@ -33,6 +33,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { auth } from '@/firebaseConfig';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
 
@@ -644,23 +645,25 @@ export default function ProfileScreen() {
 
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
-            <TouchableOpacity 
-              style={[styles.calculatorButton, !isFormValid && styles.disabledButton]}
-              onPress={handleSave}
-              disabled={!isFormValid}
-            >
-              <View style={styles.calculatorButtonContent}>
-                <View style={styles.calculatorButtonTextContainer}>
-                  <Text style={styles.calculatorButtonText}>Save and move to Pension Calculator</Text>
-                  <Text style={styles.calculatorButtonSubtext}>
-                    Get detailed pension calculations.
-                  </Text>
-                </View>
-              </View>
-              <ArrowRight size={20} color="#FFFFFF" strokeWidth={2} />
-            </TouchableOpacity>
-          </View>
-        </View>
+  <View style={{ margin: 16 }}>
+    <LinearGradient
+      colors={['#fbbf24', '#f59e0b', '#d97706']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
+    >
+      <TouchableOpacity 
+        style={styles.ctaButtonInner}
+        onPress={handleSave}
+        disabled={!isFormValid}
+      >
+        <Text style={styles.ctaButtonText}>Save and move to Pension Calculator</Text>
+      </TouchableOpacity>
+    </LinearGradient>
+  </View>
+</View>
+</View>
+
       </ScrollView>
 
       {/* Organization Selection Modal */}
@@ -772,6 +775,31 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
+  },
+  ctaButton: {
+    paddingHorizontal: 75,
+    paddingVertical: 18,
+    borderRadius: 22,
+    alignSelf: 'center',
+    minWidth: 220,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+    marginBottom: 14,
+  },
+  ctaButtonInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaButtonText: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '600',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   sectionHeader: {
     flexDirection: 'row',
