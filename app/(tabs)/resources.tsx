@@ -24,16 +24,20 @@ export default function ResourcesScreen() {
       </View>
 
       <View style={styles.section}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>General information</Text>
+        <View style={styles.card1}>
+          <Text style={styles.cardTitle}>UN News</Text>
           <TouchableOpacity onPress={() => openUrl('https://news.un.org/en/')}>
             <Text style={styles.link}>UN News</Text>
             <Text style={styles.url}>https://news.un.org/en/</Text>
           </TouchableOpacity>
+          </View>
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Your Pension Portal</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/about-member-self-service/')}>
             <Text style={styles.link}>Member Self-Service (MSS)</Text>
             <Text style={styles.url}>https://www.unjspf.org/resources/about-member-self-service/</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/pension-townhall-sessions/')}>
             <Text style={styles.link}>Pension Townhall Sessions</Text>
             <Text style={styles.url}>https://www.unjspf.org/pension-townhall-sessions/</Text>
@@ -45,7 +49,7 @@ export default function ResourcesScreen() {
         </View>
         
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Separation specific information</Text>
+          <Text style={styles.cardTitle}>Separation Specific Information</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/')}>
             <Text style={styles.link}>Separating and Retiring</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/</Text>
@@ -74,20 +78,31 @@ export default function ResourcesScreen() {
             <Text style={styles.link}>UNJSPF Survivors Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/survivors-benefit/</Text>
           </TouchableOpacity>
+          </View>
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Taxation</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/taxation-of-benefits/')}>
             <Text style={styles.link}>Taxation of UNJSPF Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/taxation-of-benefits/</Text>
           </TouchableOpacity>
+          </View>
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>ASHI (After Service Health Insurance)</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/after-service-health-insurance/')}>
             <Text style={styles.link}>ASHI (After Service Health Insurance)</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/after-service-health-insurance/</Text>
           </TouchableOpacity>
+          </View>
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Expat and Retiree Networks</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.fafics.org')}>
             <Text style={styles.link}>Retiree Associations / FAFICS</Text>
             <Text style={styles.url}>https://www.fafics.org</Text>
+            <Text style={styles.url}>https://www.internations.org</Text>
+
           </TouchableOpacity>
           <TouchableOpacity onPress={() => openUrl('https://fafics.org/member-associations/list/')}>
-            <Text style={styles.link}>    — Member Associations</Text>
+            <Text style={styles.link}>Member Associations</Text>
             <Text style={styles.url}>https://fafics.org/member-associations/list/</Text>
           </TouchableOpacity>
         </View>
@@ -144,6 +159,18 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 16,
     marginBottom: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },
+  card1: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 16,
+    marginTop: -10,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
