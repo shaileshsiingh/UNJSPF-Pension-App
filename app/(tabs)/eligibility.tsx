@@ -60,13 +60,21 @@ export default function EligibilityScreen() {
         }
       });
     }
-  }, [params]);
+  }, [params.dateOfBirth, params.dateOfSeparation, params.dateOfEntry]);
+
+  // Load selectedOption from AsyncStorage (for calculator integration)
+  React.useEffect(() => {
+    AsyncStorage.getItem('selectedOption').then(option => {
+      setSelectedOptionFromCalculator(option);
+    });
+  }, []);
   const [inputMode, setInputMode] = useState('slider');
   const [yearsOfService, setYearsOfService] = useState(10);
   const [currentAge, setCurrentAge] = useState(58);
   const [far, setFar] = useState(50000); // Set default FAR for demonstration
   const [showEligibleOnly, setShowEligibleOnly] = useState(false);
   const [entryYear, setEntryYear] = useState(2010);
+  const [selectedOptionFromCalculator, setSelectedOptionFromCalculator] = useState<string | null>(null);
 
   // Define NRA (Normal Retirement Age) and ERA (Early Retirement Age)
   function calculateNRA(entryYear: number): number {
@@ -191,8 +199,13 @@ export default function EligibilityScreen() {
   const getFilteredScenarios = () => {
     let filteredScenarios = scenarios;
     
+    // Filter by calculator selection first
+    if (selectedOptionFromCalculator === 'A') {
+      filteredScenarios = scenarios.filter(s => s.key === 'withdrawal');
+    }
+    
     if (showEligibleOnly) {
-      filteredScenarios = scenarios.filter(s => s.eligible);
+      filteredScenarios = filteredScenarios.filter(s => s.eligible);
     }
     
     // Sort by eligibility first (eligible scenarios at top), then by priority
@@ -278,7 +291,7 @@ export default function EligibilityScreen() {
         setDebugOrg('No profile data found');
       }
     });
-  }, [params2.organization]);
+}, []);
   
   // Organization to email/contact mapping
   const orgEmailMap: { [key: string]: string } = {
