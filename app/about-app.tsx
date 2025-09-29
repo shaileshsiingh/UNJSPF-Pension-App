@@ -415,9 +415,9 @@ export default function CombinedAboutScreen() {
           <LogOut size={24} color="#2563EB" strokeWidth={2} />
         </View>          </TouchableOpacity>
           <View style={styles.headerContent}>
-            {/* <View style={styles.headerIconContainer}>
-              <Shield size={32} color="#2563EB" strokeWidth={2} />
-            </View> */}
+            <View style={styles.headerIconContainer}>
+              <BookOpen size={32} color="#2563EB" strokeWidth={2} />
+            </View>
             <Text style={styles.headerTitle}>Pension Guide</Text>
             {/* <Text style={styles.headerSubtitle}>
             Concepts, Formulas, and Options      </Text> */}
