@@ -318,7 +318,7 @@ export default function LandingPage() {
 
           {/* Footer Copyright */}
           <Text style={styles.copyright}>
-            @2025OneRetire. All Rights Reserved.
+            @2025 OneRetire. All Rights Reserved.
           </Text>
         </View>
       </ScrollView>
