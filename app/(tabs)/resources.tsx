@@ -98,6 +98,10 @@ export default function ResourcesScreen() {
           <TouchableOpacity onPress={() => openUrl('https://www.fafics.org')}>
             <Text style={styles.link}>Retiree Associations / FAFICS</Text>
             <Text style={styles.url}>https://www.fafics.org</Text>
+
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => openUrl('https://www.InterNations.org')}>
+            <Text style={styles.link}>InterNations</Text>
             <Text style={styles.url}>https://www.InterNations.org</Text>
 
           </TouchableOpacity>
