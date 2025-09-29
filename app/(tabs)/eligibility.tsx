@@ -278,8 +278,8 @@ export default function EligibilityScreen() {
         setDebugOrg('No profile data found');
       }
     });
-  }, [params.organization]);
-
+  }, [params2.organization]);
+  
   // Organization to email/contact mapping
   const orgEmailMap: { [key: string]: string } = {
     'United Nations Secretariat including Peacekeeping Missions': 'Contact Us',
@@ -558,8 +558,8 @@ export default function EligibilityScreen() {
                                     >
                            <View style={{ transform: [{ scaleX: -1 }] }}>
                                     <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                                  </View>          </TouchableOpacity>
-          <View style={styles.headerIconContainer}>
+                                    </View></TouchableOpacity>
+                                              <View style={styles.headerIconContainer}>
             <TrendingUp size={32} color="#2563EB" strokeWidth={2} />
           </View>
           <Text style={styles.title}>Pension Snapshot</Text>
