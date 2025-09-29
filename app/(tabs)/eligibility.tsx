@@ -17,6 +17,12 @@ import { LogOut, TrendingUp } from 'lucide-react-native';
 import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+// Helper function to format date
+function formatDateDMY(dateString: string): string {
+  // This function should be implemented based on your date format requirements
+  return dateString;
+}
+
 export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
   const [currentAgeParts, setCurrentAgeParts] = useState<{years:number,months:number,days:number}>({years:0,months:0,days:0});
@@ -611,7 +617,7 @@ export default function EligibilityScreen() {
                 />
                 
                 
-                <View style={{ position: 'relative', height: 20, width: '100%', marginTop:'-60px'}}>
+                <View style={{ position: 'relative', height: 20, width: '100%', marginTop: -60 }}>
                   {[1, 5, 10, 15, 20, 25, 30, 38.75].map((mark) => (
                     <View
                       key={mark}
@@ -651,7 +657,7 @@ export default function EligibilityScreen() {
                 />
                 
                 
-                <View style={{ position: 'relative', height: 28, width: '100%', marginTop:'-60px' }}>
+                <View style={{ position: 'relative', height: 28, width: '100%', marginTop: -60 }}>
                   {[18, 25, 35, 45, 55, 60, 65].map((mark) => (
                     <View
                       key={mark}
@@ -776,21 +782,21 @@ export default function EligibilityScreen() {
         <View style={styles.scenarioContainer}>
           {filteredScenarios.map((scenario, idx) => renderScenarioCard(scenario, idx))}
         </View>
- <View style={{ margin: 16 }}>
-  <LinearGradient
-    colors={['#fbbf24', '#f59e0b', '#d97706']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 1 }}
-    style={styles.ctaButton}
-  >
-    <TouchableOpacity
-      style={styles.ctaButtonInner}
-      onPress={() => router.push('/(tabs)/calculator')}
-    >
-      <Text style={styles.ctaButtonText}>Back to Calculator</Text>
-    </TouchableOpacity>
-  </LinearGradient>
-</View>
+        <View style={{ margin: 16 }}>
+          <LinearGradient
+            colors={['#fbbf24', '#f59e0b', '#d97706']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.ctaButton}
+          >
+            <TouchableOpacity
+              style={styles.ctaButtonInner}
+              onPress={() => router.push('/(tabs)/calculator')}
+            >
+              <Text style={styles.ctaButtonText}>Back to Calculator</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
       </ScrollView>
     </GestureHandlerRootView>
   );
@@ -1214,4 +1220,4 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
-})
+});

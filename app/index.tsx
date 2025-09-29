@@ -29,15 +29,14 @@ const isLargeScreen = width < 1024;
 const isTablet = width >= 768;
 
 // Responsive scaling functions
-const scaleFont = (small, medium = small * 1.2, large = small * 1.4) => {
+const scaleFont = (small:number, medium:number = small * 1.2, large:number = small * 1.4) => {
   if (isXSmallScreen) return small * 0.9;
   if (isSmallScreen) return small;
   if (isMediumScreen) return medium;
   return large;
 };
 
-const scaleSize = (small, medium = small * 1.2, large = small * 1.4) => {
-  if (isXSmallScreen) return small * 0.9;
+const scaleSize = (small: number, medium: number = small * 1.2, large: number = small * 1.4) => {  if (isXSmallScreen) return small * 0.9;
   if (isSmallScreen) return small;
   if (isMediumScreen) return medium;
   return large;

@@ -30,11 +30,11 @@ export default function EmployerBenefitsScreen() {
           <Plane size={32} color="#2563EB" strokeWidth={2} />
         </View>
         <Text style={styles.title}>HR Benefits</Text>
-        <Text style={styles.subtitle}>Additional payments from your employer to support your transition.</Text>
+        <Text style={styles.subtitle}>Additional payments from your employing organization.</Text>
       </View>
     </View>
       <View style={styles.section}>        
-        <View style={styles.card}>          
+        <View style={styles.card1}>          
           
           <Text style={styles.cardTitle}>
             1. Exit Documents
@@ -196,6 +196,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
   },
+  card1: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 16,
+    marginTop: -30,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },  
   cardTitle: {
     fontSize: 16,
     fontWeight: '700',
