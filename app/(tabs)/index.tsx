@@ -34,7 +34,7 @@ import { useAuth } from '../../components/AuthContext';
 import { getRobotoFont } from '@/utils/fonts';
 import { router } from 'expo-router';
 // App logo (re-use same asset as landing page)
-const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758717717/ChatGPT_Image_Sep_24_2025_06_11_37_PM_ndldy3.png';
+const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758718205/ChatGPT_Image_Sep_24_2025_06_11_37_PM_uo4doa.png';
 
 export default function HomeScreen() {
   const { signOut, user } = useAuth();  
@@ -262,9 +262,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerLogo: {
-    width: 150,
-    height: 150,
-    // marginBottom: 6,   // a bit more spacing from the title
+    width: 120,
+    height: 120,
+    marginBottom: 22,
+    marginTop: -16,   // a bit more spacing from the title
   },
   heroTitle: {
     color: '#0072CE',
