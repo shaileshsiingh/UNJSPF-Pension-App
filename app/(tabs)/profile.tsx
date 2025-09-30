@@ -569,7 +569,7 @@ export default function ProfileScreen() {
                       if (entryDate) {
                         const entry1990 = new Date(1990, 0, 1);
                         const entry2014 = new Date(2014, 0, 1);
-                        if (entryDate < entry1990) masAge = 60;
+                        if (entryDate < entry1990) masAge = 65;
                         else if (entryDate < entry2014) masAge = 65;
                       }
                       return masDate ? `${masAge} years on ${masDate}` : '—';
