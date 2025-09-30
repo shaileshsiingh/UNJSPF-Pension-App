@@ -11,13 +11,12 @@ import {
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import CustomSlider from '../../components/CustomSlider';
 import { LogOut, TrendingUp } from 'lucide-react-native';
 import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// Helper function to format date
 function formatDateDMY(dateString: string): string {
   // This function should be implemented based on your date format requirements
   return dateString;
@@ -27,12 +26,23 @@ export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
   const [currentAgeParts, setCurrentAgeParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
   const [serviceLengthParts, setServiceLengthParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
+  
+  // Helper to get current date in DD-MM-YYYY format
+  function getCurrentDateDMY(): string {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
   // Navigation params support (for immediate update after profile save)
   const params = useLocalSearchParams();
   React.useEffect(() => {
     let setFromParams = false;
-    if (params.dateOfBirth && params.dateOfSeparation) {
-      setCurrentAgeParts(getDateParts(params.dateOfBirth as string, params.dateOfSeparation as string));
+    if (params.dateOfBirth) {
+      // Calculate age from DOB to today, not to separation date
+      setCurrentAgeParts(getDateParts(params.dateOfBirth as string, getCurrentDateDMY()));
       setFromParams = true;
     }
     if (params.dateOfEntry && params.dateOfSeparation) {
@@ -44,10 +54,10 @@ export default function EligibilityScreen() {
         if (data) {
           try {
             const profile = JSON.parse(data);
-            if (profile.dateOfBirth && profile.dateOfSeparation) {
+            if (profile.dateOfBirth) {
+              // Calculate age from DOB to today, not to separation date
               const dob = formatDateDMY(profile.dateOfBirth);
-              const sep = formatDateDMY(profile.dateOfSeparation);
-              setCurrentAgeParts(getDateParts(dob, sep));
+              setCurrentAgeParts(getDateParts(dob, getCurrentDateDMY()));
             }
             if (profile.dateOfEntry && profile.dateOfSeparation) {
               const entry = formatDateDMY(profile.dateOfEntry);
@@ -62,15 +72,52 @@ export default function EligibilityScreen() {
     }
   }, [params.dateOfBirth, params.dateOfSeparation, params.dateOfEntry]);
 
+  // Update values when screen comes into focus (e.g., returning from profile screen)
+  useFocusEffect(
+    React.useCallback(() => {
+      AsyncStorage.getItem('profileData').then(data => {
+        if (data) {
+          try {
+            const profile = JSON.parse(data);
+            if (profile.dateOfBirth) {
+              const dob = formatDateDMY(profile.dateOfBirth);
+              setCurrentAgeParts(getDateParts(dob, getCurrentDateDMY()));
+            }
+            if (profile.dateOfEntry && profile.dateOfSeparation) {
+              const entry = formatDateDMY(profile.dateOfEntry);
+              const sep = formatDateDMY(profile.dateOfSeparation);
+              setServiceLengthParts(getDateParts(entry, sep));
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+      });
+    }, [])
+  );
+
   // Load selectedOption from AsyncStorage (for calculator integration)
   React.useEffect(() => {
     AsyncStorage.getItem('selectedOption').then(option => {
       setSelectedOptionFromCalculator(option);
     });
   }, []);
+
   const [inputMode, setInputMode] = useState('slider');
   const [yearsOfService, setYearsOfService] = useState(10);
   const [currentAge, setCurrentAge] = useState(58);
+
+  // Update yearsOfService when serviceLengthParts changes
+  React.useEffect(() => {
+    const decimalYears = serviceLengthParts.years + (serviceLengthParts.months / 12) + (serviceLengthParts.days / 365.25);
+    setYearsOfService(decimalYears);
+  }, [serviceLengthParts]);
+
+  // Update currentAge when currentAgeParts changes
+  React.useEffect(() => {
+    const ageInYears = currentAgeParts.years + (currentAgeParts.months / 12) + (currentAgeParts.days / 365.25);
+    setCurrentAge(Math.floor(ageInYears)); // Use floor for age since we typically use whole years for age
+  }, [currentAgeParts]);
   const [far, setFar] = useState(50000); // Set default FAR for demonstration
   const [showEligibleOnly, setShowEligibleOnly] = useState(false);
   const [entryYear, setEntryYear] = useState(2010);
