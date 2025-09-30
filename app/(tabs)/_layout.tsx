@@ -8,14 +8,15 @@ export default function TabsLayout() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    // Only redirect if we're sure there's no user and not loading
-    // This allows the landing page to handle its own routing logic
-    if (!loading && !user) {
-      // Don't automatically redirect to login - let landing page handle this
-      router.replace('/');
-    }
-  }, [user, loading]);
+  // Commented out to prevent routing conflicts with main index.tsx
+  // useEffect(() => {
+  //   // Only redirect if we're sure there's no user and not loading
+  //   // This allows the landing page to handle its own routing logic
+  //   if (!loading && !user) {
+  //     // Don't automatically redirect to login - let landing page handle this
+  //     router.replace('/');
+  //   }
+  // }, [user, loading]);
 
   if (loading) return null;
   if (!user) return null;
@@ -57,7 +58,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-       {/* <Tabs.Screen
+      {/* <Tabs.Screen
         name="about-app"
         options={{
           title: 'Guide',

@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import { 
-  Info, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Heart, 
-  Users, 
+import {
+  Info,
+  Phone,
+  Mail,
+  MapPin,
+  Heart,
+  Users,
   TrendingUp,
-  ExternalLink 
+  ExternalLink
 } from 'lucide-react-native';
 
 export default function InfoScreen() {
@@ -91,7 +91,7 @@ export default function InfoScreen() {
       {/* Contact Information */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Contact Information</Text>
-        
+
         {contactInfo.map((contact, index) => (
           <View key={index} style={styles.contactCard}>
             <View style={styles.contactHeader}>
@@ -107,7 +107,7 @@ export default function InfoScreen() {
       {/* Benefit Types */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Additional Benefits</Text>
-        
+
         {benefitTypes.map((benefit, index) => (
           <View key={index} style={styles.benefitCard}>
             <View style={styles.benefitHeader}>
@@ -115,7 +115,7 @@ export default function InfoScreen() {
               <Text style={styles.benefitTitle}>{benefit.title}</Text>
             </View>
             <Text style={styles.benefitDescription}>{benefit.description}</Text>
-            
+
             <View style={styles.benefitDetails}>
               {benefit.details.map((detail, detailIndex) => (
                 <View key={detailIndex} style={styles.benefitDetailItem}>
@@ -131,8 +131,8 @@ export default function InfoScreen() {
       {/* Quick Links */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Quick Links</Text>
-        
-        <TouchableOpacity 
+
+        <TouchableOpacity
           style={styles.linkCard}
           onPress={() => openLink('https://www.opm.gov/retirement-services/')}
         >
@@ -143,7 +143,7 @@ export default function InfoScreen() {
           <ExternalLink size={20} color="#6B7280" strokeWidth={2} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.linkCard}
           onPress={() => openLink('https://www.tsp.gov/')}
         >
@@ -154,7 +154,7 @@ export default function InfoScreen() {
           <ExternalLink size={20} color="#6B7280" strokeWidth={2} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.linkCard}
           onPress={() => openLink('https://www.ssa.gov/')}
         >
@@ -170,14 +170,14 @@ export default function InfoScreen() {
       <View style={styles.disclaimerSection}>
         <Text style={styles.disclaimerTitle}>Important Notice</Text>
         <Text style={styles.disclaimerText}>
-          This application provides general information and estimates only. All pension calculations, 
-          eligibility determinations, and benefit amounts are subject to official review and may vary 
+          This application provides general information and estimates only. All pension calculations,
+          eligibility determinations, and benefit amounts are subject to official review and may vary
           based on current regulations, individual circumstances, and final employment records.
           {'\n\n'}
-          For official determinations and binding calculations, please contact the pension office 
+          For official determinations and binding calculations, please contact the pension office
           directly or submit formal applications through official channels.
           {'\n\n'}
-          The information in this app is current as of the last update and may not reflect recent 
+          The information in this app is current as of the last update and may not reflect recent
           regulatory changes or policy updates.
         </Text>
       </View>

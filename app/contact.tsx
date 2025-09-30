@@ -32,8 +32,8 @@ export default function ContactScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
+        <TouchableOpacity
+          style={styles.backButton}
           onPress={() => router.back()}
         >
           <ArrowLeft size={scaleFont(24)} color="#2563EB" strokeWidth={2} />

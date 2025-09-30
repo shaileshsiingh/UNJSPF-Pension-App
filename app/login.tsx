@@ -1,15 +1,15 @@
 // LoginScreen.js
 import React, { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  Pressable, 
-  StyleSheet, 
-  Alert, 
-  KeyboardAvoidingView, 
-  Platform, 
-  ToastAndroid, 
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ToastAndroid,
   Image,
   ScrollView,
   Dimensions,
@@ -85,10 +85,10 @@ export default function LoginScreen() {
   const validateForm = () => {
     const emailErr = validateEmail(email);
     const passwordErr = validatePassword(password);
-    
+
     setEmailError(emailErr);
     setPasswordError(passwordErr);
-    
+
     return !emailErr && !passwordErr;
   };
 
@@ -105,10 +105,10 @@ export default function LoginScreen() {
       router.replace('/');
     } catch (e: any) {
       console.error('Login error:', e);
-      
+
       // Handle specific error types
       let errorMessage = 'Login failed. Please try again.';
-      
+
       if (e.code === 'auth/user-not-found') {
         errorMessage = 'No account found with this email address';
       } else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
@@ -122,7 +122,7 @@ export default function LoginScreen() {
       } else if (e.message) {
         errorMessage = e.message;
       }
-      
+
       showToast(errorMessage);
     } finally {
       setLoading(false);
@@ -152,7 +152,7 @@ export default function LoginScreen() {
       showToast('Google sign-in successful!');
       router.replace('/');
     }
-  }, [user, loading, googleLoading, router]);
+  }, [user, loading, googleLoading]);
 
   return (
     <View style={styles.container}>
@@ -165,7 +165,7 @@ export default function LoginScreen() {
           style={styles.keyboardView}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <ScrollView 
+          <ScrollView
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
@@ -174,12 +174,13 @@ export default function LoginScreen() {
             <View style={styles.logoSection}>
               <View style={styles.heroIconContainer}>
                 <TouchableOpacity onPress={() => router.push('/')}>
-                <Image 
-                  source={{
-                    uri: LOGO_URL }}
-                  style={styles.heroLogo}
-                  resizeMode="contain"
-                />
+                  <Image
+                    source={{
+                      uri: LOGO_URL
+                    }}
+                    style={styles.heroLogo}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               </View>
               {/* <Text style={styles.appName}>MyUNPension</Text> */}
@@ -188,7 +189,7 @@ export default function LoginScreen() {
             {/* Login Card */}
             <View style={styles.card}>
               <Text style={styles.subtitle}>Sign in to continue</Text>
-              
+
               <View style={styles.inputContainer}>
                 <TextInput
                   style={[styles.input, emailError ? styles.inputError : null]}
@@ -216,16 +217,16 @@ export default function LoginScreen() {
                 {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
               </View>
 
-              <Pressable 
-                style={[styles.button, loading ? styles.buttonDisabled : null]} 
-                onPress={handleLogin} 
+              <Pressable
+                style={[styles.button, loading ? styles.buttonDisabled : null]}
+                onPress={handleLogin}
                 disabled={loading}
               >
                 <Text style={styles.buttonText}>
                   {loading ? 'Logging in...' : 'Login'}
                 </Text>
               </Pressable>
-              
+
               <Pressable onPress={() => router.push('/signup')} style={styles.link}>
                 <Text style={styles.linkText}>Don't have an account? Sign up</Text>
               </Pressable>
@@ -238,8 +239,8 @@ export default function LoginScreen() {
               </View>
 
               <View style={styles.socialButtons}>
-                <Pressable 
-                  style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]} 
+                <Pressable
+                  style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]}
                   onPress={handleGoogleSignIn}
                   disabled={googleLoading}
                 >
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  
+
   // Logo Section
   logoSection: {
     alignItems: 'center',
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
   // Login Card - Restored simpler styling
   card: {
     width: isSmallScreen ? width - 40 : 300,
-    height: 470, 
+    height: 470,
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 24,
     padding: isSmallScreen ? 24 : 32,
@@ -335,7 +336,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: getRobotoFont('medium'),
   },
-  
+
   // Input Styles
   inputContainer: {
     width: '100%',
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: getRobotoFont('medium'),
   },
-  
+
   // Button Styles
   button: {
     width: '100%',
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     fontFamily: getRobotoFont('bold'),
   },
-  
+
   // Link Styles
   link: {
     marginTop: 16,
@@ -428,7 +429,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 12,
   },
-  
+
   // Enhanced Google Button Styles
   googleButton: {
     width: '100%',

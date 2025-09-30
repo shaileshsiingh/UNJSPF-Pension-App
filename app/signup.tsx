@@ -1,15 +1,15 @@
 // SignupScreen.js
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  Pressable, 
-  StyleSheet, 
-  Alert, 
-  KeyboardAvoidingView, 
-  Platform, 
-  ToastAndroid, 
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ToastAndroid,
   Image,
   ScrollView,
   Dimensions,
@@ -139,12 +139,12 @@ export default function SignupScreen() {
     const emailErr = validateEmail(email);
     const passwordErr = validatePassword(password);
     const confirmPasswordErr = validateConfirmPassword(confirmPassword);
-    
+
     setNameError(nameErr);
     setEmailError(emailErr);
     setPasswordError(passwordErr);
     setConfirmPasswordError(confirmPasswordErr);
-    
+
     return !nameErr && !emailErr && !passwordErr && !confirmPasswordErr;
   };
 
@@ -163,10 +163,10 @@ export default function SignupScreen() {
       console.error('Signup error:', e);
       console.error('Error code:', e.code);
       console.error('Error message:', e.message);
-      
+
       // Handle specific error types with improved error detection
       let errorMessage = 'Signup failed. Please try again.';
-      
+
       if (e.code === 'auth/email-already-in-use') {
         errorMessage = 'An account with this email already exists. Please use a different email or try logging in.';
       } else if (e.code === 'auth/invalid-email') {
@@ -184,7 +184,7 @@ export default function SignupScreen() {
       } else if (e.message) {
         errorMessage = e.message;
       }
-      
+
       showToast(errorMessage);
     } finally {
       setLoading(false);
@@ -217,7 +217,7 @@ export default function SignupScreen() {
           style={styles.keyboardView}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <ScrollView 
+          <ScrollView
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
@@ -226,8 +226,8 @@ export default function SignupScreen() {
             <View style={styles.logoSection}>
               <View style={styles.heroIconContainer}>
                 <TouchableOpacity onPress={() => router.push('/')}>
-                  <Image 
-                    source={{ 
+                  <Image
+                    source={{
                       uri: LOGO_URL
                     }}
                     style={styles.heroLogo}
@@ -243,7 +243,7 @@ export default function SignupScreen() {
             <View style={styles.card}>
               <Text style={styles.title}>Create Account</Text>
               {/* <Text style={styles.subtitle}>Join us today</Text> */}
-              
+
               <View style={styles.inputContainer}>
                 <TextInput
                   style={[styles.input, nameError ? styles.inputError : null]}
@@ -298,16 +298,16 @@ export default function SignupScreen() {
                 {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
               </View>
 
-              <Pressable 
-                style={[styles.button, loading ? styles.buttonDisabled : null]} 
-                onPress={handleSignup} 
+              <Pressable
+                style={[styles.button, loading ? styles.buttonDisabled : null]}
+                onPress={handleSignup}
                 disabled={loading}
               >
                 <Text style={styles.buttonText}>
                   {loading ? 'Creating Account...' : 'Sign Up'}
                 </Text>
               </Pressable>
-              
+
               <Pressable onPress={() => router.push('/login')} style={styles.link}>
                 <Text style={styles.linkText}>Already have an account? Login</Text>
               </Pressable>
@@ -316,29 +316,29 @@ export default function SignupScreen() {
                 <Text style={styles.linkText}>Already have an account? Login</Text>
               </Pressable> */}
 
-              {/* Social Login Options */}
-              <View style={styles.socialSection}>
-                <View style={styles.divider}>
-                  <View style={styles.dividerLine} />
-                  <Text style={styles.dividerText}>or</Text>
-                  <View style={styles.dividerLine} />
-                </View>
-                
-                <Pressable
-                  style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]}
-                  onPress={handleGoogleSignIn}
-                  disabled={googleLoading}
-                >
-                  <View style={styles.googleButtonContent}>
-                    <View style={styles.googleIcon}>
-                      <Text style={styles.googleIconText}>G</Text>
-                    </View>
-                    <Text style={styles.googleButtonText}>
-                      {googleLoading ? 'Signing in...' : 'Continue with Google'}
-                    </Text>
-                  </View>
-                </Pressable>
+            {/* Social Login Options */}
+            <View style={styles.socialSection}>
+              <View style={styles.divider}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>or</Text>
+                <View style={styles.dividerLine} />
               </View>
+
+              <Pressable
+                style={[styles.googleButton, googleLoading ? styles.buttonDisabled : null]}
+                onPress={handleGoogleSignIn}
+                disabled={googleLoading}
+              >
+                <View style={styles.googleButtonContent}>
+                  <View style={styles.googleIcon}>
+                    <Text style={styles.googleIconText}>G</Text>
+                  </View>
+                  <Text style={styles.googleButtonText}>
+                    {googleLoading ? 'Signing in...' : 'Continue with Google'}
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
             {/* Bottom Spacing */}
             <View style={styles.bottomSpacing} />
           </ScrollView>
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  
+
   // Logo Section - same as login
   logoSection: {
     alignItems: 'center',
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: getRobotoFont('medium'),
   },
-  
+
   // Input Styles
   inputContainer: {
     width: '100%',
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: getRobotoFont('medium'),
   },
-  
+
   // Button Styles
   button: {
     width: '100%',
@@ -494,7 +494,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     fontFamily: getRobotoFont('bold'),
   },
-  
+
   // Link Styles
   link: {
     marginTop: 8,

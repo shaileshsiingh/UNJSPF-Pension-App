@@ -8,11 +8,11 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { 
-  ArrowLeft, 
-  Info, 
-  Calculator, 
-  Smartphone, 
+import {
+  ArrowLeft,
+  Info,
+  Calculator,
+  Smartphone,
   BookOpen,
   LogOut
 } from 'lucide-react-native';
@@ -63,7 +63,7 @@ export default function CombinedAboutScreen() {
           About App
         </Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.tabButton, activeTab === 'concepts' && styles.activeTab]}
         onPress={() => setActiveTab('concepts')}
@@ -102,7 +102,7 @@ export default function CombinedAboutScreen() {
       <View style={styles.uniformSection}>
         <Text style={styles.uniformTitle}>One App, All Devices</Text>
         <Text style={styles.uniformContent}>
-         <Text style={styles.uniformSubtitle}>Available on Android, and iOS.</Text>{'\n'}
+          <Text style={styles.uniformSubtitle}>Available on Android, and iOS.</Text>{'\n'}
           A single account gives you seamless access to all features across mobile and desktop platforms.{'\n'}
           Optimized for security, speed, and accessibility.
         </Text>
@@ -158,11 +158,11 @@ export default function CombinedAboutScreen() {
     <View>
       <View style={styles.uniformSection}>
         {/* <Text style={styles.uniformMainTitle}>Key Pension Concepts</Text> */}
-        
+
         {/* A. Retirement Ages */}
         <Text style={styles.uniformSectionTitle}>Retirement Ages</Text>
         <Text style={styles.uniformContent}>
-        <Text style={styles.bold}>Retirement date:</Text> Last workday of contract, or month-end at mandatory age (if born on the 1st, previous month's end).
+          <Text style={styles.bold}>Retirement date:</Text> Last workday of contract, or month-end at mandatory age (if born on the 1st, previous month's end).
           {'\n'} {'\n'}<Text style={styles.bold}>Mandatory Age of Separation (MAS):</Text> The age set by your employing organization at which you must retire from service, regardless of your pension eligibility. Most UN organizations now have MAS at 65, though some still keep it at 62.
           {'\n'} {'\n'}<Text style={styles.bold}>Normal Retirement Age (NRA):</Text> The age at which you are entitled to a full, unreduced pension.
           {'\n'}<Text style={styles.italic}>• Joined before 1990 = NRA 60</Text>
@@ -221,12 +221,12 @@ export default function CombinedAboutScreen() {
         </View>
 
         <Text style={styles.uniformContent}>
-        <Text style={styles.italic}>
-          <Text style={styles.bold}>Notes:</Text>
-         
-          {'\n'}• Maximum ROA = 70% of FAR. Reached after 38.75 years of CS.
-          {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
-            </Text>
+          <Text style={styles.italic}>
+            <Text style={styles.bold}>Notes:</Text>
+
+            {'\n'}• Maximum ROA = 70% of FAR. Reached after 38.75 years of CS.
+            {'\n'}• ROA doesn't increase beyond 70%, but contributions still count for lump-sum and FAR growth.
+          </Text>
           {'\n'} {'\n'}<Text style={styles.bold}>Actuarial Factor (Commutation Factor) / APV:</Text> A statistical value used to convert part of your annual pension into a one-time lump sum at retirement.
           {'\n'} {'\n'}<Text style={styles.bold}>COLA:</Text> Pensions are reviewed each year on 1 April, based on the previous year's average CPI.
           {'\n'}An adjustment is applied only if inflation since the last change exceeds 2%;
@@ -315,10 +315,10 @@ export default function CombinedAboutScreen() {
           {'\n'}One-time payment equal to your own contributions plus 3.25% compound interest.
           {'\n'}This is a final decision—no more pension from the Fund after this. No child benefit
           is paid under this option.
-          
+
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferment or Benefit for 36 Months (Article 32)</Text>
           {'\n'}You can delay taking your withdrawal settlement for up to 36 months. If you go
-         back to work with the same pension plan within those 36 months, your
+          back to work with the same pension plan within those 36 months, your
           membership is treated as continuous (as long as you haven't taken the money).
           {'\n'}If you don't go back to work, you must submit your payment instructions before the
           36 months end. If you do nothing by the end of 36 months, the Fund will
@@ -335,12 +335,12 @@ export default function CombinedAboutScreen() {
           {'\n'}Receive your benefit at normal retirement age (or earlier with a reduction).{'\n'}This
           gives you a monthly pension when you're older. No child benefit is paid under this
           option.
-          
+
           {'\n\n'}<Text style={styles.bold}>Option 2: Withdrawal Settlement (Article 31)</Text>
-          {'\n'}One-time payment equal to your own contributions plus interest. 
+          {'\n'}One-time payment equal to your own contributions plus interest.
           {'\n'}You give up all rights to future pension benefits. This is a final decision—no more pension from
           the Fund after this.
-          
+
           {'\n\n'}<Text style={styles.bold}>Option 3: Deferment of Choice of Benefit for 36 Months (Article 32)</Text>
           {'\n'}Delay your decision (between Option 1 and 2) for up to 36 months from when you
           leave your job.{'\n'}If you go back to work with the same pension plan within those 36
@@ -356,19 +356,19 @@ export default function CombinedAboutScreen() {
           <Text style={styles.italic}>You have 4 options:</Text>
           {'\n'}<Text style={styles.bold}>Option 1: Early Retirement Benefit (Article 29)</Text>
           {'\n'}Start receiving monthly payments before reaching normal retirement age. These
-         payments may be reduced since you retire early. {'\n'}You can choose to commute
-         (convert) up to one-third of the pension into a lump sum (one-time payment). The
-         rest will be paid as monthly pension for life.
-          
+          payments may be reduced since you retire early. {'\n'}You can choose to commute
+          (convert) up to one-third of the pension into a lump sum (one-time payment). The
+          rest will be paid as monthly pension for life.
+
           {'\n\n'}<Text style={styles.bold}>Option 2: Deferred Retirement Benefit (Article 30)</Text>
           {'\n'}Delay your pension until you reach normal retirement age (or take it earlier with
-         reductions). No child benefit is included with this option.
-          
+          reductions). No child benefit is included with this option.
+
           {'\n\n'}<Text style={styles.bold}>Option 3: Withdrawal Settlement (Article 31)</Text>
           {'\n'}One-time payment equal to your own contributions plus interest. You give up all
-         rights to any future rights to pension benefits.{'\n'}This is a final decision—no more
-         pension from the Fund after this.
-          
+          rights to any future rights to pension benefits.{'\n'}This is a final decision—no more
+          pension from the Fund after this.
+
           {'\n\n'}<Text style={styles.bold}>Option 4: Deferment of Choice for 36 Months (Article 32)</Text>
           {'\n'}You have up to 36 months to choose between the above 3 options. If you go
           back to work with the same pension plan within those 36 months, your service
@@ -406,23 +406,23 @@ export default function CombinedAboutScreen() {
 
   return (
     <ScrollView style={styles.container}>
-    <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => router.push('/(tabs)')}
-          >
- <View style={{ transform: [{ scaleX: -1 }] }}>
-          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-        </View>          </TouchableOpacity>
-          <View style={styles.headerContent}>
-            <View style={styles.headerIconContainer}>
-              <BookOpen size={32} color="#2563EB" strokeWidth={2} />
-            </View>
-            <Text style={styles.headerTitle}>Pension Guide</Text>
-            {/* <Text style={styles.headerSubtitle}>
-            Concepts, Formulas, and Options      </Text> */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push('/(tabs)')}
+        >
+          <View style={{ transform: [{ scaleX: -1 }] }}>
+            <LogOut size={24} color="#2563EB" strokeWidth={2} />
+          </View>          </TouchableOpacity>
+        <View style={styles.headerContent}>
+          <View style={styles.headerIconContainer}>
+            <BookOpen size={32} color="#2563EB" strokeWidth={2} />
           </View>
+          <Text style={styles.headerTitle}>Pension Guide</Text>
+          {/* <Text style={styles.headerSubtitle}>
+            Concepts, Formulas, and Options      </Text> */}
         </View>
+      </View>
       {renderTabButtons()}
 
       <View style={styles.content}>
@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     backgroundColor: '#2563EB',
-    borderRadius:25
+    borderRadius: 25
   },
   tabText: {
     fontSize: scaleFont(10),
@@ -528,7 +528,7 @@ const styles = StyleSheet.create({
   content: {
     padding: getHorizontalPadding(),
   },
-  
+
   // UNIFORM STYLES - All tabs use these same styles
   uniformSection: {
     backgroundColor: '#FFFFFF',
@@ -573,22 +573,22 @@ const styles = StyleSheet.create({
     color: 'brown',
     marginBottom: scaleSize(6),
     fontFamily: getRobotoFont('regular'),
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
   bold: {
     fontWeight: '600',
     color: '#374151',
-    marginTop:10,
+    marginTop: 10,
   },
   bold1: {
     fontWeight: '500',
     color: 'red',
-    marginTop:10,
+    marginTop: 10,
   },
   italic: {
-    fontStyle:'italic',
-    fontSize:scaleFont(10),
-    color:'brown'
+    fontStyle: 'italic',
+    fontSize: scaleFont(10),
+    color: 'brown'
   },
   uniformContent: {
     fontSize: scaleFont(12),
@@ -604,7 +604,7 @@ const styles = StyleSheet.create({
     fontFamily: getRobotoFont('regular'),
     // fontStyle:'italic'
   },
-  
+
   // ROA Table - Responsive
   roaTable: {
     backgroundColor: '#F8FAFC',

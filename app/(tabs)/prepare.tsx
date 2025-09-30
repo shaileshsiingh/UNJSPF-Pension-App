@@ -51,11 +51,11 @@ const StatusPill = ({ status }: { status: Status }) => {
 export default function PrepareScreen() {
   const [showIntro, setShowIntro] = useState(true);
   const [sections, setSections] = useState<Section[]>([]);
-  const [counts, setCounts] = useState({ 
-    done: 0, 
-    inprog: 0, 
-    pending: 0, 
-    total: 0 
+  const [counts, setCounts] = useState({
+    done: 0,
+    inprog: 0,
+    pending: 0,
+    total: 0
   });
   const { width } = Dimensions.get('window');
 
@@ -126,19 +126,19 @@ export default function PrepareScreen() {
   }, []);
 
   const cycleStatus = (item: ChecklistItem) => {
-    setSections(prevSections => 
+    setSections(prevSections =>
       prevSections.map(section => ({
         ...section,
-        items: section.items.map(i => 
-          i.id === item.id 
-            ? { 
-                ...i, 
-                status: i.status === 'pending' 
-                  ? 'in progress' 
-                  : i.status === 'in progress' 
-                    ? 'done' 
-                    : 'pending' 
-              } 
+        items: section.items.map(i =>
+          i.id === item.id
+            ? {
+              ...i,
+              status: i.status === 'pending'
+                ? 'in progress'
+                : i.status === 'in progress'
+                  ? 'done'
+                  : 'pending'
+            }
             : i
         )
       }))
@@ -146,7 +146,7 @@ export default function PrepareScreen() {
   };
 
   const setAll = (status: Status) => {
-    setSections(prevSections => 
+    setSections(prevSections =>
       prevSections.map(section => ({
         ...section,
         items: section.items.map(item => ({
@@ -160,7 +160,7 @@ export default function PrepareScreen() {
   // Update the useEffect for counts to include save functionality
   useEffect(() => {
     if (sections.length === 0) return;
-    
+
     let done = 0;
     let inprog = 0;
     let pending = 0;
@@ -181,7 +181,7 @@ export default function PrepareScreen() {
     // Save data
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem('retirementChecklistV2', 
+        await AsyncStorage.setItem('retirementChecklistV2',
           JSON.stringify({ sections, showIntro })
         );
       } catch (error) {
@@ -194,22 +194,22 @@ export default function PrepareScreen() {
 
   return (
     <View style={styles.container} >
-             <View style={{ padding: 16, gap: 16 }}>
-       
-      <View style={styles.header}>
-        <TouchableOpacity 
-                            style={styles.backButton}
-                            onPress={() => router.push('/(tabs)')}
-                          >
-                 <View style={{ transform: [{ scaleX: -1 }] }}>
-                          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                        </View>          </TouchableOpacity>
-        <View style={styles.headerIconContainer}>
-          <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
+      <View style={{ padding: 16, gap: 16 }}>
+
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+            <View style={{ transform: [{ scaleX: -1 }] }}>
+              <LogOut size={24} color="#2563EB" strokeWidth={2} />
+            </View>          </TouchableOpacity>
+          <View style={styles.headerIconContainer}>
+            <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
+          </View>
+          <Text style={styles.title}>Prepare to Retire</Text>
+          <Text style={styles.subtitle}>Actions, Checklist, Timelines, Submissions</Text>
         </View>
-        <Text style={styles.title}>Prepare to Retire</Text>
-        <Text style={styles.subtitle}>Actions, Checklist, Timelines, Submissions</Text>
-      </View>
       </View>
 
       <ScrollView style={styles.scrollView}>
@@ -217,7 +217,7 @@ export default function PrepareScreen() {
           <View style={styles.introContainer}>
             <Text style={styles.introTitle}>Important!</Text>
             <Text style={styles.introText}>
-              Your retirement process officially begins the moment HR issues your Separation Notification (PF4/SEP) and Separation Personnel Action (SEPPA). Once you separate, all access to official portals and emails is cut off instantly—with no way to retrieve them later. Save every essential email, document, and message to your personal email ID immediately. 
+              Your retirement process officially begins the moment HR issues your Separation Notification (PF4/SEP) and Separation Personnel Action (SEPPA). Once you separate, all access to official portals and emails is cut off instantly—with no way to retrieve them later. Save every essential email, document, and message to your personal email ID immediately.
               Delaying this step may result in <Text style={styles.bold}>permanent loss of critical records</Text>.
             </Text>
             <TouchableOpacity
@@ -252,36 +252,36 @@ export default function PrepareScreen() {
               <Text style={styles.legendText}>Done</Text>
             </View>
           </View>
-          
+
           <View style={styles.progressBar}>
-            <View 
+            <View
               style={[
-                styles.progressFill, 
+                styles.progressFill,
                 { width: `${(counts.done / Math.max(1, counts.total)) * 100}%` }
-              ]} 
+              ]}
             />
           </View>
-          
+
           <View style={styles.progressTextContainer}>
             <Text style={styles.progressText}>{counts.done} done</Text>
             <Text style={styles.progressText}>{counts.inprog} in progress</Text>
             <Text style={styles.progressText}>{counts.pending} pending</Text>
           </View>
-          
+
           <View style={styles.buttonGroup}>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => setAll('pending')}
               style={styles.actionButton}
             >
               <Text style={styles.actionButtonText}>Reset</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => setAll('in progress')}
               style={styles.actionButton}
             >
               <Text style={styles.actionButtonText}>Mark All In Progress</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => setAll('done')}
               style={styles.actionButton}
             >
@@ -328,7 +328,7 @@ export default function PrepareScreen() {
           ))}
         </View>
 
-       
+
       </ScrollView>
     </View>
   );
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 8,
     color: '#92400E',
-textAlign:'center'
+    textAlign: 'center'
   },
   bold: {
     fontWeight: '600',

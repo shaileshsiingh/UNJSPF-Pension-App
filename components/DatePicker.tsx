@@ -102,7 +102,7 @@ export default function DatePicker({
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ];
-    
+
     return (
       <View style={styles.pickerSection}>
         <Text style={styles.pickerSectionTitle}>Month</Text>
@@ -132,7 +132,7 @@ export default function DatePicker({
   const renderDayPicker = () => {
     const daysInMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    
+
     return (
       <View style={styles.pickerSection}>
         <Text style={styles.pickerSectionTitle}>Day</Text>
@@ -167,7 +167,7 @@ export default function DatePicker({
           <Text style={styles.label}>{label}</Text>
         </View>
       )}
-      
+
       <TouchableOpacity
         style={[styles.input, error && styles.inputError]}
         onPress={() => setShowModal(true)}
@@ -188,7 +188,7 @@ export default function DatePicker({
         ) : null}
         <Calendar size={20} color="#6B7280" strokeWidth={2} />
       </TouchableOpacity>
-      
+
       {error && <Text style={styles.errorText}>{error}</Text>}
 
       <Modal

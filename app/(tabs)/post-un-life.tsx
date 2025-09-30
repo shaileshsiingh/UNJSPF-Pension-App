@@ -213,7 +213,7 @@ export default function PostUNLifePlanner() {
     const plan = { pension, country, checklist, ts: new Date().toISOString() };
     try {
       await Share.share({ message: JSON.stringify(plan, null, 2) });
-    } catch {}
+    } catch { }
   }
 
   async function copyPlanToClipboard() {
@@ -272,13 +272,13 @@ export default function PostUNLifePlanner() {
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
         <View style={styles.header}>
-          <TouchableOpacity 
-                                      style={styles.backButton}
-                                      onPress={() => router.push('/(tabs)')}
-                                    >
-                           <View style={{ transform: [{ scaleX: -1 }] }}>
-                                    <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                                  </View>          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+            <View style={{ transform: [{ scaleX: -1 }] }}>
+              <LogOut size={24} color="#2563EB" strokeWidth={2} />
+            </View>          </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <Workflow size={32} color="#2563EB" strokeWidth={2} />
           </View>

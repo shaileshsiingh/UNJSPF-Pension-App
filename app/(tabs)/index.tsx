@@ -9,13 +9,13 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import { 
-  User, 
-  FileText, 
-  Smartphone, 
-  ArrowRight, 
-  Building, 
-  Shield, 
+import {
+  User,
+  FileText,
+  Smartphone,
+  ArrowRight,
+  Building,
+  Shield,
   Calculator,
   Users,
   TrendingUp,
@@ -37,7 +37,7 @@ import { router } from 'expo-router';
 const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758718205/ChatGPT_Image_Sep_24_2025_06_11_37_PM_uo4doa.png';
 
 export default function HomeScreen() {
-  const { signOut, user } = useAuth();  
+  const { signOut, user } = useAuth();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
@@ -47,9 +47,10 @@ export default function HomeScreen() {
           style={styles.logoutButton}
           accessibilityLabel="Logout"
         >
- <View style={{ transform: [{ scaleX: -1 }] }}>
-    <LogOut size={24} color="#2563EB" strokeWidth={2} />
-  </View>        </TouchableOpacity>
+          <View style={{ transform: [{ scaleX: -1 }] }}>
+            <LogOut size={24} color="#2563EB" strokeWidth={2} />
+          </View>
+        </TouchableOpacity>
         <View style={{ flex: 1 }} />
       </View>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -67,17 +68,17 @@ export default function HomeScreen() {
             {/* <Building size={48} color="#2563EB" strokeWidth={2} /> */}
             <Text style={styles.welcomeTitle}>Welcome{user?.displayName ? `, ${user.displayName.split(' ')[0]}` : ''}!</Text>
             <Text style={styles.welcomeSubtitle}>
-            Begin your pension journey with these essential steps           </Text>
+              Begin your pension journey with these essential steps</Text>
           </View>
         </View>
         {/* Quick Actions Section */}
-         {/* <View style={styles.section}> */}
-          {/* <Text style={styles.sectionTitle}>Get Started</Text>
+        {/* <View style={styles.section}> */}
+        {/* <Text style={styles.sectionTitle}>Get Started</Text>
           <Text style={styles.sectionSubtitle}>
             Begin your pension journey with these essential steps
-          </Text> */} 
-          
-          {/* <View style={styles.buttonContainer}>
+          </Text> */}
+
+        {/* <View style={styles.buttonContainer}>
             <TouchableOpacity 
               style={[styles.primaryButton, { width: '80%', height: 85 }]}
               onPress={() => {
@@ -99,7 +100,7 @@ export default function HomeScreen() {
           </View> */}
         {/* </View> */}
 
-      
+
 
         {/* Quick Tools Section */}
         {/* needs to center-aligned */}
@@ -108,9 +109,9 @@ export default function HomeScreen() {
           <Text style={styles.sectionSubtitle1}>
             Access essential pension tools and resources here
           </Text>
-          
+
           <View style={styles.toolsGrid}>
-          <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/about-app' as any)}
             >
@@ -121,7 +122,7 @@ export default function HomeScreen() {
               </Text>
             </TouchableOpacity>
             {/* 1. Prepare to Retire (old: Planner) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/prepare' as any)}
             >
@@ -133,7 +134,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
 
             {/* 2. UNJSF Benefits (kept route used previously) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/profile')}
             >
@@ -145,7 +146,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
 
             {/* 3. My Pension (old: Pension) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/eligibility')}
             >
@@ -157,37 +158,37 @@ export default function HomeScreen() {
             </TouchableOpacity>
 
             {/* 4. HR Benefits (old: Benefits from your employing organization) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/employer-benefits')}
             >
-            <Plane size={32} color="#059669" strokeWidth={2} />
-            <Text style={styles.toolTitle}>HR Benefits</Text>
+              <Plane size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>HR Benefits</Text>
               <Text style={styles.toolDescription}>
                 Relocation • Repatriation {'\n'} Leave • Home travel
               </Text>
             </TouchableOpacity>
 
             {/* 5. Post-UN Life Planner (old: Relocation) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/post-un-life' as any)}
             >
-            <Workflow size={32} color="#059669" strokeWidth={2} />
-            <Text style={styles.toolTitle}>Post-UN {'\n'} Life Planner</Text>
+              <Workflow size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Post-UN {'\n'} Life Planner</Text>
               <Text style={styles.toolDescription}>
                 Design your next chapter
               </Text>
             </TouchableOpacity>
 
             {/* 6. Resources (old: Community) */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.toolCard}
               onPress={() => router.push('/(tabs)/resources')}
             >
 
-            <Link size={32} color="#059669" strokeWidth={2} />
-                       <Text style={styles.toolTitle}>Resources</Text>
+              <Link size={32} color="#059669" strokeWidth={2} />
+              <Text style={styles.toolTitle}>Resources</Text>
               <Text style={styles.toolDescription}>
                 Useful links
               </Text>
@@ -195,7 +196,7 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        
+
 
         {/* Stats Section */}
         {/* <View style={styles.section}>
@@ -214,7 +215,7 @@ export default function HomeScreen() {
         </View> */}
 
         {/* Footer */}
-       
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
     // textShadowRadius: 8,
     marginTop: -32,
     marginBottom: 4,
-  }, 
+  },
   welcomeTitle: {
     fontSize: 22,
     fontWeight: '800',
@@ -295,18 +296,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 16,
     maxWidth: 300,
-    marginLeft:35
+    marginLeft: 35
   },
   section: {
     padding: 14,
-    
+
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: '700',
     color: '#111827',
     marginBottom: 8,
-    
+
   },
   sectionTitle1: {
     fontSize: 20,

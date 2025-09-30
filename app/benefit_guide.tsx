@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import { 
+import {
   ArrowLeft
 } from 'lucide-react-native';
 import { router } from 'expo-router';
@@ -17,11 +17,11 @@ export default function BenefitGuideScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
-      
+
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
+        <TouchableOpacity
+          style={styles.backButton}
           onPress={() => router.back()}
         >
           <ArrowLeft size={24} color="#2563EB" strokeWidth={2} />
@@ -30,9 +30,9 @@ export default function BenefitGuideScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        
+
         {/* Key Pension Concepts */}
-      
+
 
         {/* Key Formulae */}
         <View style={styles.section}>

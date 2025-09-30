@@ -25,8 +25,8 @@ function formatDateDMY(dateString: string): string {
 
 export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
-  const [currentAgeParts, setCurrentAgeParts] = useState<{years:number,months:number,days:number}>({years:0,months:0,days:0});
-  const [serviceLengthParts, setServiceLengthParts] = useState<{years:number,months:number,days:number}>({years:0,months:0,days:0});
+  const [currentAgeParts, setCurrentAgeParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
+  const [serviceLengthParts, setServiceLengthParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
   // Navigation params support (for immediate update after profile save)
   const params = useLocalSearchParams();
   React.useEffect(() => {
@@ -198,16 +198,16 @@ export default function EligibilityScreen() {
   // Filter and sort scenarios
   const getFilteredScenarios = () => {
     let filteredScenarios = scenarios;
-    
+
     // Filter by calculator selection first
     if (selectedOptionFromCalculator === 'A') {
       filteredScenarios = scenarios.filter(s => s.key === 'withdrawal');
     }
-    
+
     if (showEligibleOnly) {
       filteredScenarios = filteredScenarios.filter(s => s.eligible);
     }
-    
+
     // Sort by eligibility first (eligible scenarios at top), then by priority
     return filteredScenarios.sort((a, b) => {
       if (a.eligible && !b.eligible) return -1;
@@ -245,11 +245,11 @@ export default function EligibilityScreen() {
             const yearsMatch = parsed.serviceLength.match(/(\d+)\s*years?/);
             const monthsMatch = parsed.serviceLength.match(/(\d+)\s*months?/);
             const daysMatch = parsed.serviceLength.match(/(\d+)\s*days?/);
-            
+
             const years = yearsMatch ? parseInt(yearsMatch[1]) : 0;
             const months = monthsMatch ? parseInt(monthsMatch[1]) : 0;
             const days = daysMatch ? parseInt(daysMatch[1]) : 0;
-            
+
             // Convert to decimal years for slider
             const decimalYears = years + (months / 12) + (days / 365.25);
             setYearsOfService(decimalYears);
@@ -291,8 +291,8 @@ export default function EligibilityScreen() {
         setDebugOrg('No profile data found');
       }
     });
-}, []);
-  
+  }, []);
+
   // Organization to email/contact mapping
   const orgEmailMap: { [key: string]: string } = {
     'United Nations Secretariat including Peacekeeping Missions': 'Contact Us',
@@ -364,25 +364,25 @@ export default function EligibilityScreen() {
     const totalDays = Math.round(remainingDecimal * 365.25);
     const months = Math.floor(totalDays / 30.44); // Average days per month
     const days = Math.round(totalDays - (months * 30.44));
-    
+
     return { years, months, days };
   }
 
   const renderScenarioCard = (scenario: any, idx: number) => {
     const isEligible = scenario.eligible;
     const cardStyle = {
-      backgroundColor: isEligible ? 
-        (scenario.key === 'normal' ? '#EFF6FF' : '#F0FDF4') : 
+      backgroundColor: isEligible ?
+        (scenario.key === 'normal' ? '#EFF6FF' : '#F0FDF4') :
         '#F9FAFB',
-      borderColor: isEligible ? 
-        (scenario.key === 'normal' ? '#2563EB' : '#22C55E') : 
+      borderColor: isEligible ?
+        (scenario.key === 'normal' ? '#2563EB' : '#22C55E') :
         '#E5E7EB',
       borderWidth: 2,
       borderRadius: 16,
       padding: 20,
       marginBottom: 16,
-      shadowColor: isEligible ? 
-        (scenario.key === 'normal' ? '#2563EB' : '#22C55E') : 
+      shadowColor: isEligible ?
+        (scenario.key === 'normal' ? '#2563EB' : '#22C55E') :
         '#000',
       shadowOpacity: isEligible ? 0.08 : 0.03,
       shadowRadius: 6,
@@ -390,8 +390,8 @@ export default function EligibilityScreen() {
       opacity: (!showEligibleOnly && !isEligible) ? 0.6 : 1.0,
     };
 
-    const titleColor = isEligible ? 
-      (scenario.key === 'normal' ? '#1D4ED8' : '#15803D') : 
+    const titleColor = isEligible ?
+      (scenario.key === 'normal' ? '#1D4ED8' : '#15803D') :
       '#6B7280';
 
     return (
@@ -401,17 +401,17 @@ export default function EligibilityScreen() {
             {scenario.title}
           </Text>
           {isEligible && (
-            <View style={[styles.eligibleBadge, { 
-              backgroundColor: scenario.key === 'normal' ? '#2563EB' : '#22C55E' 
+            <View style={[styles.eligibleBadge, {
+              backgroundColor: scenario.key === 'normal' ? '#2563EB' : '#22C55E'
             }]}>
               <Text style={styles.eligibleBadgeText}>Eligible</Text>
             </View>
           )}
         </View>
-        
+
         {scenario.description.map((desc: string, i: number) => (
-          <Text key={i} style={[styles.cardDescription, { 
-            color: isEligible ? '#374151' : '#9CA3AF' 
+          <Text key={i} style={[styles.cardDescription, {
+            color: isEligible ? '#374151' : '#9CA3AF'
           }]}>
             {desc}
           </Text>
@@ -500,7 +500,7 @@ export default function EligibilityScreen() {
                 <Text style={styles.stepText}>Processing takes ~15 business days after complete documentation</Text>
               </View>
             </View>
-            
+
             <Text style={styles.employingOrgTitle}>YOUR EMPLOYING ORGANIZATION MUST:</Text>
             <View style={styles.orgStepsList}>
               <View style={styles.stepItem}>
@@ -565,19 +565,19 @@ export default function EligibilityScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-           <TouchableOpacity 
-                                      style={styles.backButton}
-                                      onPress={() => router.push('/(tabs)')}
-                                    >
-                           <View style={{ transform: [{ scaleX: -1 }] }}>
-                                    <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                                    </View></TouchableOpacity>
-                                              <View style={styles.headerIconContainer}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)')}
+          >
+            <View style={{ transform: [{ scaleX: -1 }] }}>
+              <LogOut size={24} color="#2563EB" strokeWidth={2} />
+            </View></TouchableOpacity>
+          <View style={styles.headerIconContainer}>
             <TrendingUp size={32} color="#2563EB" strokeWidth={2} />
           </View>
           <Text style={styles.title}>Pension Snapshot</Text>
           <Text style={styles.subtitle}>
-          Your best availabale options and scenarios.
+            Your best availabale options and scenarios.
           </Text>
         </View>
 
@@ -624,12 +624,12 @@ export default function EligibilityScreen() {
                   color="#2563EB"
                   label="Length of Your Contributory Service"
                   unit=" years"
-                  // hideRange={true}
-                  // hideMax={true}
-                  // hideMin={true}
+                // hideRange={true}
+                // hideMax={true}
+                // hideMin={true}
                 />
-                
-                
+
+
                 <View style={{ position: 'relative', height: 20, width: '100%', marginTop: -60 }}>
                   {[1, 5, 10, 15, 20, 25, 30, 38.75].map((mark) => (
                     <View
@@ -652,7 +652,7 @@ export default function EligibilityScreen() {
                 </Text>
                 <Text style={styles.sliderNote}>Maximum accrual: 70% of FAR (after 38.75 years of service)</Text>
               </View>
-              
+
               {/* Current Age Slider */}
               <View style={styles.sliderContainer}>
                 <CustomSlider
@@ -664,12 +664,12 @@ export default function EligibilityScreen() {
                   color="#059669"
                   label="Your Current Age"
                   unit=" years"
-                  // hideRange={true}
-                  // hideMax={true}
-                  // hideMin={true}
+                // hideRange={true}
+                // hideMax={true}
+                // hideMin={true}
                 />
-                
-                
+
+
                 <View style={{ position: 'relative', height: 28, width: '100%', marginTop: -60 }}>
                   {[18, 25, 35, 45, 55, 60, 65].map((mark) => (
                     <View
@@ -689,8 +689,8 @@ export default function EligibilityScreen() {
                 </View>
                 <Text style={[styles.sliderValue, { marginTop: 30, marginBottom: 10 }]}>
                   {currentAge === ERA ? `${currentAge} years (ERA)` :
-                   currentAge === NRA ? `${currentAge} years (NRA)` :
-                   `${currentAge} years`}
+                    currentAge === NRA ? `${currentAge} years (NRA)` :
+                      `${currentAge} years`}
                 </Text>
                 {/* ERA/NRA Info */}
                 <View style={styles.eraNraInfo}>
@@ -814,7 +814,7 @@ export default function EligibilityScreen() {
     </GestureHandlerRootView>
   );
 }
-const { width } = Dimensions.get('window'); 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,

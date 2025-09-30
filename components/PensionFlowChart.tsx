@@ -54,7 +54,7 @@ export default function PensionFlowChart() {
               <Text style={styles.conditionText}>15+ Years</Text>
             </View>
             <ArrowDown size={16} color="#6B7280" />
-            
+
             {/* Age sub-decision */}
             <View style={styles.subDecisionNode}>
               <Text style={styles.subDecisionText}>Age Check</Text>

@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('Auth state changed:', firebaseUser ? firebaseUser.email : 'No user');
       setUser(firebaseUser);
       setLoading(false);
-      
+
       // If user is signed in and we were in the middle of Google sign-in, reset loading
       if (firebaseUser && googleLoading) {
         console.log('User signed in successfully, resetting Google loading state');
@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
     return unsubscribe;
-  }, [googleLoading]);
+  }, []);
 
   const signIn = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
@@ -59,13 +59,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithGoogle = async () => {
     console.log('🚀 signInWithGoogle called');
     const provider = new GoogleAuthProvider();
-    
+
     // Configure provider for better account selection
     provider.addScope('email');
     provider.addScope('profile');
-    
+
     // Force account selection - this shows the account picker
-    provider.setCustomParameters({ 
+    provider.setCustomParameters({
       prompt: 'select_account',
       hd: '',
       include_granted_scopes: 'true'
@@ -83,12 +83,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error: any) {
       console.error('❌ Google sign-in error:', error);
       setGoogleLoading(false);
-      
+
       if (error.code === 'auth/popup-closed-by-user') {
         console.log('ℹ️ User cancelled sign-in');
         return null; // Don't throw error for user cancellation
       }
-      
+
       throw error;
     }
   };

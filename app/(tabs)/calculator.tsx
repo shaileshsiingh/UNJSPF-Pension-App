@@ -40,7 +40,7 @@ function formatNumberWithCommas(text: string): string {
   // Remove all non-digits
   const digits = text.replace(/\D/g, '');
   if (digits === '') return '';
-  
+
   // Add commas every 3 digits from the right
   return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -125,11 +125,11 @@ function calculateYearsOfService(entry: string, separation: string) {
   const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
   const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
   if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) return 0;
-  
+
   let years = sepYear - entryYear;
   let months = sepMonth - entryMonth;
   let days = sepDay - entryDay;
-  
+
   if (days < 0) {
     months--;
     days += new Date(sepYear, sepMonth - 1, 0).getDate();
@@ -138,19 +138,19 @@ function calculateYearsOfService(entry: string, separation: string) {
     years--;
     months += 12;
   }
-  
+
   // Roll days into months (30 days = 1 month for consistency)
   if (days >= 30) {
     months += Math.floor(days / 30);
     days = days % 30;
   }
-  
+
   // Roll months into years
   if (months >= 12) {
     years += Math.floor(months / 12);
     months = months % 12;
   }
-  
+
   return +(years + months / 12 + days / 365.25).toFixed(2);
 }
 
@@ -160,31 +160,31 @@ function calculateAgeAtRetirement(dob: string, separation: string) {
   const dobParts = dob.split('-').map(Number);
   const sepParts = separation.split('-').map(Number);
   let dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear;
-  
+
   if (dobParts[0] > 1000) {
     [dobYear, dobMonth, dobDay] = dobParts;
   } else {
     [dobDay, dobMonth, dobYear] = dobParts;
   }
-  
+
   if (sepParts[0] > 1000) {
     [sepYear, sepMonth, sepDay] = sepParts;
   } else {
     [sepDay, sepMonth, sepYear] = sepParts;
   }
-  
+
   if ([dobDay, dobMonth, dobYear, sepDay, sepMonth, sepYear].some(isNaN)) return 0;
-  
+
   let age = sepYear - dobYear;
   if (sepMonth < dobMonth || (sepMonth === dobMonth && sepDay < dobDay)) {
     age--;
   }
-  
+
   let months = sepMonth - dobMonth;
   if (months < 0) months += 12;
   let days = sepDay - dobDay;
   if (days < 0) days += 30;
-  
+
   return +(age + months / 12 + days / 365.25).toFixed(2);
 }
 
@@ -193,14 +193,14 @@ function getServiceLengthParts(entry: string, separation: string) {
   if (!entry || !separation) return { years: 0, months: 0, days: 0 };
   const [entryDay, entryMonth, entryYear] = entry.split('-').map(Number);
   const [sepDay, sepMonth, sepYear] = separation.split('-').map(Number);
-  
-  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN)) 
+
+  if ([entryDay, entryMonth, entryYear, sepDay, sepMonth, sepYear].some(isNaN))
     return { years: 0, months: 0, days: 0 };
-  
+
   let years = sepYear - entryYear;
   let months = sepMonth - entryMonth;
   let days = sepDay - entryDay;
-  
+
   if (days < 0) {
     months--;
     days += new Date(sepYear, sepMonth - 1, 0).getDate();
@@ -209,19 +209,19 @@ function getServiceLengthParts(entry: string, separation: string) {
     years--;
     months += 12;
   }
-  
+
   // Roll days into months
   if (days >= 30) {
     months += Math.floor(days / 30);
     days = days % 30;
   }
-  
+
   // Roll months into years
   if (months >= 12) {
     years += Math.floor(months / 12);
     months = months % 12;
   }
-  
+
   return { years, months, days };
 }
 
@@ -231,18 +231,18 @@ function formatServiceLength(parts: { years: number, months: number, days: numbe
 
 // Calculate withdrawal settlement with interest and bonus - FIXED LOGIC
 function calculateWithdrawalSettlement(
-  ownContributions: number, 
+  ownContributions: number,
   yearsOfService: number,
   separationDate: string,
   entryDate: string
 ) {
   const INTEREST_RATE = 0.0325; // 3.25%
-  
+
   // Calculate compounded interest
   const futureValue = ownContributions * Math.pow((1 + INTEREST_RATE), yearsOfService);
   const calculatedInterest = futureValue - ownContributions;
   const baseAmount = ownContributions + calculatedInterest;
-  
+
   // Calculate bonus percentage based on years of service - FIXED LOGIC
   let bonusPercentage = 0;
   if (yearsOfService < 5) {
@@ -253,10 +253,10 @@ function calculateWithdrawalSettlement(
   } else if (yearsOfService > 15) {
     bonusPercentage = 1.0; // 100% bonus for over 15 years
   }
-  
+
   const bonusAmount = baseAmount * bonusPercentage;
   const totalSettlement = baseAmount + bonusAmount;
-  
+
   return {
     ownContributions,
     calculatedInterest,
@@ -274,16 +274,16 @@ function determineBenefitType(
   entryDate: string
 ) {
   if (!entryDate) return { type: 'Unknown', nra: 65, era: 58 };
-  
+
   const [day, month, year] = entryDate.split('-').map(Number);
   const entryDateObj = new Date(year, month - 1, day);
-  
+
   let nra = 65, era = 58;
-  
+
   // Determine NRA and ERA based on entry date - CORRECTED LOGIC
   const jan1990 = new Date(1990, 0, 1);
   const jan2014 = new Date(2014, 0, 1);
-  
+
   if (entryDateObj < jan1990) {
     nra = 60;
     era = 55;
@@ -294,9 +294,9 @@ function determineBenefitType(
     nra = 65;
     era = 58;
   }
-  
+
   let benefitType = '';
-  
+
   if (yearsOfService < 5) {
     benefitType = 'Withdrawal Settlement Only';
   } else if (ageAtSeparation >= nra) {
@@ -306,7 +306,7 @@ function determineBenefitType(
   } else {
     benefitType = 'Deferred Retirement Benefit (Article 30)';
   }
-  
+
   return { type: benefitType, nra, era };
 }
 
@@ -319,10 +319,10 @@ function calculateReductionFactor(
 ) {
   if (ageAtSeparation >= nra) return 0; // No reduction for normal retirement
   if (ageAtSeparation < era) return 0; // Deferred benefit, no immediate reduction
-  
+
   const yearsToNRA = nra - ageAtSeparation;
   let reductionRate = 0;
-  
+
   // Determine reduction rate based on ERA and years of service
   if (era === 55) {
     if (yearsOfService < 25) {
@@ -339,11 +339,11 @@ function calculateReductionFactor(
       reductionRate = 0.04; // 4%
     }
   }
-  
+
   // Apply smaller rate for first 5 years, then 6% for remaining years
   const yearsForSmallerRate = Math.min(yearsToNRA, 5);
   const yearsFor6PercentRate = Math.max(0, yearsToNRA - 5);
-  
+
   return (yearsForSmallerRate * reductionRate) + (yearsFor6PercentRate * 0.06);
 }
 
@@ -370,7 +370,7 @@ export default function CalculatorScreen() {
   const [scrollPositions, setScrollPositions] = useState([0, 0, 0]); // Track scroll positions for each row
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '' });
-  
+
   // NEW: Option selection state and animations
   const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'both' | null>(null);
   const blinkAnimA = useRef(new Animated.Value(1)).current;
@@ -378,12 +378,12 @@ export default function CalculatorScreen() {
   const scaleAnimA = useRef(new Animated.Value(1)).current;
   const scaleAnimB = useRef(new Animated.Value(1)).current;
   const ownContributionsBlinkAnim = useRef(new Animated.Value(1)).current;
-// Create refs outside conditional rendering to avoid hook count mismatch
-const scrollViewRefs = [
-  useRef<ScrollView>(null),
-  useRef<ScrollView>(null),
-  useRef<ScrollView>(null)
-];
+  // Create refs outside conditional rendering to avoid hook count mismatch
+  const scrollViewRefs = [
+    useRef<ScrollView>(null),
+    useRef<ScrollView>(null),
+    useRef<ScrollView>(null)
+  ];
   // Animation effects
   useEffect(() => {
     // Blinking animation for unselected options
@@ -475,55 +475,55 @@ const scrollViewRefs = [
   }
 
   const monthLabels = getMonthLabels(getSeparationDateObj()).slice(0, 36);
-  const rows = monthLabels && monthLabels.length > 0 
+  const rows = monthLabels && monthLabels.length > 0
     ? [monthLabels.slice(0, 12), monthLabels.slice(12, 24), monthLabels.slice(24, 36)]
     : [[], [], []];
 
   // Calculate FAR - either from input or PR values
-  const far = useFarInput 
+  const far = useFarInput
     ? finalAverageRemuneration
     : (prValues.filter(v => v !== '').length === 36
-        ? prValues.reduce((sum, v) => sum + parseFloat(v || '0'), 0) / 36
-        : 0);
+      ? prValues.reduce((sum, v) => sum + parseFloat(v || '0'), 0) / 36
+      : 0);
 
   // Calculate ROA (tiered system) - SAME AS ORIGINAL
   function calculateROA(years: number) {
     let roa = 0;
     let remaining = years;
-    
+
     // First 5 years: 1.50% per year
     if (remaining > 0) {
       const first5 = Math.min(5, remaining);
       roa += first5 * 1.5;
       remaining -= first5;
     }
-    
+
     // Next 5 years (6-10): 1.75% per year
     if (remaining > 0) {
       const next5 = Math.min(5, remaining);
       roa += next5 * 1.75;
       remaining -= next5;
     }
-    
+
     // Next 25 years (11-35): 2.00% per year
     if (remaining > 0) {
       const next25 = Math.min(25, remaining);
       roa += next25 * 2.0;
       remaining -= next25;
     }
-    
+
     // Excess over 35 years: 1.00% per year (max 3.75% from this tier)
     if (remaining > 0) {
       const excessROA = remaining * 1.00;
       roa += Math.min(excessROA, 3.75);
     }
-    
+
     return Math.min(roa, 70); // Cap at 70%
   }
 
   const roa = calculateROA(yearsOfService);
   const annualPension = far * (roa / 100);
-  
+
   // Use manual actuarial factor instead of age-based lookup
   const maxLumpSum = (annualPension * (lumpSumPercentage / 100)) * parseFloat(actuarialFactor);
 
@@ -538,32 +538,32 @@ const scrollViewRefs = [
 
       // Determine benefit type
       const benefitInfo = determineBenefitType(ageAtRetirement, yearsOfService, entryDate);
-      
+
       // Calculate withdrawal settlement
       const wsData = calculateWithdrawalSettlement(ownContributions, yearsOfService, separationDate, entryDate);
       setWithdrawalSettlement(wsData);
-      
+
       // Calculate periodic benefits if eligible (5+ years service)
       if (yearsOfService >= 5) {
         let reductionFactor = 0;
         if (benefitInfo.type === 'Early Retirement Benefit (Article 29)') {
           reductionFactor = calculateReductionFactor(ageAtRetirement, yearsOfService, benefitInfo.nra, benefitInfo.era);
         }
-        
+
         // Initial annual pension (FAR * ROA)
         const initialAnnualPension = far * (roa / 100);
-        
+
         // Annual pension after reduction factor
         const annualPensionAfterReduction = initialAnnualPension * (1 - reductionFactor);
-        
+
         // Monthly pension before commutation
         const monthlyPensionBeforeCommutation = annualPensionAfterReduction / 12;
-        
+
         // Lump sum calculations
         let totalLumpSumAmount = 0;
         let monthlyCommutedValue = 0;
         let reducedMonthlyPension = monthlyPensionBeforeCommutation;
-        
+
         // Only allow lump sum for non-deferred benefits
         if (electLumpSum && benefitInfo.type !== 'Deferred Retirement Benefit (Article 30)') {
           // Use initial annual pension (before reduction) for lump sum calculation
@@ -571,14 +571,14 @@ const scrollViewRefs = [
           monthlyCommutedValue = monthlyPensionBeforeCommutation * (lumpSumPercentage / 100);
           reducedMonthlyPension = monthlyPensionBeforeCommutation - monthlyCommutedValue;
         }
-        
+
         // COLA adjustment (2.8%)
         const colaAmount = reducedMonthlyPension * 0.028;
         const monthlyPensionAfterCOLA = reducedMonthlyPension + colaAmount;
-        
+
         // Final periodic benefit after ASHI deduction
         const finalPeriodicBenefit = monthlyPensionAfterCOLA - ashiContribution;
-        
+
         setCalculation({
           annualPension: initialAnnualPension,
           monthlyPension: monthlyPensionBeforeCommutation,
@@ -656,7 +656,7 @@ const scrollViewRefs = [
   // NEW: Handle option selection with animation
   const handleOptionSelect = (option: 'A' | 'B') => {
     const scaleAnim = option === 'A' ? scaleAnimA : scaleAnimB;
-    
+
     // Scale animation
     Animated.sequence([
       Animated.timing(scaleAnim, {
@@ -689,7 +689,7 @@ const scrollViewRefs = [
     setModalVisible(true);
   };
 
-  const isFormValid = 
+  const isFormValid =
     dateOfBirth &&
     entryDate &&
     separationDate &&
@@ -699,7 +699,7 @@ const scrollViewRefs = [
     <ScrollView style={styles.container}>
       <View style={{ padding: 16, gap: 16 }}>
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.push('/(tabs)')}
           >
@@ -716,7 +716,7 @@ const scrollViewRefs = [
           </View>
         </View>
       </View>
-      
+
       <View style={styles.form}>
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
@@ -744,7 +744,7 @@ const scrollViewRefs = [
             ) : null}
           </View>
         </View>
-        
+
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Entry: </Text>
@@ -770,7 +770,7 @@ const scrollViewRefs = [
             ) : null}
           </View>
         </View>
-        
+
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Separation: </Text>
@@ -799,20 +799,20 @@ const scrollViewRefs = [
 
         {/* Own Contributions Input */}
         <View style={styles.inlineInputGroup}>
-        <Animated.View style={[styles.inlineLabel, { opacity: ownContributionsBlinkAnim }]}>
+          <Animated.View style={[styles.inlineLabel, { opacity: ownContributionsBlinkAnim }]}>
 
-          <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD): </Text>
-            <TouchableOpacity 
-              onPress={() => showHelpModal(
-                "Own Contributions (USD)",
-                "You can find the balance of your own contributions in Part C, Contributions of your Annual Pension Statement (as of 31 December [Year]). The statement shows two figures: Amount and Interest. Use only the Amount, which represents your contributions. Ignore the Interest figure, since it does not include the Organization's matching contribution (Bonus). This App calculator already accounts for that portion."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
-          </View>
+            <View style={styles.labelWithHelp}>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD): </Text>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "Own Contributions (USD)",
+                  "You can find the balance of your own contributions in Part C, Contributions of your Annual Pension Statement (as of 31 December [Year]). The statement shows two figures: Amount and Interest. Use only the Amount, which represents your contributions. Ignore the Interest figure, since it does not include the Organization's matching contribution (Bonus). This App calculator already accounts for that portion."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={16} color="#6B7280" />
+              </TouchableOpacity>
+            </View>
           </Animated.View>
           <TextInput
             style={[styles.inlineInput, styles.amountInput]}
@@ -833,7 +833,7 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.longLabel]}>Interest(Calculated): </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "Calculated Interest",
                 "Your contributions earn compound interest at 3.25% for every completed year of contributory service. This interest is calculated automatically based on your years of service and contribution amount."
@@ -849,12 +849,12 @@ const scrollViewRefs = [
         {/* Final Average Remuneration Section */}
         <View style={{ marginVertical: 14 }}>
           <Text style={styles.boldLabel}>Final Average Remuneration (FAR)</Text>
-          
+
           {/* Direct FAR Input Option */}
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.inlineLabel, styles.longLabel]}>FAR(USD): </Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => showHelpModal(
                   "Final Average Remuneration (FAR)",
                   "FAR is your Final Average Remuneration used to calculate your pension benefits. You can either enter it directly if you know it, or use the FAR calculator below to calculate it from your monthly PR values."
@@ -885,7 +885,7 @@ const scrollViewRefs = [
             <View style={styles.inlineInputGroup}>
               <View style={styles.labelWithHelp}>
                 <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator(USD): </Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => showHelpModal(
                     "FAR Calculator",
                     "You can find your Pensionable Remuneration(PR) value on your monthly payslips. Fill in all 36 boxes for a reliable estimate.\n\nEnter your highest PR for 36 consecutive months within the 5 years before your retirement date.\n\nThe calculator uses these 36 months of PR to automatically generate your Final Average Remuneration (FAR), which determines your lifetime pension.\n\nIf retirement is still years away, you may enter approximate values.\n\nFor example: if your current monthly PR is $150,000 and you plan to retire in 5-10 years, you can project an increase of about $10,000 per year of contributory service.\n\nKeep in mind that your future PR depends on expected pay raises, promotions, and other changes."
@@ -896,22 +896,22 @@ const scrollViewRefs = [
                 </TouchableOpacity>
               </View>
             </View>
-            
+
             {/* PR Values Grid */}
             {rows.map((row, rowIdx) => {
               const scrollViewRef = scrollViewRefs[rowIdx];
               const isFirstVisible = scrollPositions[rowIdx] <= 0;
               const isLastVisible = scrollPositions[rowIdx] >= (row.length * 78 - 300);
-              
+
               const scrollLeft = () => {
                 scrollViewRef?.current?.scrollTo({ x: Math.max(0, scrollPositions[rowIdx] - 200), animated: true });
               };
-              
+
               const scrollRight = () => {
                 const maxScroll = row.length * 78 - 300;
                 scrollViewRef?.current?.scrollTo({ x: Math.min(maxScroll, scrollPositions[rowIdx] + 200), animated: true });
               };
-              
+
               return (
                 <View key={rowIdx} style={{ marginBottom: rowIdx < rows.length - 1 ? 20 : 0 }}>
                   <View style={styles.scrollContainer}>
@@ -992,7 +992,7 @@ const scrollViewRefs = [
           <View>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.label]}>Length of Your Contributory Service: </Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => showHelpModal(
                   "Length of Contributory Service",
                   "Calculated from your entry to separation dates. This represents the total years, months, and days of your contributory service to the UN pension fund. Maximum recognized service is 38.75 years."
@@ -1010,7 +1010,7 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Age at Separation: </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "Age at Separation",
                 "Calculated from your birth date and separation date. This determines your benefit eligibility category (normal retirement, early retirement, or deferred retirement)."
@@ -1027,10 +1027,10 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated): </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "FAR (Calculated)",
-                useFarInput 
+                useFarInput
                   ? "This is your direct FAR input value. FAR is your Final Average Remuneration used to calculate your pension benefits."
                   : "This is the average of your 36 months pensionable remuneration values. FAR (Final Average Remuneration) is the key factor in determining your lifetime pension amount."
               )}
@@ -1048,7 +1048,7 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.longLabel]}>Rate of Accumulation (%): </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "Rate of Accumulation",
                 "The Rate of Accumulation (ROA) is calculated based on your years of contributory service:\n\n• First 5 years: 1.50% per year\n• Next 5 years (6-10): 1.75% per year\n• Next 25 years (11-35): 2.00% per year\n• Excess over 35 years: 1.00% per year (max 3.75%)\n\nMaximum ROA is capped at 70%."
@@ -1065,7 +1065,7 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor: </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "Actuarial Factor",
                 "The actuarial factor is used to calculate the lump sum payment if you choose to commute part of your pension. This factor varies based on your age and other demographic factors. The default value is 12.694, but you can adjust it if you have a different actuarial factor applicable to your situation."
@@ -1103,7 +1103,7 @@ const scrollViewRefs = [
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.inlineLabel, styles.longLabel]}>Lump Sum Percentage: </Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => showHelpModal(
                   "Lump Sum Percentage",
                   "You may commute up to 1/3 (33.33%) of your annual pension as a lump sum payment. This reduces your monthly pension accordingly, but gives you immediate access to a portion of your benefits. The lump sum is calculated using the actuarial factor."
@@ -1132,7 +1132,7 @@ const scrollViewRefs = [
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>ASHI Contribution (USD): </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => showHelpModal(
                 "ASHI Contribution",
                 "If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).\n\nEnrollment is optional. Check the ASHI rates document for your monthly premium contribution.\n\nThis amount will be deducted from your monthly pension if you choose to enroll."
@@ -1168,11 +1168,11 @@ const scrollViewRefs = [
         {/* NEW: Results Section with Interactive Selection */}
         <View style={{ marginTop: 24 }}>
           <Text style={styles.resultsTitle}>Snapshot of your estimated benefits</Text>
-          
+
           {/* NEW: Option Selection Interface */}
           <View style={styles.optionSelectionContainer}>
             <Text style={styles.resultsTitle1}>Select your preferred option to retire:</Text>
-            
+
             <View style={styles.optionButtonsContainer}>
               <Animated.View
                 style={[
@@ -1252,7 +1252,7 @@ const scrollViewRefs = [
               </TouchableOpacity>
             )}
           </View>
-          
+
           {/* Withdrawal Settlement - Option A */}
           {withdrawalSettlement && (selectedOption === 'A' || selectedOption === 'both' || selectedOption === null) && (
             <Animated.View style={[
@@ -1288,8 +1288,8 @@ const scrollViewRefs = [
                   {yearsOfService < 5
                     ? 'Less than 5 years of service. No Pension Rights. No Bonus. Only contributions plus interest are returned.'
                     : yearsOfService <= 15
-                    ? `Between 5 and 15 years of service. Bonus applied based on years over 5.${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you.${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.`
-                    : `For more than 15 years of your contributory service, 100% bonus is applied.${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you.${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.` 
+                      ? `Between 5 and 15 years of service. Bonus applied based on years over 5.${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you.${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.`
+                      : `For more than 15 years of your contributory service, 100% bonus is applied.${'\n'}This is a one-time payment that "settles" all obligations of the Fund to you.${'\n'}You relinquish all rights in the UNJSPF and there is no further relationship between you and the Fund.`
                   }
                 </Text>
               </View>
@@ -1311,7 +1311,7 @@ const scrollViewRefs = [
               </View>
 
               {/* B) Annual Pension (early retirement...) */}
-              {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0? (
+              {calculation.earlyRetirementReduction && calculation.earlyRetirementReduction > 0 ? (
                 <View style={styles.resultCard}>
                   <Text style={styles.resultLabel}>
                     Annual Pension (early retirement at {Math.floor(ageAtRetirement)} reduction factor {calculation.earlyRetirementReduction?.toFixed(2)}%)
@@ -1394,50 +1394,50 @@ const scrollViewRefs = [
         selectedOption === 'A' && styles.blurredSection,
       ]}>
         <Text style={styles.infoTitle}>Important Information</Text>
-        
+
         {/* Deferment Option - Show conditionally */}
         {yearsOfService >= 5 && yearsOfService < 15 && (
           <View style={styles.infoCard}>
             <Text style={styles.infoCardTitle}>Deferment of Choice ("Freeze" Option - Article 32)</Text>
             <Text style={styles.infoText}>
-              You can choose to defer making a benefit election for up to 36 months from your separation date. 
+              You can choose to defer making a benefit election for up to 36 months from your separation date.
               Note: You do not earn interest on your contributions during this deferment period.
             </Text>
             <Text style={styles.infoText}>
-              This option is useful if you expect to re-enter the UNJSPF within 36 months, as your participation 
+              This option is useful if you expect to re-enter the UNJSPF within 36 months, as your participation
               is considered continuous with a break in service (BIS).
             </Text>
           </View>
         )}
-        
+
         {/* Restoration Eligibility - Show conditionally */}
         {yearsOfService >= 5 && (
           <View style={styles.infoCard}>
             <Text style={styles.infoCardTitle}>Eligibility for Restoration</Text>
             <Text style={styles.infoText}>
-              Should you re-join a UNJSPF member organization later, your Withdrawal Settlement is eligible 
-              for Restoration (strict deadlines apply!). This applies to those who had 5 or more years of 
+              Should you re-join a UNJSPF member organization later, your Withdrawal Settlement is eligible
+              for Restoration (strict deadlines apply!). This applies to those who had 5 or more years of
               Contributory Service and vested pension rights.
             </Text>
           </View>
         )}
-        
+
         {/* Benefit Type Information */}
         {calculation?.eligibilityType && (
           <View style={styles.infoCard}>
             <Text style={styles.infoCardTitle}>About Your Benefit Type</Text>
             {calculation.eligibilityType === 'Normal Retirement Benefit (Article 28)' && (
               <Text style={styles.infoText}>
-                A monthly benefit payable for life without reduction factors. Monthly amount is adjusted 
-                for cost of living over time and carries Survivors Benefits for eligible survivors. 
+                A monthly benefit payable for life without reduction factors. Monthly amount is adjusted
+                for cost of living over time and carries Survivors Benefits for eligible survivors.
                 Your entitlement starts as of the date following your separation date.
               </Text>
             )}
             {calculation.eligibilityType === 'Early Retirement Benefit (Article 29)' && (
               <>
                 <Text style={styles.infoText}>
-                  A monthly benefit payable for life but reduced based on your age and length of service 
-                  at separation. The reduction is permanent but the benefit still includes cost of living 
+                  A monthly benefit payable for life but reduced based on your age and length of service
+                  at separation. The reduction is permanent but the benefit still includes cost of living
                   adjustments and survivor benefits.
                 </Text>
                 <Text style={[styles.infoCardTitle, { marginTop: 12 }]}>Reduction Factors:</Text>
@@ -1455,9 +1455,9 @@ const scrollViewRefs = [
             )}
             {calculation.eligibilityType === 'Deferred Retirement Benefit (Article 30)' && (
               <Text style={styles.infoText}>
-                A periodic benefit offering lifelong monthly payments, adjusted for cost of living. 
-                NO lump sum option available and NO Child's benefits (except for surviving children 
-                under Survivor's Benefits). You determine when the benefit starts by submitting payment 
+                A periodic benefit offering lifelong monthly payments, adjusted for cost of living.
+                NO lump sum option available and NO Child's benefits (except for surviving children
+                under Survivor's Benefits). You determine when the benefit starts by submitting payment
                 instructions after reaching Early Retirement Age.
               </Text>
             )}
@@ -1468,29 +1468,29 @@ const scrollViewRefs = [
       <View style={styles.disclaimerBox}>
         <Info size={20} color="#D97706" strokeWidth={2} />
         <Text style={styles.disclaimerText}>
-          These estimates are based on current UNJSPF Regulations and Rules. Your actual entitlements may vary 
-          depending on your final options and regulatory changes. For official calculations, please refer to 
-          your Member Self-Service portal or consult with your HR department. Processing typically takes 
+          These estimates are based on current UNJSPF Regulations and Rules. Your actual entitlements may vary
+          depending on your final options and regulatory changes. For official calculations, please refer to
+          your Member Self-Service portal or consult with your HR department. Processing typically takes
           15 business days after complete documentation is received.
         </Text>
       </View>
-      
+
       <View style={styles.section}>
-  <LinearGradient
-    colors={['#fbbf24', '#f59e0b', '#d97706']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 1 }}
-    style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
-  >
-    <TouchableOpacity
-      style={styles.ctaButtonInner}
-      onPress={() => router.push('/(tabs)/eligibility')}
-      disabled={!isFormValid}
-    >
-      <Text style={styles.ctaButtonText}>See your best available options</Text>
-    </TouchableOpacity>
-  </LinearGradient>
-</View>
+        <LinearGradient
+          colors={['#fbbf24', '#f59e0b', '#d97706']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
+        >
+          <TouchableOpacity
+            style={styles.ctaButtonInner}
+            onPress={() => router.push('/(tabs)/eligibility')}
+            disabled={!isFormValid}
+          >
+            <Text style={styles.ctaButtonText}>See your best available options</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </View>
 
       {/* Help Modal */}
       <Modal
@@ -1592,7 +1592,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#374151',
-    marginRight:10
+    marginRight: 10
   },
   boldLabel: {
     fontSize: 14,
@@ -1608,8 +1608,8 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     textAlign: 'center',
     width: '100%',
-    marginTop:10,
-    
+    marginTop: 10,
+
   },
   inlineLabel: {
     fontSize: 14,
@@ -1656,13 +1656,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     // backgroundColor: '#F3F4F6',
     // marginTop: 8,
-    marginBottom:6
+    marginBottom: 6
   },
   helpText: {
     fontSize: 12,
     color: '#4B5563',
     lineHeight: 18,
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
   inlineInput: {
     backgroundColor: '#FFFFFF',
@@ -1695,7 +1695,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
     color: '#4B5563',
     // minWidth:150,
-    width:'100%',
+    width: '100%',
 
   },
   link: {
@@ -1710,7 +1710,7 @@ const styles = StyleSheet.create({
     color: '#374151',
     fontWeight: '600',
     marginTop: 12,
-    width:250,
+    width: 250,
   },
   ashiLinkButton: {
     backgroundColor: '#2563EB',
@@ -1747,7 +1747,7 @@ const styles = StyleSheet.create({
   switchDescription: {
     fontSize: 13,
     color: '#6B7280',
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
   resultsTitle: {
     fontSize: width < 300 ? 15 : width < 350 ? 16 : 18,
@@ -1763,7 +1763,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
-  
+
   // Option Selection Styles
   optionSelectionContainer: {
     backgroundColor: '#F8FAFC',
@@ -1779,7 +1779,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: width < 320 ? 12 : width < 380 ? 16 : 20,
   },
-  
+
   optionButtonWrapper: {
     flex: 1,
     maxWidth: width < 320 ? '38%' : width < 380 ? '40%' : '42%',
@@ -1825,29 +1825,29 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     minHeight: width < 320 ? 65 : width < 380 ? 75 : 85,
   },
-  
+
   optionA: {
     backgroundColor: '#FEF2F2',
     borderColor: '#FCA5A5',
   },
-  
+
   optionB: {
     backgroundColor: '#EBF8FF',
     borderColor: '#93C5FD',
   },
-  
+
   optionSelected: {
     borderColor: '#2563EB',
     backgroundColor: '#EBF4FF',
   },
-  
+
   separatorContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: width < 320 ? 4 : width < 380 ? 6 : 8,
     minWidth: width < 320 ? 35 : width < 380 ? 40 : 45,
   },
-  
+
   optionSeparator: {
     fontSize: width < 320 ? 13 : width < 380 ? 14 : 16,
     fontWeight: '700',
@@ -1857,7 +1857,7 @@ const styles = StyleSheet.create({
     borderRadius: width < 320 ? 6 : width < 380 ? 8 : 10,
     textAlign: 'center',
   },
-  
+
   optionButtonText: {
     fontSize: width < 320 ? 12 : width < 380 ? 13 : 15,
     fontWeight: '700',
@@ -1865,7 +1865,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#374151',
   },
-  
+
   optionButtonSubtext: {
     fontSize: width < 320 ? 10 : width < 380 ? 11 : 12,
     fontWeight: '500',
@@ -1891,11 +1891,11 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 13 : 15,
     fontWeight: '600',
   },
-  
+
   blurredSection: {
     opacity: 0.3,
   },
-  
+
   benefitSection: {
     backgroundColor: '#FFFFFF',
     padding: 20,
@@ -1992,7 +1992,7 @@ const styles = StyleSheet.create({
     fontSize: width < 300 ? 12 : width < 350 ? 13 : 13,
     color: '#0F172A',
     lineHeight: 18,
-    textAlign:'justify'
+    textAlign: 'justify'
   },
   disclaimerBox: {
     margin: 10,
@@ -2008,7 +2008,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     lineHeight: 18,
-    textAlign:'justify'
+    textAlign: 'justify'
   },
   scrollContainer: {
     flexDirection: 'row',
@@ -2076,7 +2076,7 @@ const styles = StyleSheet.create({
     elevation: 0,
     shadowOpacity: 0,
   },
-  
+
   // Modal Styles
   modalOverlay: {
     flex: 1,

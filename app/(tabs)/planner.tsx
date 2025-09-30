@@ -15,13 +15,13 @@ export default function PlannerScreen() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
-                            style={styles.backButton}
-                            onPress={() => router.push('/(tabs)')}
-                          >
-                 <View style={{ transform: [{ scaleX: -1 }] }}>
-                          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                        </View>          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push('/(tabs)')}
+        >
+          <View style={{ transform: [{ scaleX: -1 }] }}>
+            <LogOut size={24} color="#2563EB" strokeWidth={2} />
+          </View>          </TouchableOpacity>
         <Calculator size={48} color="#2563EB" strokeWidth={2} />
         <Text style={styles.title}>Pension Planner</Text>
         <Text style={styles.subtitle}>
@@ -36,7 +36,7 @@ export default function PlannerScreen() {
           Access advanced calculators and planning resources
         </Text>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.toolCard}
           onPress={() => router.push('/(tabs)/calculator')}
         >
@@ -51,7 +51,7 @@ export default function PlannerScreen() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.toolCard}
           onPress={() => router.push('/(tabs)/eligibility')}
         >
@@ -66,7 +66,7 @@ export default function PlannerScreen() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.toolCard}
           onPress={() => router.push('/(tabs)/resources')}
         >
@@ -81,7 +81,7 @@ export default function PlannerScreen() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.toolCard}
           onPress={() => router.push('/(tabs)/info')}
         >
@@ -100,7 +100,7 @@ export default function PlannerScreen() {
       {/* Quick Tips */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Planning Tips</Text>
-        
+
         <View style={styles.tipCard}>
           <Text style={styles.tipTitle}>💡 Start Early</Text>
           <Text style={styles.tipText}>

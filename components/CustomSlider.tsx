@@ -21,7 +21,7 @@ export default function CustomSlider({
   value,
   onValueChange,
   step = 1,
-  label, 
+  label,
   unit = '',
   color = '#2563EB',
   hideRange = false,
@@ -32,19 +32,19 @@ export default function CustomSlider({
   const sliderWidth = screenWidth - 80; // Account for padding
   const thumbSize = 32; // Larger thumb
   const trackRef = useRef<View>(null);
-  
+
   const [sliderValue, setSliderValue] = useState(value);
   const [trackLayout, setTrackLayout] = useState({ x: 0, width: sliderWidth });
   const [dragging, setDragging] = useState(false);
-  
+
   // Update internal state when prop changes
   useEffect(() => {
     setSliderValue(value);
   }, [value]);
-  
+
   const percentage = (sliderValue - min) / (max - min);
   const thumbPosition = percentage * (sliderWidth - thumbSize);
-  
+
   const updateValue = (touchX: number) => {
     // Calculate relative position within the track
     const relativeX = touchX - trackLayout.x;
@@ -53,7 +53,7 @@ export default function CustomSlider({
     const newValue = min + percentage * (max - min);
     const steppedValue = Math.round(newValue / step) * step;
     const finalValue = Math.max(min, Math.min(max, steppedValue));
-    
+
     // Only update if we have a valid number
     if (!isNaN(finalValue) && isFinite(finalValue)) {
       setSliderValue(finalValue);
@@ -128,8 +128,8 @@ export default function CustomSlider({
       </View>
       {!hideRange && (
         <View style={styles.rangeContainer}>
-         {hideMin ? null : <Text style={styles.rangeText}>{min.toLocaleString()}{unit}</Text>}
-         {hideMax ? null : <Text style={styles.rangeText}>{max.toLocaleString()}{unit}</Text>}
+          {hideMin ? null : <Text style={styles.rangeText}>{min.toLocaleString()}{unit}</Text>}
+          {hideMax ? null : <Text style={styles.rangeText}>{max.toLocaleString()}{unit}</Text>}
         </View>
       )}
     </View>

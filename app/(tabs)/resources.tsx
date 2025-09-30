@@ -4,18 +4,18 @@ import { BookOpen, Link, LogOut } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 export default function ResourcesScreen() {
-  const openUrl = (url: string) => Linking.openURL(url).catch(() => {});
+  const openUrl = (url: string) => Linking.openURL(url).catch(() => { });
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-           <TouchableOpacity 
-                    style={styles.backButton}
-                    onPress={() => router.push('/(tabs)')}
-                  >
-         <View style={{ transform: [{ scaleX: -1 }] }}>
-                  <LogOut size={24} color="#2563EB" strokeWidth={2} />
-                </View>          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push('/(tabs)')}
+        >
+          <View style={{ transform: [{ scaleX: -1 }] }}>
+            <LogOut size={24} color="#2563EB" strokeWidth={2} />
+          </View>          </TouchableOpacity>
         <View style={styles.headerIconContainer}>
           <Link size={32} color="#2563EB" strokeWidth={2} />
         </View>
@@ -30,14 +30,14 @@ export default function ResourcesScreen() {
             <Text style={styles.link}>UN News</Text>
             <Text style={styles.url}>https://news.un.org/en/</Text>
           </TouchableOpacity>
-          </View>
-          <View style={styles.card}>
+        </View>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>Your Pension Portal</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/resources/about-member-self-service/')}>
             <Text style={styles.link}>Member Self-Service (MSS)</Text>
             <Text style={styles.url}>https://www.unjspf.org/resources/about-member-self-service/</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/pension-townhall-sessions/')}>
             <Text style={styles.link}>Pension Townhall Sessions</Text>
             <Text style={styles.url}>https://www.unjspf.org/pension-townhall-sessions/</Text>
@@ -47,7 +47,7 @@ export default function ResourcesScreen() {
             <Text style={styles.url}>https://www.unjspf.org/resources/all-videos/</Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Separation Specific Information</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/preparing-to-retire-or-leave-the-fund/')}>
@@ -78,22 +78,22 @@ export default function ResourcesScreen() {
             <Text style={styles.link}>UNJSPF Survivors Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/survivors-benefit/</Text>
           </TouchableOpacity>
-          </View>
-          <View style={styles.card}>
+        </View>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>Taxation</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/taxation-of-benefits/')}>
             <Text style={styles.link}>Taxation of UNJSPF Benefits</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/taxation-of-benefits/</Text>
           </TouchableOpacity>
-          </View>
-          <View style={styles.card}>
+        </View>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>ASHI (After Service Health Insurance)</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.unjspf.org/for-clients/after-service-health-insurance/')}>
             <Text style={styles.link}>ASHI (After Service Health Insurance)</Text>
             <Text style={styles.url}>https://www.unjspf.org/for-clients/after-service-health-insurance/</Text>
           </TouchableOpacity>
-          </View>
-          <View style={styles.card}>
+        </View>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>Expat and Retiree Networks</Text>
           <TouchableOpacity onPress={() => openUrl('https://www.fafics.org')}>
             <Text style={styles.link}>Retiree Associations / FAFICS</Text>
@@ -111,7 +111,7 @@ export default function ResourcesScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      </ScrollView>
+    </ScrollView>
   );
 }
 
