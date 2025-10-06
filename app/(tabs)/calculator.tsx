@@ -749,7 +749,7 @@ export default function CalculatorScreen() {
 
       <View style={styles.form}>
         {/* NEW: Help indicator text */}
-        <View style={styles.helpIndicatorBox}>
+        <View >
           <Text style={styles.helpIndicatorText}>
             Tap the orange question mark icons for detailed explanations of each field
           </Text>
@@ -758,7 +758,7 @@ export default function CalculatorScreen() {
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Birth: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Birth </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -784,7 +784,7 @@ export default function CalculatorScreen() {
 
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Entry: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Entry </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -810,7 +810,7 @@ export default function CalculatorScreen() {
 
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Separation: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Separation </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -839,7 +839,7 @@ export default function CalculatorScreen() {
           <Animated.View style={[styles.inlineLabel, { opacity: ownContributionsBlinkAnim }]}>
 
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD): </Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD) </Text>
               <Animated.View style={{ opacity: helpIconBlinkAnim }}>
                 <TouchableOpacity
                   onPress={() => showHelpModal(
@@ -871,7 +871,7 @@ export default function CalculatorScreen() {
         {/* Calculated Interest Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.longLabel]}>Interest(Calculated): </Text>
+            <Text style={[styles.inlineLabel, styles.longLabel]}>Interest (Calculated): </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -894,7 +894,7 @@ export default function CalculatorScreen() {
           {/* Direct FAR Input Option */}
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>FAR(USD): </Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>FAR (USD) </Text>
               <Animated.View style={{ opacity: helpIconBlinkAnim }}>
                 <TouchableOpacity
                   onPress={() => showHelpModal(
@@ -927,7 +927,7 @@ export default function CalculatorScreen() {
           <View style={{ marginTop: 16 }}>
             <View style={styles.inlineInputGroup}>
               <View style={styles.labelWithHelp}>
-                <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator(USD): </Text>
+                <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator (USD) </Text>
                 <Animated.View style={{ opacity: helpIconBlinkAnim }}>
                   <TouchableOpacity
                     onPress={() => showHelpModal(
@@ -1036,7 +1036,7 @@ export default function CalculatorScreen() {
           <Text style={styles.sectionTitle}>Pension Determinants Summary (Calculated)</Text>
           <View>
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.label]}>Length of Your Contributory Service: </Text>
+              <Text style={[styles.label]}>Length of Your Contributory Service </Text>
               <Animated.View style={{ opacity: helpIconBlinkAnim }}>
                 <TouchableOpacity
                   onPress={() => showHelpModal(
@@ -1056,7 +1056,7 @@ export default function CalculatorScreen() {
         {/* Age at Retirement Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Age at Separation: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Age at Separation </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -1075,7 +1075,7 @@ export default function CalculatorScreen() {
         {/* FAR (calculated) Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated): </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated) </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -1098,7 +1098,7 @@ export default function CalculatorScreen() {
         {/* Rate of Accumulation Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.longLabel]}>Rate of Accumulation (%): </Text>
+            <Text style={[styles.inlineLabel, styles.longLabel]}>Rate of Accumulation (%) </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -1117,7 +1117,7 @@ export default function CalculatorScreen() {
         {/* Actuarial Factor Input */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -1157,7 +1157,7 @@ export default function CalculatorScreen() {
         {electLumpSum && (
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>Lump Sum Percentage: </Text>
+              <Text style={[styles.inlineLabel, styles.longLabel]}>Lump Sum Percentage </Text>
               <Animated.View style={{ opacity: helpIconBlinkAnim }}>
                 <TouchableOpacity
                   onPress={() => showHelpModal(
@@ -1188,7 +1188,7 @@ export default function CalculatorScreen() {
         {/* ASHI Contribution */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>ASHI Contribution (USD): </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel]}>ASHI Contribution (USD) </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
@@ -1640,19 +1640,15 @@ const styles = StyleSheet.create({
   // NEW: Help indicator box
   helpIndicatorBox: {
     backgroundColor: '#FFF4ED',
-    padding: 8,
-    borderRadius: 8,
-    borderColor: '#FDBA74',
-    borderWidth: 1,
-    marginBottom: 10,
-    alignItems: 'center',
+    
   },
   helpIndicatorText: {
     fontSize: 11,
     color: '#C2410C',
     fontStyle: 'italic',
     textAlign: 'center',
-    lineHeight: 18,
+    lineHeight: 18, 
+    marginBottom: 10,
   },
   inputGroup: {
     marginBottom: 8,
