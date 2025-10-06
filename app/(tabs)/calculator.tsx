@@ -871,7 +871,7 @@ export default function CalculatorScreen() {
         {/* Calculated Interest Display */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.longLabel]}>Interest (Calculated): </Text>
+            <Text style={[styles.inlineLabel, styles.longLabel]}>Interest (Calculated) </Text>
             <Animated.View style={{ opacity: helpIconBlinkAnim }}>
               <TouchableOpacity
                 onPress={() => showHelpModal(
