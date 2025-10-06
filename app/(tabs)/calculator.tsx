@@ -721,7 +721,7 @@ export default function CalculatorScreen() {
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Birth: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Birth: </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -747,7 +747,7 @@ export default function CalculatorScreen() {
 
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Entry: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Entry: </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -773,7 +773,7 @@ export default function CalculatorScreen() {
 
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
-            <Text style={[styles.inlineLabel, styles.mediumLabel]}>Date of Separation: </Text>
+            <Text style={[styles.inlineLabel, styles.mediumLabel1]}>Date of Separation: </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -1624,6 +1624,9 @@ const styles = StyleSheet.create({
   },
   mediumLabel: {
     width: width < 350 ? 90 : 177,
+  },
+  mediumLabel1: {
+    width: width < 350 ? 90 : 187,
   },
   longLabel: {
     width: width < 350 ? 110 : 177,
