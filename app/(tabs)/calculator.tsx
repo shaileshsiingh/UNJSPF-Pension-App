@@ -378,12 +378,15 @@ export default function CalculatorScreen() {
   const scaleAnimA = useRef(new Animated.Value(1)).current;
   const scaleAnimB = useRef(new Animated.Value(1)).current;
   const ownContributionsBlinkAnim = useRef(new Animated.Value(1)).current;
+  const helpIconBlinkAnim = useRef(new Animated.Value(1)).current; // NEW: Help icon blink animation
+  
   // Create refs outside conditional rendering to avoid hook count mismatch
   const scrollViewRefs = [
     useRef<ScrollView>(null),
     useRef<ScrollView>(null),
     useRef<ScrollView>(null)
   ];
+  
   // Animation effects
   useEffect(() => {
     // Blinking animation for unselected options
@@ -452,6 +455,33 @@ export default function CalculatorScreen() {
       ownContributionsBlinkAnim.setValue(1);
     }
   }, [ownContributions]);
+
+  // NEW: Help icon blinking animation
+  useEffect(() => {
+    const createBlinkAnimation = (animValue: Animated.Value) => {
+      return Animated.loop(
+        Animated.sequence([
+          Animated.timing(animValue, {
+            toValue: 0.4,
+            duration: 900,
+            useNativeDriver: true,
+          }),
+          Animated.timing(animValue, {
+            toValue: 1,
+            duration: 900,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+    };
+
+    // Always blink the help icons
+    const blinkAnimation = createBlinkAnimation(helpIconBlinkAnim);
+    blinkAnimation.start();
+    return () => {
+      blinkAnimation.stop();
+    };
+  }, []);
 
   // Helper functions
   function getSeparationDateObj() {
@@ -718,6 +748,13 @@ export default function CalculatorScreen() {
       </View>
 
       <View style={styles.form}>
+        {/* NEW: Help indicator text */}
+        <View style={styles.helpIndicatorBox}>
+          <Text style={styles.helpIndicatorText}>
+            Tap the orange question mark icons for detailed explanations of each field
+          </Text>
+        </View>
+
         {/* Date inputs - inline layout */}
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
@@ -803,15 +840,17 @@ export default function CalculatorScreen() {
 
             <View style={styles.labelWithHelp}>
               <Text style={[styles.inlineLabel, styles.longLabel]}>Own Contributions (USD): </Text>
-              <TouchableOpacity
-                onPress={() => showHelpModal(
-                  "Own Contributions (USD)",
-                  "You can find the balance of your own contributions in Part C, Contributions of your Annual Pension Statement (as of 31 December [Year]). The statement shows two figures: Amount and Interest. Use only the Amount, which represents your contributions. Ignore the Interest figure, since it does not include the Organization's matching contribution (Bonus). This App calculator already accounts for that portion."
-                )}
-                style={styles.helpButtonInline}
-              >
-                <HelpCircle size={16} color="#6B7280" />
-              </TouchableOpacity>
+              <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+                <TouchableOpacity
+                  onPress={() => showHelpModal(
+                    "Own Contributions (USD)",
+                    "You can find the balance of your own contributions in Part C, Contributions of your Annual Pension Statement (as of 31 December [Year]). The statement shows two figures: Amount and Interest. Use only the Amount, which represents your contributions. Ignore the Interest figure, since it does not include the Organization's matching contribution (Bonus). This App calculator already accounts for that portion."
+                  )}
+                  style={styles.helpButtonInline}
+                >
+                  <HelpCircle size={20} color="#F97316" />
+                </TouchableOpacity>
+              </Animated.View>
             </View>
           </Animated.View>
           <TextInput
@@ -833,15 +872,17 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.longLabel]}>Interest(Calculated): </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "Calculated Interest",
-                "Your contributions earn compound interest at 3.25% for every completed year of contributory service. This interest is calculated automatically based on your years of service and contribution amount."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "Calculated Interest",
+                  "Your contributions earn compound interest at 3.25% for every completed year of contributory service. This interest is calculated automatically based on your years of service and contribution amount."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <Text style={[styles.inlineInput, styles.readOnlyInput]}>{formatCurrency(calculatedInterest)}</Text>
         </View>
@@ -854,15 +895,17 @@ export default function CalculatorScreen() {
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.inlineLabel, styles.longLabel]}>FAR(USD): </Text>
-              <TouchableOpacity
-                onPress={() => showHelpModal(
-                  "Final Average Remuneration (FAR)",
-                  "FAR is your Final Average Remuneration used to calculate your pension benefits. You can either enter it directly if you know it, or use the FAR calculator below to calculate it from your monthly PR values."
-                )}
-                style={styles.helpButtonInline}
-              >
-                <HelpCircle size={16} color="#6B7280" />
-              </TouchableOpacity>
+              <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+                <TouchableOpacity
+                  onPress={() => showHelpModal(
+                    "Final Average Remuneration (FAR)",
+                    "FAR is your Final Average Remuneration used to calculate your pension benefits. You can either enter it directly if you know it, or use the FAR calculator below to calculate it from your monthly PR values."
+                  )}
+                  style={styles.helpButtonInline}
+                >
+                  <HelpCircle size={20} color="#F97316" />
+                </TouchableOpacity>
+              </Animated.View>
             </View>
             <TextInput
               style={[styles.inlineInput, styles.amountInput]}
@@ -885,15 +928,17 @@ export default function CalculatorScreen() {
             <View style={styles.inlineInputGroup}>
               <View style={styles.labelWithHelp}>
                 <Text style={[styles.inlineLabel, styles.longLabel]}>FAR Calculator(USD): </Text>
-                <TouchableOpacity
-                  onPress={() => showHelpModal(
-                    "FAR Calculator",
-                    "You can find your Pensionable Remuneration(PR) value on your monthly payslips. Fill in all 36 boxes for a reliable estimate.\n\nEnter your highest PR for 36 consecutive months within the 5 years before your retirement date.\n\nThe calculator uses these 36 months of PR to automatically generate your Final Average Remuneration (FAR), which determines your lifetime pension.\n\nIf retirement is still years away, you may enter approximate values.\n\nFor example: if your current monthly PR is $150,000 and you plan to retire in 5-10 years, you can project an increase of about $10,000 per year of contributory service.\n\nKeep in mind that your future PR depends on expected pay raises, promotions, and other changes."
-                  )}
-                  style={styles.helpButtonInline}
-                >
-                  <HelpCircle size={16} color="#6B7280" />
-                </TouchableOpacity>
+                <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+                  <TouchableOpacity
+                    onPress={() => showHelpModal(
+                      "FAR Calculator",
+                      "You can find your Pensionable Remuneration(PR) value on your monthly payslips. Fill in all 36 boxes for a reliable estimate.\n\nEnter your highest PR for 36 consecutive months within the 5 years before your retirement date.\n\nThe calculator uses these 36 months of PR to automatically generate your Final Average Remuneration (FAR), which determines your lifetime pension.\n\nIf retirement is still years away, you may enter approximate values.\n\nFor example: if your current monthly PR is $150,000 and you plan to retire in 5-10 years, you can project an increase of about $10,000 per year of contributory service.\n\nKeep in mind that your future PR depends on expected pay raises, promotions, and other changes."
+                    )}
+                    style={styles.helpButtonInline}
+                  >
+                    <HelpCircle size={20} color="#F97316" />
+                  </TouchableOpacity>
+                </Animated.View>
               </View>
             </View>
 
@@ -992,15 +1037,17 @@ export default function CalculatorScreen() {
           <View>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.label]}>Length of Your Contributory Service: </Text>
-              <TouchableOpacity
-                onPress={() => showHelpModal(
-                  "Length of Contributory Service",
-                  "Calculated from your entry to separation dates. This represents the total years, months, and days of your contributory service to the UN pension fund. Maximum recognized service is 38.75 years."
-                )}
-                style={styles.helpButtonInline}
-              >
-                <HelpCircle size={16} color="#6B7280" />
-              </TouchableOpacity>
+              <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+                <TouchableOpacity
+                  onPress={() => showHelpModal(
+                    "Length of Contributory Service",
+                    "Calculated from your entry to separation dates. This represents the total years, months, and days of your contributory service to the UN pension fund. Maximum recognized service is 38.75 years."
+                  )}
+                  style={styles.helpButtonInline}
+                >
+                  <HelpCircle size={20} color="#F97316" />
+                </TouchableOpacity>
+              </Animated.View>
             </View>
             <Text style={styles.displayValue}>{serviceLength}</Text>
           </View>
@@ -1010,15 +1057,17 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Age at Separation: </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "Age at Separation",
-                "Calculated from your birth date and separation date. This determines your benefit eligibility category (normal retirement, early retirement, or deferred retirement)."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "Age at Separation",
+                  "Calculated from your birth date and separation date. This determines your benefit eligibility category (normal retirement, early retirement, or deferred retirement)."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <Text style={[styles.inlineInput, styles.readOnlyInput]}>{Math.floor(ageAtRetirement)} years</Text>
         </View>
@@ -1027,17 +1076,19 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>FAR (calculated): </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "FAR (Calculated)",
-                useFarInput
-                  ? "This is your direct FAR input value. FAR is your Final Average Remuneration used to calculate your pension benefits."
-                  : "This is the average of your 36 months pensionable remuneration values. FAR (Final Average Remuneration) is the key factor in determining your lifetime pension amount."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "FAR (Calculated)",
+                  useFarInput
+                    ? "This is your direct FAR input value. FAR is your Final Average Remuneration used to calculate your pension benefits."
+                    : "This is the average of your 36 months pensionable remuneration values. FAR (Final Average Remuneration) is the key factor in determining your lifetime pension amount."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <Text style={[styles.inlineInput, styles.readOnlyInput]}>
             {isNaN(far) || far === 0 ? '$0' : formatCurrency(far)}
@@ -1048,15 +1099,17 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.longLabel]}>Rate of Accumulation (%): </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "Rate of Accumulation",
-                "The Rate of Accumulation (ROA) is calculated based on your years of contributory service:\n\n• First 5 years: 1.50% per year\n• Next 5 years (6-10): 1.75% per year\n• Next 25 years (11-35): 2.00% per year\n• Excess over 35 years: 1.00% per year (max 3.75%)\n\nMaximum ROA is capped at 70%."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "Rate of Accumulation",
+                  "The Rate of Accumulation (ROA) is calculated based on your years of contributory service:\n\n• First 5 years: 1.50% per year\n• Next 5 years (6-10): 1.75% per year\n• Next 25 years (11-35): 2.00% per year\n• Excess over 35 years: 1.00% per year (max 3.75%)\n\nMaximum ROA is capped at 70%."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <Text style={[styles.inlineInput, styles.readOnlyInput]}>{roa.toFixed(2)}%</Text>
         </View>
@@ -1065,15 +1118,17 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>Actuarial Factor: </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "Actuarial Factor",
-                "The actuarial factor is used to calculate the lump sum payment if you choose to commute part of your pension. This factor varies based on your age and other demographic factors. The default value is 12.694, but you can adjust it if you have a different actuarial factor applicable to your situation."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "Actuarial Factor",
+                  "The actuarial factor is used to calculate the lump sum payment if you choose to commute part of your pension. This factor varies based on your age and other demographic factors. The default value is 12.694, but you can adjust it if you have a different actuarial factor applicable to your situation."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <TextInput
             style={[styles.inlineInput, styles.numberInput]}
@@ -1103,15 +1158,17 @@ export default function CalculatorScreen() {
           <View style={styles.inlineInputGroup}>
             <View style={styles.labelWithHelp}>
               <Text style={[styles.inlineLabel, styles.longLabel]}>Lump Sum Percentage: </Text>
-              <TouchableOpacity
-                onPress={() => showHelpModal(
-                  "Lump Sum Percentage",
-                  "You may commute up to 1/3 (33.33%) of your annual pension as a lump sum payment. This reduces your monthly pension accordingly, but gives you immediate access to a portion of your benefits. The lump sum is calculated using the actuarial factor."
-                )}
-                style={styles.helpButtonInline}
-              >
-                <HelpCircle size={16} color="#6B7280" />
-              </TouchableOpacity>
+              <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+                <TouchableOpacity
+                  onPress={() => showHelpModal(
+                    "Lump Sum Percentage",
+                    "You may commute up to 1/3 (33.33%) of your annual pension as a lump sum payment. This reduces your monthly pension accordingly, but gives you immediate access to a portion of your benefits. The lump sum is calculated using the actuarial factor."
+                  )}
+                  style={styles.helpButtonInline}
+                >
+                  <HelpCircle size={20} color="#F97316" />
+                </TouchableOpacity>
+              </Animated.View>
             </View>
             <TextInput
               style={[styles.inlineInput, styles.numberInput]}
@@ -1132,15 +1189,17 @@ export default function CalculatorScreen() {
         <View style={styles.inlineInputGroup}>
           <View style={styles.labelWithHelp}>
             <Text style={[styles.inlineLabel, styles.mediumLabel]}>ASHI Contribution (USD): </Text>
-            <TouchableOpacity
-              onPress={() => showHelpModal(
-                "ASHI Contribution",
-                "If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).\n\nEnrollment is optional. Check the ASHI rates document for your monthly premium contribution.\n\nThis amount will be deducted from your monthly pension if you choose to enroll."
-              )}
-              style={styles.helpButtonInline}
-            >
-              <HelpCircle size={16} color="#6B7280" />
-            </TouchableOpacity>
+            <Animated.View style={{ opacity: helpIconBlinkAnim }}>
+              <TouchableOpacity
+                onPress={() => showHelpModal(
+                  "ASHI Contribution",
+                  "If you have 10+ years of contributory service, you and your spouse are eligible for lifetime UN-subsidized After-Service Health Insurance (ASHI).\n\nEnrollment is optional. Check the ASHI rates document for your monthly premium contribution.\n\nThis amount will be deducted from your monthly pension if you choose to enroll."
+                )}
+                style={styles.helpButtonInline}
+              >
+                <HelpCircle size={20} color="#F97316" />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             <TextInput
@@ -1578,6 +1637,23 @@ const styles = StyleSheet.create({
   form: {
     padding: width < 300 ? 12 : width < 350 ? 16 : 20,
   },
+  // NEW: Help indicator box
+  helpIndicatorBox: {
+    backgroundColor: '#FFF4ED',
+    padding: 8,
+    borderRadius: 8,
+    borderColor: '#FDBA74',
+    borderWidth: 1,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  helpIndicatorText: {
+    fontSize: 11,
+    color: '#C2410C',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    lineHeight: 18,
+  },
   inputGroup: {
     marginBottom: 8,
   },
@@ -1643,7 +1719,6 @@ const styles = StyleSheet.create({
   helpButtonInline: {
     marginLeft: -10,
     padding: 2,
-    // marginRight:4
   },
   input: {
     borderWidth: 1,
@@ -1655,10 +1730,6 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   helpContainer: {
-    // padding: 8,
-    borderRadius: 12,
-    // backgroundColor: '#F3F4F6',
-    // marginTop: 8,
     marginBottom: 6
   },
   helpText: {
@@ -1697,7 +1768,6 @@ const styles = StyleSheet.create({
   readOnlyInput: {
     backgroundColor: '#F3F4F6',
     color: '#4B5563',
-    // minWidth:150,
     width: '100%',
 
   },
