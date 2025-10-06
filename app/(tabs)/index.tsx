@@ -28,7 +28,8 @@ import {
   Link,
   Plane,
   Info,
-  BookOpen
+  BookOpen,
+  ChevronRight
 } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
 import { getRobotoFont } from '@/utils/fonts';
@@ -103,95 +104,134 @@ export default function HomeScreen() {
 
 
         {/* Quick Tools Section */}
-        {/* needs to center-aligned */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle1}>Quick Tools</Text>
           <Text style={styles.sectionSubtitle1}>
             Access essential pension tools and resources here
           </Text>
 
-          <View style={styles.toolsGrid}>
+          {/* 1. Pension Essentials */}
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>1. Pension Essentials</Text>
+            
             <TouchableOpacity
-              style={styles.toolCard}
+              style={styles.categoryItem}
               onPress={() => router.push('/about-app' as any)}
+              activeOpacity={0.7}
             >
-              <BookOpen size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension Guide</Text>
-              <Text style={styles.toolDescription}>
-                Concepts • Formulas  {'\n'} Options • About
-              </Text>
+              <View style={styles.categoryItemContent}>
+                <BookOpen size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Pension Guide</Text>
+                  <Text style={styles.categoryItemSubtitle}>Concepts • Formulas • Options • About</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
             </TouchableOpacity>
-            {/* 1. Prepare to Retire (old: Planner) */}
+            
             <TouchableOpacity
-              style={styles.toolCard}
+              style={styles.categoryItem}
               onPress={() => router.push('/(tabs)/prepare' as any)}
+              activeOpacity={0.7}
             >
-              <CheckSquare size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Prepare to Retire</Text>
-              <Text style={styles.toolDescription}>
-                Actions • Checklist  {'\n'} Timelines • Submissions
-              </Text>
+              <View style={styles.categoryItemContent}>
+                <CheckSquare size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Prepare to Retire</Text>
+                  <Text style={styles.categoryItemSubtitle}>Actions • Checklist • Timelines • Submissions</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
             </TouchableOpacity>
-
-            {/* 2. UNJSF Benefits (kept route used previously) */}
+            
             <TouchableOpacity
-              style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/profile')}
-            >
-              <Shield size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension Calculator</Text>
-              <Text style={styles.toolDescription}>
-                Eligibility • Amounts • {'\n'} Next steps
-              </Text>
-            </TouchableOpacity>
-
-            {/* 3. My Pension (old: Pension) */}
-            <TouchableOpacity
-              style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/eligibility')}
-            >
-              <TrendingUp size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Pension Snapshot</Text>
-              <Text style={styles.toolDescription}>
-                Scenarios • Options
-              </Text>
-            </TouchableOpacity>
-
-            {/* 4. HR Benefits (old: Benefits from your employing organization) */}
-            <TouchableOpacity
-              style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/employer-benefits')}
-            >
-              <Plane size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>HR Benefits</Text>
-              <Text style={styles.toolDescription}>
-                Relocation • Repatriation {'\n'} Leave • Home travel
-              </Text>
-            </TouchableOpacity>
-
-            {/* 5. Post-UN Life Planner (old: Relocation) */}
-            <TouchableOpacity
-              style={styles.toolCard}
-              onPress={() => router.push('/(tabs)/post-un-life' as any)}
-            >
-              <Workflow size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Post-UN {'\n'} Life Planner</Text>
-              <Text style={styles.toolDescription}>
-                Design your next chapter
-              </Text>
-            </TouchableOpacity>
-
-            {/* 6. Resources (old: Community) */}
-            <TouchableOpacity
-              style={styles.toolCard}
+              style={styles.categoryItem}
               onPress={() => router.push('/(tabs)/resources')}
+              activeOpacity={0.7}
             >
+              <View style={styles.categoryItemContent}>
+                <Link size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Resources</Text>
+                  <Text style={styles.categoryItemSubtitle}>Useful Links</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
+            </TouchableOpacity>
+          </View>
 
-              <Link size={32} color="#059669" strokeWidth={2} />
-              <Text style={styles.toolTitle}>Resources</Text>
-              <Text style={styles.toolDescription}>
-                Useful links
-              </Text>
+          {/* 2. Pension Planning Tools */}
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>2. Pension Planning Tools</Text>
+            
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => router.push('/(tabs)/profile')}
+              activeOpacity={0.7}
+            >
+              <View style={styles.categoryItemContent}>
+                <Calculator size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Pension Calculator</Text>
+                  <Text style={styles.categoryItemSubtitle}>Eligibility • Amounts • Next steps</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => router.push('/(tabs)/eligibility')}
+              activeOpacity={0.7}
+            >
+              <View style={styles.categoryItemContent}>
+                <TrendingUp size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Pension Snapshot</Text>
+                  <Text style={styles.categoryItemSubtitle}>Scenarios • Options</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* 3. Employer Benefits */}
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>3. Employer Benefits</Text>
+            
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => router.push('/(tabs)/employer-benefits')}
+              activeOpacity={0.7}
+            >
+              <View style={styles.categoryItemContent}>
+                <Plane size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>HR Benefits</Text>
+                  <Text style={styles.categoryItemSubtitle}>Relocation • Repatriation • Leave • Home travel</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* 4. Post-Retirement Support */}
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>4. Post-Retirement Support</Text>
+            
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => router.push('/(tabs)/post-un-life' as any)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.categoryItemContent}>
+                <Workflow size={20} color="#059669" strokeWidth={2} />
+                <View style={styles.categoryItemTextContainer}>
+                  <Text style={styles.categoryItemTitle}>Post-UN Life Planner</Text>
+                  <Text style={styles.categoryItemSubtitle}>Design your next chapter</Text>
+                </View>
+                <ChevronRight size={20} color="#9CA3AF" strokeWidth={2} />
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -442,6 +482,53 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6B7280',
     textAlign: 'center',
+    lineHeight: 16,
+  },
+  categoryContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  categoryTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#111827',
+    marginBottom: 12,
+  },
+  categoryItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    marginBottom: 4,
+    borderRadius: 8,
+    backgroundColor: '#F9FAFB',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  categoryItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  categoryItemTextContainer: {
+    flex: 1,
+    marginLeft: 12,
+    marginRight: 8,
+  },
+  categoryItemTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 2,
+  },
+  categoryItemSubtitle: {
+    fontSize: 12,
+    color: '#6B7280',
     lineHeight: 16,
   },
   statsContainer: {
