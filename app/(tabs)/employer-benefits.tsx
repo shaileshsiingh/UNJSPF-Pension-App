@@ -34,10 +34,18 @@ export default function EmployerBenefitsScreen() {
         </View>
       </View>
       <View style={styles.section}>
-        <View style={styles.card1}>
+      <View style={styles.card1}>
+          <Text style={styles.cardTitle}>1. Separation Benefits Estimate</Text>
+          <Text>
+            <Text>Access the UNDP <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text> tool—courtesy of UNDP—to calculate the benefits payable by your employing organization at the time of separation
+              .</Text>
+          </Text>
+          <Text style={styles.urlText}>https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx </Text>
+        </View>
+        <View style={styles.card}>
 
           <Text style={styles.cardTitle}>
-            1. Exit Documents
+            2. Exit Documents
           </Text>
           <Text >Your retirement preparation begins with two key exit documents that your employing organization must send to the UNJSPF:</Text>
           <Text style={styles.bold}>Separation Notification (P4/SEP)</Text>
@@ -46,7 +54,7 @@ export default function EmployerBenefitsScreen() {
 
         <View style={styles.card}>
           {/* <Text style={styles.cardTitle}>This is a summary of the HR entitlements due from your employing organization, including the steps you must complete for release of payment</Text> */}
-          <Text style={styles.cardTitle}>2. HR Entitlements</Text>
+          <Text style={styles.cardTitle}>3. HR Entitlements</Text>
           <Text>Summary of HR entitlements from your employing organization at separation, including the steps you must complete for payment release.</Text>
           {'\n'}
           <Text style={styles.sectionHeading}>📦 Relocation Grant</Text>
@@ -81,14 +89,7 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.item}><Text style={styles.bold}>Exclusions:</Text> Days beyond the cap are forfeited.</Text>
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Payments released after payroll audit of service record (normally 6–8 weeks after separation).</Text>
         </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>3. Separation Benefits Estimate</Text>
-          <Text>
-            <Text>Access the UNDP <Text style={styles.link} onPress={() => openUrl('https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx')}>"Separation Estimate"</Text> tool—courtesy of UNDP—to calculate the benefits payable by your employing organization at the time of separation
-              .</Text>
-          </Text>
-          <Text style={styles.urlText}>https://info.undp.org/gssu/onlinetools/SiteAssets/Separation.aspx </Text>
-        </View>
+        
 
 
 
