@@ -162,7 +162,7 @@ export default function HomeScreen() {
 
           {/* 2. Pension Planning Tools */}
           <View style={styles.categoryContainer}>
-            <Text style={styles.categoryTitle}>2. Pension Planning Tools</Text>
+            <Text style={styles.categoryTitle}>2. Pension Planner</Text>
             
             <TouchableOpacity
               style={styles.categoryItem}
