@@ -1,8 +1,13 @@
 // Firebase configuration and initialization
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import type {} from 'firebase/app';
-import type {} from 'firebase/auth';
+import { FirebaseError, getApp, getApps, initializeApp } from 'firebase/app';
+import {
+  Auth,
+  getAuth,
+  getReactNativePersistence,
+  initializeAuth,
+} from 'firebase/auth';
+import { Platform } from 'react-native';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // TODO: Replace with your own Firebase config
 const firebaseConfig = {
@@ -15,7 +20,25 @@ const firebaseConfig = {
     measurementId: "G-7S8LLYJSD7"
   };
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-const auth = getAuth(app);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+let auth: Auth;
+
+if (Platform.OS === 'web') {
+  auth = getAuth(app);
+} else {
+  try {
+    auth = initializeAuth(app, {
+      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+    });
+  } catch (error) {
+    const firebaseError = error as FirebaseError;
+    if (firebaseError.code === 'auth/already-initialized') {
+      auth = getAuth(app);
+    } else {
+      throw error;
+    }
+  }
+}
 
 export { app, auth }; 

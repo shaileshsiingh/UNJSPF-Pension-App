@@ -21,7 +21,8 @@ export default function PlannerScreen() {
         >
           <View style={{ transform: [{ scaleX: -1 }] }}>
             <LogOut size={24} color="#2563EB" strokeWidth={2} />
-          </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
         <Calculator size={48} color="#2563EB" strokeWidth={2} />
         <Text style={styles.title}>Pension Planner</Text>
         <Text style={styles.subtitle}>

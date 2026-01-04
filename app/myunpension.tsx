@@ -7,11 +7,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView,
   StatusBar,
   Platform,
-  Animated
+  Animated,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 // import { useAuth } from '../components/AuthContext';
 import { useRouter } from 'expo-router';
 
@@ -68,7 +68,9 @@ export default function LandingPage() {
             <Text style={styles.heroTitle}>MyUNPension</Text>
             <Text style={styles.heroSubtitle}>Your Complete Guide to UN Separation Benefits</Text>
             <Text style={styles.heroDesc}>
-              Take Control of your retirement planning. <br /> This app gives you a complete overview of all your retirment benefits from UN Pension Fund and Employing Organization            </Text>
+              Take control of your retirement planning.{'\n'}
+              This app gives you a complete overview of all your retirement benefits from the UN Pension Fund and your employing organization.
+            </Text>
             {/* <TouchableOpacity 
               style={styles.primaryBtn} 
               onPress={() => router.push('/calculator')}

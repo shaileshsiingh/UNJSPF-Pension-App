@@ -32,7 +32,7 @@ import {
   ChevronRight
 } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
-import { getRobotoFont } from '@/utils/fonts';
+import { getRobotoFont } from '../../utils/fonts';
 import { router } from 'expo-router';
 // App logo (re-use same asset as landing page)
 const LOGO_URL = 'https://res.cloudinary.com/djd2pcr44/image/upload/v1758718205/ChatGPT_Image_Sep_24_2025_06_11_37_PM_uo4doa.png';
@@ -44,7 +44,14 @@ export default function HomeScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
       <View style={styles.topBar}>
         <TouchableOpacity
-          onPress={signOut}
+          onPress={async () => {
+            // Sign the user out, then send them back to the public landing page
+            try {
+              await signOut();
+            } finally {
+              router.replace('/');
+            }
+          }}
           style={styles.logoutButton}
           accessibilityLabel="Logout"
         >

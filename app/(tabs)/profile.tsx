@@ -32,7 +32,7 @@ import {
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-import { auth } from '@/firebaseConfig';
+import { auth } from '../../firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -391,7 +391,8 @@ export default function ProfileScreen() {
           >
  <View style={{ transform: [{ scaleX: -1 }] }}>
           <LogOut size={24} color="#2563EB" strokeWidth={2} />
-        </View>          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
           <View style={styles.headerContent}>
             <View style={styles.headerIconContainer}>
               <Shield size={32} color="#2563EB" strokeWidth={2} />
