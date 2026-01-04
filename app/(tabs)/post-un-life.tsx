@@ -45,7 +45,7 @@ export default function PostUNLifePlanner() {
   const countryNotes: Record<string, string> = {
     Portugal: 'EU Schengen access, quality healthcare, temperate climate.',
     Panama: 'Territorial tax, dollarized economy, acclaimed Pensionado benefits.',
-    Malaysia: 'Long-stay MM2H option, English widely spoken in cities.',
+    // Malaysia: 'Long-stay MM2H option, English widely spoken in cities.',
     'Costa Rica': 'Stable democracy, public healthcare (Caja), biodiversity.',
     Mexico: 'Vibrant expat hubs, strong connectivity, diverse climates.',
   };
@@ -82,17 +82,17 @@ export default function PostUNLifePlanner() {
         { label: 'Pensionado PDF', url: 'https://www.migracion.gob.pa/wp-content/uploads/02-JUBILADO-PENSIONADO-1.pdf' },
       ],
     },
-    {
-      name: 'Malaysia',
-      residencyRoute: 'MM2H (Malaysia My Second Home)',
-      incomeNote: 'Financial criteria differ; refer to Immigration & MyGov portals',
-      taxNote: 'Resident/non-resident rates differ; consult for personal situation',
-      healthcareNote: 'Strong private hospitals; expats typically carry private insurance',
-      links: [
-        { label: 'IMI MM2H', url: 'https://www.imi.gov.my/index.php/en/main-services/malaysia-my-second-home-mmh2-en/' },
-        { label: 'MyGov MM2H', url: 'https://www.malaysia.gov.my/portal/subcategory/865' },
-      ],
-    },
+    // {
+    //   name: 'Malaysia',
+    //   residencyRoute: 'MM2H (Malaysia My Second Home)',
+    //   incomeNote: 'Financial criteria differ; refer to Immigration & MyGov portals',
+    //   taxNote: 'Resident/non-resident rates differ; consult for personal situation',
+    //   healthcareNote: 'Strong private hospitals; expats typically carry private insurance',
+    //   links: [
+    //     { label: 'IMI MM2H', url: 'https://www.imi.gov.my/index.php/en/main-services/malaysia-my-second-home-mmh2-en/' },
+    //     { label: 'MyGov MM2H', url: 'https://www.malaysia.gov.my/portal/subcategory/865' },
+    //   ],
+    // },
     {
       name: 'Costa Rica',
       residencyRoute: 'Pensionado / Rentista',
@@ -118,8 +118,8 @@ export default function PostUNLifePlanner() {
     { name: 'Portugal — D7 Visa Checklist (VFS Global)', url: 'https://www.vfsglobal.com/one-pager/portugal/india/english/pdf/checklist_for_d7_new.pdf', tag: 'Checklist' },
     { name: 'Panama — Migración (Permisos)', url: 'https://www.migracion.gob.pa/permisos-migratorios/', tag: 'Official' },
     { name: 'Panama — Requisitos Jubilado/Pensionado (PDF)', url: 'https://www.migracion.gob.pa/wp-content/uploads/02-JUBILADO-PENSIONADO-1.pdf', tag: 'Official PDF' },
-    { name: 'Malaysia — MM2H (Immigration Dept.)', url: 'https://www.imi.gov.my/index.php/en/main-services/malaysia-my-second-home-mmh2-en/', tag: 'Official' },
-    { name: 'Malaysia — MyGov MM2H Portal', url: 'https://www.malaysia.gov.my/portal/subcategory/865', tag: 'Gov Portal' },
+    // { name: 'Malaysia — MM2H (Immigration Dept.)', url: 'https://www.imi.gov.my/index.php/en/main-services/malaysia-my-second-home-mmh2-en/', tag: 'Official' },
+    // { name: 'Malaysia — MyGov MM2H Portal', url: 'https://www.malaysia.gov.my/portal/subcategory/865', tag: 'Gov Portal' },
     { name: 'Costa Rica — Dirección de Migración (Visas)', url: 'https://migracion.go.cr/visas/', tag: 'Official' },
     { name: 'Mexico — Temporary Resident (Consulate)', url: 'https://consulmex.sre.gob.mx/leamington/index.php/non-mexicans/visas/115-temporary-resident-visa', tag: 'Official' },
   ];
@@ -278,7 +278,8 @@ export default function PostUNLifePlanner() {
           >
             <View style={{ transform: [{ scaleX: -1 }] }}>
               <LogOut size={24} color="#2563EB" strokeWidth={2} />
-            </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <Workflow size={32} color="#2563EB" strokeWidth={2} />
           </View>
@@ -323,7 +324,7 @@ export default function PostUNLifePlanner() {
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Relocate? 5 expat-friendly options</Text>
-          {(['Portugal', 'Panama', 'Malaysia', 'Costa Rica', 'Mexico'] as const).map((c) => (
+          {(['Portugal', 'Panama', 'Costa Rica', 'Mexico'] as const).map((c) => (
             <View key={c} style={{ marginTop: 8 }}>
               <Text style={styles.listTitle}>{c}</Text>
               <View style={styles.linkPills}>

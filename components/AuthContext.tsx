@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAn
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { router } from 'expo-router';
+import { Alert, Platform } from 'react-native';
 
 interface AuthContextProps {
   user: User | null;
@@ -58,6 +59,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     console.log('🚀 signInWithGoogle called');
+
+    if (Platform.OS !== 'web') {
+      Alert.alert('Coming soon', 'Google sign-in is only available on the web right now.');
+      return null;
+    }
+
     const provider = new GoogleAuthProvider();
 
     // Configure provider for better account selection

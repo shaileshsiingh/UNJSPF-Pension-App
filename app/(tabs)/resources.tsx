@@ -15,7 +15,8 @@ export default function ResourcesScreen() {
         >
           <View style={{ transform: [{ scaleX: -1 }] }}>
             <LogOut size={24} color="#2563EB" strokeWidth={2} />
-          </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
         <View style={styles.headerIconContainer}>
           <Link size={32} color="#2563EB" strokeWidth={2} />
         </View>

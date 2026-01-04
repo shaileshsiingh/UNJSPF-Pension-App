@@ -203,7 +203,8 @@ export default function PrepareScreen() {
           >
             <View style={{ transform: [{ scaleX: -1 }] }}>
               <LogOut size={24} color="#2563EB" strokeWidth={2} />
-            </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
           </View>

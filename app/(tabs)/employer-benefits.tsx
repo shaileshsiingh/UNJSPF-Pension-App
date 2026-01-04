@@ -25,7 +25,8 @@ export default function EmployerBenefitsScreen() {
           >
             <View style={{ transform: [{ scaleX: -1 }] }}>
               <LogOut size={24} color="#2563EB" strokeWidth={2} />
-            </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <Plane size={32} color="#2563EB" strokeWidth={2} />
           </View>
@@ -58,7 +59,6 @@ export default function EmployerBenefitsScreen() {
           <Text>Summary of HR entitlements from your employing organization at separation, including the steps you must complete for payment release.</Text>
           {'\n'}
           <Text style={styles.sectionHeading}>📦 Relocation Grant</Text>
-          <br />
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Lump-sum to cover relocation costs for you and eligible family members.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Weeks of net base salary (varies by family status, duty station, service length).</Text>
           <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Typically 2–4 weeks of salary; higher at hardship duty stations.</Text>
@@ -66,7 +66,6 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Submit boarding passes as proof of return and return your UNLP.</Text>
 
           <Text style={styles.sectionHeading}>🏠 Repatriation Grant</Text>
-          <br />
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Cash benefit recognizing service outside your home country.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Weeks of net base salary, based on qualifying years of service abroad + family status.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Up to 28 weeks of salary.</Text>
@@ -74,7 +73,6 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Send an affidavit confirming your repatriation to your home country.</Text>
 
           <Text style={styles.sectionHeading}>✈️ Final Travel Entitlements</Text>
-          <br />
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Travel costs for you and dependants to repatriation destination at separation.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Economy airfare + DSA, most direct and economical route.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Varies by distance, dependants, and route.</Text>
@@ -82,7 +80,6 @@ export default function EmployerBenefitsScreen() {
           <Text style={styles.item}><Text style={styles.bold}>Requirement:</Text> Submit your expense report for reimbursement of terminal expenses.</Text>
 
           <Text style={styles.sectionHeading}>📅 Leave Encashment</Text>
-          <br />
           <Text style={styles.item}><Text style={styles.bold}>What it is:</Text> Cash for unused annual leave days and final account settlements.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How calculated:</Text> Unused days × daily rate of final net salary.</Text>
           <Text style={styles.item}><Text style={styles.bold}>How much:</Text> Up to a maximum of 60 days of accrued leave (18 days for temporary; 60 for fixed/continuing).</Text>

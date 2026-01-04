@@ -1,25 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { Home, CheckSquare, Shield, TrendingUp, Plane, Workflow, Link, BookOpen } from 'lucide-react-native';
 import { useAuth } from '../../components/AuthContext';
-import { useRouter } from 'expo-router';
 
 export default function TabsLayout() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+  const { loading } = useAuth();
 
-  // Commented out to prevent routing conflicts with main index.tsx
-  // useEffect(() => {
-  //   // Only redirect if we're sure there's no user and not loading
-  //   // This allows the landing page to handle its own routing logic
-  //   if (!loading && !user) {
-  //     // Don't automatically redirect to login - let landing page handle this
-  //     router.replace('/');
-  //   }
-  // }, [user, loading]);
-
+  // While auth is initializing, avoid rendering tabs to prevent flicker
   if (loading) return null;
-  if (!user) return null;
 
   return (
     <Tabs

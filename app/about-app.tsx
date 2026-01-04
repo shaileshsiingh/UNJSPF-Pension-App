@@ -413,7 +413,8 @@ export default function CombinedAboutScreen() {
         >
           <View style={{ transform: [{ scaleX: -1 }] }}>
             <LogOut size={24} color="#2563EB" strokeWidth={2} />
-          </View>          </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
         <View style={styles.headerContent}>
           <View style={styles.headerIconContainer}>
             <BookOpen size={32} color="#2563EB" strokeWidth={2} />
