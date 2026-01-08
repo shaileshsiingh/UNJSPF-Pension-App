@@ -323,7 +323,7 @@ export default function PostUNLifePlanner() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Relocate? 5 expat-friendly options</Text>
+          <Text style={styles.cardTitle}>Relocate? 4 expat-friendly options</Text>
           {(['Portugal', 'Panama', 'Costa Rica', 'Mexico'] as const).map((c) => (
             <View key={c} style={{ marginTop: 8 }}>
               <Text style={styles.listTitle}>{c}</Text>

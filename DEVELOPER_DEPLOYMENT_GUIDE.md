@@ -41,8 +41,8 @@ eas whoami
 ### 2.1 Review `app.json`
 Key configurations to verify:
 - **App Name**: "UNJSPF Pension App"
-- **Bundle Identifier (iOS)**: `com.unjspf.pensionapp`
-- **Package Name (Android)**: `com.unjspf.pensionapp`
+- **Bundle Identifier (iOS)**: `com.oneretire.app`
+- **Package Name (Android)**: `com.oneretire.app`
 - **Version**: `1.0.0`
 - **Version Code (Android)**: `1`
 - **Build Number (iOS)**: `1`
@@ -82,7 +82,7 @@ Ensure `./assets/images/icon.png` exists and is:
    - Go to [Apple Developer Portal](https://developer.apple.com/account)
    - Navigate to "Certificates, Identifiers & Profiles"
    - Click "Identifiers" → "+" → "App IDs"
-   - Register: `com.unjspf.pensionapp`
+   - Register: `com.oneretire.app`
    - Enable required capabilities (Push Notifications, Sign in with Apple, etc. if needed)
 
 2. **Create App in App Store Connect**:
@@ -92,7 +92,7 @@ Ensure `./assets/images/icon.png` exists and is:
      - Platform: iOS
      - Name: UNJSPF Pension App
      - Primary Language: English
-     - Bundle ID: `com.unjspf.pensionapp` (select the one you registered)
+     - Bundle ID: `com.oneretire.app` (select the one you registered)
      - SKU: `unjspf-pension-app-001` (unique identifier)
      - User Access: Full Access
 
@@ -141,7 +141,7 @@ eas submit --platform ios
    - Declarations: Check all that apply (Privacy Policy, Content Rating, etc.)
 
 4. **Register Package Name**:
-   - In App Content → App access, set Package name: `com.unjspf.pensionapp`
+   - In App Content → App access, set Package name: `com.oneretire.app`
    - This must match exactly with `app.json`
 
 ### 5.2 Create Upload Key (First Time Only)

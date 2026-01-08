@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.unjspf.pensionapp",
+      "bundleIdentifier": "com.oneretire.app",
       "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "package": "com.unjspf.pensionapp",
+      "package": "com.oneretire.app",
       "versionCode": 1
     }
   }

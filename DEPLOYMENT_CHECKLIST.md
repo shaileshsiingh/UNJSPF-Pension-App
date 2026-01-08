@@ -6,8 +6,8 @@ Use this checklist to ensure all steps are completed before and during deploymen
 
 ### Configuration
 - [ ] Verify `app.json` has correct bundle identifiers
-  - iOS: `com.unjspf.pensionapp`
-  - Android: `com.unjspf.pensionapp`
+  - iOS: `com.oneretire.app`
+  - Android: `com.oneretire.app`
 - [ ] Version numbers are correct
   - Version: `1.0.0`
   - iOS buildNumber: `1`
@@ -23,14 +23,14 @@ Use this checklist to ensure all steps are completed before and during deploymen
 - [ ] Logged into EAS: `eas login`
 
 ### Apple Developer Setup
-- [ ] Bundle ID registered: `com.unjspf.pensionapp`
+- [ ] Bundle ID registered: `com.oneretire.app`
 - [ ] App created in App Store Connect
 - [ ] App information filled in App Store Connect
 - [ ] Privacy Policy URL prepared and accessible
 
 ### Google Play Setup
 - [ ] App created in Google Play Console
-- [ ] Package name set: `com.unjspf.pensionapp`
+- [ ] Package name set: `com.oneretire.app`
 - [ ] Privacy Policy URL prepared and accessible
 - [ ] Content rating questionnaire completed
 

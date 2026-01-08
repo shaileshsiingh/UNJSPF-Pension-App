@@ -24,14 +24,14 @@ This is a condensed version of the deployment process. For detailed instructions
 ### Step 1: Configure App Stores
 
 **Apple App Store**:
-1. Go to [developer.apple.com](https://developer.apple.com) → Register bundle ID: `com.unjspf.pensionapp`
+1. Go to [developer.apple.com](https://developer.apple.com) → Register bundle ID: `com.oneretire.app`
 2. Go to [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → Create new app
-   - Bundle ID: `com.unjspf.pensionapp`
+   - Bundle ID: `com.oneretire.app`
    - App name: UNJSPF Pension App
 
 **Google Play Store**:
 1. Go to [play.google.com/console](https://play.google.com/console) → Create app
-   - Package name: `com.unjspf.pensionapp`
+   - Package name: `com.oneretire.app`
    - App name: UNJSPF Pension App
 
 ### Step 2: Prepare Assets

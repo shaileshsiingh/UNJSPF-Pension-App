@@ -4,8 +4,8 @@
 
 ### 1. Configuration Updates
 - ✅ **app.json** updated with:
-  - Proper iOS bundle identifier: `com.unjspf.pensionapp`
-  - Fixed Android package name: `com.unjspf.pensionapp` (removed typo)
+  - Proper iOS bundle identifier: `com.oneretire.app`
+  - Fixed Android package name: `com.oneretire.app` (removed typo)
   - Updated app name: "UNJSPF Pension App"
   - Added version codes for both platforms
   - Updated scheme: `unjspf-pension`
@@ -44,8 +44,8 @@
    - **Google Play Developer Account**: Sign up at [play.google.com/console](https://play.google.com/console) ($25 one-time)
 
 5. **Register Bundle Identifiers**:
-   - **iOS**: Register `com.unjspf.pensionapp` in Apple Developer Portal
-   - **Android**: Package name `com.unjspf.pensionapp` will be registered when creating app in Google Play Console
+   - **iOS**: Register `com.oneretire.app` in Apple Developer Portal
+   - **Android**: Package name `com.oneretire.app` will be registered when creating app in Google Play Console
 
 6. **Create App Store Listings**:
    - Create app in App Store Connect (iOS)
@@ -72,8 +72,8 @@
 ### App Details
 - **Name**: UNJSPF Pension App
 - **Version**: 1.0.0
-- **iOS Bundle ID**: com.unjspf.pensionapp
-- **Android Package**: com.unjspf.pensionapp
+- **iOS Bundle ID**: com.oneretire.app
+- **Android Package**: com.oneretire.app
 - **EAS Project ID**: c3d10625-1b38-4c6e-8d61-f437296007aa
 
 ### Build Profiles
@@ -83,7 +83,7 @@
 
 ## 🔑 Important Notes
 
-1. **Bundle Identifiers**: The current identifiers (`com.unjspf.pensionapp`) are suggestions. Confirm with client if they want different ones.
+1. **Bundle Identifiers**: The current identifiers (`com.oneretire.app`) are suggestions. Confirm with client if they want different ones.
 
 2. **Privacy Policy**: Required for both stores. Ensure you have a publicly accessible URL.
 
