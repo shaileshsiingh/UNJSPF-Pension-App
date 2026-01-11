@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "UNJSPF Pension App",
+    "name": "OneRetire",
     "slug": "unpensionappnativewind",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "unjspf-pension",
@@ -37,7 +37,11 @@
     },
     "android": {
       "package": "com.oneretire.app",
-      "versionCode": 1
+      "versionCode": 2,
+      "adaptiveIcon": {
+        "foregroundImage": "https://res.cloudinary.com/djd2pcr44/image/upload/v1758718205/ChatGPT_Image_Sep_24_2025_06_11_37_PM_uo4doa.png",
+        "backgroundColor": "#ffffff"
+      }
     }
   }
 }

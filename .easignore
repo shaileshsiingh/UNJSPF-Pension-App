@@ -1,0 +1,55 @@
+# EAS Build ignore file
+# Files and directories to exclude from the build upload
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+.expo/
+.expo-shared/
+dist/
+build/
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (optional - remove if you want docs in build)
+*.md
+!README.md
+
+# Backup files
+*.bak
+*.backup
+
+# Environment files (these should use EAS secrets instead)
+.env
+.env.local
+.env.*.local
+
+# Test files
+**/__tests__/
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Misc
+.cache/
+tmp/
+temp/
+

@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithCredential } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { router } from 'expo-router';
 import { Alert, Platform } from 'react-native';
+import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
+import { ResponseType } from 'expo-auth-session';
 
 interface AuthContextProps {
   user: User | null;
@@ -59,44 +62,97 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     console.log('🚀 signInWithGoogle called');
-
-    if (Platform.OS !== 'web') {
-      Alert.alert('Coming soon', 'Google sign-in is only available on the web right now.');
-      return null;
-    }
-
-    const provider = new GoogleAuthProvider();
-
-    // Configure provider for better account selection
-    provider.addScope('email');
-    provider.addScope('profile');
-
-    // Force account selection - this shows the account picker
-    provider.setCustomParameters({
-      prompt: 'select_account',
-      hd: '',
-      include_granted_scopes: 'true'
-    });
-
     setGoogleLoading(true);
-    console.log('📱 Google loading state set to true');
 
     try {
-      console.log('🔄 Calling signInWithPopup...');
-      const result = await signInWithPopup(auth, provider);
-      setGoogleLoading(false);
-      console.log('✅ Google sign-in successful:', result.user.email);
-      return result;
+      if (Platform.OS === 'web') {
+        // Web: Use Firebase popup method
+        const provider = new GoogleAuthProvider();
+        provider.addScope('email');
+        provider.addScope('profile');
+        provider.setCustomParameters({
+          prompt: 'select_account',
+          hd: '',
+          include_granted_scopes: 'true'
+        });
+
+        console.log('🔄 Calling signInWithPopup for web...');
+        const result = await signInWithPopup(auth, provider);
+        setGoogleLoading(false);
+        console.log('✅ Google sign-in successful:', result.user.email);
+        return result;
+      } else {
+        // Native (Android/iOS): Use expo-auth-session with Google OAuth
+        console.log('🔄 Starting Google OAuth for native platform...');
+        
+        // Complete the auth session for expo-auth-session
+        WebBrowser.maybeCompleteAuthSession();
+
+        // Create redirect URI (Expo will use its proxy automatically in development)
+        const redirectUri = AuthSession.makeRedirectUri();
+
+        // Use Firebase Web Client ID (works with Expo's proxy)
+        // To get your client ID:
+        // 1. Go to Firebase Console > Authentication > Sign-in method > Google
+        // 2. Copy the "Web client ID" (format: xxxxx.apps.googleusercontent.com)
+        // 3. Replace the value below with your actual client ID
+        // 
+        // IMPORTANT: You also need to add authorized domains in Firebase:
+        // Firebase Console > Authentication > Settings > Authorized domains
+        // Add: exp.host, expo.dev, auth.expo.io
+        const clientId = '343269736783-srb627btq9fr895hsb72p9j0q8tjdlc2.apps.googleusercontent.com'; // TODO: Replace with your actual Web Client ID from Firebase Console
+
+        // Create Google OAuth request
+        const request = new AuthSession.AuthRequest({
+          clientId: clientId,
+          scopes: ['openid', 'profile', 'email'],
+          responseType: ResponseType.IdToken,
+          redirectUri,
+        });
+
+        const discovery = {
+          authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+          tokenEndpoint: 'https://oauth2.googleapis.com/token',
+          revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
+        };
+
+        console.log('📱 Prompting for Google OAuth...');
+        const result = await request.promptAsync(discovery);
+
+        if (result.type === 'success') {
+          const { id_token } = result.params;
+          
+          if (id_token) {
+            // Sign in with Firebase using the Google credential
+            console.log('✅ Got ID token, signing in with Firebase...');
+            const googleCredential = GoogleAuthProvider.credential(id_token);
+            const firebaseResult = await signInWithCredential(auth, googleCredential);
+            setGoogleLoading(false);
+            console.log('✅ Google sign-in successful:', firebaseResult.user.email);
+            return firebaseResult;
+          } else {
+            throw new Error('No ID token received from Google');
+          }
+        } else if (result.type === 'cancel') {
+          console.log('ℹ️ User cancelled sign-in');
+          setGoogleLoading(false);
+          return null;
+        } else {
+          throw new Error(`Google sign-in failed: ${result.type}`);
+        }
+      }
     } catch (error: any) {
       console.error('❌ Google sign-in error:', error);
       setGoogleLoading(false);
 
-      if (error.code === 'auth/popup-closed-by-user') {
+      if (error.code === 'auth/popup-closed-by-user' || error.message?.includes('cancel')) {
         console.log('ℹ️ User cancelled sign-in');
         return null; // Don't throw error for user cancellation
       }
 
-      throw error;
+      // Provide helpful error message
+      const errorMessage = error.message || 'Google sign-in failed. Please try again.';
+      throw new Error(errorMessage);
     }
   };
 
