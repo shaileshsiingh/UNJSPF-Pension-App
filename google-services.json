@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "343269736783",
+    "project_id": "unspension",
+    "storage_bucket": "unspension.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343269736783:android:07abdadc1a1815b517853a",
+        "android_client_info": {
+          "package_name": "com.oneretire.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343269736783-srb627btq9fr895hsb72p9j0q8tjdlc2.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "610470496963-slov8eeuritmekudmppd9ufansrqg3v8.apps.googleusercontent.com",
+          "client_type": 1
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdslZlXnytkXCnddEDnzldF4cqUwtcmxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343269736783-srb627btq9fr895hsb72p9j0q8tjdlc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

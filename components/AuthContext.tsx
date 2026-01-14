@@ -7,6 +7,7 @@ import { Alert, Platform } from 'react-native';
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import { ResponseType } from 'expo-auth-session';
+import { GOOGLE_CLIENT_IDS } from '../config/googleClientIds';
 
 interface AuthContextProps {
   user: User | null;
@@ -84,23 +85,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         // Native (Android/iOS): Use expo-auth-session with Google OAuth
         console.log('🔄 Starting Google OAuth for native platform...');
+        console.log('📱 Platform:', Platform.OS);
         
         // Complete the auth session for expo-auth-session
         WebBrowser.maybeCompleteAuthSession();
 
-        // Create redirect URI (Expo will use its proxy automatically in development)
+        // Create redirect URI - use app scheme for production, Expo proxy for development
         const redirectUri = AuthSession.makeRedirectUri();
+        
+        console.log('🔗 Redirect URI:', redirectUri);
 
-        // Use Firebase Web Client ID (works with Expo's proxy)
-        // To get your client ID:
-        // 1. Go to Firebase Console > Authentication > Sign-in method > Google
-        // 2. Copy the "Web client ID" (format: xxxxx.apps.googleusercontent.com)
-        // 3. Replace the value below with your actual client ID
-        // 
-        // IMPORTANT: You also need to add authorized domains in Firebase:
-        // Firebase Console > Authentication > Settings > Authorized domains
-        // Add: exp.host, expo.dev, auth.expo.io
-        const clientId = '343269736783-srb627btq9fr895hsb72p9j0q8tjdlc2.apps.googleusercontent.com'; // TODO: Replace with your actual Web Client ID from Firebase Console
+        // Use platform-specific Client ID
+        // IMPORTANT: Make sure these client IDs have the redirect URI added in Google Cloud Console
+        const clientId = Platform.OS === 'ios' 
+          ? GOOGLE_CLIENT_IDS.ios 
+          : GOOGLE_CLIENT_IDS.android;
+
+        console.log('🔑 Using Client ID for', Platform.OS, ':', clientId);
 
         // Create Google OAuth request
         const request = new AuthSession.AuthRequest({
@@ -108,6 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           scopes: ['openid', 'profile', 'email'],
           responseType: ResponseType.IdToken,
           redirectUri,
+          extraParams: {},
         });
 
         const discovery = {
@@ -117,10 +119,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         console.log('📱 Prompting for Google OAuth...');
-        const result = await request.promptAsync(discovery);
+        console.log('🔍 Request details:', {
+          clientId,
+          redirectUri,
+          scopes: ['openid', 'profile', 'email'],
+        });
+
+        const result = await request.promptAsync(discovery, {
+          showInRecents: true,
+        });
+
+        console.log('📥 OAuth result type:', result.type);
+        console.log('📥 OAuth result:', JSON.stringify(result, null, 2));
 
         if (result.type === 'success') {
-          const { id_token } = result.params;
+          const { id_token, error, error_description } = result.params;
+          
+          if (error) {
+            console.error('❌ OAuth error:', error, error_description);
+            throw new Error(`Google OAuth error: ${error} - ${error_description || ''}`);
+          }
           
           if (id_token) {
             // Sign in with Firebase using the Google credential
@@ -137,7 +155,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.log('ℹ️ User cancelled sign-in');
           setGoogleLoading(false);
           return null;
+        } else if (result.type === 'error') {
+          const errorMsg = result.error?.message || 'Unknown error';
+          console.error('❌ OAuth error result:', result.error);
+          throw new Error(`Google sign-in failed: ${errorMsg}`);
         } else {
+          console.error('❌ Unexpected result type:', result.type);
           throw new Error(`Google sign-in failed: ${result.type}`);
         }
       }
