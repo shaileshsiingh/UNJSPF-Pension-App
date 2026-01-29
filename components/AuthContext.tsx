@@ -3,11 +3,11 @@ import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAn
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { router } from 'expo-router';
-import { Alert, Platform } from 'react-native';
-import * as AuthSession from 'expo-auth-session';
-import * as WebBrowser from 'expo-web-browser';
-import { ResponseType } from 'expo-auth-session';
+import { Platform } from 'react-native';
 import { GOOGLE_CLIENT_IDS } from '../config/googleClientIds';
+
+// Import native Google Sign-In for Android/iOS
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 interface AuthContextProps {
   user: User | null;
@@ -28,6 +28,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {
+    // Configure Google Sign-In for native platforms
+    if (Platform.OS !== 'web') {
+      GoogleSignin.configure({
+        webClientId: GOOGLE_CLIENT_IDS.web, // Web client ID from Firebase Console
+        offlineAccess: true,
+        scopes: ['profile', 'email'],
+      });
+      console.log('✅ GoogleSignin configured with webClientId:', GOOGLE_CLIENT_IDS.web);
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
       console.log('Auth state changed:', firebaseUser ? firebaseUser.email : 'No user');
       setUser(firebaseUser);
@@ -57,6 +67,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    // Sign out from Google if on native
+    if (Platform.OS !== 'web') {
+      try {
+        await GoogleSignin.signOut();
+      } catch (error) {
+        console.log('Google sign out error (non-critical):', error);
+      }
+    }
     await firebaseSignOut(auth);
     router.replace('/login');
   };
@@ -83,94 +101,64 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('✅ Google sign-in successful:', result.user.email);
         return result;
       } else {
-        // Native (Android/iOS): Use expo-auth-session with Google OAuth
-        console.log('🔄 Starting Google OAuth for native platform...');
+        // Native (Android/iOS): Use @react-native-google-signin/google-signin
+        console.log('🔄 Starting native Google Sign-In...');
         console.log('📱 Platform:', Platform.OS);
-        
-        // Complete the auth session for expo-auth-session
-        WebBrowser.maybeCompleteAuthSession();
 
-        // Create redirect URI - use app scheme for production, Expo proxy for development
-        const redirectUri = AuthSession.makeRedirectUri();
-        
-        console.log('🔗 Redirect URI:', redirectUri);
-
-        // Use platform-specific Client ID
-        // IMPORTANT: Make sure these client IDs have the redirect URI added in Google Cloud Console
-        const clientId = Platform.OS === 'ios' 
-          ? GOOGLE_CLIENT_IDS.ios 
-          : GOOGLE_CLIENT_IDS.android;
-
-        console.log('🔑 Using Client ID for', Platform.OS, ':', clientId);
-
-        // Create Google OAuth request
-        const request = new AuthSession.AuthRequest({
-          clientId: clientId,
-          scopes: ['openid', 'profile', 'email'],
-          responseType: ResponseType.IdToken,
-          redirectUri,
-          extraParams: {},
-        });
-
-        const discovery = {
-          authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-          tokenEndpoint: 'https://oauth2.googleapis.com/token',
-          revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
-        };
-
-        console.log('📱 Prompting for Google OAuth...');
-        console.log('🔍 Request details:', {
-          clientId,
-          redirectUri,
-          scopes: ['openid', 'profile', 'email'],
-        });
-
-        const result = await request.promptAsync(discovery, {
-          showInRecents: true,
-        });
-
-        console.log('📥 OAuth result type:', result.type);
-        console.log('📥 OAuth result:', JSON.stringify(result, null, 2));
-
-        if (result.type === 'success') {
-          const { id_token, error, error_description } = result.params;
-          
-          if (error) {
-            console.error('❌ OAuth error:', error, error_description);
-            throw new Error(`Google OAuth error: ${error} - ${error_description || ''}`);
+        // Check if Google Play Services are available (Android only)
+        if (Platform.OS === 'android') {
+          try {
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            console.log('✅ Google Play Services available');
+          } catch (error: any) {
+            console.error('❌ Google Play Services error:', error);
+            throw new Error('Google Play Services is not available on this device');
           }
-          
-          if (id_token) {
-            // Sign in with Firebase using the Google credential
-            console.log('✅ Got ID token, signing in with Firebase...');
-            const googleCredential = GoogleAuthProvider.credential(id_token);
-            const firebaseResult = await signInWithCredential(auth, googleCredential);
-            setGoogleLoading(false);
-            console.log('✅ Google sign-in successful:', firebaseResult.user.email);
-            return firebaseResult;
-          } else {
-            throw new Error('No ID token received from Google');
-          }
-        } else if (result.type === 'cancel') {
-          console.log('ℹ️ User cancelled sign-in');
-          setGoogleLoading(false);
-          return null;
-        } else if (result.type === 'error') {
-          const errorMsg = result.error?.message || 'Unknown error';
-          console.error('❌ OAuth error result:', result.error);
-          throw new Error(`Google sign-in failed: ${errorMsg}`);
-        } else {
-          console.error('❌ Unexpected result type:', result.type);
-          throw new Error(`Google sign-in failed: ${result.type}`);
         }
+
+        // Sign in with Google
+        console.log('📱 Prompting for Google Sign-In...');
+        const signInResult = await GoogleSignin.signIn();
+        console.log('✅ Google Sign-In result:', JSON.stringify(signInResult, null, 2));
+
+        // Get the ID token
+        const idToken = signInResult.data?.idToken;
+
+        if (!idToken) {
+          console.error('❌ No ID token received from Google Sign-In');
+          throw new Error('No ID token received from Google Sign-In');
+        }
+
+        console.log('✅ Got ID token, signing in with Firebase...');
+
+        // Create a Google credential with the token
+        const googleCredential = GoogleAuthProvider.credential(idToken);
+
+        // Sign in with Firebase
+        const firebaseResult = await signInWithCredential(auth, googleCredential);
+        setGoogleLoading(false);
+        console.log('✅ Google sign-in successful:', firebaseResult.user.email);
+        return firebaseResult;
       }
     } catch (error: any) {
       console.error('❌ Google sign-in error:', error);
       setGoogleLoading(false);
 
+      // Handle specific error codes from @react-native-google-signin
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('ℹ️ User cancelled sign-in');
+        return null;
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('ℹ️ Sign-in already in progress');
+        return null;
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        throw new Error('Google Play Services is not available. Please install or update it.');
+      }
+
+      // Handle Firebase auth errors
       if (error.code === 'auth/popup-closed-by-user' || error.message?.includes('cancel')) {
         console.log('ℹ️ User cancelled sign-in');
-        return null; // Don't throw error for user cancellation
+        return null;
       }
 
       // Provide helpful error message
