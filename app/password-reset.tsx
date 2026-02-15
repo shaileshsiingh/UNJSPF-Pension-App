@@ -34,7 +34,7 @@ export default function PasswordResetScreen() {
 
     // Email validation function
     const validateEmail = (email: string) => {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!email) {
             return 'Email is required';
         }
