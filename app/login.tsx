@@ -217,6 +217,11 @@ export default function LoginScreen() {
                 {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
               </View>
 
+              {/* Forgot Password Link */}
+              <Pressable onPress={() => router.push('/password-reset')} style={{ alignSelf: 'flex-end', marginBottom: 16 }}>
+                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+              </Pressable>
+
               <Pressable
                 style={[styles.button, loading ? styles.buttonDisabled : null]}
                 onPress={handleLogin}
@@ -469,6 +474,14 @@ const styles = StyleSheet.create({
     color: '#3c4043',
     fontWeight: '500',
     fontSize: isSmallScreen ? 14 : 15,
+    fontFamily: getRobotoFont('medium'),
+  },
+
+  // Forgot password link
+  forgotPasswordText: {
+    color: '#2563EB',
+    fontSize: 14,
+    fontWeight: '600',
     fontFamily: getRobotoFont('medium'),
   },
 

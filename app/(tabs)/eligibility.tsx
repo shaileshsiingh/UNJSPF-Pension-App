@@ -26,7 +26,7 @@ export default function EligibilityScreen() {
   // Load profile data on mount and update currentAge and yearsOfService
   const [currentAgeParts, setCurrentAgeParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
   const [serviceLengthParts, setServiceLengthParts] = useState<{ years: number, months: number, days: number }>({ years: 0, months: 0, days: 0 });
-  
+
   // Helper to get current date in DD-MM-YYYY format
   function getCurrentDateDMY(): string {
     const today = new Date();
@@ -526,7 +526,7 @@ export default function EligibilityScreen() {
                 <View style={styles.stepNumber}>
                   <Text style={styles.stepNumberText}>4</Text>
                 </View>
-                <Text style={styles.stepText}>Upload Payment Instructions on PENS.E/6 Form (find this under E-Forms section of your MSS)- page 2 for immediate disbursement or page 1 if you opt to defer for upto 36 months</Text>
+                <Text style={styles.stepText}>Upload Payment Instructions on PENS.E/6 Form (find this under E-Forms section of your MSS)- page 2 for immediate disbursement or page 1 if you opt to defer for up to 36 months</Text>
               </View>
               <View style={styles.stepItem}>
                 <View style={styles.stepNumber}>
@@ -624,7 +624,7 @@ export default function EligibilityScreen() {
           </View>
           <Text style={styles.title}>Pension Snapshot</Text>
           <Text style={styles.subtitle}>
-            Your best availabale options and scenarios.
+            Your best available options and scenarios.
           </Text>
         </View>
 
@@ -664,7 +664,10 @@ export default function EligibilityScreen() {
               <View style={styles.sliderContainer}>
                 <CustomSlider
                   value={Math.min(yearsOfService, 38.75)}
-                  onValueChange={val => setYearsOfService(Math.min(val, 38.75))}
+                  onValueChange={val => {
+                    const maxService = Math.max(0, currentAge - 18);
+                    setYearsOfService(Math.min(val, 38.75, maxService));
+                  }}
                   min={0}
                   max={38.75}
                   step={0.1}
@@ -704,7 +707,13 @@ export default function EligibilityScreen() {
               <View style={styles.sliderContainer}>
                 <CustomSlider
                   value={currentAge}
-                  onValueChange={setCurrentAge}
+                  onValueChange={val => {
+                    setCurrentAge(val);
+                    // Adjust service years if age decreases such that service > age - 18
+                    if (yearsOfService > val - 18) {
+                      setYearsOfService(Math.max(0, val - 18));
+                    }
+                  }}
                   min={18}
                   max={65}
                   step={1}

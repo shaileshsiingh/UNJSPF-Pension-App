@@ -15,9 +15,9 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
-import { 
-  Shield, 
-  Building, 
+import {
+  Shield,
+  Building,
   Calendar,
   ChevronDown,
   X,
@@ -257,6 +257,15 @@ export default function ProfileScreen() {
     yearsOfService: '',
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Validation State
+  const [dobError, setDobError] = useState('');
+  const [entryError, setEntryError] = useState('');
+  const [separationError, setSeparationError] = useState('');
+  const [chronologyError, setChronologyError] = useState('');
+  const [serviceAgeError, setServiceAgeError] = useState('');
+
   const [showOrgModal, setShowOrgModal] = useState(false);
   const [showRetirementInfo, setShowRetirementInfo] = useState(false);
   const scaleAnim = new Animated.Value(1);
@@ -277,9 +286,9 @@ export default function ProfileScreen() {
         }),
       ])
     );
-    
+
     pulseAnimation.start();
-    
+
     return () => pulseAnimation.stop();
   }, []);
   // When dateOfBirth changes, always set dateOfSeparation to MAS
@@ -292,6 +301,121 @@ export default function ProfileScreen() {
     }
   }, [formData.dateOfBirth]);
 
+  // Validation Effect
+  useEffect(() => {
+    let isValid = true;
+    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+
+    // 1. Format Validation
+    if (formData.dateOfBirth && formData.dateOfBirth.length === 10) {
+      if (!dateRegex.test(formData.dateOfBirth)) {
+        setDobError('Invalid date format. Use DD-MM-YYYY');
+        isValid = false;
+      } else {
+        const parts = formData.dateOfBirth.split('-');
+        const d = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10);
+        const y = parseInt(parts[2], 10);
+        const date = new Date(y, m - 1, d);
+        if (date.getFullYear() !== y || date.getMonth() + 1 !== m || date.getDate() !== d) {
+          setDobError('Invalid date value');
+          isValid = false;
+        } else if (y < 1900 || y > new Date().getFullYear()) {
+          setDobError('Invalid year');
+          isValid = false;
+        } else {
+          setDobError('');
+        }
+      }
+    } else {
+      setDobError('');
+    }
+
+    if (formData.dateOfEntry && formData.dateOfEntry.length === 10) {
+      if (!dateRegex.test(formData.dateOfEntry)) {
+        setEntryError('Invalid date format. Use DD-MM-YYYY');
+        isValid = false;
+      } else {
+        setEntryError('');
+      }
+    } else {
+      setEntryError('');
+    }
+
+    if (formData.dateOfSeparation && formData.dateOfSeparation.length === 10) {
+      if (!dateRegex.test(formData.dateOfSeparation)) {
+        setSeparationError('Invalid date format. Use DD-MM-YYYY');
+        isValid = false;
+      } else {
+        setSeparationError('');
+      }
+    } else {
+      setSeparationError('');
+    }
+
+    // 2. Chronological Validation
+    if (isValid && formData.dateOfBirth && formData.dateOfEntry && !dobError && !entryError) {
+      const dob = parseDMY(formData.dateOfBirth);
+      const entry = parseDMY(formData.dateOfEntry);
+      if (dob && entry) {
+        if (entry <= dob) {
+          setChronologyError('Date of Entry must be after Date of Birth');
+        } else if (entry.getFullYear() - dob.getFullYear() < 18) {
+          // Warning for very young entry, but maybe not hard error? Enforcing 18 for now based on previous requests
+          setChronologyError('You must be at least 18 years old at entry');
+        } else {
+          setChronologyError('');
+        }
+      }
+    } else {
+      setChronologyError('');
+    }
+
+    if (isValid && formData.dateOfEntry && formData.dateOfSeparation && !entryError && !separationError && !chronologyError) {
+      const entry = parseDMY(formData.dateOfEntry);
+      const sep = parseDMY(formData.dateOfSeparation);
+      if (entry && sep) {
+        if (sep <= entry) {
+          setChronologyError('Separation date must be after entry date');
+        } else {
+          // Clear if no other chrono error exists
+          // Note: This logic might overwrite the previous check. Better to sequence them.
+          // However, if we reached here, the previous check passed or wasn't applicable.
+          // Let's refine:
+          if (entry.getFullYear() - (parseDMY(formData.dateOfBirth)?.getFullYear() || 0) >= 18) {
+            setChronologyError('');
+          }
+        }
+      }
+    }
+
+    // 3. Service vs Age Logic
+    if (isValid && formData.dateOfBirth && formData.dateOfEntry && formData.dateOfSeparation && !dobError && !entryError && !separationError) {
+      const dob = parseDMY(formData.dateOfBirth);
+      const sep = parseDMY(formData.dateOfSeparation);
+      const entry = parseDMY(formData.dateOfEntry);
+
+      if (dob && sep && entry) {
+        let ageAtSep = sep.getFullYear() - dob.getFullYear();
+        const m = sep.getMonth() - dob.getMonth();
+        if (m < 0 || (m === 0 && sep.getDate() < dob.getDate())) {
+          ageAtSep--;
+        }
+
+        const yearsOfService = getYearsOfServiceFloat(formData.dateOfEntry, formData.dateOfSeparation);
+
+        if (yearsOfService > Math.max(0, ageAtSep - 18)) {
+          setServiceAgeError(`Service length (${yearsOfService.toFixed(1)}y) cannot exceed Age - 18`);
+        } else {
+          setServiceAgeError('');
+        }
+      }
+    } else {
+      setServiceAgeError('');
+    }
+
+  }, [formData, dobError, entryError, separationError]);
+
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -300,6 +424,7 @@ export default function ProfileScreen() {
   };
 
   const handleSave = async () => {
+    setIsLoading(true);
     // Calculate length of contributory service
     const serviceLength = formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation));
 
@@ -323,6 +448,18 @@ export default function ProfileScreen() {
         'Please fill in all required fields: ' + missingFields.join(', '),
         [{ text: 'OK' }]
       );
+      setIsLoading(false);
+      return;
+    }
+
+    // Check for Validation Errors
+    if (dobError || entryError || separationError || chronologyError || serviceAgeError) {
+      Alert.alert(
+        'Validation Error',
+        'Please fix the errors highlighted in red before proceeding.',
+        [{ text: 'OK' }]
+      );
+      setIsLoading(false);
       return;
     }
 
@@ -336,7 +473,7 @@ export default function ProfileScreen() {
       dateOfSeparation: formatDateDMY(formData.dateOfSeparation),
       serviceLength,
     };
-    
+
     try {
       await AsyncStorage.setItem('profileData', JSON.stringify(profileToSave));
     } catch (e) {
@@ -363,13 +500,14 @@ export default function ProfileScreen() {
         serviceLength,
       }
     });
+    setIsLoading(false);
   };
 
   // Use formattedEntry and formattedSeparation for calculation
   const formattedEntry = formatDateDMY(formData.dateOfEntry);
   const formattedSeparation = formatDateDMY(formData.dateOfSeparation);
 
-  const isFormValid = 
+  const isFormValid =
     (formData.firstName || auth.currentUser?.displayName) &&
     (formData.lastName || auth.currentUser?.displayName) &&
     formData.organization &&
@@ -382,41 +520,52 @@ export default function ProfileScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
-              <View style={{ padding: 16, gap: 16 }}>
-        
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => router.push('/(tabs)')}
-          >
- <View style={{ transform: [{ scaleX: -1 }] }}>
-          <LogOut size={24} color="#2563EB" strokeWidth={2} />
-        </View>
-      </TouchableOpacity>
-          <View style={styles.headerContent}>
-            <View style={styles.headerIconContainer}>
-              <Shield size={32} color="#2563EB" strokeWidth={2} />
+        <View style={{ padding: 16, gap: 16 }}>
+
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => router.push('/(tabs)')}
+            >
+              <View style={{ transform: [{ scaleX: -1 }] }}>
+                <LogOut size={24} color="#2563EB" strokeWidth={2} />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.headerContent}>
+              <View style={styles.headerIconContainer}>
+                <Shield size={32} color="#2563EB" strokeWidth={2} />
+              </View>
+              <Text style={styles.headerTitle}>Pension Calculator</Text>
+              <Text style={styles.headerSubtitle}>
+                Retirement eligibility dates      </Text>
             </View>
-            <Text style={styles.headerTitle}>Pension Calculator</Text>
-            <Text style={styles.headerSubtitle}>
-            Retirement eligibility dates      </Text>
           </View>
         </View>
-</View>
         {/* Form */}
         <View style={styles.form}>
+          {/* Validation Errors Display */}
+          {(dobError || entryError || separationError || chronologyError || serviceAgeError) && (
+            <View style={styles.errorContainer}>
+              {dobError ? <Text style={styles.errorText}>• {dobError}</Text> : null}
+              {entryError ? <Text style={styles.errorText}>• {entryError}</Text> : null}
+              {separationError ? <Text style={styles.errorText}>• {separationError}</Text> : null}
+              {chronologyError ? <Text style={styles.errorText}>• {chronologyError}</Text> : null}
+              {serviceAgeError ? <Text style={styles.errorText}>• {serviceAgeError}</Text> : null}
+            </View>
+          )}
+
           {/* Personal Information */}
           <View style={styles.section}>
             {/* <View style={styles.sectionHeader}>
               <User size={20} color="#2563EB" strokeWidth={2} />
               <Text style={styles.sectionTitle}>Your Information</Text>
             </View> */}
-            
+
             <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.shortLabel]}>First Name:</Text>  
+              <Text style={[styles.inlineLabel, styles.shortLabel]}>First Name:</Text>
               <TextInput
                 style={[styles.inlineInput, styles.shortLabelInput]}
-                value={formData.firstName||auth.currentUser?.displayName?.split(' ')[0]}
+                value={formData.firstName || auth.currentUser?.displayName?.split(' ')[0]}
                 onChangeText={(value) => handleInputChange('firstName', value)}
                 placeholder="Enter your first name"
                 placeholderTextColor="#9CA3AF"
@@ -427,7 +576,7 @@ export default function ProfileScreen() {
               <Text style={[styles.inlineLabel, styles.shortLabel]}>Last Name:</Text>
               <TextInput
                 style={[styles.inlineInput, styles.shortLabelInput]}
-                value={formData.lastName||auth.currentUser?.displayName?.split(' ')[1]}
+                value={formData.lastName || auth.currentUser?.displayName?.split(' ')[1]}
                 onChangeText={(value) => handleInputChange('lastName', value)}
                 placeholder="Enter your last name"
                 placeholderTextColor="#9CA3AF"
@@ -457,183 +606,183 @@ export default function ProfileScreen() {
                 ) : null}
               </View>
             </View>
-          
 
-          {/* Employment Information */}
-          <View >
-            {/* <View style={styles.sectionHeader}>
+
+            {/* Employment Information */}
+            <View >
+              {/* <View style={styles.sectionHeader}>
               <Building size={20} color="#2563EB" strokeWidth={2} />
               <Text style={styles.sectionTitle}>Your Employment History</Text>
             </View> */}
-            
-            {/* Participating Organization Dropdown */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label1}>Employing Organization (select from the list of 25)</Text>
-              <TouchableOpacity
-                style={styles.dropdownInput}
-                onPress={() => setShowOrgModal(true)}
-              >
-                <Text style={[styles.dropdownText, !formData.organization && styles.placeholderText]}>
-                  {formData.organization || 'Select your Organization'}
-                </Text>
-                <ChevronDown size={20} color="#6B7280" strokeWidth={2} />
-              </TouchableOpacity>
-            </View>
 
-            {/* Date of Entry into Pension Fund Participation */}
-            <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry into Fund:</Text>
-              <View style={{ position: 'relative', flex: 1 }}>
+              {/* Participating Organization Dropdown */}
+              <View style={styles.inputGroup}>
+                <Text style={styles.label1}>Employing Organization (select from the list of 25)</Text>
+                <TouchableOpacity
+                  style={styles.dropdownInput}
+                  onPress={() => setShowOrgModal(true)}
+                >
+                  <Text style={[styles.dropdownText, !formData.organization && styles.placeholderText]}>
+                    {formData.organization || 'Select your Organization'}
+                  </Text>
+                  <ChevronDown size={20} color="#6B7280" strokeWidth={2} />
+                </TouchableOpacity>
+              </View>
+
+              {/* Date of Entry into Pension Fund Participation */}
+              <View style={styles.inlineInputGroup}>
+                <Text style={[styles.inlineLabel, styles.longLabel]}>Date of Entry into Fund:</Text>
+                <View style={{ position: 'relative', flex: 1 }}>
+                  <TextInput
+                    style={[styles.inlineInput, styles.longLabelInput]}
+                    value={formData.dateOfEntry}
+                    onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
+                    placeholder="DD-MM-YYYY"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="numbers-and-punctuation"
+                    maxLength={10}
+                  />
+                  {formData.dateOfEntry ? (
+                    <TouchableOpacity
+                      style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                      onPress={() => handleInputChange('dateOfEntry', '')}
+                      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    >
+                      <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+              </View>
+              <View style={styles.helpTextContainer}>
+                <Text style={styles.helpText}>This is the date you began your UN service</Text>
+              </View>
+
+              {/* Date of Separation */}
+              <View style={styles.inlineInputGroup}>
+                <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Preferred Separation date:</Text>
+                <View style={{ position: 'relative', flex: 1 }}>
+                  <TextInput
+                    style={[styles.inlineInput, styles.veryLongLabelInput]}
+                    value={formData.dateOfSeparation}
+                    onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
+                    placeholder="DD-MM-YYYY"
+                    placeholderTextColor="#9CA3AF"
+                    keyboardType="numbers-and-punctuation"
+                    maxLength={10}
+                  />
+                  {formData.dateOfSeparation ? (
+                    <TouchableOpacity
+                      style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
+                      onPress={() => handleInputChange('dateOfSeparation', '')}
+                      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    >
+                      <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+              </View>
+              <View style={styles.helpTextContainer}>
+                <Text style={styles.helpText}>This is your mandatory separation date. You may still choose when to separate—enter your preferred date if different.</Text>
+              </View>
+
+              {/* Length of Contributory Service (auto-calc) */}
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Length of Your Contributory Service (Calculated)</Text>
                 <TextInput
-                  style={[styles.inlineInput, styles.longLabelInput]}
-                  value={formData.dateOfEntry}
-                  onChangeText={(value) => handleInputChange('dateOfEntry', formatDateInput(value))}
-                  placeholder="DD-MM-YYYY"
+                  style={[styles.input, styles.readOnlyInput]}
+                  value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
+                  editable={false}
+                  placeholder="Years, months, days will be calculated automatically"
                   placeholderTextColor="#9CA3AF"
-                  keyboardType="numbers-and-punctuation"
-                  maxLength={10}
                 />
-                {formData.dateOfEntry ? (
-                  <TouchableOpacity
-                    style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
-                    onPress={() => handleInputChange('dateOfEntry', '')}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                  >
-                    <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
-                  </TouchableOpacity>
-                ) : null}
+                <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
               </View>
             </View>
-            <View style={styles.helpTextContainer}>
-              <Text style={styles.helpText}>This is the date you began your UN service</Text>
-            </View>
-
-            {/* Date of Separation */}
-            <View style={styles.inlineInputGroup}>
-              <Text style={[styles.inlineLabel, styles.veryLongLabel]}>Preferred Separation date:</Text>
-              <View style={{ position: 'relative', flex: 1 }}>
-                <TextInput
-                  style={[styles.inlineInput, styles.veryLongLabelInput]}
-                  value={formData.dateOfSeparation}
-                  onChangeText={(value) => handleInputChange('dateOfSeparation', formatDateInput(value))}
-                  placeholder="DD-MM-YYYY"
-                  placeholderTextColor="#9CA3AF"
-                  keyboardType="numbers-and-punctuation"
-                  maxLength={10}
-                />
-                {formData.dateOfSeparation ? (
-                  <TouchableOpacity
-                    style={{ position: 'absolute', right: 12, top: 16, zIndex: 2 }}
-                    onPress={() => handleInputChange('dateOfSeparation', '')}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                  >
-                    <Text style={{ fontSize: 18, color: '#9CA3AF' }}>×</Text>
-                  </TouchableOpacity>
-                ) : null}
-              </View>
-            </View>
-            <View style={styles.helpTextContainer}>
-              <Text style={styles.helpText}>This is your mandatory separation date. You may still choose when to separate—enter your preferred date if different.</Text>
-            </View>
-
-            {/* Length of Contributory Service (auto-calc) */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Length of Your Contributory Service (Calculated)</Text>
-              <TextInput
-                style={[styles.input, styles.readOnlyInput]}
-                value={formatYearsMonthsDays(getYearsOfServiceFloat(formattedEntry, formattedSeparation))}
-                editable={false}
-                placeholder="Years, months, days will be calculated automatically"
-                placeholderTextColor="#9CA3AF"
-              />
-              <Text style={styles.helpText}>From Date of Entry to Date of Separation</Text>
-            </View>
-          </View>
           </View>
           {/* Retirement Information */}
           <View style={styles.retirementSection}>
-                         <View style={styles.retirementHeader}>
-               <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary {'\n'} (Calculated)</Text>
-             </View>
+            <View style={styles.retirementHeader}>
+              <Text style={styles.retirementSectionTitle}>Retirement eligibility dates summary {'\n'} (Calculated)</Text>
+            </View>
 
-            
-              <View style={styles.retirementInfoCard}>
-                <View style={styles.retirementInfoItem}>
-                  <Text style={styles.retirementInfoLabel}>Mandatory Age of Separation (MAS): </Text>
-                  <Text style={styles.retirementInfoValue}>
-                    {(() => {
-                      const dob = formData.dateOfBirth;
-                      const entry = formData.dateOfEntry;
-                      const masDate = calculateMAS(dob);
-                      let masAge = 65;
-                      const entryDate = parseDMY(entry);
-                      if (entryDate) {
-                        const entry1990 = new Date(1990, 0, 1);
-                        const entry2014 = new Date(2014, 0, 1);
-                        if (entryDate < entry1990) masAge = 65;
-                        else if (entryDate < entry2014) masAge = 65;
-                      }
-                      return masDate ? `${masAge} years on ${masDate}` : '—';
-                    })()}
-                  </Text>
-                </View>
-                <View style={styles.retirementInfoItem}>
-                  <Text style={styles.retirementInfoLabel}>Normal Retirement Age (NRA): </Text>
-                  <Text style={styles.retirementInfoValue}>
-                    {(() => {
-                      const dob = formData.dateOfBirth;
-                      const entry = formData.dateOfEntry;
-                      const nraDate = calculateNRA(dob, entry);
-                      let nraAge = 65;
-                      const entryDate = parseDMY(entry);
-                      if (entryDate) {
-                        const entry1990 = new Date(1990, 0, 1);
-                        const entry2014 = new Date(2014, 0, 1);
-                        if (entryDate < entry1990) nraAge = 60;
-                        else if (entryDate < entry2014) nraAge = 62;
-                      }
-                      return nraDate ? `${nraAge} years on ${nraDate}` : '—';
-                    })()}
-                  </Text>
-                </View>
-                <View style={styles.retirementInfoItem}>
-                  <Text style={styles.retirementInfoLabel}>Early Retirement Age (ERA): </Text>
-                  <Text style={styles.retirementInfoValue}>
-                    {(() => {
-                      const dob = formData.dateOfBirth;
-                      const entry = formData.dateOfEntry;
-                      const eraDate = calculateERA(dob, entry);
-                      let eraAge = 58;
-                      const entryDate = parseDMY(entry);
-                      if (entryDate) {
-                        const entry2014 = new Date(2014, 0, 1);
-                        if (entryDate < entry2014) eraAge = 55;
-                      }
-                      return eraDate ? `${eraAge} years on ${eraDate}` : '—';
-                    })()}
-                  </Text>
-                </View>
-                <View style={styles.retirementInfoItem}>
-                  <Text style={styles.retirementInfoLabel}>Deferred Retirement Age (DRA): </Text>
-                  <Text style={styles.retirementInfoValue}>
-                    {(() => {
-                      const dob = formData.dateOfBirth;
-                      const entry = formData.dateOfEntry;
-                      const entryDate = parseDMY(entry);
-                      if (!dob || !entryDate) return '—';
-                      let eraAge = 58;
+
+            <View style={styles.retirementInfoCard}>
+              <View style={styles.retirementInfoItem}>
+                <Text style={styles.retirementInfoLabel}>Mandatory Age of Separation (MAS): </Text>
+                <Text style={styles.retirementInfoValue}>
+                  {(() => {
+                    const dob = formData.dateOfBirth;
+                    const entry = formData.dateOfEntry;
+                    const masDate = calculateMAS(dob);
+                    let masAge = 65;
+                    const entryDate = parseDMY(entry);
+                    if (entryDate) {
+                      const entry1990 = new Date(1990, 0, 1);
                       const entry2014 = new Date(2014, 0, 1);
-                      if (entryDate < entry2014) eraAge = 55;
-                      const eraDate = calculateERA(dob, entry);
-                      return eraDate ? `Any age younger than ${eraAge}. Before ${eraDate}` : '—';
-                    })()}
-                  </Text>
-                </View>
-                <Text style={styles.retirementHelpText}>
-                Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on when you joined the UNJSPF; Unless stated otherwise, your retirement date is your last contract day or the last day of your birth month (the day before if born on the 1st). If unsure, check your pension statement or contact UNJSPF.
+                      if (entryDate < entry1990) masAge = 65;
+                      else if (entryDate < entry2014) masAge = 65;
+                    }
+                    return masDate ? `${masAge} years on ${masDate}` : '—';
+                  })()}
                 </Text>
               </View>
-            
+              <View style={styles.retirementInfoItem}>
+                <Text style={styles.retirementInfoLabel}>Normal Retirement Age (NRA): </Text>
+                <Text style={styles.retirementInfoValue}>
+                  {(() => {
+                    const dob = formData.dateOfBirth;
+                    const entry = formData.dateOfEntry;
+                    const nraDate = calculateNRA(dob, entry);
+                    let nraAge = 65;
+                    const entryDate = parseDMY(entry);
+                    if (entryDate) {
+                      const entry1990 = new Date(1990, 0, 1);
+                      const entry2014 = new Date(2014, 0, 1);
+                      if (entryDate < entry1990) nraAge = 60;
+                      else if (entryDate < entry2014) nraAge = 62;
+                    }
+                    return nraDate ? `${nraAge} years on ${nraDate}` : '—';
+                  })()}
+                </Text>
+              </View>
+              <View style={styles.retirementInfoItem}>
+                <Text style={styles.retirementInfoLabel}>Early Retirement Age (ERA): </Text>
+                <Text style={styles.retirementInfoValue}>
+                  {(() => {
+                    const dob = formData.dateOfBirth;
+                    const entry = formData.dateOfEntry;
+                    const eraDate = calculateERA(dob, entry);
+                    let eraAge = 58;
+                    const entryDate = parseDMY(entry);
+                    if (entryDate) {
+                      const entry2014 = new Date(2014, 0, 1);
+                      if (entryDate < entry2014) eraAge = 55;
+                    }
+                    return eraDate ? `${eraAge} years on ${eraDate}` : '—';
+                  })()}
+                </Text>
+              </View>
+              <View style={styles.retirementInfoItem}>
+                <Text style={styles.retirementInfoLabel}>Deferred Retirement Age (DRA): </Text>
+                <Text style={styles.retirementInfoValue}>
+                  {(() => {
+                    const dob = formData.dateOfBirth;
+                    const entry = formData.dateOfEntry;
+                    const entryDate = parseDMY(entry);
+                    if (!dob || !entryDate) return '—';
+                    let eraAge = 58;
+                    const entry2014 = new Date(2014, 0, 1);
+                    if (entryDate < entry2014) eraAge = 55;
+                    const eraDate = calculateERA(dob, entry);
+                    return eraDate ? `Any age younger than ${eraAge}. Before ${eraDate}` : '—';
+                  })()}
+                </Text>
+              </View>
+              <Text style={styles.retirementHelpText}>
+                Tip: Your retirement eligibility (Normal, Early, or Deferred) depends on when you joined the UNJSPF; Unless stated otherwise, your retirement date is your last contract day or the last day of your birth month (the day before if born on the 1st). If unsure, check your pension statement or contact UNJSPF.
+              </Text>
+            </View>
+
           </View>
 
           {/* Save Button */}
@@ -646,24 +795,26 @@ export default function ProfileScreen() {
 
           {/* Advanced Calculator Section */}
           <View style={styles.section}>
-  <View style={{ margin: 16 }}>
-    <LinearGradient
-      colors={['#fbbf24', '#f59e0b', '#d97706']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
-    >
-      <TouchableOpacity 
-        style={styles.ctaButtonInner}
-        onPress={handleSave}
-        disabled={!isFormValid}
-      >
-        <Text style={styles.ctaButtonText}>Save and move to Pension Calculator</Text>
-      </TouchableOpacity>
-    </LinearGradient>
-  </View>
-</View>
-</View>
+            <View style={{ margin: 16 }}>
+              <LinearGradient
+                colors={['#fbbf24', '#f59e0b', '#d97706']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={[styles.ctaButton, !isFormValid && { opacity: 0.5 }]}
+              >
+                <TouchableOpacity
+                  style={styles.ctaButtonInner}
+                  onPress={handleSave}
+                  disabled={!isFormValid || isLoading}
+                >
+                  <Text style={styles.ctaButtonText}>
+                    {isLoading ? 'Saving...' : 'Continue to Calculator'}
+                  </Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            </View>
+          </View>
+        </View>
 
       </ScrollView>
 
@@ -685,7 +836,7 @@ export default function ProfileScreen() {
                 <X size={24} color="#6B7280" strokeWidth={2} />
               </TouchableOpacity>
             </View>
-            
+
             <ScrollView style={styles.modalScrollView}>
               {organizations.map((org, index) => (
                 <TouchableOpacity
@@ -793,6 +944,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // Validation Error Styles
+  errorContainer: {
+    backgroundColor: '#FEF2F2',
+    borderWidth: 1,
+    borderColor: '#FAC7C7',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    marginHorizontal: 4,
+  },
+  errorText: {
+    color: '#DC2626',
+    fontSize: 13,
+    marginBottom: 2,
+  },
   ctaButtonText: {
     color: '#ffffff',
     fontSize: 17,
@@ -824,7 +990,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
   },
- 
+
   retirementHeader: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -966,7 +1132,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     // marginLeft: 4,
     marginBottom: 12,
-    fontStyle:'italic'
+    fontStyle: 'italic'
   },
   helpTextContainer: {
     marginBottom: 16,
@@ -978,7 +1144,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginLeft: 4,
     fontStyle: 'italic',
-    textAlign:'justify'
+    textAlign: 'justify'
   },
   saveSection: {
     marginTop: 10,

@@ -11,7 +11,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckSquare, LogOut } from 'lucide-react-native';
 import { router } from "expo-router";
 
-type Status = 'pending' | 'in progress' | 'done';
+type Status = 'pending' | 'in progress' | 'done' | 'not-applicable';
+
 
 interface ChecklistItem {
   id: string;
@@ -32,12 +33,14 @@ const StatusPill = ({ status }: { status: Status }) => {
     'pending': '#E5E7EB',
     'in progress': '#FBBF24',
     'done': '#10B981',
+    'not-applicable': '#9CA3AF',
   }[status];
 
   const textColor = {
     'pending': '#374151',
     'in progress': '#92400E',
     'done': '#065F46',
+    'not-applicable': '#4B5563',
   }[status];
   return (
     <View style={[styles.statusPill, { backgroundColor: `${bgColor}40` }]}>
@@ -137,13 +140,16 @@ export default function PrepareScreen() {
                 ? 'in progress'
                 : i.status === 'in progress'
                   ? 'done'
-                  : 'pending'
+                  : i.status === 'done'
+                    ? 'not-applicable'
+                    : 'pending'
             }
             : i
         )
       }))
     );
   };
+
 
   const setAll = (status: Status) => {
     setSections(prevSections =>
@@ -170,8 +176,9 @@ export default function PrepareScreen() {
       section.items.forEach(item => {
         if (item.status === 'done') done++;
         else if (item.status === 'in progress') inprog++;
-        else pending++;
-        total++;
+        else if (item.status === 'pending') pending++;
+        // Only count items that are not 'not-applicable' in the total
+        if (item.status !== 'not-applicable') total++;
       });
     });
 
@@ -203,8 +210,8 @@ export default function PrepareScreen() {
           >
             <View style={{ transform: [{ scaleX: -1 }] }}>
               <LogOut size={24} color="#2563EB" strokeWidth={2} />
-          </View>
-        </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
           <View style={styles.headerIconContainer}>
             <CheckSquare size={32} color="#2563EB" strokeWidth={2} />
           </View>

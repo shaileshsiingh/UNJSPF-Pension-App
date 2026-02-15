@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithCredential } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithCredential, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { router } from 'expo-router';
@@ -18,7 +18,9 @@ interface AuthContextProps {
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<any>;
   signInWithApple: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
 }
+
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -171,6 +173,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     throw new Error('Apple sign-in not implemented yet');
   };
 
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
+  };
+
   const value = {
     user,
     loading,
@@ -180,7 +186,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signOut,
     signInWithGoogle,
     signInWithApple,
+    resetPassword,
   };
+
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

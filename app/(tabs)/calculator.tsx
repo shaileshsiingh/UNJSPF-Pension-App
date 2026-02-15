@@ -119,6 +119,79 @@ function parseDateDMY(dateString: string) {
   return new Date(year, month - 1, day);
 }
 
+// NEW: Validate date is in correct DD-MM-YYYY format
+function isValidDateFormat(dateString: string): boolean {
+  if (!dateString) return false;
+  const parts = dateString.split('-');
+  if (parts.length !== 3) return false;
+
+  const [day, month, year] = parts.map(Number);
+
+  // Check if all parts are numbers
+  if ([day, month, year].some(isNaN)) return false;
+
+  // Check ranges
+  if (day < 1 || day > 31) return false;
+  if (month < 1 || month > 12) return false;
+  if (year < 1900 || year > 2100) return false;
+
+  // Check if date is valid (e.g., not Feb 30)
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day;
+}
+
+// NEW: Validate chronological order of dates
+function validateDateChronology(dob: string, entryDate: string, separationDate: string): string | null {
+  if (!dob || !entryDate || !separationDate) return null;
+
+  const dobDate = parseDateDMY(dob);
+  const entryDateObj = parseDateDMY(entryDate);
+  const sepDate = parseDateDMY(separationDate);
+
+  if (!dobDate || !entryDateObj || !sepDate) {
+    return 'One or more dates are invalid';
+  }
+
+  // Check DOB < Entry Date
+  if (dobDate >= entryDateObj) {
+    return 'Date of Birth must be before Date of Entry';
+  }
+
+  // Check Entry Date < Separation Date
+  if (entryDateObj >= sepDate) {
+    return 'Date of Entry must be before Date of Separation';
+  }
+
+  // Check age at entry is at least 18
+  const ageAtEntry = calculateAgeAtRetirement(dob, entryDate);
+  if (ageAtEntry < 18) {
+    return 'Age at entry must be at least 18 years';
+  }
+
+  /* 
+  // Check separation date is not in future (more than 2 years) - REMOVED per user request
+  const today = new Date();
+  const maxFutureDate = new Date(today.getFullYear() + 2, today.getMonth(), today.getDate());
+  if (sepDate > maxFutureDate) {
+    return 'Separation date cannot be more than 2 years in the future';
+  }
+  */
+
+  return null; // No errors
+}
+
+//NEW: Validate service length against age
+function validateServiceVsAge(yearsOfService: number, ageAtRetirement: number): string | null {
+  const maxPossibleService = ageAtRetirement - 18;
+  if (yearsOfService > maxPossibleService) {
+    return `Service length (${yearsOfService.toFixed(1)} years) cannot exceed age minus 18 (${maxPossibleService} years)`;
+  }
+  return null;
+}
+
+
 // Helper to calculate years of service (float)
 function calculateYearsOfService(entry: string, separation: string) {
   if (!entry || !separation) return 0;
@@ -268,12 +341,13 @@ function calculateWithdrawalSettlement(
 }
 
 // Determine benefit eligibility and type - CORRECTED LOGIC
+// Returns primary benefit type AND all applicable benefits for vested users
 function determineBenefitType(
   ageAtSeparation: number,
   yearsOfService: number,
   entryDate: string
 ) {
-  if (!entryDate) return { type: 'Unknown', nra: 65, era: 58 };
+  if (!entryDate) return { type: 'Unknown', nra: 65, era: 58, allBenefits: [] };
 
   const [day, month, year] = entryDate.split('-').map(Number);
   const entryDateObj = new Date(year, month - 1, day);
@@ -296,18 +370,30 @@ function determineBenefitType(
   }
 
   let benefitType = '';
+  let allBenefits: string[] = [];
 
   if (yearsOfService < 5) {
+    // Not vested - only withdrawal settlement
     benefitType = 'Withdrawal Settlement Only';
-  } else if (ageAtSeparation >= nra) {
-    benefitType = 'Normal Retirement Benefit (Article 28)';
-  } else if (ageAtSeparation >= era) {
-    benefitType = 'Early Retirement Benefit (Article 29)';
+    allBenefits = ['Withdrawal Settlement (Article 31)'];
   } else {
-    benefitType = 'Deferred Retirement Benefit (Article 30)';
+    // Vested (≥5 years) - ALWAYS show withdrawal settlement as an option
+    allBenefits.push('Withdrawal Settlement (Article 31)');
+
+    // Determine primary periodic benefit type
+    if (ageAtSeparation >= nra) {
+      benefitType = 'Normal Retirement Benefit (Article 28)';
+      allBenefits.push('Normal Retirement Benefit (Article 28)');
+    } else if (ageAtSeparation >= era) {
+      benefitType = 'Early Retirement Benefit (Article 29)';
+      allBenefits.push('Early Retirement Benefit (Article 29)');
+    } else {
+      benefitType = 'Deferred Retirement Benefit (Article 30)';
+      allBenefits.push('Deferred Retirement Benefit (Article 30)');
+    }
   }
 
-  return { type: benefitType, nra, era };
+  return { type: benefitType, nra, era, allBenefits };
 }
 
 // Calculate early retirement reduction factor - CORRECTED LOGIC
@@ -371,6 +457,14 @@ export default function CalculatorScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '' });
 
+  // NEW: Validation error states
+  const [dobError, setDobError] = useState('');
+  const [entryError, setEntryError] = useState('');
+  const [separationError, setSeparationError] = useState('');
+  const [chronologyError, setChronologyError] = useState('');
+  const [serviceAgeError, setServiceAgeError] = useState('');
+
+
   // NEW: Option selection state and animations
   const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'both' | null>(null);
   const blinkAnimA = useRef(new Animated.Value(1)).current;
@@ -379,14 +473,14 @@ export default function CalculatorScreen() {
   const scaleAnimB = useRef(new Animated.Value(1)).current;
   const ownContributionsBlinkAnim = useRef(new Animated.Value(1)).current;
   const helpIconBlinkAnim = useRef(new Animated.Value(1)).current; // NEW: Help icon blink animation
-  
+
   // Create refs outside conditional rendering to avoid hook count mismatch
   const scrollViewRefs = [
     useRef<ScrollView>(null),
     useRef<ScrollView>(null),
     useRef<ScrollView>(null)
   ];
-  
+
   // Animation effects
   useEffect(() => {
     // Blinking animation for unselected options
@@ -606,18 +700,22 @@ export default function CalculatorScreen() {
         const colaAmount = reducedMonthlyPension * 0.028;
         const monthlyPensionAfterCOLA = reducedMonthlyPension + colaAmount;
 
-        // Final periodic benefit after ASHI deduction
-        const finalPeriodicBenefit = monthlyPensionAfterCOLA - ashiContribution;
+        // Final periodic benefit (after ASHI deduction)
+        const finalMonthlyBenefitAmount = monthlyPensionAfterCOLA - ashiContribution;
 
         setCalculation({
+          eligibilityType: benefitInfo.type,
+          allBenefits: benefitInfo.allBenefits, // NEW: Store all applicable benefits
           annualPension: initialAnnualPension,
+          reductionFactor,
           monthlyPension: monthlyPensionBeforeCommutation,
           lumpSum: totalLumpSumAmount,
           reducedMonthlyPension,
           colaAdjustedPension: monthlyPensionAfterCOLA,
-          finalPeriodicBenefit,
-          eligibilityType: benefitInfo.type,
-          earlyRetirementReduction: reductionFactor * 100,
+          finalPeriodicBenefit: finalMonthlyBenefitAmount,
+          nra: benefitInfo.nra,
+          era: benefitInfo.era,
+          withdrawalSettlement: wsData,
         });
       } else {
         setCalculation(null);
@@ -642,6 +740,45 @@ export default function CalculatorScreen() {
       }
     }
   }, [entryDate, separationDate, dateOfBirth]);
+
+  //NEW: Validation effect - runs whenever dates or service/age change
+  useEffect(() => {
+    // Clear all errors first
+    setDobError('');
+    setEntryError('');
+    setSeparationError('');
+    setChronologyError('');
+    setServiceAgeError('');
+
+    // Validate individual date formats
+    if (dateOfBirth && !isValidDateFormat(dateOfBirth)) {
+      setDobError('Invalid date format. Use DD-MM-YYYY');
+    }
+    if (entryDate && !isValidDateFormat(entryDate)) {
+      setEntryError('Invalid date format. Use DD-MM-YYYY');
+    }
+    if (separationDate && !isValidDateFormat(separationDate)) {
+      setSeparationError('Invalid date format. Use DD-MM-YYYY');
+    }
+
+    // Validate chronology if all dates are present and valid
+    if (dateOfBirth && entryDate && separationDate &&
+      isValidDateFormat(dateOfBirth) && isValidDateFormat(entryDate) && isValidDateFormat(separationDate)) {
+      const chronError = validateDateChronology(dateOfBirth, entryDate, separationDate);
+      if (chronError) {
+        setChronologyError(chronError);
+      }
+    }
+
+    // Validate service vs age
+    if (yearsOfService > 0 && ageAtRetirement > 0) {
+      const serviceError = validateServiceVsAge(yearsOfService, ageAtRetirement);
+      if (serviceError) {
+        setServiceAgeError(serviceError);
+      }
+    }
+  }, [dateOfBirth, entryDate, separationDate, yearsOfService, ageAtRetirement]);
+
 
   // Load profile data
   useFocusEffect(
@@ -833,6 +970,17 @@ export default function CalculatorScreen() {
             ) : null}
           </View>
         </View>
+
+        {/* Validation Errors Display */}
+        {(dobError || entryError || separationError || chronologyError || serviceAgeError) && (
+          <View style={styles.errorContainer}>
+            {dobError ? <Text style={styles.errorText}>• {dobError}</Text> : null}
+            {entryError ? <Text style={styles.errorText}>• {entryError}</Text> : null}
+            {separationError ? <Text style={styles.errorText}>• {separationError}</Text> : null}
+            {chronologyError ? <Text style={styles.errorText}>• {chronologyError}</Text> : null}
+            {serviceAgeError ? <Text style={styles.errorText}>• {serviceAgeError}</Text> : null}
+          </View>
+        )}
 
         {/* Own Contributions Input */}
         <View style={styles.inlineInputGroup}>
@@ -1442,6 +1590,27 @@ export default function CalculatorScreen() {
                     'You are eligible for a Deferred Retirement Benefit as you have 5+ years of service but are below your Early Retirement Age.'}
                 </Text>
               </View>
+
+              {/* NEW: Show all available benefit options for vested users */}
+              {calculation.allBenefits && calculation.allBenefits.length > 0 && (
+                <View style={[styles.infoCard, { marginTop: 16, backgroundColor: '#EFF6FF', borderColor: '#BFDBFE' }]}>
+                  <Text style={[styles.infoCardTitle, { color: '#1E40AF' }]}>All Your Available Benefit Options</Text>
+                  <Text style={[styles.infoText, { marginBottom: 8 }]}>
+                    Based on your service history, you are eligible to choose ONE of the following:
+                  </Text>
+                  {calculation.allBenefits.map((benefit, index) => (
+                    <View key={index} style={{ flexDirection: 'row', marginBottom: 6, alignItems: 'flex-start' }}>
+                      <Text style={{ marginRight: 8, color: '#2563EB', fontSize: 14 }}>•</Text>
+                      <Text style={[styles.infoText, { flex: 1 }]}>{benefit}</Text>
+                    </View>
+                  ))}
+                  {calculation.allBenefits.includes('Deferred Retirement Benefit (Article 30)') && calculation.eligibilityType !== 'Deferred Retirement Benefit (Article 30)' && (
+                    <Text style={[styles.infoText, { marginTop: 8, fontStyle: 'italic', fontSize: 13 }]}>
+                      Note: You can choose to Defer your benefit to avoid early retirement reduction factors.
+                    </Text>
+                  )}
+                </View>
+              )}
             </Animated.View>
           )}
         </View>
@@ -1640,14 +1809,14 @@ const styles = StyleSheet.create({
   // NEW: Help indicator box
   helpIndicatorBox: {
     backgroundColor: '#FFF4ED',
-    
+
   },
   helpIndicatorText: {
     fontSize: 11,
     color: '#C2410C',
     fontStyle: 'italic',
     textAlign: 'center',
-    lineHeight: 18, 
+    lineHeight: 18,
     marginBottom: 10,
   },
   inputGroup: {
